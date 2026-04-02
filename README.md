@@ -22,7 +22,7 @@ Marley connects to public genomic databases and runs a multi-stage filtering pip
 ```
 TriTrypDB (L. infantum genome)
         ↓
-01_fetch_genome      — Downloads all annotated protein sequences (~8,000)
+01_fetch_genome      — Downloads all annotated protein sequences (~8,500)
         ↓
 02_filter_surface     — Filters surface-exposed proteins via SignalP 6.0
         ↓
@@ -31,6 +31,8 @@ TriTrypDB (L. infantum genome)
 04_immunogenicity     — Predicts canine MHC binding via IEDB + loads pre-validated antigens
         ↓
 05_report             — Generates ranked candidate list + Markdown report
+        ↓
+06_construct          — Designs multi-epitope mRNA vaccine construct
 ```
 
 ---
@@ -144,9 +146,10 @@ npm run dev
 | 03_conservation | ✅ Complete | NCBI BLAST against L. donovani, L. major, L. braziliensis |
 | 04_immunogenicity | ✅ Complete | IEDB MHC-I with 3 canine DLA alleles (netmhcpan_ba) |
 | 05_report | ✅ Complete | Ranked CSV + Markdown report with validated antigens |
+| 06_construct | ✅ Complete | mRNA vaccine construct designer (see below) |
 | Web dashboard | ✅ MVP | Next.js + Tailwind, live data from Supabase |
 | CI/CD | ✅ Complete | GitHub Actions: lint (ruff) + pytest on Python 3.11/3.12/3.13 |
-| Test suite | ✅ 40 tests | Models, pipeline modules, validated antigens, logger |
+| Test suite | ✅ 61 tests | Models, pipeline modules, construct designer, validated antigens |
 
 ### End-to-end validation
 
@@ -159,6 +162,45 @@ The full pipeline has been validated on real data:
 | Conservation | Surface proteins | Candidates with >80% identity across strains | ~62s/protein |
 | Immunogenicity | Conserved candidates | IC50 binding scores for 3 DLA alleles | ~12s/protein |
 | Report | All scored candidates | Ranked list + validated antigens from literature | <1s |
+| Construct design | Top candidates | mRNA vaccine sequence ready for synthesis | ~30s |
+
+---
+
+## mRNA Vaccine Construct Design (Module 06)
+
+Module 06 takes the ranked antigen candidates and designs a complete multi-epitope mRNA vaccine construct:
+
+### Construct architecture
+
+```
+[tPA signal peptide] → [L7/L12 adjuvant] → EAAAK → [CTL epitopes joined by AAY] → GPGPG → [HTL epitopes joined by GPGPG]
+```
+
+| Component | Description |
+|-----------|-------------|
+| **Signal peptide** | tPA leader (MDAMKRGLCCVLLLCGAVFVSAS) — drives secretion for MHC presentation |
+| **Adjuvant** | 50S ribosomal L7/L12 — TLR4 agonist with Th1 bias (critical for *Leishmania*) |
+| **CTL epitopes** | 9-mer peptides selected from IEDB MHC-I predictions (IC50 < 500 nM, 3 DLA alleles) |
+| **Linkers** | AAY (proteasomal cleavage), GPGPG (prevents junctional neoepitopes), EAAAK (rigid spacer) |
+
+### What the module produces
+
+| Output | Description |
+|--------|-------------|
+| `results/construct/vaccine_construct.fasta` | Multi-epitope protein sequence |
+| `results/construct/vaccine_mrna.fasta` | Full mRNA: 5'UTR + codon-optimized ORF + 3'UTR(x2) + poly(A)120 |
+| `results/construct/construct_card.json` | Identity card: MW, pI, instability index, GRAVY, GC content |
+| `results/construct/construct_report.md` | Design rationale with epitope table, safety assessment, references |
+
+### Design features
+
+- **Codon optimization** for *Canis lupus familiaris* (Kazusa codon usage table)
+- **Restriction site removal** (EcoRI, BamHI, HindIII, XbaI, NheI, BsaI)
+- **Homopolymer breaking** (no runs > 4 nt)
+- **Physicochemical analysis** via Biopython ProtParam (MW, pI, instability, GRAVY)
+- **Antigenicity check** via VaxiJen 2.0 (threshold > 0.4)
+- **Allergenicity check** via AllerTOP v2.0
+- **Configurable** via CLI: `--signal-peptide tPA|IgK` and `--adjuvant L7L12|RS09`
 
 ---
 
