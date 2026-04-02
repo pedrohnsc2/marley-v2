@@ -8,7 +8,8 @@ traits for vaccine targets.
 
 from __future__ import annotations
 
-import json
+import csv
+import io
 import tempfile
 from pathlib import Path
 
@@ -27,7 +28,6 @@ from core.models import Candidate
 INPUT_FILE: str = "data/raw/proteins.fasta"
 OUTPUT_FILE: str = "data/raw/surface_proteins.fasta"
 CHUNK_SIZE: int = 500
-SIGNAL_TYPE: str = "Sec/SPI"  # classic signal peptide
 BIOLIB_MODEL: str = "DTU/SignalP-6"
 
 logger = get_logger("filter_surface")
@@ -102,18 +102,18 @@ def run_signalp(fasta_path: str) -> dict:
     """Run SignalP 6.0 on a FASTA file using the BioLib Python SDK.
 
     The BioLib SDK executes the DTU/SignalP-6 model synchronously and returns
-    structured JSON output with signal peptide predictions.
+    a tab-delimited text file with signal peptide predictions.
 
     Args:
         fasta_path: Path to a FASTA file containing protein sequences.
 
     Returns:
-        A dictionary mapping gene_id to its prediction metadata.  The
-        expected structure is
-        ``{"SEQUENCES": {"gene_id": {"Prediction": "...", ...}, ...}}``.
+        A dictionary mapping gene_id to its prediction metadata::
+
+            {"gene_id": {"prediction": "SP", "probability": 0.9998}, ...}
 
     Raises:
-        RuntimeError: If the BioLib job fails or returns no output.
+        RuntimeError: If the BioLib job fails or returns no parseable output.
     """
     logger.info("Running SignalP 6.0 via BioLib on %s ...", fasta_path)
 
@@ -128,35 +128,53 @@ def run_signalp(fasta_path: str) -> dict:
         )
     )
 
-    # BioLib returns output files; look for the JSON results.
+    # BioLib returns LazyLoadedFile objects; look for the TSV results file.
     output_files = result.list_output_files()
-    logger.debug("BioLib output files: %s", output_files)
+    logger.debug(
+        "BioLib output files: %s",
+        [f.path for f in output_files],
+    )
 
-    # Try to find and parse the JSON output file.
-    for file_path in output_files:
-        if file_path.endswith(".json"):
-            content = result.get_output_file(file_path).decode("utf-8")
-            data: dict = json.loads(content)
-            logger.info(
-                "SignalP returned predictions for %d sequences.",
-                len(data.get("SEQUENCES", {})),
-            )
-            return data
-
-    # Fallback: try to parse any output as JSON.
-    for file_path in output_files:
-        try:
-            content = result.get_output_file(file_path).decode("utf-8")
-            data = json.loads(content)
-            if isinstance(data, dict):
-                logger.info("Parsed SignalP results from %s.", file_path)
-                return data
-        except (json.JSONDecodeError, UnicodeDecodeError):
+    # SignalP 6.0 via BioLib outputs tab-delimited .txt files
+    # (e.g. prediction_results.txt).  Columns:
+    #   ID  Prediction  OTHER  SP(Sec/SPI)  CS Position
+    for f in output_files:
+        if not f.path.endswith(".txt"):
             continue
 
+        content = f.get_data().decode("utf-8")
+        reader = csv.DictReader(
+            io.StringIO(content), delimiter="\t"
+        )
+
+        predictions: dict[str, dict] = {}
+        for row in reader:
+            gene_id = row.get("ID", "").strip()
+            if not gene_id:
+                continue
+            prediction = row.get("Prediction", "").strip()
+            # The SP(Sec/SPI) column holds the probability score.
+            probability_str = row.get("SP(Sec/SPI)", "0").strip()
+            try:
+                probability = float(probability_str)
+            except ValueError:
+                probability = 0.0
+
+            predictions[gene_id] = {
+                "prediction": prediction,
+                "probability": probability,
+            }
+
+        if predictions:
+            logger.info(
+                "SignalP returned predictions for %d sequences.",
+                len(predictions),
+            )
+            return predictions
+
     raise RuntimeError(
-        f"SignalP via BioLib produced no parseable JSON output. "
-        f"Output files found: {output_files}"
+        f"SignalP via BioLib produced no parseable .txt output. "
+        f"Output files found: {[f.path for f in output_files]}"
     )
 
 
@@ -166,38 +184,29 @@ def run_signalp(fasta_path: str) -> dict:
 
 
 def _extract_signal_hits(results: dict) -> set[str]:
-    """Extract gene_ids classified as Sec/SPI from BioLib SignalP results.
+    """Extract gene_ids classified as having a signal peptide (SP).
 
-    Handles the BioLib JSON structure:
-    ``{"SEQUENCES": {"gene_id": {"Prediction": "Signal Peptide (Sec/SPI)", ...}}}``
+    Expects the flat dict returned by :func:`run_signalp`::
 
-    Also falls back to a flat dict structure where keys are gene_ids.
+        {"gene_id": {"prediction": "SP", "probability": 0.9998}, ...}
+
+    A protein is considered a hit when its ``prediction`` value equals
+    ``"SP"`` -- the SignalP 6.0 label for a classic Sec/SPI signal peptide.
 
     Args:
-        results: Parsed JSON returned by :func:`run_signalp`.
+        results: Dict returned by :func:`run_signalp`.
 
     Returns:
-        A set of gene_id strings that have a Sec/SPI prediction.
+        A set of gene_id strings that have a signal peptide prediction.
     """
     hits: set[str] = set()
 
-    # Primary shape: BioLib SEQUENCES dict.
-    sequences = results.get("SEQUENCES", {})
-    if sequences:
-        for gene_id, info in sequences.items():
-            if not isinstance(info, dict):
-                continue
-            prediction = info.get("Prediction", "")
-            if SIGNAL_TYPE in prediction:
-                hits.add(gene_id)
-        return hits
-
-    # Fallback: flat dict keyed by gene_id.
     for gene_id, info in results.items():
-        if isinstance(info, dict):
-            prediction = info.get("Prediction", info.get("prediction", ""))
-            if SIGNAL_TYPE in prediction:
-                hits.add(gene_id)
+        if not isinstance(info, dict):
+            continue
+        prediction = info.get("prediction", "")
+        if prediction == "SP":
+            hits.add(gene_id)
 
     return hits
 

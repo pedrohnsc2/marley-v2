@@ -1,63 +1,5 @@
+import { createServerClient } from "@/lib/supabase";
 import { Candidate } from "@/lib/types";
-
-const MOCK_CANDIDATES: Candidate[] = [
-  {
-    gene_id: "LinJ.28.0310",
-    gene_name: "LiHyp1",
-    sequence: "MKLF...",
-    has_signal_peptide: true,
-    conservation_score: 0.95,
-    immunogenicity_score: 0.91,
-    final_score: 0.93,
-    priority: "high",
-    source: "TriTrypDB",
-    evidence: ["Validated in clinical trial", "Strong Th1 response"],
-    status: "validated",
-    filters_passed: 6,
-  },
-  {
-    gene_id: "LinJ.22.0680",
-    gene_name: "A2",
-    sequence: "MAST...",
-    has_signal_peptide: false,
-    conservation_score: 0.92,
-    immunogenicity_score: 0.89,
-    final_score: 0.9,
-    priority: "high",
-    source: "TriTrypDB",
-    evidence: ["Used in Leish-Tec vaccine", "Amastigote-specific"],
-    status: "validated",
-    filters_passed: 5,
-  },
-  {
-    gene_id: "LinJ.25.1680",
-    gene_name: "KMP-11",
-    sequence: "MATK...",
-    has_signal_peptide: false,
-    conservation_score: 0.88,
-    immunogenicity_score: 0.85,
-    final_score: 0.86,
-    priority: "medium",
-    source: "TriTrypDB",
-    evidence: ["Kinetoplast membrane protein", "Cross-reactive"],
-    status: "validated",
-    filters_passed: 5,
-  },
-  {
-    gene_id: "LinJ.12.0945",
-    gene_name: "LACK",
-    sequence: "MRVL...",
-    has_signal_peptide: false,
-    conservation_score: 0.84,
-    immunogenicity_score: 0.82,
-    final_score: 0.83,
-    priority: "medium",
-    source: "TriTrypDB",
-    evidence: ["Leishmania homolog of RACK1", "Th1 adjuvant candidate"],
-    status: "validated",
-    filters_passed: 4,
-  },
-];
 
 function PriorityBadge({ priority }: { priority: string }) {
   const colors: Record<string, string> = {
@@ -75,7 +17,26 @@ function PriorityBadge({ priority }: { priority: string }) {
   );
 }
 
-export default function Home() {
+async function fetchCandidates(): Promise<Candidate[]> {
+  const supabase = createServerClient();
+
+  const { data, error } = await supabase
+    .from("candidates")
+    .select("*")
+    .order("priority", { ascending: false })
+    .order("final_score", { ascending: false });
+
+  if (error) {
+    console.error("Failed to fetch candidates:", error.message);
+    return [];
+  }
+
+  return (data as Candidate[]) ?? [];
+}
+
+export default async function Home() {
+  const candidates = await fetchCandidates();
+
   return (
     <main className="mx-auto max-w-6xl px-6 py-12">
       <header className="mb-10">
@@ -92,55 +53,84 @@ export default function Home() {
           Candidate Rankings
         </h2>
 
-        <div className="overflow-x-auto rounded-lg border border-zinc-800">
-          <table
-            className="w-full text-left text-sm"
-            data-testid="candidates-table"
+        {candidates.length === 0 ? (
+          <div
+            className="rounded-lg border border-zinc-800 bg-zinc-900/40 px-6 py-16 text-center"
+            data-testid="empty-state"
           >
-            <thead className="border-b border-zinc-800 bg-zinc-900/60 text-xs uppercase tracking-wider text-zinc-400">
-              <tr>
-                <th className="px-4 py-3">Rank</th>
-                <th className="px-4 py-3">Gene ID</th>
-                <th className="px-4 py-3">Gene Name</th>
-                <th className="px-4 py-3 text-right">Final Score</th>
-                <th className="px-4 py-3">Priority</th>
-                <th className="px-4 py-3">Source</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-zinc-800">
-              {MOCK_CANDIDATES.map((candidate, index) => (
-                <tr
-                  key={candidate.gene_id}
-                  className="transition-colors hover:bg-zinc-900/40"
-                  data-testid={`candidate-row-${index}`}
-                >
-                  <td className="px-4 py-3 font-mono text-zinc-500">
-                    {index + 1}
-                  </td>
-                  <td className="px-4 py-3 font-mono text-zinc-300">
-                    {candidate.gene_id}
-                  </td>
-                  <td className="px-4 py-3 font-semibold text-white">
-                    {candidate.gene_name}
-                  </td>
-                  <td className="px-4 py-3 text-right font-mono text-zinc-200">
-                    {candidate.final_score.toFixed(2)}
-                  </td>
-                  <td className="px-4 py-3">
-                    <PriorityBadge priority={candidate.priority} />
-                  </td>
-                  <td className="px-4 py-3 text-zinc-400">
-                    {candidate.source}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+            <p className="text-sm text-zinc-400">
+              No candidates found. Run the pipeline to populate results.
+            </p>
+          </div>
+        ) : (
+          <>
+            <div className="overflow-x-auto rounded-lg border border-zinc-800">
+              <table
+                className="w-full text-left text-sm"
+                data-testid="candidates-table"
+              >
+                <thead className="border-b border-zinc-800 bg-zinc-900/60 text-xs uppercase tracking-wider text-zinc-400">
+                  <tr>
+                    <th className="px-4 py-3">Rank</th>
+                    <th className="px-4 py-3">Gene ID</th>
+                    <th className="px-4 py-3">Gene Name</th>
+                    <th className="px-4 py-3 text-right">Final Score</th>
+                    <th className="px-4 py-3">Priority</th>
+                    <th className="px-4 py-3">Evidence</th>
+                    <th className="px-4 py-3">Source</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-zinc-800">
+                  {candidates.map((candidate, index) => (
+                    <tr
+                      key={candidate.gene_id}
+                      className="transition-colors hover:bg-zinc-900/40"
+                      data-testid={`candidate-row-${index}`}
+                    >
+                      <td className="px-4 py-3 font-mono text-zinc-500">
+                        {index + 1}
+                      </td>
+                      <td className="px-4 py-3 font-mono text-zinc-300">
+                        {candidate.gene_id}
+                      </td>
+                      <td className="px-4 py-3 font-semibold text-white">
+                        {candidate.gene_name}
+                      </td>
+                      <td className="px-4 py-3 text-right font-mono text-zinc-200">
+                        {candidate.final_score.toFixed(2)}
+                      </td>
+                      <td className="px-4 py-3">
+                        <PriorityBadge priority={candidate.priority} />
+                      </td>
+                      <td className="max-w-xs px-4 py-3 text-zinc-400">
+                        {Array.isArray(candidate.evidence) &&
+                        candidate.evidence.length > 0 ? (
+                          <ul className="list-inside list-disc space-y-0.5">
+                            {candidate.evidence.map((item) => (
+                              <li key={item} className="truncate text-xs">
+                                {item}
+                              </li>
+                            ))}
+                          </ul>
+                        ) : (
+                          <span className="text-xs text-zinc-600">--</span>
+                        )}
+                      </td>
+                      <td className="px-4 py-3 text-zinc-400">
+                        {candidate.source}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
 
-        <p className="mt-3 text-xs text-zinc-600">
-          Showing {MOCK_CANDIDATES.length} candidates (mock data)
-        </p>
+            <p className="mt-3 text-xs text-zinc-600">
+              Showing {candidates.length} candidate
+              {candidates.length !== 1 ? "s" : ""} from Supabase
+            </p>
+          </>
+        )}
       </section>
     </main>
   );
