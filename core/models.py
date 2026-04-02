@@ -109,3 +109,129 @@ class Candidate:
             source=data.get("source", ""),
             evidence=data.get("evidence", ""),
         )
+
+
+# ---------------------------------------------------------------------------
+# Module 06 -- mRNA vaccine construct models
+# ---------------------------------------------------------------------------
+
+
+@dataclass
+class Epitope:
+    """A single predicted epitope selected for the vaccine construct."""
+
+    sequence: str
+    source_gene_id: str
+    source_gene_name: str
+    epitope_type: str  # "CTL" or "HTL"
+    allele: str
+    ic50: float
+    rank: float = 0.0
+    start_position: int = 0
+
+    def to_dict(self) -> dict:
+        """Serialize to a plain dict suitable for Supabase upsert.
+
+        Returns:
+            Dictionary with all epitope fields.
+        """
+        return {
+            "sequence": self.sequence,
+            "source_gene_id": self.source_gene_id,
+            "source_gene_name": self.source_gene_name,
+            "epitope_type": self.epitope_type,
+            "allele": self.allele,
+            "ic50": self.ic50,
+            "rank": self.rank,
+            "start_position": self.start_position,
+        }
+
+    @classmethod
+    def from_dict(cls, data: dict) -> Epitope:
+        """Construct an ``Epitope`` from a dictionary (e.g. Supabase row).
+
+        Args:
+            data: Dictionary containing epitope fields.
+
+        Returns:
+            A new ``Epitope`` instance.
+        """
+        return cls(
+            sequence=data["sequence"],
+            source_gene_id=data["source_gene_id"],
+            source_gene_name=data.get("source_gene_name", ""),
+            epitope_type=data["epitope_type"],
+            allele=data["allele"],
+            ic50=float(data["ic50"]),
+            rank=float(data.get("rank", 0.0)),
+            start_position=int(data.get("start_position", 0)),
+        )
+
+
+@dataclass
+class VaccineConstruct:
+    """A complete multi-epitope mRNA vaccine design."""
+
+    construct_id: str
+    protein_sequence: str
+    mrna_sequence: str
+    signal_peptide_name: str
+    adjuvant_name: str
+    epitopes: list[Epitope] = field(default_factory=list)
+    molecular_weight: float = 0.0
+    isoelectric_point: float = 0.0
+    instability_index: float = 0.0
+    gravy: float = 0.0
+    gc_content: float = 0.0
+    vaxijen_score: float | None = None
+    allergenicity: str | None = None
+    created_at: str = ""
+
+    def to_dict(self) -> dict:
+        """Serialize to a plain dict suitable for Supabase upsert.
+
+        Returns:
+            Dictionary with all construct fields.
+        """
+        return {
+            "construct_id": self.construct_id,
+            "protein_sequence": self.protein_sequence,
+            "mrna_sequence": self.mrna_sequence,
+            "signal_peptide": self.signal_peptide_name,
+            "adjuvant_name": self.adjuvant_name,
+            "epitope_count": len(self.epitopes),
+            "molecular_weight": self.molecular_weight,
+            "isoelectric_point": self.isoelectric_point,
+            "instability_index": self.instability_index,
+            "gravy": self.gravy,
+            "gc_content": self.gc_content,
+            "vaxijen_score": self.vaxijen_score,
+            "allergenicity": self.allergenicity,
+            "created_at": self.created_at,
+        }
+
+    @classmethod
+    def from_dict(cls, data: dict) -> VaccineConstruct:
+        """Construct a ``VaccineConstruct`` from a dictionary (e.g. Supabase row).
+
+        Args:
+            data: Dictionary containing construct fields.
+
+        Returns:
+            A new ``VaccineConstruct`` instance.
+        """
+        return cls(
+            construct_id=data["construct_id"],
+            protein_sequence=data["protein_sequence"],
+            mrna_sequence=data["mrna_sequence"],
+            signal_peptide_name=data.get("signal_peptide", "tPA"),
+            adjuvant_name=data.get("adjuvant_name", "L7L12"),
+            molecular_weight=float(data.get("molecular_weight", 0.0)),
+            isoelectric_point=float(data.get("isoelectric_point", 0.0)),
+            instability_index=float(data.get("instability_index", 0.0)),
+            gravy=float(data.get("gravy", 0.0)),
+            gc_content=float(data.get("gc_content", 0.0)),
+            vaxijen_score=data.get("vaxijen_score"),
+            allergenicity=data.get("allergenicity"),
+            created_at=data.get("created_at", ""),
+        )

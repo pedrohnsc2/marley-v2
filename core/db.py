@@ -15,7 +15,7 @@ from dotenv import load_dotenv
 from supabase import Client, create_client
 
 from core.logger import get_logger
-from core.models import Candidate
+from core.models import Candidate, Epitope, VaccineConstruct
 
 # ---------------------------------------------------------------------------
 # Configuration
@@ -26,6 +26,8 @@ load_dotenv()
 SUPABASE_URL: str = os.getenv("SUPABASE_URL", "")
 SUPABASE_KEY: str = os.getenv("SUPABASE_KEY", "")
 CANDIDATES_TABLE: str = "candidates"
+CONSTRUCTS_TABLE: str = "vaccine_constructs"
+EPITOPES_TABLE: str = "construct_epitopes"
 
 logger = get_logger("db")
 
@@ -145,4 +147,128 @@ def update_candidate(gene_id: str, data: dict[str, Any]) -> dict[str, Any]:
         return response.data
     except Exception:
         logger.exception("Failed to update candidate %s.", gene_id)
+        raise
+
+
+# ---------------------------------------------------------------------------
+# Vaccine construct helpers (Module 06)
+# ---------------------------------------------------------------------------
+
+
+def upsert_construct(construct: VaccineConstruct) -> dict[str, Any]:
+    """Insert or update a vaccine construct row keyed by ``construct_id``.
+
+    Args:
+        construct: The ``VaccineConstruct`` to persist.
+
+    Returns:
+        The Supabase response data for the upserted row.
+
+    Raises:
+        Exception: On any Supabase communication failure.
+    """
+    client = _get_client()
+    payload = construct.to_dict()
+
+    # Remove empty created_at so Supabase uses its DEFAULT now()
+    if not payload.get("created_at"):
+        payload.pop("created_at", None)
+
+    try:
+        response = (
+            client.table(CONSTRUCTS_TABLE)
+            .upsert(payload, on_conflict="construct_id")
+            .execute()
+        )
+        logger.info("Upserted construct %s.", construct.construct_id)
+        return response.data
+    except Exception:
+        logger.exception("Failed to upsert construct %s.", construct.construct_id)
+        raise
+
+
+def get_construct(construct_id: str) -> VaccineConstruct | None:
+    """Fetch a vaccine construct by its ID.
+
+    Args:
+        construct_id: The unique construct identifier.
+
+    Returns:
+        A ``VaccineConstruct`` instance, or ``None`` if not found.
+
+    Raises:
+        Exception: On any Supabase communication failure.
+    """
+    client = _get_client()
+
+    try:
+        response = (
+            client.table(CONSTRUCTS_TABLE)
+            .select("*")
+            .eq("construct_id", construct_id)
+            .execute()
+        )
+        if not response.data:
+            logger.info("Construct %s not found.", construct_id)
+            return None
+
+        construct = VaccineConstruct.from_dict(response.data[0])
+        logger.info("Fetched construct %s.", construct_id)
+        return construct
+    except Exception:
+        logger.exception("Failed to fetch construct %s.", construct_id)
+        raise
+
+
+def upsert_construct_epitopes(
+    construct_id: str, epitopes: list[Epitope]
+) -> None:
+    """Insert epitopes for a construct, replacing any existing rows.
+
+    Existing epitopes for the given *construct_id* are deleted first to
+    avoid duplicates on re-runs.
+
+    Args:
+        construct_id: The construct these epitopes belong to.
+        epitopes: List of ``Epitope`` instances to persist.
+
+    Raises:
+        Exception: On any Supabase communication failure.
+    """
+    client = _get_client()
+
+    try:
+        # Remove previous epitopes for this construct
+        client.table(EPITOPES_TABLE).delete().eq(
+            "construct_id", construct_id
+        ).execute()
+
+        if not epitopes:
+            logger.info("Cleared epitopes for construct %s (none to insert).", construct_id)
+            return
+
+        rows = [
+            {
+                "construct_id": construct_id,
+                "peptide": ep.sequence,
+                "epitope_type": ep.epitope_type,
+                "source_gene_id": ep.source_gene_id,
+                "source_gene_name": ep.source_gene_name,
+                "allele": ep.allele,
+                "ic50": ep.ic50,
+                "position_in_construct": ep.start_position,
+            }
+            for ep in epitopes
+        ]
+
+        client.table(EPITOPES_TABLE).insert(rows).execute()
+        logger.info(
+            "Inserted %d epitope(s) for construct %s.",
+            len(epitopes),
+            construct_id,
+        )
+    except Exception:
+        logger.exception(
+            "Failed to upsert epitopes for construct %s.", construct_id
+        )
         raise
