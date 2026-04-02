@@ -1,17 +1,18 @@
 """Filter proteins for surface-exposed and secreted candidates using signal peptide predictions.
 
-Uses the SignalP 6.0 web API to classify signal peptides, retaining only
-proteins with a classic Sec/SPI signal peptide -- strong indicators of
-surface exposure or secretion, both desirable traits for vaccine targets.
+Uses the SignalP 6.0 model via the BioLib Python SDK (pybiolib) to classify
+signal peptides, retaining only proteins with a classic Sec/SPI signal
+peptide -- strong indicators of surface exposure or secretion, both desirable
+traits for vaccine targets.
 """
 
 from __future__ import annotations
 
-import os
-import time
+import json
+import tempfile
 from pathlib import Path
 
-import requests
+import biolib
 from Bio import SeqIO
 from tqdm import tqdm
 
@@ -23,13 +24,11 @@ from core.models import Candidate
 # Constants
 # ---------------------------------------------------------------------------
 
-SIGNALP_URL: str = "https://services.healthtech.dtu.dk/services/SignalP-6.0/"
 INPUT_FILE: str = "data/raw/proteins.fasta"
 OUTPUT_FILE: str = "data/raw/surface_proteins.fasta"
-BATCH_SIZE: int = 50
-POLL_INTERVAL: int = 10  # seconds
-POLL_TIMEOUT: int = 300  # 5 minutes
+CHUNK_SIZE: int = 500
 SIGNAL_TYPE: str = "Sec/SPI"  # classic signal peptide
+BIOLIB_MODEL: str = "DTU/SignalP-6"
 
 logger = get_logger("filter_surface")
 
@@ -74,128 +73,91 @@ def parse_fasta(fasta_path: str) -> list[tuple[str, str, str]]:
 
 
 # ---------------------------------------------------------------------------
-# SignalP 6.0 API interaction
+# SignalP 6.0 via BioLib SDK
 # ---------------------------------------------------------------------------
 
 
-def _build_fasta_payload(sequences: list[tuple[str, str]]) -> str:
-    """Convert a list of (header, sequence) pairs into FASTA-formatted text.
-
-    Args:
-        sequences: Each element is ``(header, sequence)``.
-
-    Returns:
-        A multi-record FASTA string.
-    """
-    lines: list[str] = []
-    for header, seq in sequences:
-        lines.append(f">{header}")
-        lines.append(seq)
-    return "\n".join(lines)
-
-
-def submit_batch(
-    sequences: list[tuple[str, str]], organism: str = "eukarya"
-) -> dict:
-    """Submit a batch of sequences to the SignalP 6.0 web API.
-
-    The API expects multipart form data with a FASTA-formatted input and the
-    target organism group.
+def _write_temp_fasta(sequences: list[tuple[str, str]]) -> str:
+    """Write sequences to a temporary FASTA file for BioLib input.
 
     Args:
         sequences: List of ``(header, sequence)`` pairs.
-        organism: Organism group for prediction. One of ``"eukarya"``,
-                  ``"gram-"``, ``"gram+"``, ``"archaea"``.
 
     Returns:
-        The parsed JSON response from the submission endpoint, which
-        typically contains a ``job_id`` key.
-
-    Raises:
-        requests.HTTPError: On any non-2xx HTTP status.
+        The absolute path to the temporary FASTA file.
     """
-    fasta_text = _build_fasta_payload(sequences)
-
-    form_data = {
-        "fastaentry": fasta_text,
-        "organism": organism,
-        "format": "json",
-    }
-
+    tmp = tempfile.NamedTemporaryFile(
+        mode="w", suffix=".fasta", delete=False, prefix="signalp_chunk_"
+    )
     try:
-        response = requests.post(
-            SIGNALP_URL,
-            data=form_data,
-            timeout=60,
-        )
-        response.raise_for_status()
-        logger.info(
-            "Submitted batch of %d sequences to SignalP.", len(sequences)
-        )
-        return response.json()
-    except requests.ConnectionError:
-        logger.error(
-            "Cannot reach SignalP API at %s. The service may be unavailable.",
-            SIGNALP_URL,
-        )
-        raise
-    except requests.HTTPError as exc:
-        logger.error(
-            "SignalP API returned HTTP %s: %s",
-            exc.response.status_code if exc.response is not None else "N/A",
-            exc.response.text[:500] if exc.response is not None else "",
-        )
-        raise
-    except requests.RequestException:
-        logger.exception("Unexpected error submitting batch to SignalP.")
-        raise
+        for header, seq in sequences:
+            tmp.write(f">{header}\n{seq}\n")
+    finally:
+        tmp.close()
+
+    return tmp.name
 
 
-def poll_results(job_id: str) -> dict | None:
-    """Poll the SignalP 6.0 API until results are ready or timeout is reached.
+def run_signalp(fasta_path: str) -> dict:
+    """Run SignalP 6.0 on a FASTA file using the BioLib Python SDK.
+
+    The BioLib SDK executes the DTU/SignalP-6 model synchronously and returns
+    structured JSON output with signal peptide predictions.
 
     Args:
-        job_id: The job identifier returned by :func:`submit_batch`.
+        fasta_path: Path to a FASTA file containing protein sequences.
 
     Returns:
-        The parsed JSON results, or ``None`` if the job did not complete
-        within :data:`POLL_TIMEOUT` seconds.
+        A dictionary mapping gene_id to its prediction metadata.  The
+        expected structure is
+        ``{"SEQUENCES": {"gene_id": {"Prediction": "...", ...}, ...}}``.
+
+    Raises:
+        RuntimeError: If the BioLib job fails or returns no output.
     """
-    results_url = f"{SIGNALP_URL.rstrip('/')}/results/{job_id}"
-    elapsed = 0
+    logger.info("Running SignalP 6.0 via BioLib on %s ...", fasta_path)
 
-    while elapsed < POLL_TIMEOUT:
-        try:
-            response = requests.get(results_url, timeout=30)
-            if response.status_code == 200:
-                data = response.json()
-                # Some APIs return a "status" field while processing.
-                if data.get("status") in ("complete", "done", None):
-                    logger.info(
-                        "Results ready for job %s after %ds.", job_id, elapsed
-                    )
-                    return data
-            elif response.status_code == 202:
-                # 202 Accepted -- still processing.
-                pass
-            else:
-                logger.warning(
-                    "Unexpected status %d while polling job %s.",
-                    response.status_code,
-                    job_id,
-                )
-        except requests.RequestException:
-            logger.warning(
-                "Network error polling job %s; will retry.", job_id
-            )
-
-        time.sleep(POLL_INTERVAL)
-        elapsed += POLL_INTERVAL
-
-    logger.error(
-        "Timed out after %ds waiting for SignalP job %s.", POLL_TIMEOUT, job_id
+    signalp = biolib.load(BIOLIB_MODEL)
+    result = signalp.cli(
+        args=(
+            f"--fastafile {fasta_path} "
+            f"--output_dir output "
+            f"--organism eukarya "
+            f"--format txt "
+            f"--mode fast"
+        )
     )
-    return None
+
+    # BioLib returns output files; look for the JSON results.
+    output_files = result.list_output_files()
+    logger.debug("BioLib output files: %s", output_files)
+
+    # Try to find and parse the JSON output file.
+    for file_path in output_files:
+        if file_path.endswith(".json"):
+            content = result.get_output_file(file_path).decode("utf-8")
+            data: dict = json.loads(content)
+            logger.info(
+                "SignalP returned predictions for %d sequences.",
+                len(data.get("SEQUENCES", {})),
+            )
+            return data
+
+    # Fallback: try to parse any output as JSON.
+    for file_path in output_files:
+        try:
+            content = result.get_output_file(file_path).decode("utf-8")
+            data = json.loads(content)
+            if isinstance(data, dict):
+                logger.info("Parsed SignalP results from %s.", file_path)
+                return data
+        except (json.JSONDecodeError, UnicodeDecodeError):
+            continue
+
+    raise RuntimeError(
+        f"SignalP via BioLib produced no parseable JSON output. "
+        f"Output files found: {output_files}"
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -204,32 +166,36 @@ def poll_results(job_id: str) -> dict | None:
 
 
 def _extract_signal_hits(results: dict) -> set[str]:
-    """Extract gene_ids classified as Sec/SPI from a SignalP results dict.
+    """Extract gene_ids classified as Sec/SPI from BioLib SignalP results.
 
-    The function handles two common response shapes:
-      1. ``{"results": [{"id": ..., "prediction": ...}, ...]}``
-      2. ``{"<gene_id>": {"prediction": ...}, ...}``
+    Handles the BioLib JSON structure:
+    ``{"SEQUENCES": {"gene_id": {"Prediction": "Signal Peptide (Sec/SPI)", ...}}}``
+
+    Also falls back to a flat dict structure where keys are gene_ids.
 
     Args:
-        results: Parsed JSON returned by :func:`poll_results`.
+        results: Parsed JSON returned by :func:`run_signalp`.
 
     Returns:
         A set of gene_id strings that have a Sec/SPI prediction.
     """
     hits: set[str] = set()
 
-    # Shape 1: list-based results.
-    if "results" in results and isinstance(results["results"], list):
-        for entry in results["results"]:
-            prediction = entry.get("prediction", "")
+    # Primary shape: BioLib SEQUENCES dict.
+    sequences = results.get("SEQUENCES", {})
+    if sequences:
+        for gene_id, info in sequences.items():
+            if not isinstance(info, dict):
+                continue
+            prediction = info.get("Prediction", "")
             if SIGNAL_TYPE in prediction:
-                hits.add(entry.get("id", entry.get("gene_id", "")))
+                hits.add(gene_id)
         return hits
 
-    # Shape 2: dict keyed by gene_id.
+    # Fallback: flat dict keyed by gene_id.
     for gene_id, info in results.items():
         if isinstance(info, dict):
-            prediction = info.get("prediction", "")
+            prediction = info.get("Prediction", info.get("prediction", ""))
             if SIGNAL_TYPE in prediction:
                 hits.add(gene_id)
 
@@ -242,11 +208,12 @@ def _extract_signal_hits(results: dict) -> set[str]:
 
 
 def filter_surface_proteins(force: bool = False) -> str:
-    """Run the surface-protein filter using SignalP 6.0.
+    """Run the surface-protein filter using SignalP 6.0 via BioLib.
 
-    Reads protein sequences from :data:`INPUT_FILE`, submits them in batches
-    to SignalP, retains those classified as *Sec/SPI*, persists each passing
-    candidate to Supabase, and writes the filtered FASTA to :data:`OUTPUT_FILE`.
+    Reads protein sequences from :data:`INPUT_FILE`, processes them in chunks
+    through SignalP via the BioLib SDK, retains those classified as *Sec/SPI*,
+    persists each passing candidate to Supabase, and writes the filtered FASTA
+    to :data:`OUTPUT_FILE`.
 
     Args:
         force: When ``False`` and *OUTPUT_FILE* already exists, skip
@@ -277,43 +244,42 @@ def filter_surface_proteins(force: bool = False) -> str:
     logger.info("Starting surface filter for %d proteins.", total)
 
     # ------------------------------------------------------------------
-    # 2. Process in batches via SignalP
+    # 2. Process in chunks via SignalP (BioLib SDK)
     # ------------------------------------------------------------------
     surface_ids: set[str] = set()
-    batches = [
-        proteins[i : i + BATCH_SIZE] for i in range(0, total, BATCH_SIZE)
+    chunks = [
+        proteins[i : i + CHUNK_SIZE] for i in range(0, total, CHUNK_SIZE)
     ]
 
-    for batch in tqdm(batches, desc="SignalP batches", unit="batch"):
-        batch_seqs = [(gene_id, seq) for gene_id, _, seq in batch]
+    for chunk in tqdm(chunks, desc="SignalP chunks", unit="chunk"):
+        chunk_seqs: list[tuple[str, str]] = [
+            (gene_id, seq) for gene_id, _, seq in chunk
+        ]
+
+        tmp_fasta: str | None = None
         try:
-            submission = submit_batch(batch_seqs)
-        except requests.RequestException:
-            logger.error(
-                "Failed to submit batch; skipping %d sequences. "
-                "Ensure the SignalP 6.0 API is reachable at %s.",
-                len(batch),
-                SIGNALP_URL,
+            tmp_fasta = _write_temp_fasta(chunk_seqs)
+            results = run_signalp(tmp_fasta)
+            hits = _extract_signal_hits(results)
+            surface_ids.update(hits)
+            logger.info(
+                "Chunk: %d/%d sequences had signal peptides.",
+                len(hits),
+                len(chunk),
             )
-            continue
-
-        job_id = submission.get("job_id") or submission.get("id")
-        if job_id:
-            results = poll_results(job_id)
-        else:
-            # Some API versions return results directly (synchronous mode).
-            results = submission
-
-        if results is None:
-            logger.warning(
-                "No results for batch (job %s); skipping %d sequences.",
-                job_id,
-                len(batch),
+        except Exception:
+            logger.exception(
+                "Failed to process chunk of %d sequences via BioLib; "
+                "skipping this chunk.",
+                len(chunk),
             )
-            continue
-
-        hits = _extract_signal_hits(results)
-        surface_ids.update(hits)
+        finally:
+            # Clean up the temporary FASTA file.
+            if tmp_fasta is not None:
+                try:
+                    Path(tmp_fasta).unlink(missing_ok=True)
+                except OSError:
+                    pass
 
     # ------------------------------------------------------------------
     # 3. Build filtered set and persist

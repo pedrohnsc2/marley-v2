@@ -38,8 +38,9 @@ OUTPUT_FILE: str = "results/conserved_candidates.csv"
 CONSERVATION_THRESHOLD: float = 0.80
 REFERENCE_STRAIN: str = "Leishmania infantum JPCM5"
 COMPARISON_STRAINS: list[str] = [
-    "Leishmania infantum LEM3323",
-    "Leishmania chagasi",
+    "Leishmania donovani",      # Closest relative, same complex as L. infantum
+    "Leishmania major",         # Well-studied reference species
+    "Leishmania braziliensis",  # Brazilian species, different subgenus
 ]
 BLAST_DB: str = "nr"  # NCBI non-redundant database
 BLAST_PROGRAM: str = "blastp"
@@ -190,36 +191,48 @@ def calculate_conservation(blast_hits: list[dict[str, Any]]) -> float:
     """Compute an average conservation score from BLAST hits.
 
     Filters *blast_hits* for entries whose ``organism`` field matches any of
-    the ``COMPARISON_STRAINS``.  For each matching strain the highest
+    the ``COMPARISON_STRAINS`` at species level (substring match).  Hits from
+    the reference strain (``REFERENCE_STRAIN``) are skipped to avoid
+    self-matches inflating the score.  For each matching species the highest
     percent-identity hit is selected, and the final score is the average of
-    those best-per-strain values, normalised to [0.0, 1.0].
+    those best-per-species values, normalised to [0.0, 1.0].
 
     Args:
         blast_hits: Output of :func:`run_blast`.
 
     Returns:
         A conservation score in the range [0.0, 1.0], or ``0.0`` when no
-        matching strains are found.
+        matching species are found.
     """
     if not blast_hits:
         return 0.0
 
-    # Collect best identity per comparison strain.
-    best_per_strain: dict[str, float] = {}
+    # Extract the species-level prefix of the reference strain for filtering
+    # self-hits (e.g. "Leishmania infantum" from "Leishmania infantum JPCM5").
+    ref_species = " ".join(REFERENCE_STRAIN.split()[:2]).lower()
+
+    # Collect best identity per comparison species.
+    best_per_species: dict[str, float] = {}
 
     for hit in blast_hits:
         organism = hit.get("organism", "")
-        for strain in COMPARISON_STRAINS:
-            if strain.lower() in organism.lower():
-                identity = hit.get("identity_percent", 0.0)
-                if identity > best_per_strain.get(strain, 0.0):
-                    best_per_strain[strain] = identity
+        organism_lower = organism.lower()
 
-    if not best_per_strain:
+        # Skip self-matches from the reference species.
+        if ref_species in organism_lower:
+            continue
+
+        for species in COMPARISON_STRAINS:
+            if species.lower() in organism_lower:
+                identity = hit.get("identity_percent", 0.0)
+                if identity > best_per_species.get(species, 0.0):
+                    best_per_species[species] = identity
+
+    if not best_per_species:
         return 0.0
 
     # Normalise from 0-100 percent to 0.0-1.0 score.
-    average_identity = sum(best_per_strain.values()) / len(best_per_strain)
+    average_identity = sum(best_per_species.values()) / len(best_per_species)
     score = round(average_identity / 100.0, 4)
 
     return min(score, 1.0)

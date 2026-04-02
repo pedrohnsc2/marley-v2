@@ -28,10 +28,10 @@ IEDB_API_URL: str = "http://tools-cluster-interface.iedb.org/tools_api/mhci/"
 INPUT_FILE: str = "results/conserved_candidates.csv"
 OUTPUT_FILE: str = "results/scored_candidates.csv"
 
-MHC_ALLELES: list[str] = ["DLA-88*50101", "DLA-88*50801"]
+MHC_ALLELES: list[str] = ["DLA-8850101", "DLA-8850801"]
 PEPTIDE_LENGTH: int = 9  # 9-mer peptides
 IC50_THRESHOLD: float = 500  # nM -- below this = good binder
-PREDICTION_METHOD: str = "recommended"
+PREDICTION_METHOD: str = "netmhcpan_ba"
 
 # Polite delay between IEDB API calls to avoid hammering the service.
 API_DELAY_SECONDS: float = 1.0

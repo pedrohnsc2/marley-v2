@@ -1,4 +1,5 @@
 biopython>=1.83
+pybiolib>=1.2
 requests>=2.31
 httpx>=0.27
 pandas>=2.2

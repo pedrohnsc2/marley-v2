@@ -13,7 +13,7 @@ import pytest
 filter_mod = importlib.import_module("pipeline.02_filter_surface")
 parse_fasta = filter_mod.parse_fasta
 filter_surface_proteins = filter_mod.filter_surface_proteins
-_build_fasta_payload = filter_mod._build_fasta_payload
+_write_temp_fasta = filter_mod._write_temp_fasta
 
 
 # ---------------------------------------------------------------------------
@@ -70,18 +70,30 @@ def test_filter_skips_existing(mock_exists: MagicMock) -> None:
     assert result == filter_mod.OUTPUT_FILE
 
 
-def test_build_fasta_payload() -> None:
-    """_build_fasta_payload should produce valid FASTA-formatted text."""
+def test_write_temp_fasta() -> None:
+    """_write_temp_fasta should produce a valid FASTA file and return its path."""
     sequences = [
         ("gene_A", "ACDEFG"),
         ("gene_B", "HIKLMN"),
     ]
 
-    payload = _build_fasta_payload(sequences)
+    path = _write_temp_fasta(sequences)
+    content = Path(path).read_text()
 
-    assert payload == ">gene_A\nACDEFG\n>gene_B\nHIKLMN"
+    assert ">gene_A" in content
+    assert "ACDEFG" in content
+    assert ">gene_B" in content
+    assert "HIKLMN" in content
+
+    # Cleanup
+    Path(path).unlink(missing_ok=True)
 
 
-def test_build_fasta_payload_empty() -> None:
-    """An empty input list should produce an empty string."""
-    assert _build_fasta_payload([]) == ""
+def test_write_temp_fasta_empty() -> None:
+    """An empty input list should produce an empty file."""
+    path = _write_temp_fasta([])
+    content = Path(path).read_text()
+
+    assert content.strip() == ""
+
+    Path(path).unlink(missing_ok=True)
