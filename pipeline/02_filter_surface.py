@@ -135,40 +135,56 @@ def run_signalp(fasta_path: str) -> dict:
         [f.path for f in output_files],
     )
 
-    # SignalP 6.0 via BioLib outputs tab-delimited .txt files
-    # (e.g. prediction_results.txt).  Columns:
-    #   ID  Prediction  OTHER  SP(Sec/SPI)  CS Position
+    # SignalP 6.0 via BioLib outputs tab-delimited prediction_results.txt
+    # Also outputs output.json. We check both.
+    # Columns in TSV: ID  Prediction  OTHER  SP(Sec/SPI)  CS Position
+    RESULTS_FILES = ("prediction_results.txt", "output.json")
     for f in output_files:
-        if not f.path.endswith(".txt"):
+        basename = f.path.rsplit("/", 1)[-1] if "/" in f.path else f.path
+        if basename not in RESULTS_FILES:
             continue
 
         content = f.get_data().decode("utf-8")
-        reader = csv.DictReader(
-            io.StringIO(content), delimiter="\t"
-        )
-
         predictions: dict[str, dict] = {}
-        for row in reader:
-            gene_id = row.get("ID", "").strip()
-            if not gene_id:
-                continue
-            prediction = row.get("Prediction", "").strip()
-            # The SP(Sec/SPI) column holds the probability score.
-            probability_str = row.get("SP(Sec/SPI)", "0").strip()
-            try:
-                probability = float(probability_str)
-            except ValueError:
-                probability = 0.0
 
-            predictions[gene_id] = {
-                "prediction": prediction,
-                "probability": probability,
-            }
+        if basename == "output.json":
+            import json
+            try:
+                data = json.loads(content)
+                seqs = data if isinstance(data, dict) else {}
+                # Handle {"SEQUENCES": {...}} wrapper
+                if "SEQUENCES" in seqs:
+                    seqs = seqs["SEQUENCES"]
+                for gene_id, info in seqs.items():
+                    pred = info.get("Prediction", "")
+                    prob = float(info.get("SP(Sec/SPI)", info.get("sp", 0)))
+                    predictions[gene_id] = {"prediction": pred, "probability": prob}
+            except (json.JSONDecodeError, ValueError) as exc:
+                logger.debug("Could not parse output.json: %s", exc)
+        else:
+            # Tab-delimited prediction_results.txt
+            reader = csv.DictReader(
+                io.StringIO(content), delimiter="\t"
+            )
+            for row in reader:
+                gene_id = row.get("ID", "").strip()
+                if not gene_id:
+                    continue
+                prediction = row.get("Prediction", "").strip()
+                probability_str = row.get("SP(Sec/SPI)", "0").strip()
+                try:
+                    probability = float(probability_str)
+                except ValueError:
+                    probability = 0.0
+                predictions[gene_id] = {
+                    "prediction": prediction,
+                    "probability": probability,
+                }
 
         if predictions:
             logger.info(
-                "SignalP returned predictions for %d sequences.",
-                len(predictions),
+                "SignalP returned predictions for %d sequences from %s.",
+                len(predictions), basename,
             )
             return predictions
 
@@ -204,8 +220,8 @@ def _extract_signal_hits(results: dict) -> set[str]:
     for gene_id, info in results.items():
         if not isinstance(info, dict):
             continue
-        prediction = info.get("prediction", "")
-        if prediction == "SP":
+        prediction = info.get("prediction", "").lower()
+        if prediction in ("sp", "signal peptide (sec/spi)"):
             hits.add(gene_id)
 
     return hits
