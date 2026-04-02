@@ -62,14 +62,15 @@ The following antigens are pre-loaded with priority status, sourced from publish
 | Database | Supabase |
 | Web dashboard | Next.js + TypeScript |
 | CI/CD | GitHub Actions |
-| External APIs | TriTrypDB, SignalP 6.0, IEDB |
+| Signal peptide | SignalP 6.0 via BioLib SDK |
+| External APIs | TriTrypDB, NCBI BLAST, IEDB |
 
 ---
 
 ## Setup
 
 ```bash
-git clone https://github.com/your-username/marley
+git clone https://github.com/pedrohnsc2/marley
 cd marley
 pip install -r requirements.txt
 cp .env.example .env
@@ -105,28 +106,59 @@ create index idx_candidates_priority on candidates(priority desc);
 ## How to run
 
 ```bash
-# Full pipeline
+# Full pipeline (interactive, confirms each stage)
 python run_pipeline.py
+
+# Full pipeline (automated, saves progress between stages)
+python run_full_pipeline.py
 
 # Skip genome download if already fetched
 python run_pipeline.py --skip-fetch
 
 # Dry run (no external API calls)
 python run_pipeline.py --dry-run
+
+# Run tests
+python -m pytest tests/ -v
+```
+
+### Web dashboard
+
+```bash
+cd web
+npm install
+cp .env.local.example .env.local
+# Fill in Supabase credentials
+npm run dev
+# Open http://localhost:3000
 ```
 
 ---
 
 ## Module status
 
-| Module | Status |
-|---|---|
-| 01_fetch_genome | 🔄 In development |
-| 02_filter_surface | 🔄 In development |
-| 03_conservation | 🔄 In development |
-| 04_immunogenicity | 🔄 In development |
-| 05_report | 🔄 In development |
-| Web dashboard | 🔄 In development |
+| Module | Status | Notes |
+|---|---|---|
+| 01_fetch_genome | ✅ Complete | 8,527 proteins downloaded from TriTrypDB |
+| 02_filter_surface | ✅ Complete | SignalP 6.0 via BioLib SDK, tested end-to-end |
+| 03_conservation | ✅ Complete | NCBI BLAST against L. donovani, L. major, L. braziliensis |
+| 04_immunogenicity | ✅ Complete | IEDB MHC-I with 3 canine DLA alleles (netmhcpan_ba) |
+| 05_report | ✅ Complete | Ranked CSV + Markdown report with validated antigens |
+| Web dashboard | ✅ MVP | Next.js + Tailwind, live data from Supabase |
+| CI/CD | ✅ Complete | GitHub Actions: lint (ruff) + pytest on Python 3.11/3.12/3.13 |
+| Test suite | ✅ 40 tests | Models, pipeline modules, validated antigens, logger |
+
+### End-to-end validation
+
+The full pipeline has been validated on real data:
+
+| Stage | Input | Output | Time |
+|---|---|---|---|
+| Genome fetch | TriTrypDB API | 8,527 protein sequences (8.35 MB) | ~2s |
+| Surface filter | 8,527 proteins | Signal peptide candidates (Sec/SPI) | ~77s/50 proteins |
+| Conservation | Surface proteins | Candidates with >80% identity across strains | ~62s/protein |
+| Immunogenicity | Conserved candidates | IC50 binding scores for 3 DLA alleles | ~12s/protein |
+| Report | All scored candidates | Ranked list + validated antigens from literature | <1s |
 
 ---
 
