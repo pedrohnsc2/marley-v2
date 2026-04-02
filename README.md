@@ -1,168 +1,154 @@
-# Marley
+# Marley 🐾
 
-> In memory of Marley, lost to visceral leishmaniasis.
-> This pipeline is dedicated to every dog that didn't make it.
+> *In memory of Marley, lost to canine visceral leishmaniasis.*
+> *This pipeline is dedicated to every dog that didn't make it.*
 
-An open-source bioinformatics pipeline for **reverse vaccinology** targeting canine visceral leishmaniasis (*Leishmania infantum*).
+[![Status](https://img.shields.io/badge/status-in%20development-yellow)]()
+[![License](https://img.shields.io/badge/license-MIT-blue)]()
+[![Python](https://img.shields.io/badge/python-3.11+-green)]()
+
+An open-source bioinformatics pipeline for reverse vaccinology targeting canine visceral leishmaniasis (*Leishmania infantum*). Marley automates the computational identification and ranking of antigen candidates for mRNA vaccine development.
 
 ---
 
 ## What it does
 
-Marley identifies mRNA vaccine antigen candidates through a five-stage computational pipeline. Starting from the complete *L. infantum* proteome, it progressively filters, scores, and ranks proteins to surface the most promising targets for a canine mRNA vaccine -- no wet-lab work required until the final candidates are selected.
-
-The goal is to lower the barrier to vaccine research for a disease that kills thousands of dogs every year and remains endemic in Latin America, the Mediterranean, and parts of Asia.
+Marley connects to public genomic databases and runs a multi-stage filtering pipeline to identify which proteins from *L. infantum* are the strongest candidates for a canine mRNA vaccine — combining computational prediction with a curated list of experimentally validated antigens from Brazilian researchers.
 
 ---
 
 ## Pipeline stages
 
-| Stage | Name | Description |
-|-------|------|-------------|
-| 1 | **Genome Fetch** | Downloads the *L. infantum* proteome from [TriTrypDB](https://tritrypdb.org). Caches the FASTA locally so subsequent runs skip the download. |
-| 2 | **Surface Filtering** | Identifies surface-exposed proteins using SignalP 6.0 signal-peptide prediction. Only proteins likely to be accessible to the host immune system pass this gate. |
-| 3 | **Conservation Analysis** | Evaluates protein conservation across *Leishmania* strains via NCBI BLAST. Highly conserved proteins make better vaccine targets because they are less likely to mutate and escape immune recognition. |
-| 4 | **Immunogenicity Scoring** | Predicts MHC-I and MHC-II binding affinities through the IEDB Analysis Resource API. Proteins that generate strong T-cell responses score higher. |
-| 5 | **Report Generation** | Combines all scores into a weighted final ranking, persists results to Supabase, and generates a human-readable report of the top antigen candidates. |
+```
+TriTrypDB (L. infantum genome)
+        ↓
+01_fetch_genome      — Downloads all annotated protein sequences (~8,000)
+        ↓
+02_filter_surface     — Filters surface-exposed proteins via SignalP 6.0
+        ↓
+03_conservation       — Scores conservation across Brazilian strains via BLAST
+        ↓
+04_immunogenicity     — Predicts canine MHC binding via IEDB + loads pre-validated antigens
+        ↓
+05_report             — Generates ranked candidate list + Markdown report
+```
+
+---
+
+## Experimentally validated antigens
+
+The following antigens are pre-loaded with priority status, sourced from published research by Brazilian groups (UFMG, UFOP, Fiocruz/MG):
+
+| Antigen | Source | Evidence | Score |
+|---|---|---|---|
+| LiHyp1 | Giunchetti/UFMG | Murine validation, Th1 response via IFN-γ, immunoproteomics | 0.95 |
+| A2 | UFMG / Leish-Tec | Only MAPA-approved vaccine in Brazil, 96.41% efficacy | 0.92 |
+| LBSap_antigens | Reis/UFOP + Giunchetti/UFMG | Technology transferred to Ouro Fino Saúde Animal | 0.90 |
+| Lutzomyia_longipalpis_proteins | Giunchetti/UFMG | Patent052, transmission-blocking | 0.88 |
+| KMP-11 | Literature | High conservation across strains, documented immunogenicity | 0.85 |
+| LiESP_Q | Literature | High diagnostic specificity, immunoprotective potential | 0.83 |
+| LACK | Literature | T-cell activation in murine models | 0.82 |
+| HSP70_HSP83 | Literature | Overexpressed under stress, conserved, strong cellular response | 0.80 |
 
 ---
 
 ## Stack
 
-| Component | Version / Notes |
-|-----------|-----------------|
-| Python | 3.11+ |
-| Biopython | Sequence parsing and BLAST interaction |
-| requests / httpx | HTTP clients for TriTrypDB, IEDB, and SignalP APIs |
-| pandas | Tabular data manipulation and report generation |
-| tqdm | Progress bars for long-running stages |
-| python-dotenv | Environment variable management |
-| supabase-py | Supabase client for persisting candidates |
-| pytest | Test framework |
+| Layer | Technology |
+|---|---|
+| Core language | Python 3.11+ |
+| Bioinformatics | Biopython |
+| Data | pandas |
+| Database | Supabase |
+| Web dashboard | Next.js + TypeScript |
+| CI/CD | GitHub Actions |
+| External APIs | TriTrypDB, SignalP 6.0, IEDB |
 
 ---
 
 ## Setup
 
 ```bash
-# 1. Clone the repository
-git clone https://github.com/your-username/marley.git
+git clone https://github.com/your-username/marley
 cd marley
-
-# 2. Create and activate a virtual environment
-python -m venv .venv
-source .venv/bin/activate   # Linux / macOS
-# .venv\Scripts\activate    # Windows
-
-# 3. Install dependencies
 pip install -r requirements.txt
-
-# 4. Configure environment variables
 cp .env.example .env
-# Edit .env and fill in your Supabase URL and anon key:
-#   SUPABASE_URL=https://your-project.supabase.co
-#   SUPABASE_KEY=your-anon-key
+# Fill in SUPABASE_URL and SUPABASE_KEY
 ```
 
-### Supabase setup
+Run the Supabase schema:
+```sql
+create table candidates (
+  id uuid default gen_random_uuid() primary key,
+  gene_id text unique not null,
+  gene_name text,
+  sequence text,
+  has_signal_peptide boolean default false,
+  conservation_score float,
+  immunogenicity_score float,
+  final_score float,
+  filters_passed text[],
+  status text default 'pending',
+  priority boolean default false,
+  source text,
+  evidence text,
+  created_at timestamp default now(),
+  updated_at timestamp default now()
+);
 
-1. Create a free project at [supabase.com](https://supabase.com).
-2. Open the SQL Editor and run the schema in [`docs/supabase_schema.sql`](docs/supabase_schema.sql).
-3. Copy the project URL and anon key into your `.env` file.
+create index idx_candidates_final_score on candidates(final_score desc);
+create index idx_candidates_priority on candidates(priority desc);
+```
 
 ---
 
 ## How to run
 
 ```bash
-# Run the full pipeline (all 5 stages)
+# Full pipeline
 python run_pipeline.py
 
-# Skip the genome download (use cached proteome)
+# Skip genome download if already fetched
 python run_pipeline.py --skip-fetch
 
-# Dry run -- execute all stages but do not write to the database
+# Dry run (no external API calls)
 python run_pipeline.py --dry-run
-
-# Combine flags
-python run_pipeline.py --skip-fetch --dry-run
 ```
-
-### Output
-
-- A ranked table of antigen candidates printed to stdout.
-- Results persisted to the `candidates` table in Supabase (unless `--dry-run` is set).
-- A CSV report written to `output/candidates.csv`.
 
 ---
 
-## Database schema (Supabase)
+## Module status
 
-The pipeline stores its results in a single `candidates` table. Full DDL is in [`docs/supabase_schema.sql`](docs/supabase_schema.sql).
-
-```sql
-create table candidates (
-  id                    uuid default gen_random_uuid() primary key,
-  gene_id               text unique not null,
-  gene_name             text,
-  sequence              text,
-  has_signal_peptide    boolean default false,
-  conservation_score    float,
-  immunogenicity_score  float,
-  final_score           float,
-  filters_passed        text[],
-  status                text default 'pending',
-  created_at            timestamp default now(),
-  updated_at            timestamp default now()
-);
-```
-
-Key indexes:
-
-- `idx_candidates_gene_id` -- fast lookup by gene identifier.
-- `idx_candidates_final_score` -- efficient ranking queries (descending).
-
----
-
-## Contributing
-
-Contributions are welcome. To get started:
-
-1. Fork the repository and create a feature branch from `main`.
-2. Write tests for any new functionality (`pytest`).
-3. Make sure all tests pass before opening a pull request.
-4. Follow the existing code style (the project uses standard Python conventions).
-5. Open a pull request with a clear description of what you changed and why.
-
-If you find a bug or have a feature request, please open an issue first so we can discuss the approach.
+| Module | Status |
+|---|---|
+| 01_fetch_genome | 🔄 In development |
+| 02_filter_surface | 🔄 In development |
+| 03_conservation | 🔄 In development |
+| 04_immunogenicity | 🔄 In development |
+| 05_report | 🔄 In development |
+| Web dashboard | 🔄 In development |
 
 ---
 
 ## Scientific context
 
-### Reverse vaccinology
+Canine visceral leishmaniasis affects millions of dogs in Brazil, particularly in Minas Gerais. The only approved vaccine (Leish-Tec, developed at UFMG) was suspended in 2023 due to quality deviations in the A2 protein antigen. No replacement is currently available.
 
-Traditional vaccine development starts in the lab -- growing pathogens, extracting proteins, and testing them one by one. **Reverse vaccinology** flips this process: it starts with the pathogen's genome and uses computational tools to predict which proteins are most likely to provoke a protective immune response. Only the best candidates are then synthesized and tested experimentally.
+mRNA vaccines represent a promising path forward — the same platform that enabled rapid COVID-19 vaccine development could be applied to *Leishmania* using well-characterized antigens and lipid nanoparticle delivery. The main challenge remains inducing cellular (Th1) rather than humoral (Th2) immunity.
 
-This approach was pioneered by Rino Rappuoli for *Neisseria meningitidis* serogroup B and has since been applied to dozens of pathogens.
+Marley contributes to this effort by automating the computational layer of antigen discovery, making the pipeline reproducible and open to collaboration with wet-lab researchers.
 
-### Visceral leishmaniasis
+---
 
-Visceral leishmaniasis (VL), also known as kala-azar, is a vector-borne disease caused by *Leishmania* parasites transmitted through sandfly bites. In dogs, the disease is often fatal and serves as the primary urban reservoir for human infection. There is currently no widely available, highly effective vaccine for canine VL.
+## Contributing
 
-### Why mRNA vaccines for dogs
+Marley is open to collaboration from both developers and researchers.
 
-mRNA vaccines offer several advantages for veterinary use:
-
-- **Speed**: once antigens are identified, mRNA constructs can be synthesized in weeks.
-- **Safety**: no live pathogen is involved; the mRNA degrades naturally.
-- **Flexibility**: multi-antigen constructs can target several proteins simultaneously.
-- **Scalability**: manufacturing is simpler than traditional protein-based vaccines.
-
-By combining reverse vaccinology with mRNA technology, Marley aims to accelerate the development of an effective canine VL vaccine.
+- **Developers:** check open issues, improve pipeline modules, build the web dashboard
+- **Researchers:** validate computational outputs, suggest antigens, share experimental data
 
 ---
 
 ## License
 
-MIT
+MIT — free to use, modify and distribute with attribution.

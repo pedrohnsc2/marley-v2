@@ -96,6 +96,9 @@ def _generate_csv(candidates: list[Candidate]) -> str:
                 "conservation_score": round(c.conservation_score, 4),
                 "immunogenicity_score": round(c.immunogenicity_score, 4),
                 "final_score": round(c.final_score, 4),
+                "priority": c.priority,
+                "source": c.source,
+                "evidence": c.evidence,
                 "status": c.status,
             }
             for c in top
@@ -150,15 +153,16 @@ def _generate_markdown(
     lines.append(f"## Top {TOP_N} Candidates")
     lines.append("")
     lines.append(
-        "| Rank | Gene ID | Gene Name | Conservation | Immunogenicity | Final Score |"
+        "| Rank | Gene ID | Gene Name | Conservation | Immunogenicity | Final Score | Priority | Source |"
     )
-    lines.append("|---|---|---|---|---|---|")
+    lines.append("|---|---|---|---|---|---|---|---|")
 
     for rank, c in enumerate(top, start=1):
+        priority_mark = "Yes" if c.priority else ""
         lines.append(
             f"| {rank} | {c.gene_id} | {c.gene_name} "
             f"| {c.conservation_score:.4f} | {c.immunogenicity_score:.4f} "
-            f"| {c.final_score:.4f} |"
+            f"| {c.final_score:.4f} | {priority_mark} | {c.source} |"
         )
 
     lines.append("")
@@ -219,7 +223,7 @@ def _print_top_candidates(candidates: list[Candidate]) -> None:
 
     header = (
         f"{'Rank':<6} {'Gene ID':<25} {'Gene Name':<30} "
-        f"{'Conserv.':<10} {'Immuno.':<10} {'Final':<10}"
+        f"{'Conserv.':<10} {'Immuno.':<10} {'Final':<10} {'Pri':<5} {'Source':<20}"
     )
     separator = "-" * len(header)
 
@@ -229,10 +233,11 @@ def _print_top_candidates(candidates: list[Candidate]) -> None:
     print(f"  {separator}")
 
     for rank, c in enumerate(top, start=1):
+        pri = "*" if c.priority else ""
         row = (
             f"{rank:<6} {c.gene_id:<25} {c.gene_name:<30} "
             f"{c.conservation_score:<10.4f} {c.immunogenicity_score:<10.4f} "
-            f"{c.final_score:<10.4f}"
+            f"{c.final_score:<10.4f} {pri:<5} {c.source:<20}"
         )
         print(f"  {row}")
 
@@ -267,10 +272,10 @@ def generate_report() -> tuple[str, str]:
     all_candidates = get_all_candidates()
     logger.info("Fetched %d total candidate(s) from database.", len(all_candidates))
 
-    # Filter to approved/scored candidates only.
+    # Filter to approved/scored candidates and priority (validated) antigens.
     scored = [
         c for c in all_candidates
-        if c.status == STATUS_APPROVED and c.final_score > 0.0
+        if (c.status == STATUS_APPROVED and c.final_score > 0.0) or c.priority
     ]
     logger.info(
         "%d candidate(s) are approved with a final score.", len(scored)

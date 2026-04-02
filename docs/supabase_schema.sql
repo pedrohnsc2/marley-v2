@@ -16,12 +16,15 @@ create table candidates (
   final_score           float,
   filters_passed        text[],
   status                text default 'pending',
+  priority              boolean default false,
+  source                text,
+  evidence              text,
   created_at            timestamp default now(),
   updated_at            timestamp default now()
 );
 
--- Index for fast lookups by gene_id
-create index idx_candidates_gene_id on candidates(gene_id);
-
 -- Index for ranking queries
 create index idx_candidates_final_score on candidates(final_score desc);
+
+-- Index for priority antigens
+create index idx_candidates_priority on candidates(priority desc);

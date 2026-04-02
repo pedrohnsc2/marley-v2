@@ -14,9 +14,9 @@ from pathlib import Path
 import requests
 from tqdm import tqdm
 
-from core.db import update_candidate
+from core.db import update_candidate, upsert_candidate
 from core.logger import get_logger
-from core.models import CONSERVATION_WEIGHT, IMMUNOGENICITY_WEIGHT
+from core.models import CONSERVATION_WEIGHT, IMMUNOGENICITY_WEIGHT, Candidate, STATUS_APPROVED
 
 # ---------------------------------------------------------------------------
 # Constants
@@ -37,6 +37,111 @@ PREDICTION_METHOD: str = "recommended"
 API_DELAY_SECONDS: float = 1.0
 
 logger = get_logger("immunogenicity")
+
+# ---------------------------------------------------------------------------
+# Experimentally validated antigens (Brazilian research groups)
+# ---------------------------------------------------------------------------
+
+VALIDATED_ANTIGENS: list[dict] = [
+    {
+        "gene_id": "LiHyp1",
+        "gene_name": "LiHyp1",
+        "source": "Giunchetti/UFMG",
+        "evidence": "Murine validation, Th1 response via IFN-γ, immunoproteomics",
+        "final_score": 0.95,
+    },
+    {
+        "gene_id": "A2",
+        "gene_name": "A2",
+        "source": "UFMG / Leish-Tec",
+        "evidence": "Only MAPA-approved vaccine in Brazil, 96.41% efficacy",
+        "final_score": 0.92,
+    },
+    {
+        "gene_id": "LBSap_antigens",
+        "gene_name": "LBSap antigens",
+        "source": "Reis/UFOP + Giunchetti/UFMG",
+        "evidence": "Technology transferred to Ouro Fino Saúde Animal",
+        "final_score": 0.90,
+    },
+    {
+        "gene_id": "Lutzomyia_longipalpis_proteins",
+        "gene_name": "Lutzomyia longipalpis proteins",
+        "source": "Giunchetti/UFMG",
+        "evidence": "Patent052, transmission-blocking",
+        "final_score": 0.88,
+    },
+    {
+        "gene_id": "KMP-11",
+        "gene_name": "KMP-11",
+        "source": "Literature",
+        "evidence": "High conservation across strains, documented immunogenicity",
+        "final_score": 0.85,
+    },
+    {
+        "gene_id": "LiESP_Q",
+        "gene_name": "LiESP/Q",
+        "source": "Literature",
+        "evidence": "High diagnostic specificity, immunoprotective potential",
+        "final_score": 0.83,
+    },
+    {
+        "gene_id": "LACK",
+        "gene_name": "LACK",
+        "source": "Literature",
+        "evidence": "T-cell activation in murine models",
+        "final_score": 0.82,
+    },
+    {
+        "gene_id": "HSP70_HSP83",
+        "gene_name": "HSP70/HSP83",
+        "source": "Literature",
+        "evidence": "Overexpressed under stress, conserved, strong cellular response",
+        "final_score": 0.80,
+    },
+]
+
+
+def load_validated_antigens() -> int:
+    """Load experimentally validated antigens into the database as priority candidates.
+
+    These antigens come from published research by Brazilian groups (UFMG, UFOP,
+    Fiocruz/MG) and are pre-scored based on experimental evidence.
+
+    Returns:
+        Number of validated antigens loaded.
+    """
+    count = 0
+    for antigen in VALIDATED_ANTIGENS:
+        candidate = Candidate(
+            gene_id=antigen["gene_id"],
+            gene_name=antigen["gene_name"],
+            sequence="",
+            has_signal_peptide=True,
+            conservation_score=antigen["final_score"],
+            immunogenicity_score=antigen["final_score"],
+            final_score=antigen["final_score"],
+            filters_passed=["validated_antigen"],
+            status=STATUS_APPROVED,
+            priority=True,
+            source=antigen["source"],
+            evidence=antigen["evidence"],
+        )
+        try:
+            upsert_candidate(candidate)
+            count += 1
+            logger.info(
+                "Loaded validated antigen: %s (score=%.2f, source=%s)",
+                antigen["gene_id"],
+                antigen["final_score"],
+                antigen["source"],
+            )
+        except Exception:
+            logger.warning("Could not load validated antigen %s. Continuing.", antigen["gene_id"])
+
+    logger.info("Loaded %d/%d validated antigens.", count, len(VALIDATED_ANTIGENS))
+    return count
+
 
 # ---------------------------------------------------------------------------
 # Helper: FASTA parsing
@@ -257,6 +362,12 @@ def score_immunogenicity(force: bool = False) -> str:
 
     # Ensure output directory exists.
     output_path.parent.mkdir(parents=True, exist_ok=True)
+
+    # ------------------------------------------------------------------
+    # 0. Load experimentally validated antigens
+    # ------------------------------------------------------------------
+    logger.info("Loading experimentally validated antigens ...")
+    load_validated_antigens()
 
     # ------------------------------------------------------------------
     # 1. Load input candidates

@@ -38,6 +38,9 @@ def test_candidate_creation() -> None:
     assert c.final_score == 0.0
     assert c.filters_passed == []
     assert c.status == STATUS_PENDING
+    assert c.priority is False
+    assert c.source == ""
+    assert c.evidence == ""
 
 
 def test_compute_final_score() -> None:
@@ -71,6 +74,9 @@ def test_to_dict_from_dict() -> None:
         final_score=0.84,
         filters_passed=["surface_filter", "conservation"],
         status="approved",
+        priority=True,
+        source="Giunchetti/UFMG",
+        evidence="Murine validation, Th1 response",
     )
 
     data = original.to_dict()
@@ -85,6 +91,9 @@ def test_to_dict_from_dict() -> None:
     assert restored.final_score == original.final_score
     assert restored.filters_passed == original.filters_passed
     assert restored.status == original.status
+    assert restored.priority == original.priority
+    assert restored.source == original.source
+    assert restored.evidence == original.evidence
 
 
 def test_from_dict_with_defaults() -> None:

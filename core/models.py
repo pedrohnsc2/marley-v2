@@ -35,6 +35,9 @@ class Candidate:
         final_score: Weighted average of conservation and immunogenicity.
         filters_passed: Names of pipeline filters this candidate cleared.
         status: Current pipeline status (pending, approved, rejected).
+        priority: Whether this is a pre-validated antigen with priority status.
+        source: Origin of the antigen data (e.g. researcher/institution).
+        evidence: Summary of experimental evidence supporting this candidate.
     """
 
     gene_id: str
@@ -46,6 +49,9 @@ class Candidate:
     final_score: float = 0.0
     filters_passed: list[str] = field(default_factory=list)
     status: str = STATUS_PENDING
+    priority: bool = False
+    source: str = ""
+    evidence: str = ""
 
     def compute_final_score(self) -> None:
         """Set ``final_score`` as the weighted average of sub-scores.
@@ -73,6 +79,9 @@ class Candidate:
             "final_score": self.final_score,
             "filters_passed": self.filters_passed,
             "status": self.status,
+            "priority": self.priority,
+            "source": self.source,
+            "evidence": self.evidence,
         }
 
     @classmethod
@@ -96,4 +105,7 @@ class Candidate:
             final_score=data.get("final_score", 0.0),
             filters_passed=data.get("filters_passed", []),
             status=data.get("status", STATUS_PENDING),
+            priority=data.get("priority", False),
+            source=data.get("source", ""),
+            evidence=data.get("evidence", ""),
         )
