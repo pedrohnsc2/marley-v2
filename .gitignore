@@ -8,3 +8,5 @@ node_modules
 .next
 *.pyc
 venv/
+orchestrator/
+setup-orchestrator.sh
