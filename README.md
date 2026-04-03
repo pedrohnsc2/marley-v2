@@ -146,14 +146,17 @@ npm run dev
 | Module | Status | Notes |
 |---|---|---|
 | 01_fetch_genome | ✅ Complete | 8,527 proteins downloaded from TriTrypDB |
-| 02_filter_surface | ✅ Complete | SignalP 6.0 via BioLib SDK, tested end-to-end |
+| 02_filter_surface | ✅ Complete | SignalP 6.0 via BioLib SDK, 139 surface proteins identified |
 | 03_conservation | ✅ Complete | NCBI BLAST against L. donovani, L. major, L. braziliensis |
-| 04_immunogenicity | ✅ Complete | IEDB MHC-I with 3 canine DLA alleles (netmhcpan_ba) |
+| 04_immunogenicity | ✅ Complete | IEDB MHC-I (3 DLA alleles) + MHC-II (HLA-DRB1 proxy) |
+| 04a_fetch_sequences | ✅ Complete | UniProt integration for validated antigen sequences |
 | 05_report | ✅ Complete | Ranked CSV + Markdown report with validated antigens |
-| 06_construct | ✅ Complete | mRNA vaccine construct designer (see below) |
+| 06_construct | ✅ Complete | Multi-epitope mRNA vaccine construct (CTL + HTL) |
+| 06_variants | ✅ Complete | 3 construct variants (A/B/C) with comparison report |
+| 07_structure | ✅ Complete | 3D structure prediction via ESMFold + PyMOL/ChimeraX |
 | Web dashboard | ✅ MVP | Next.js + Tailwind, live data from Supabase |
 | CI/CD | ✅ Complete | GitHub Actions: lint (ruff) + pytest on Python 3.11/3.12/3.13 |
-| Test suite | ✅ 61 tests | Models, pipeline modules, construct designer, validated antigens |
+| Test suite | ✅ 88 tests | Full coverage: pipeline, models, APIs, construct, structure |
 
 ### End-to-end validation
 
