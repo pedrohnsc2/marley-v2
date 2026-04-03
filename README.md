@@ -207,6 +207,15 @@ Module 06 takes the ranked antigen candidates and designs a complete multi-epito
 - **Antigenicity check** via VaxiJen 2.0 (threshold > 0.4)
 - **Allergenicity check** via AllerTOP v2.0
 - **Configurable** via CLI: `--signal-peptide tPA|IgK` and `--adjuvant L7L12|RS09`
+- **3D structure prediction** via ESMFold + PyMOL/ChimeraX visualization scripts
+
+### 3D Structure Predictions (ESMFold)
+
+| Variant A — L7/L12 adjuvant (335 aa) | Variant C — RS09 adjuvant (400 aa) |
+|:---:|:---:|
+| ![Variant A 3D Structure](docs/variant_a_3d.png) | ![Variant C 3D Structure](docs/variant_c_3d.png) |
+
+Predicted using [ESMFold](https://esmatlas.com/about#esmfold). Structures visualized in [Mol*](https://molstar.org/viewer/). PyMOL and ChimeraX scripts auto-generated for region-colored visualization.
 
 ---
 
