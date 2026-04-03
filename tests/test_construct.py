@@ -60,6 +60,7 @@ def _make_selected_epitope(**overrides) -> SelectedEpitope:
         "ic50": 42.5,
         "rank": 0.3,
         "position": 120,
+        "epitope_type": "CTL",
     }
     defaults.update(overrides)
     return SelectedEpitope(**defaults)
@@ -357,3 +358,68 @@ def test_predict_allergenicity_failure() -> None:
         result = predict_allergenicity("MFVFLVLLPLVSS")
 
     assert result is None
+
+
+# ---------------------------------------------------------------------------
+# HTL epitope support tests
+# ---------------------------------------------------------------------------
+
+
+def test_assemble_construct_with_htl() -> None:
+    """Verify GPGPG linkers between HTL epitopes."""
+    ctl_eps = [_make_selected_epitope(peptide="KLFPGDEIFSV", epitope_type="CTL")]
+    htl_eps = [
+        _make_selected_epitope(peptide="ACDEFGHIKLMNPQR", epitope_type="HTL"),
+        _make_selected_epitope(peptide="CDEFGHIKLMNPQRS", epitope_type="HTL"),
+    ]
+
+    protein = assemble_construct(ctl_eps, htl_epitopes=htl_eps)
+
+    # Both HTL epitopes must be present.
+    assert "ACDEFGHIKLMNPQR" in protein
+    assert "CDEFGHIKLMNPQRS" in protein
+    # GPGPG linker must separate HTL epitopes.
+    assert "GPGPG" in protein
+
+
+def test_assemble_construct_htl_after_ctl() -> None:
+    """Verify CTL block comes before HTL block in the construct."""
+    ctl_eps = [_make_selected_epitope(peptide="KLFPGDEIFSV", epitope_type="CTL")]
+    htl_eps = [_make_selected_epitope(peptide="ACDEFGHIKLMNPQR", epitope_type="HTL")]
+
+    protein = assemble_construct(ctl_eps, htl_epitopes=htl_eps)
+
+    ctl_pos = protein.index("KLFPGDEIFSV")
+    htl_pos = protein.index("ACDEFGHIKLMNPQR")
+    assert ctl_pos < htl_pos, "CTL epitopes should precede HTL epitopes"
+
+
+def test_assemble_construct_no_htl_backwards_compatible() -> None:
+    """Verify old behavior with htl_epitopes=None (no HTL block)."""
+    ctl_eps = [
+        _make_selected_epitope(peptide="KLFPGDEIFSV"),
+        _make_selected_epitope(peptide="YMLDIFHEV"),
+    ]
+
+    # Call without htl_epitopes (default None).
+    protein = assemble_construct(ctl_eps)
+
+    assert "KLFPGDEIFSV" in protein
+    assert "YMLDIFHEV" in protein
+    # No GPGPG linker should appear when there are no HTL epitopes.
+    assert "GPGPG" not in protein
+    # AAY linker should still join CTL epitopes.
+    assert "AAY" in protein
+
+
+def test_selected_epitope_has_type() -> None:
+    """Verify SelectedEpitope has epitope_type field."""
+    ep_ctl = _make_selected_epitope(epitope_type="CTL")
+    assert ep_ctl.epitope_type == "CTL"
+
+    ep_htl = _make_selected_epitope(epitope_type="HTL")
+    assert ep_htl.epitope_type == "HTL"
+
+    # Default should be CTL.
+    ep_default = _make_selected_epitope()
+    assert ep_default.epitope_type == "CTL"

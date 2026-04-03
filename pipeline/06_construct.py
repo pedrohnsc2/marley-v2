@@ -98,12 +98,20 @@ IC50_THRESHOLD: float = 500.0
 OVERLAP_THRESHOLD: int = 5
 MAX_EPITOPES_PER_GENE: int = 3
 
-# IEDB
+# IEDB MHC-I (CTL)
 IEDB_API_URL: str = "http://tools-cluster-interface.iedb.org/tools_api/mhci/"
 MHC_ALLELES: list[str] = ["DLA-8850101", "DLA-8850801", "DLA-8803401"]
 PEPTIDE_LENGTH: int = 9
 PREDICTION_METHOD: str = "netmhcpan_ba"
 API_DELAY_SECONDS: float = 1.0
+
+# IEDB MHC-II (HTL) — canine DLA-II not supported by IEDB, using HLA proxy
+IEDB_MHCII_API_URL: str = "http://tools-cluster-interface.iedb.org/tools_api/mhcii/"
+MHCII_ALLELES: list[str] = ["HLA-DRB1*01:01", "HLA-DRB1*04:01", "HLA-DRB1*07:01"]
+MHCII_PEPTIDE_LENGTH: int = 15
+MHCII_METHOD: str = "nn_align"
+MHCII_IC50_THRESHOLD: float = 1000.0  # MHC-II uses relaxed threshold
+TARGET_HTL_COUNT: int = 10
 
 # Construct components
 SIGNAL_PEPTIDES: dict[str, str] = {
@@ -159,7 +167,7 @@ RESTRICTION_SITES: list[str] = [
 
 @dataclass
 class SelectedEpitope:
-    """A single CTL epitope selected for the vaccine construct."""
+    """A single epitope selected for the vaccine construct."""
 
     peptide: str
     gene_id: str
@@ -168,6 +176,7 @@ class SelectedEpitope:
     ic50: float
     rank: float
     position: int = 0
+    epitope_type: str = "CTL"  # "CTL" or "HTL"
 
 
 @dataclass
@@ -436,6 +445,151 @@ def select_epitopes(
 
 
 # ---------------------------------------------------------------------------
+# 1b. MHC-II (HTL) epitope selection
+# ---------------------------------------------------------------------------
+
+
+def _predict_mhcii_binding(sequence: str, allele: str) -> list[dict]:
+    """Submit a sequence to the IEDB MHC-II binding prediction API.
+
+    Uses nn_align method against HLA-DRB1 alleles as cross-species proxy
+    for canine DLA class II (which IEDB does not support directly).
+
+    Args:
+        sequence: Amino-acid sequence to analyse.
+        allele: MHC-II allele name (e.g. ``"HLA-DRB1*01:01"``).
+
+    Returns:
+        List of dicts with keys ``peptide``, ``allele``, ``ic50``, ``rank``.
+        Returns an empty list when the API call fails.
+    """
+    payload = {
+        "method": MHCII_METHOD,
+        "sequence_text": sequence,
+        "allele": allele,
+        "length": str(MHCII_PEPTIDE_LENGTH),
+    }
+
+    try:
+        response = requests.post(IEDB_MHCII_API_URL, data=payload, timeout=120)
+        response.raise_for_status()
+    except requests.RequestException as exc:
+        logger.warning("IEDB MHC-II API request failed for allele %s: %s", allele, exc)
+        return []
+
+    return _parse_iedb_response(response.text, allele)
+
+
+def select_htl_epitopes(
+    candidates: list[dict],
+    sequences: dict[str, str],
+    max_htl: int = TARGET_HTL_COUNT,
+) -> list[SelectedEpitope]:
+    """Select HTL epitopes from top candidates via IEDB MHC-II predictions.
+
+    Mirrors :func:`select_epitopes` but targets the MHC-II endpoint with
+    HLA-DRB1 alleles, 15-mer peptides, and a relaxed IC50 threshold of
+    1000 nM.
+
+    Args:
+        candidates: Rows from ``scored_candidates.csv`` as dicts.
+        sequences: Mapping of gene_id to protein sequence.
+        max_htl: Maximum number of HTL epitopes to select.
+
+    Returns:
+        List of :class:`SelectedEpitope` instances with ``epitope_type="HTL"``,
+        sorted by IC50.
+    """
+    sorted_candidates = sorted(
+        candidates,
+        key=lambda c: float(c.get("final_score", 0)),
+        reverse=True,
+    )[:TOP_CANDIDATES]
+
+    logger.info(
+        "Selecting HTL epitopes from top %d candidates ...",
+        len(sorted_candidates),
+    )
+
+    all_hits: list[dict] = []
+
+    for cand in tqdm(sorted_candidates, desc="IEDB HTL prediction", unit="gene"):
+        gene_id = cand.get("gene_id", "")
+        gene_name = cand.get("gene_name", "")
+        sequence = sequences.get(gene_id, cand.get("sequence", ""))
+
+        if not sequence or len(sequence) < MHCII_PEPTIDE_LENGTH:
+            logger.warning("No usable sequence for %s. Skipping.", gene_id)
+            continue
+
+        for allele in MHCII_ALLELES:
+            predictions = _predict_mhcii_binding(sequence, allele)
+            time.sleep(API_DELAY_SECONDS)
+
+            for pred in predictions:
+                if pred["ic50"] < MHCII_IC50_THRESHOLD:
+                    all_hits.append(
+                        {
+                            "peptide": pred["peptide"],
+                            "gene_id": gene_id,
+                            "gene_name": gene_name,
+                            "allele": pred["allele"],
+                            "ic50": pred["ic50"],
+                            "rank": pred["rank"],
+                            "sequence": sequence,
+                        }
+                    )
+
+    all_hits.sort(key=lambda h: h["ic50"])
+
+    logger.info(
+        "Found %d HTL peptides with IC50 < %.0f nM.", len(all_hits), MHCII_IC50_THRESHOLD,
+    )
+
+    # Greedy selection: non-overlapping, max per gene.
+    selected: list[SelectedEpitope] = []
+    gene_counts: dict[str, int] = {}
+
+    for hit in all_hits:
+        if len(selected) >= max_htl:
+            break
+
+        gene_id = hit["gene_id"]
+        peptide = hit["peptide"]
+        sequence = hit["sequence"]
+
+        if gene_counts.get(gene_id, 0) >= MAX_EPITOPES_PER_GENE:
+            continue
+
+        dominated = False
+        for existing in selected:
+            if existing.gene_id == gene_id:
+                if _peptides_overlap(peptide, existing.peptide, sequence):
+                    dominated = True
+                    break
+        if dominated:
+            continue
+
+        position = sequence.find(peptide)
+        selected.append(
+            SelectedEpitope(
+                peptide=peptide,
+                gene_id=gene_id,
+                gene_name=hit["gene_name"],
+                allele=hit["allele"],
+                ic50=hit["ic50"],
+                rank=hit["rank"],
+                position=position,
+                epitope_type="HTL",
+            )
+        )
+        gene_counts[gene_id] = gene_counts.get(gene_id, 0) + 1
+
+    logger.info("Selected %d HTL epitopes.", len(selected))
+    return selected
+
+
+# ---------------------------------------------------------------------------
 # 2. Construct assembly
 # ---------------------------------------------------------------------------
 
@@ -444,18 +598,25 @@ def assemble_construct(
     epitopes: list[SelectedEpitope],
     signal_peptide: str = "tPA",
     adjuvant: str = "L7L12",
+    htl_epitopes: list[SelectedEpitope] | None = None,
 ) -> str:
     """Assemble the multi-epitope vaccine protein construct.
 
     Layout::
 
-        [Signal peptide] + [Adjuvant] + EAAAK + [Epitope1] + AAY +
-        [Epitope2] + AAY + ... + [EpitopeN]
+        [Signal peptide] + [Adjuvant] + EAAAK +
+        [CTL1]-AAY-[CTL2]-AAY-...-[CTLn] +
+        GPGPG + [HTL1]-GPGPG-[HTL2]-GPGPG-...-[HTLm]
+
+    If *htl_epitopes* is ``None`` or empty, the HTL block is omitted and
+    the construct is identical to the previous CTL-only layout (backwards
+    compatible).
 
     Args:
         epitopes: Selected CTL epitopes.
         signal_peptide: Key into :data:`SIGNAL_PEPTIDES`.
         adjuvant: Key into :data:`ADJUVANTS`.
+        htl_epitopes: Optional list of selected HTL epitopes.
 
     Returns:
         Full amino-acid sequence of the vaccine construct.
@@ -480,18 +641,29 @@ def assemble_construct(
         LINKERS["adjuvant_to_epitopes"],
     ]
 
+    # CTL epitope cassette
     for i, ep in enumerate(epitopes):
         if i > 0:
             parts.append(LINKERS["ctl"])
         parts.append(ep.peptide)
 
+    # HTL epitope cassette (appended after a GPGPG bridge)
+    if htl_epitopes:
+        parts.append(LINKERS["htl"])
+        for i, ep in enumerate(htl_epitopes):
+            if i > 0:
+                parts.append(LINKERS["htl"])
+            parts.append(ep.peptide)
+
     construct = "".join(parts)
+    htl_count = len(htl_epitopes) if htl_epitopes else 0
     logger.info(
-        "Assembled construct: %d aa (%s signal + %s adjuvant + %d epitopes).",
+        "Assembled construct: %d aa (%s signal + %s adjuvant + %d CTL + %d HTL epitopes).",
         len(construct),
         signal_peptide,
         adjuvant,
         len(epitopes),
+        htl_count,
     )
     return construct
 
@@ -858,6 +1030,7 @@ def _build_markdown_report(
     epitopes: list[SelectedEpitope],
     physicochemical: dict,
     card: ConstructCard,
+    htl_epitopes: list[SelectedEpitope] | None = None,
 ) -> str:
     """Build a Markdown report describing the vaccine construct design.
 
@@ -880,9 +1053,13 @@ def _build_markdown_report(
     lines.append(f"|---|---|")
     lines.append(f"| Signal peptide | {card.signal_peptide_name} ({len(SIGNAL_PEPTIDES[card.signal_peptide_name])} aa) |")
     lines.append(f"| Adjuvant | {card.adjuvant_name} ({len(ADJUVANTS[card.adjuvant_name])} aa) |")
-    lines.append(f"| CTL epitopes | {card.epitope_count} |")
+    htl_count = len(htl_epitopes) if htl_epitopes else 0
+    lines.append(f"| CTL epitopes | {len(epitopes)} |")
+    lines.append(f"| HTL epitopes | {htl_count} |")
+    lines.append(f"| Total epitopes | {card.epitope_count} |")
     lines.append(f"| Linker (adjuvant) | EAAAK |")
     lines.append(f"| Linker (CTL) | AAY |")
+    lines.append(f"| Linker (HTL) | GPGPG |")
     lines.append(f"| Total protein length | {card.protein_length} aa |")
     lines.append(f"| Total mRNA length | {card.mrna_length} nt |")
     lines.append("")

@@ -33,6 +33,13 @@ PEPTIDE_LENGTH: int = 9  # 9-mer peptides
 IC50_THRESHOLD: float = 500  # nM -- below this = good binder
 PREDICTION_METHOD: str = "netmhcpan_ba"
 
+# MHC-II (HTL) prediction — canine DLA-II not supported by IEDB, using HLA proxy
+IEDB_MHCII_API_URL: str = "http://tools-cluster-interface.iedb.org/tools_api/mhcii/"
+MHCII_ALLELES: list[str] = ["HLA-DRB1*01:01", "HLA-DRB1*04:01", "HLA-DRB1*07:01"]
+MHCII_PEPTIDE_LENGTH: int = 15
+MHCII_METHOD: str = "nn_align"
+MHCII_IC50_THRESHOLD: float = 1000.0  # MHC-II uses relaxed threshold
+
 # Polite delay between IEDB API calls to avoid hammering the service.
 API_DELAY_SECONDS: float = 1.0
 
@@ -93,8 +100,15 @@ VALIDATED_ANTIGENS: list[dict] = [
         "final_score": 0.82,
     },
     {
-        "gene_id": "HSP70_HSP83",
-        "gene_name": "HSP70/HSP83",
+        "gene_id": "HSP70",
+        "gene_name": "HSP70",
+        "source": "Literature",
+        "evidence": "Overexpressed under stress, conserved, strong cellular response",
+        "final_score": 0.80,
+    },
+    {
+        "gene_id": "HSP83",
+        "gene_name": "HSP83",
         "source": "Literature",
         "evidence": "Overexpressed under stress, conserved, strong cellular response",
         "final_score": 0.80,
@@ -292,6 +306,50 @@ def _parse_iedb_response(text: str, allele: str) -> list[dict]:
             continue
 
     return results
+
+
+def predict_mhcii_binding(
+    sequence: str,
+    allele: str,
+    length: int = MHCII_PEPTIDE_LENGTH,
+) -> list[dict]:
+    """Submit a sequence to the IEDB MHC-II binding prediction API.
+
+    Uses the nn_align method against HLA-DRB1 alleles as a cross-species
+    proxy for canine DLA class II (which IEDB does not support directly).
+
+    Args:
+        sequence: Amino-acid sequence to analyse.
+        allele: MHC-II allele name (e.g. ``"HLA-DRB1*01:01"``).
+        length: Peptide length for the prediction.
+
+    Returns:
+        List of dicts, each containing:
+        - ``peptide`` (str): The predicted peptide.
+        - ``allele`` (str): The MHC-II allele used.
+        - ``ic50`` (float): Predicted IC50 in nM.
+        - ``rank`` (float): Percentile rank.
+
+        Returns an empty list when the API call fails or returns
+        unparsable data.
+    """
+    payload = {
+        "method": MHCII_METHOD,
+        "sequence_text": sequence,
+        "allele": allele,
+        "length": str(length),
+    }
+
+    try:
+        response = requests.post(IEDB_MHCII_API_URL, data=payload, timeout=120)
+        response.raise_for_status()
+    except requests.RequestException as exc:
+        logger.warning(
+            "IEDB MHC-II API request failed for allele %s: %s", allele, exc,
+        )
+        return []
+
+    return _parse_iedb_response(response.text, allele)
 
 
 # ---------------------------------------------------------------------------
