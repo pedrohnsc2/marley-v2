@@ -1,5 +1,9 @@
 # Marley 🐾
 
+<p align="center">
+  <img src="docs/marley.png" alt="Marley" width="400">
+</p>
+
 > *In memory of Marley, lost to canine visceral leishmaniasis.*
 > *This pipeline is dedicated to every dog that didn't make it.*
 
