@@ -164,6 +164,8 @@ The full pipeline has been validated on real data:
 | Report | All scored candidates | Ranked list + validated antigens from literature | <1s |
 | Construct design | Top candidates | mRNA vaccine sequence ready for synthesis | ~30s |
 
+**Full analysis report:** [`docs/marley_full_report.md`](docs/marley_full_report.md) — complete results from the pipeline run on the entire *L. infantum* proteome (8,527 proteins → 15 epitopes → mRNA construct).
+
 ---
 
 ## mRNA Vaccine Construct Design (Module 06)
