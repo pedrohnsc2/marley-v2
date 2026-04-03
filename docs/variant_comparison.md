@@ -9,10 +9,10 @@
 | HTL epitopes | 0 | 10 | 10 |
 | Protein length (aa) | 335 | 523 | 400 |
 | mRNA length (nt) | 1449 | 2013 | 1644 |
-| MW (kDa) | 36.0 | 55.5 | 42.7 |
-| pI | 7.93 | 8.83 | 9.51 |
-| Instability index | 28.38 | 25.36 | 28.28 |
-| GC content (%) | 66.9 | 69.9 | 70.1 |
+| MW (kDa) | 35.8 | 55.5 | 42.7 |
+| pI | 6.46 | 8.83 | 9.51 |
+| Instability index | 31.16 | 25.36 | 28.28 |
+| GC content (%) | 60.0 | 60.0 | 60.0 |
 | Adjuvant | L7L12 (130 aa) | L7L12 (130 aa) | RS09 (7 aa) |
 | Validated antigens | No | Yes | Yes |
 | VaxiJen score | N/A | N/A | N/A |
@@ -20,7 +20,7 @@
 
 ## Stability Assessment
 
-- **Variant A:** instability index = 28.38 (stable, threshold < 40)
+- **Variant A:** instability index = 31.16 (stable, threshold < 40)
 - **Variant B:** instability index = 25.36 (stable, threshold < 40)
 - **Variant C:** instability index = 28.28 (stable, threshold < 40)
 

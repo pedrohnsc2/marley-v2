@@ -149,6 +149,13 @@ VAXIJEN_URL: str = "http://www.ddg-pharmfac.net/vaxijen/VaxiJen/VaxiJen.html"
 VAXIJEN_THRESHOLD: float = 0.4
 ALLERTOP_URL: str = "https://www.ddg-pharmfac.net/AllerTOP/"
 
+# GC content target range for mRNA vaccines
+GC_TARGET_MIN: float = 0.40
+GC_TARGET_MAX: float = 0.60
+
+# Minimum codon frequency to allow during GC balancing (avoid rare codons)
+MIN_CODON_FREQUENCY: float = 0.10
+
 # Restriction sites to avoid in codon optimization
 RESTRICTION_SITES: list[str] = [
     "GAATTC",  # EcoRI
@@ -403,6 +410,7 @@ def select_epitopes(
     # Greedy selection: non-overlapping, max per gene.
     selected: list[SelectedEpitope] = []
     gene_counts: dict[str, int] = {}
+    seen_peptides: set[str] = set()
 
     for hit in all_hits:
         if len(selected) >= max_ctl:
@@ -411,6 +419,10 @@ def select_epitopes(
         gene_id = hit["gene_id"]
         peptide = hit["peptide"]
         sequence = hit["sequence"]
+
+        # Skip identical peptide sequences already selected (cross-protein dedup).
+        if peptide in seen_peptides:
+            continue
 
         # Enforce per-gene cap.
         if gene_counts.get(gene_id, 0) >= MAX_EPITOPES_PER_GENE:
@@ -439,6 +451,7 @@ def select_epitopes(
             )
         )
         gene_counts[gene_id] = gene_counts.get(gene_id, 0) + 1
+        seen_peptides.add(peptide)
 
     logger.info("Selected %d CTL epitopes.", len(selected))
     return selected
@@ -549,6 +562,7 @@ def select_htl_epitopes(
     # Greedy selection: non-overlapping, max per gene.
     selected: list[SelectedEpitope] = []
     gene_counts: dict[str, int] = {}
+    seen_peptides: set[str] = set()
 
     for hit in all_hits:
         if len(selected) >= max_htl:
@@ -557,6 +571,10 @@ def select_htl_epitopes(
         gene_id = hit["gene_id"]
         peptide = hit["peptide"]
         sequence = hit["sequence"]
+
+        # Skip identical peptide sequences already selected (cross-protein dedup).
+        if peptide in seen_peptides:
+            continue
 
         if gene_counts.get(gene_id, 0) >= MAX_EPITOPES_PER_GENE:
             continue
@@ -584,6 +602,7 @@ def select_htl_epitopes(
             )
         )
         gene_counts[gene_id] = gene_counts.get(gene_id, 0) + 1
+        seen_peptides.add(peptide)
 
     logger.info("Selected %d HTL epitopes.", len(selected))
     return selected
@@ -685,6 +704,105 @@ def _get_alternative_codon(amino_acid: str, avoid: str) -> str:
     return avoid
 
 
+def _gc_count(codon: str) -> int:
+    """Return the number of G/C bases in a codon."""
+    return sum(1 for nt in codon.upper() if nt in ("G", "C"))
+
+
+def _calculate_gc_fraction(codons: list[str]) -> float:
+    """Calculate GC fraction from a list of codons."""
+    dna = "".join(codons)
+    if not dna:
+        return 0.0
+    return sum(1 for nt in dna.upper() if nt in ("G", "C")) / len(dna)
+
+
+def _balance_gc_content(
+    cds: str,
+    protein_seq: str,
+    target_min: float = GC_TARGET_MIN,
+    target_max: float = GC_TARGET_MAX,
+) -> str:
+    """Post-process CDS to bring GC content into target range.
+
+    Strategy: For each codon position, if GC is too high, try replacing
+    the current codon with a synonymous codon that has fewer G/C bases.
+    Iterate until GC is within range or no more swaps are possible.
+
+    Args:
+        cds: DNA coding sequence (multiple of 3 in length).
+        protein_seq: Amino-acid sequence corresponding to *cds*.
+        target_min: Lower bound for acceptable GC fraction.
+        target_max: Upper bound for acceptable GC fraction.
+
+    Returns:
+        GC-balanced DNA coding sequence.
+    """
+    codons = [cds[i : i + 3] for i in range(0, len(cds), 3)]
+    gc_fraction = _calculate_gc_fraction(codons)
+
+    if target_min <= gc_fraction <= target_max:
+        return cds  # Already within range
+
+    original_gc = gc_fraction
+    need_less_gc = gc_fraction > target_max
+    swaps_made = 0
+
+    for pos in range(len(codons)):
+        if pos >= len(protein_seq):
+            break
+
+        aa = protein_seq[pos]
+        current_codon = codons[pos]
+        synonymous = CANIS_LUPUS_CODON_TABLE.get(aa, [])
+
+        if len(synonymous) <= 1:
+            continue  # No alternatives (e.g. Met, Trp)
+
+        current_gc = _gc_count(current_codon)
+
+        # Build candidates: synonymous codons with acceptable frequency
+        candidates = [
+            (codon, freq)
+            for codon, freq in synonymous
+            if freq >= MIN_CODON_FREQUENCY and codon != current_codon
+        ]
+
+        if not candidates:
+            continue
+
+        if need_less_gc:
+            # Sort ascending by GC count to prefer AT-richer codons
+            candidates.sort(key=lambda pair: _gc_count(pair[0]))
+            best_codon, _freq = candidates[0]
+            if _gc_count(best_codon) >= current_gc:
+                continue  # No improvement possible at this position
+        else:
+            # Need more GC: sort descending by GC count
+            candidates.sort(key=lambda pair: -_gc_count(pair[0]))
+            best_codon, _freq = candidates[0]
+            if _gc_count(best_codon) <= current_gc:
+                continue
+
+        codons[pos] = best_codon
+        swaps_made += 1
+
+        # Re-check GC content
+        gc_fraction = _calculate_gc_fraction(codons)
+        if target_min <= gc_fraction <= target_max:
+            break
+
+    if swaps_made > 0:
+        logger.info(
+            "GC balancing: %d codon swap(s), GC content %.1f%% -> %.1f%%.",
+            swaps_made,
+            original_gc * 100,
+            gc_fraction * 100,
+        )
+
+    return "".join(codons)
+
+
 def reverse_translate_optimized(protein_seq: str) -> str:
     """Reverse-translate a protein sequence using Canis lupus codon preferences.
 
@@ -735,7 +853,10 @@ def reverse_translate_optimized(protein_seq: str) -> str:
             aa = protein_seq[codon_idx]
             codons[codon_idx] = _get_alternative_codon(aa, codons[codon_idx])
 
+    # --- Balance GC content for mRNA vaccine suitability --------------------
     cds = "".join(codons)
+    cds = _balance_gc_content(cds, protein_seq)
+
     logger.info(
         "Codon optimisation complete: %d bp CDS, %d restriction site(s) removed.",
         len(cds),
