@@ -157,6 +157,13 @@ npm run dev
 | Web dashboard | ✅ MVP | Next.js + Tailwind, live data from Supabase |
 | CI/CD | ✅ Complete | GitHub Actions: lint (ruff) + pytest on Python 3.11/3.12/3.13 |
 | Test suite | ✅ 88 tests | Full coverage: pipeline, models, APIs, construct, structure |
+| **v2: Drug Targets** | | |
+| dt/01_fetch_enzymes | ✅ Complete | TriTrypDB enzyme fetch by EC number / metabolic pathway |
+| dt/02_human_comparison | ✅ Complete | NCBI BLAST vs human proteome + UniProt active site diff |
+| dt/03_essentiality | ✅ Complete | DEG + TriTrypDB knockout + curated literature |
+| dt/04_druggability | ✅ Complete | Composite score + AlphaFold links + 7 priority targets |
+| dt/05_report | ✅ Complete | Top-20 CSV + Markdown report with next steps |
+| dt/run_drug_targets | ✅ Complete | Entrypoint with --dry-run and --priority-only flags |
 
 ### End-to-end validation
 
@@ -219,6 +226,78 @@ Module 06 takes the ranked antigen candidates and designs a complete multi-epito
 | ![Variant A 3D Structure](docs/variant_a_3d.png) | ![Variant C 3D Structure](docs/variant_c_3d.png) |
 
 Predicted using [ESMFold](https://esmatlas.com/about#esmfold). Structures visualized in [Mol*](https://molstar.org/viewer/). PyMOL and ChimeraX scripts auto-generated for region-colored visualization.
+
+---
+
+## Marley v2 — Drug Target Discovery
+
+In parallel with vaccine antigen identification, Marley v2 maps enzymatic drug targets in *L. infantum* that are structurally distinct from human homologs — prioritizing selective inhibitor design.
+
+### Drug target pipeline
+
+```
+TriTrypDB (L. infantum enzymes)
+        ↓
+01_fetch_enzymes     — Downloads annotated enzymes by metabolic pathway
+        ↓
+02_human_comparison  — BLAST against human proteome, identity scoring
+        ↓
+03_essentiality      — DEG database + knockout literature validation
+        ↓
+04_druggability      — Composite score + AlphaFold 3D links
+        ↓
+05_report            — Ranked targets + Markdown report
+```
+
+### Priority pathways
+
+- **Purine salvage** (HGPRT, XPRT, ADL, GMPS) — parasite cannot synthesize purines *de novo*
+- **Trypanothione** (TryS, TryR) — absent in humans, unique redox defense
+- **Sterol biosynthesis** (SMT, SDM) — absent in mammals, basis for azole drugs
+- **Pentose phosphate** (6PGDH) — < 35% identity with human enzyme
+
+### How to run v2
+
+```bash
+# Full drug target pipeline (interactive)
+python -m drug_targets.run_drug_targets
+
+# Dry run (no external API calls)
+python -m drug_targets.run_drug_targets --dry-run
+
+# Priority-only mode (demo with pre-validated targets)
+python -m drug_targets.run_drug_targets --priority-only
+
+# Priority-only dry run (quickest demo)
+python -m drug_targets.run_drug_targets --dry-run --priority-only
+```
+
+### Drug target Supabase schema
+
+```sql
+create table drug_targets (
+  id uuid default gen_random_uuid() primary key,
+  gene_id text unique not null,
+  gene_name text,
+  sequence text,
+  enzyme_class text,
+  pathway text,
+  human_homolog_id text,
+  identity_score float,
+  active_site_diff float,
+  is_essential boolean default false,
+  druggability_score float,
+  alphafold_url text,
+  status text default 'pending',
+  evidence text,
+  priority boolean default false,
+  created_at timestamp default now(),
+  updated_at timestamp default now()
+);
+
+create index idx_drug_targets_druggability on drug_targets(druggability_score desc);
+create index idx_drug_targets_priority on drug_targets(priority desc);
+```
 
 ---
 

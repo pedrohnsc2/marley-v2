@@ -211,7 +211,7 @@ class VaccineConstruct:
         }
 
     @classmethod
-    def from_dict(cls, data: dict) -> VaccineConstruct:
+    def from_dict(cls, data: dict) -> "VaccineConstruct":
         """Construct a ``VaccineConstruct`` from a dictionary (e.g. Supabase row).
 
         Args:
@@ -234,4 +234,119 @@ class VaccineConstruct:
             vaxijen_score=data.get("vaxijen_score"),
             allergenicity=data.get("allergenicity"),
             created_at=data.get("created_at", ""),
+        )
+
+
+# ---------------------------------------------------------------------------
+# Module v2 -- Drug target discovery models
+# ---------------------------------------------------------------------------
+
+# Druggability score weights
+DIVERGENCE_WEIGHT: float = 0.40
+ACTIVE_SITE_WEIGHT: float = 0.35
+ESSENTIALITY_WEIGHT: float = 0.25
+
+
+@dataclass
+class DrugTarget:
+    """An enzymatic drug target from *L. infantum* evaluated for selective inhibitor design.
+
+    Attributes:
+        gene_id: Unique identifier for the gene (e.g. TriTrypDB accession).
+        gene_name: Human-readable gene/enzyme name.
+        sequence: Amino-acid sequence.
+        enzyme_class: Enzyme classification (e.g. "phosphoribosyltransferase").
+        pathway: Metabolic pathway (e.g. "purine_salvage", "sterol_biosynthesis").
+        human_homolog_id: UniProt ID of the closest human homolog.
+        identity_score: Percent identity with human homolog in [0.0, 1.0].
+        active_site_diff: Percent difference in active-site residues in [0.0, 1.0].
+        is_essential: Whether the gene is essential for parasite survival.
+        druggability_score: Composite score in [0.0, 1.0] (higher = better target).
+        alphafold_url: AlphaFold structure URL for the target.
+        evidence: Bibliographic reference or experimental evidence summary.
+        priority: True for targets with prior experimental validation.
+        status: Pipeline status (pending, approved, rejected, priority_validated).
+    """
+
+    gene_id: str
+    gene_name: str
+    sequence: str
+    enzyme_class: str = ""
+    pathway: str = ""
+    human_homolog_id: str = ""
+    identity_score: float = 0.0
+    active_site_diff: float = 0.0
+    is_essential: bool = False
+    druggability_score: float = 0.0
+    alphafold_url: str = ""
+    evidence: str = ""
+    priority: bool = False
+    status: str = STATUS_PENDING
+
+    def compute_druggability_score(self) -> None:
+        """Calculate the composite druggability score.
+
+        Formula:
+            (1 - identity_score) * 0.40
+            + active_site_diff * 0.35
+            + essentiality_factor * 0.25
+
+        Where essentiality_factor is 1.0 if essential, 0.3 otherwise.
+        """
+        essentiality_factor = 1.0 if self.is_essential else 0.3
+        self.druggability_score = (
+            (1 - self.identity_score) * DIVERGENCE_WEIGHT
+            + self.active_site_diff * ACTIVE_SITE_WEIGHT
+            + essentiality_factor * ESSENTIALITY_WEIGHT
+        )
+
+    def to_dict(self) -> dict:
+        """Serialize to a plain dict suitable for Supabase upsert.
+
+        Returns:
+            Dictionary with all drug target fields.
+        """
+        return {
+            "gene_id": self.gene_id,
+            "gene_name": self.gene_name,
+            "sequence": self.sequence,
+            "enzyme_class": self.enzyme_class,
+            "pathway": self.pathway,
+            "human_homolog_id": self.human_homolog_id,
+            "identity_score": self.identity_score,
+            "active_site_diff": self.active_site_diff,
+            "is_essential": self.is_essential,
+            "druggability_score": self.druggability_score,
+            "alphafold_url": self.alphafold_url,
+            "evidence": self.evidence,
+            "priority": self.priority,
+            "status": self.status,
+        }
+
+    @classmethod
+    def from_dict(cls, data: dict) -> "DrugTarget":
+        """Construct a ``DrugTarget`` from a dictionary (e.g. Supabase row).
+
+        Args:
+            data: Dictionary containing drug target fields. Unknown keys
+                  are silently ignored.
+
+        Returns:
+            A new ``DrugTarget`` instance.
+        """
+        return cls(
+            gene_id=data["gene_id"],
+            gene_name=data["gene_name"],
+            sequence=data.get("sequence", ""),
+            enzyme_class=data.get("enzyme_class", ""),
+            pathway=data.get("pathway", ""),
+            human_homolog_id=data.get("human_homolog_id", ""),
+            identity_score=float(data.get("identity_score", 0.0)),
+            active_site_diff=float(data.get("active_site_diff", 0.0)),
+            is_essential=data.get("is_essential", False),
+            druggability_score=float(data.get("druggability_score", 0.0)),
+            alphafold_url=data.get("alphafold_url", ""),
+            evidence=data.get("evidence", ""),
+            priority=data.get("priority", False),
+            status=data.get("status", STATUS_PENDING),
         )

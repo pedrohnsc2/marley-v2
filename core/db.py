@@ -15,7 +15,7 @@ from dotenv import load_dotenv
 from supabase import Client, create_client
 
 from core.logger import get_logger
-from core.models import Candidate, Epitope, VaccineConstruct
+from core.models import Candidate, DrugTarget, Epitope, VaccineConstruct
 
 # ---------------------------------------------------------------------------
 # Configuration
@@ -28,6 +28,7 @@ SUPABASE_KEY: str = os.getenv("SUPABASE_KEY", "")
 CANDIDATES_TABLE: str = "candidates"
 CONSTRUCTS_TABLE: str = "vaccine_constructs"
 EPITOPES_TABLE: str = "construct_epitopes"
+DRUG_TARGETS_TABLE: str = "drug_targets"
 
 logger = get_logger("db")
 
@@ -271,4 +272,87 @@ def upsert_construct_epitopes(
         logger.exception(
             "Failed to upsert epitopes for construct %s.", construct_id
         )
+        raise
+
+
+# ---------------------------------------------------------------------------
+# Drug target helpers (Module v2)
+# ---------------------------------------------------------------------------
+
+
+def upsert_drug_target(target: DrugTarget) -> dict[str, Any]:
+    """Insert or update a drug target row keyed by ``gene_id``.
+
+    Args:
+        target: The ``DrugTarget`` to persist.
+
+    Returns:
+        The Supabase response data for the upserted row.
+
+    Raises:
+        Exception: On any Supabase communication failure.
+    """
+    client = _get_client()
+    payload = target.to_dict()
+
+    try:
+        response = (
+            client.table(DRUG_TARGETS_TABLE)
+            .upsert(payload, on_conflict="gene_id")
+            .execute()
+        )
+        logger.info("Upserted drug target %s.", target.gene_id)
+        return response.data
+    except Exception:
+        logger.exception("Failed to upsert drug target %s.", target.gene_id)
+        raise
+
+
+def get_all_drug_targets() -> list[DrugTarget]:
+    """Fetch every row from the drug_targets table.
+
+    Returns:
+        List of ``DrugTarget`` instances (may be empty).
+
+    Raises:
+        Exception: On any Supabase communication failure.
+    """
+    client = _get_client()
+
+    try:
+        response = client.table(DRUG_TARGETS_TABLE).select("*").execute()
+        targets = [DrugTarget.from_dict(row) for row in response.data]
+        logger.info("Fetched %d drug target(s).", len(targets))
+        return targets
+    except Exception:
+        logger.exception("Failed to fetch drug targets.")
+        raise
+
+
+def update_drug_target(gene_id: str, data: dict[str, Any]) -> dict[str, Any]:
+    """Apply a partial update to an existing drug target.
+
+    Args:
+        gene_id: The ``gene_id`` of the row to update.
+        data: A dictionary of column-value pairs to set.
+
+    Returns:
+        The Supabase response data for the updated row.
+
+    Raises:
+        Exception: On any Supabase communication failure.
+    """
+    client = _get_client()
+
+    try:
+        response = (
+            client.table(DRUG_TARGETS_TABLE)
+            .update(data)
+            .eq("gene_id", gene_id)
+            .execute()
+        )
+        logger.info("Updated drug target %s.", gene_id)
+        return response.data
+    except Exception:
+        logger.exception("Failed to update drug target %s.", gene_id)
         raise
