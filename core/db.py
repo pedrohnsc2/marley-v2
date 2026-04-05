@@ -15,7 +15,14 @@ from dotenv import load_dotenv
 from supabase import Client, create_client
 
 from core.logger import get_logger
-from core.models import Candidate, DrugTarget, Epitope, VaccineConstruct
+from core.models import (
+    Candidate,
+    DockingCompound,
+    DockingResult,
+    DrugTarget,
+    Epitope,
+    VaccineConstruct,
+)
 
 # ---------------------------------------------------------------------------
 # Configuration
@@ -29,6 +36,8 @@ CANDIDATES_TABLE: str = "candidates"
 CONSTRUCTS_TABLE: str = "vaccine_constructs"
 EPITOPES_TABLE: str = "construct_epitopes"
 DRUG_TARGETS_TABLE: str = "drug_targets"
+DOCKING_COMPOUNDS_TABLE: str = "docking_compounds"
+DOCKING_RESULTS_TABLE: str = "docking_results"
 
 logger = get_logger("db")
 
@@ -355,4 +364,141 @@ def update_drug_target(gene_id: str, data: dict[str, Any]) -> dict[str, Any]:
         return response.data
     except Exception:
         logger.exception("Failed to update drug target %s.", gene_id)
+        raise
+
+
+# ---------------------------------------------------------------------------
+# Docking helpers (Module v3)
+# ---------------------------------------------------------------------------
+
+
+def upsert_docking_compound(compound: DockingCompound) -> dict[str, Any]:
+    """Insert or update a docking compound row keyed by ``compound_id``.
+
+    Args:
+        compound: The ``DockingCompound`` to persist.
+
+    Returns:
+        The Supabase response data for the upserted row.
+
+    Raises:
+        Exception: On any Supabase communication failure.
+    """
+    client = _get_client()
+    payload = compound.to_dict()
+
+    try:
+        response = (
+            client.table(DOCKING_COMPOUNDS_TABLE)
+            .upsert(payload, on_conflict="compound_id")
+            .execute()
+        )
+        logger.info("Upserted docking compound %s.", compound.compound_id)
+        return response.data
+    except Exception:
+        logger.exception("Failed to upsert docking compound %s.", compound.compound_id)
+        raise
+
+
+def upsert_docking_result(result: DockingResult) -> dict[str, Any]:
+    """Insert or update a docking result for a (target, compound) pair.
+
+    Since the unique constraint spans two columns (``target_gene_id``,
+    ``compound_id``), this deletes any existing row for the pair and then
+    inserts the new data.
+
+    Args:
+        result: The ``DockingResult`` to persist.
+
+    Returns:
+        The Supabase response data for the inserted row.
+
+    Raises:
+        Exception: On any Supabase communication failure.
+    """
+    client = _get_client()
+    payload = result.to_dict()
+
+    try:
+        # Delete existing row for this (target, compound) pair
+        client.table(DOCKING_RESULTS_TABLE).delete().eq(
+            "target_gene_id", result.target_gene_id
+        ).eq("compound_id", result.compound_id).execute()
+
+        response = (
+            client.table(DOCKING_RESULTS_TABLE).insert(payload).execute()
+        )
+        logger.info(
+            "Upserted docking result for target=%s compound=%s.",
+            result.target_gene_id,
+            result.compound_id,
+        )
+        return response.data
+    except Exception:
+        logger.exception(
+            "Failed to upsert docking result for target=%s compound=%s.",
+            result.target_gene_id,
+            result.compound_id,
+        )
+        raise
+
+
+def get_docking_results_by_target(gene_id: str) -> list[DockingResult]:
+    """Fetch all docking results for a given drug target.
+
+    Args:
+        gene_id: The ``target_gene_id`` to filter on.
+
+    Returns:
+        List of ``DockingResult`` instances (may be empty).
+
+    Raises:
+        Exception: On any Supabase communication failure.
+    """
+    client = _get_client()
+
+    try:
+        response = (
+            client.table(DOCKING_RESULTS_TABLE)
+            .select("*")
+            .eq("target_gene_id", gene_id)
+            .execute()
+        )
+        results = [DockingResult.from_dict(row) for row in response.data]
+        logger.info(
+            "Fetched %d docking result(s) for target %s.", len(results), gene_id
+        )
+        return results
+    except Exception:
+        logger.exception("Failed to fetch docking results for target %s.", gene_id)
+        raise
+
+
+def get_top_docking_results(limit: int = 10) -> list[DockingResult]:
+    """Fetch the top-ranked docking results across all targets.
+
+    Args:
+        limit: Maximum number of results to return (default 10).
+
+    Returns:
+        List of ``DockingResult`` instances ordered by composite_score DESC.
+
+    Raises:
+        Exception: On any Supabase communication failure.
+    """
+    client = _get_client()
+
+    try:
+        response = (
+            client.table(DOCKING_RESULTS_TABLE)
+            .select("*")
+            .order("composite_score", desc=True)
+            .limit(limit)
+            .execute()
+        )
+        results = [DockingResult.from_dict(row) for row in response.data]
+        logger.info("Fetched top %d docking result(s).", len(results))
+        return results
+    except Exception:
+        logger.exception("Failed to fetch top docking results.")
         raise

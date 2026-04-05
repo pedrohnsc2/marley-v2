@@ -350,3 +350,158 @@ class DrugTarget:
             priority=data.get("priority", False),
             status=data.get("status", STATUS_PENDING),
         )
+
+
+# ---------------------------------------------------------------------------
+# Module v3 -- Molecular docking models
+# ---------------------------------------------------------------------------
+
+
+@dataclass
+class DockingCompound:
+    """A small molecule compound prepared for molecular docking.
+
+    Attributes:
+        compound_id: Unique identifier (ChEMBL ID, ZINC ID, or DrugBank ID).
+        name: Common drug name (if approved drug).
+        smiles: Canonical SMILES string.
+        source: Origin database ("chembl", "drugbank", "zinc", "repurposing_hub").
+        is_approved_drug: Whether this compound is an approved drug.
+        molecular_weight: Molecular weight in Daltons.
+        logp: Calculated LogP (lipophilicity).
+        inchi_key: InChIKey for deduplication.
+    """
+
+    compound_id: str
+    name: str
+    smiles: str
+    source: str = ""
+    is_approved_drug: bool = False
+    molecular_weight: float = 0.0
+    logp: float = 0.0
+    inchi_key: str = ""
+
+    def to_dict(self) -> dict:
+        return {
+            "compound_id": self.compound_id,
+            "name": self.name,
+            "smiles": self.smiles,
+            "source": self.source,
+            "is_approved": self.is_approved_drug,
+            "mol_weight": self.molecular_weight,
+            "logp": self.logp,
+            "inchi_key": self.inchi_key,
+        }
+
+    @classmethod
+    def from_dict(cls, data: dict) -> "DockingCompound":
+        return cls(
+            compound_id=data["compound_id"],
+            name=data.get("name", ""),
+            smiles=data["smiles"],
+            source=data.get("source", ""),
+            is_approved_drug=data.get("is_approved", False),
+            molecular_weight=float(data.get("mol_weight", 0.0)),
+            logp=float(data.get("logp", 0.0)),
+            inchi_key=data.get("inchi_key", ""),
+        )
+
+
+# Docking score weights
+AFFINITY_WEIGHT: float = 0.50
+ADMET_WEIGHT: float = 0.25
+REPURPOSING_WEIGHT: float = 0.15
+SELECTIVITY_WEIGHT: float = 0.10
+
+
+@dataclass
+class DockingResult:
+    """Result of a molecular docking simulation.
+
+    Attributes:
+        target_gene_id: Gene ID of the drug target.
+        target_gene_name: Human-readable target name.
+        compound_id: ID of the docked compound.
+        compound_name: Common name of the compound.
+        smiles: SMILES of the compound.
+        binding_affinity: Vina binding affinity in kcal/mol (more negative = better).
+        rmsd_lb: RMSD lower bound from Vina.
+        rmsd_ub: RMSD upper bound from Vina.
+        lipinski_violations: Number of Lipinski Rule of 5 violations (0-4).
+        is_approved_drug: Whether compound is an approved drug.
+        admet_score: ADMET composite score in [0.0, 1.0].
+        composite_score: Final ranking score combining docking + ADMET.
+        pdbqt_path: Path to output PDBQT with docked pose.
+        source: Origin of the compound.
+        status: Pipeline status.
+    """
+
+    target_gene_id: str
+    target_gene_name: str
+    compound_id: str
+    compound_name: str = ""
+    smiles: str = ""
+    binding_affinity: float = 0.0
+    rmsd_lb: float = 0.0
+    rmsd_ub: float = 0.0
+    lipinski_violations: int = 0
+    is_approved_drug: bool = False
+    admet_score: float = 0.0
+    composite_score: float = 0.0
+    pdbqt_path: str = ""
+    source: str = ""
+    status: str = STATUS_PENDING
+
+    def compute_composite_score(self) -> None:
+        """Calculate composite score from docking affinity and ADMET.
+
+        Normalizes binding affinity from [-12, 0] kcal/mol to [0, 1],
+        then combines with ADMET score and repurposing bonus.
+        """
+        norm_affinity = min(1.0, max(0.0, -self.binding_affinity / 12.0))
+        repurposing_bonus = 1.0 if self.is_approved_drug else 0.0
+        self.composite_score = (
+            norm_affinity * AFFINITY_WEIGHT
+            + self.admet_score * ADMET_WEIGHT
+            + repurposing_bonus * REPURPOSING_WEIGHT
+            + SELECTIVITY_WEIGHT
+        )
+
+    def to_dict(self) -> dict:
+        return {
+            "target_gene_id": self.target_gene_id,
+            "target_gene_name": self.target_gene_name,
+            "compound_id": self.compound_id,
+            "compound_name": self.compound_name,
+            "smiles": self.smiles,
+            "binding_affinity": self.binding_affinity,
+            "rmsd_lb": self.rmsd_lb,
+            "rmsd_ub": self.rmsd_ub,
+            "lipinski_violations": self.lipinski_violations,
+            "is_approved_drug": self.is_approved_drug,
+            "admet_score": self.admet_score,
+            "composite_score": self.composite_score,
+            "pdbqt_path": self.pdbqt_path,
+            "source": self.source,
+            "status": self.status,
+        }
+
+    @classmethod
+    def from_dict(cls, data: dict) -> "DockingResult":
+        return cls(
+            target_gene_id=data["target_gene_id"],
+            target_gene_name=data.get("target_gene_name", ""),
+            compound_id=data["compound_id"],
+            compound_name=data.get("compound_name", ""),
+            smiles=data.get("smiles", ""),
+            binding_affinity=float(data.get("binding_affinity", 0.0)),
+            rmsd_lb=float(data.get("rmsd_lb", 0.0)),
+            rmsd_ub=float(data.get("rmsd_ub", 0.0)),
+            lipinski_violations=int(data.get("lipinski_violations", 0)),
+            is_approved_drug=data.get("is_approved_drug", False),
+            admet_score=float(data.get("admet_score", 0.0)),
+            composite_score=float(data.get("composite_score", 0.0)),
+            pdbqt_path=data.get("pdbqt_path", ""),
+            source=data.get("source", ""),
+            status=data.get("status", "pending"),
+        )

@@ -1,18 +1,27 @@
-"""Entry point for the Marley v2 drug target discovery pipeline.
+"""Entry point for the Marley v2/v3 drug target discovery pipeline.
 
-Executes all five pipeline stages sequentially:
+Executes pipeline stages sequentially:
 
-1. Fetch enzymes (TriTrypDB download by metabolic pathway)
+v2 (drug target discovery):
+1. Fetch enzymes (UniProt download by metabolic pathway)
 2. Human comparison (BLAST against human proteome)
 3. Essentiality check (DEG + TriTrypDB knockout data)
 4. Druggability scoring (composite score + AlphaFold links)
 5. Report generation (CSV + Markdown summary)
 
+v3 (molecular docking, activated with --docking):
+6. Fetch structures (AlphaFold PDB + PDBQT preparation)
+7. Compound library (ChEMBL + repurposing library)
+8. Docking (AutoDock Vina)
+9. ADMET filter (Lipinski + pkCSM)
+10. Docking report (top hits + PyMOL scripts)
+
 Usage:
     python -m drug_targets.run_drug_targets
     python -m drug_targets.run_drug_targets --dry-run
     python -m drug_targets.run_drug_targets --priority-only
-    python -m drug_targets.run_drug_targets --dry-run --priority-only
+    python -m drug_targets.run_drug_targets --docking --top-n 5
+    python -m drug_targets.run_drug_targets --docking --dry-run
 """
 
 from __future__ import annotations
@@ -44,6 +53,22 @@ def _load_modules() -> dict[str, Any]:
         "essentiality": importlib.import_module("drug_targets.03_essentiality"),
         "druggability": importlib.import_module("drug_targets.04_druggability"),
         "report": importlib.import_module("drug_targets.05_report"),
+    }
+    return modules
+
+
+def _load_docking_modules() -> dict[str, Any]:
+    """Import v3 docking pipeline modules using importlib.
+
+    Returns:
+        Dictionary mapping short names to imported module objects.
+    """
+    modules = {
+        "structures": importlib.import_module("drug_targets.06_fetch_structures"),
+        "compounds": importlib.import_module("drug_targets.07_compound_library"),
+        "docking": importlib.import_module("drug_targets.08_docking"),
+        "admet": importlib.import_module("drug_targets.09_admet_filter"),
+        "docking_report": importlib.import_module("drug_targets.10_docking_report"),
     }
     return modules
 
@@ -207,8 +232,8 @@ def main() -> None:
     """Parse arguments and run the drug target discovery pipeline."""
     parser = argparse.ArgumentParser(
         description=(
-            "Marley v2 -- Run the drug target discovery pipeline "
-            "for Leishmania infantum enzymatic targets."
+            "Marley v2/v3 -- Drug target discovery + molecular docking "
+            "pipeline for Leishmania infantum enzymatic targets."
         ),
     )
     parser.add_argument(
@@ -226,18 +251,52 @@ def main() -> None:
         action="store_true",
         help="Force re-run of all stages even if output files already exist.",
     )
+    parser.add_argument(
+        "--docking",
+        action="store_true",
+        help="Run v3 molecular docking stages (06-10) after drug target discovery.",
+    )
+    parser.add_argument(
+        "--top-n",
+        type=int,
+        default=5,
+        help="Number of top targets to use for docking (default: 5).",
+    )
+    parser.add_argument(
+        "--max-compounds",
+        type=int,
+        default=100,
+        help="Maximum compounds per target for docking (default: 100).",
+    )
+    parser.add_argument(
+        "--exhaustiveness",
+        type=int,
+        default=16,
+        help="AutoDock Vina exhaustiveness parameter (default: 16).",
+    )
+    parser.add_argument(
+        "--blind-docking",
+        action="store_true",
+        help="Use blind docking (large grid box covering entire protein).",
+    )
+    parser.add_argument(
+        "--predict-admet",
+        action="store_true",
+        help="Run pkCSM ADMET predictions (slower, requires API access).",
+    )
     args = parser.parse_args()
 
     skip_confirm = args.dry_run
     force = args.force
 
     logger.info("=" * 60)
-    logger.info("Marley v2 -- Drug Target Discovery Pipeline")
+    logger.info("Marley v2/v3 -- Drug Target Discovery Pipeline")
     logger.info(
-        "Options: dry_run=%s  priority_only=%s  force=%s",
+        "Options: dry_run=%s  priority_only=%s  force=%s  docking=%s",
         args.dry_run,
         args.priority_only,
         args.force,
+        args.docking,
     )
     logger.info("=" * 60)
 
@@ -345,6 +404,95 @@ def main() -> None:
         results.append(r)
 
     # ------------------------------------------------------------------
+    # v3: Molecular Docking (stages 6-10, if --docking)
+    # ------------------------------------------------------------------
+    if args.docking:
+        logger.info("=" * 60)
+        logger.info("Marley v3 -- Molecular Docking Pipeline")
+        logger.info("=" * 60)
+
+        try:
+            docking_mods = _load_docking_modules()
+        except ImportError as exc:
+            logger.error("Failed to import docking modules: %s", exc)
+            logger.error(
+                "Install docking dependencies: pip install rdkit-pypi meeko vina openbabel-wheel chembl-webresource-client"
+            )
+            sys.exit(1)
+
+        # Stage 6: Fetch Structures.
+        r = _run_stage(
+            name="6. Fetch Structures (AlphaFold)",
+            func=docking_mods["structures"].fetch_and_prepare_structures,
+            kwargs={"top_n": args.top_n, "force": force, "dry_run": args.dry_run},
+            skip_confirm=skip_confirm,
+        )
+        results.append(r)
+        if r.status == "skipped (user quit)":
+            _print_summary(results)
+            return
+
+        # Stage 7: Compound Library.
+        r = _run_stage(
+            name="7. Compound Library (ChEMBL)",
+            func=docking_mods["compounds"].build_compound_library,
+            kwargs={
+                "top_n": args.top_n,
+                "max_compounds": args.max_compounds,
+                "force": force,
+                "dry_run": args.dry_run,
+            },
+            skip_confirm=skip_confirm,
+        )
+        results.append(r)
+        if r.status == "skipped (user quit)":
+            _print_summary(results)
+            return
+
+        # Stage 8: Molecular Docking.
+        r = _run_stage(
+            name="8. Molecular Docking (Vina)",
+            func=docking_mods["docking"].run_docking_campaign,
+            kwargs={
+                "top_n": args.top_n,
+                "exhaustiveness": args.exhaustiveness,
+                "blind_docking": args.blind_docking,
+                "force": force,
+                "dry_run": args.dry_run,
+            },
+            skip_confirm=skip_confirm,
+        )
+        results.append(r)
+        if r.status == "skipped (user quit)":
+            _print_summary(results)
+            return
+
+        # Stage 9: ADMET Filter.
+        r = _run_stage(
+            name="9. ADMET Filter (Lipinski + pkCSM)",
+            func=docking_mods["admet"].filter_admet,
+            kwargs={
+                "predict_admet": args.predict_admet,
+                "force": force,
+                "dry_run": args.dry_run,
+            },
+            skip_confirm=skip_confirm,
+        )
+        results.append(r)
+        if r.status == "skipped (user quit)":
+            _print_summary(results)
+            return
+
+        # Stage 10: Docking Report.
+        r = _run_stage(
+            name="10. Docking Report",
+            func=docking_mods["docking_report"].generate_docking_report,
+            kwargs={"dry_run": args.dry_run},
+            skip_confirm=skip_confirm,
+        )
+        results.append(r)
+
+    # ------------------------------------------------------------------
     # Summary
     # ------------------------------------------------------------------
     _print_summary(results)
@@ -361,7 +509,7 @@ def main() -> None:
         )
         sys.exit(1)
 
-    logger.info("Drug target pipeline completed successfully.")
+    logger.info("Pipeline completed successfully.")
 
 
 if __name__ == "__main__":
