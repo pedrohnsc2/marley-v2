@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
+import Nav from "@/components/nav";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Marley — Vaccine Candidates Dashboard",
+  title: "Marley -- Reverse Vaccinology Dashboard",
   description:
-    "Ranked vaccine candidate antigens for canine visceral leishmaniasis",
+    "Computational pipeline for canine visceral leishmaniasis vaccine and drug discovery",
 };
 
 export default function RootLayout({
@@ -14,7 +15,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="min-h-screen antialiased">{children}</body>
+      <body className="min-h-screen antialiased">
+        <Nav />
+        <main className="ml-56 min-h-screen">{children}</main>
+      </body>
     </html>
   );
 }

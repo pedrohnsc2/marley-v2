@@ -1,137 +1,149 @@
-import { createServerClient } from "@/lib/supabase";
-import { Candidate } from "@/lib/types";
+import Link from "next/link";
+import KpiCard from "@/components/kpi-card";
 
-function PriorityBadge({ priority }: { priority: string }) {
-  const colors: Record<string, string> = {
-    high: "bg-green-900 text-green-300 border-green-700",
-    medium: "bg-yellow-900 text-yellow-300 border-yellow-700",
-    low: "bg-zinc-800 text-zinc-400 border-zinc-600",
-  };
+const kpis = [
+  {
+    title: "Proteins Analyzed",
+    value: "8,527",
+    subtitle: "L. infantum proteome",
+    accent: "border-cyan-500",
+  },
+  {
+    title: "Epitopes Selected",
+    value: 11,
+    subtitle: "MHC-I high-affinity binders",
+    accent: "border-cyan-400",
+  },
+  {
+    title: "Drug Targets",
+    value: 52,
+    subtitle: "Prioritized by druggability",
+    accent: "border-orange-500",
+  },
+  {
+    title: "Compounds Docked",
+    value: 77,
+    subtitle: "Repurposed + custom molecules",
+    accent: "border-green-500",
+  },
+  {
+    title: "Custom Molecules",
+    value: 20,
+    subtitle: "MRL-series designed in silico",
+    accent: "border-orange-400",
+  },
+  {
+    title: "Best Affinity",
+    value: "-7.74 kcal/mol",
+    subtitle: "MRL-003 on TryR",
+    accent: "border-green-400",
+  },
+];
 
+const pipelineSteps = [
+  {
+    id: "v1",
+    title: "Proteome Screening",
+    description:
+      "Filtered 8,527 proteins through signal peptide detection, conservation analysis, and immunogenicity scoring to identify top vaccine candidates.",
+    color: "bg-cyan-900/30 border-cyan-800",
+    href: "/vaccine",
+  },
+  {
+    id: "v2",
+    title: "Vaccine Construct",
+    description:
+      "Designed multi-epitope mRNA vaccine with 15 epitopes, L7/L12 adjuvant, tPA signal peptide, and codon-optimized sequence validated via ESMFold 3D prediction.",
+    color: "bg-cyan-900/30 border-cyan-800",
+    href: "/vaccine",
+  },
+  {
+    id: "v3",
+    title: "Drug Target Discovery",
+    description:
+      "Identified 52 druggable parasite-specific targets across trypanothione, sterol, folate, and purine salvage pathways with low human homology.",
+    color: "bg-orange-900/30 border-orange-800",
+    href: "/drug",
+  },
+  {
+    id: "v4",
+    title: "Molecular Docking",
+    description:
+      "Screened 77 compounds via AutoDock Vina against GMPS and TryR. Top hit: CHEMBL92 at -8.07 kcal/mol. Designed 20 custom MRL-series molecules.",
+    color: "bg-green-900/30 border-green-800",
+    href: "/docking",
+  },
+  {
+    id: "v5",
+    title: "Immune Simulation",
+    description:
+      "ODE-based immune kinetics model predicting Th1 dominance (82.4%), robust memory cell formation, and estimated protection beyond 693 days.",
+    color: "bg-purple-900/30 border-purple-800",
+    href: "/simulation",
+  },
+];
+
+export default function Home() {
   return (
-    <span
-      className={`inline-block rounded-full border px-2.5 py-0.5 text-xs font-medium ${colors[priority] ?? colors.low}`}
-    >
-      {priority}
-    </span>
-  );
-}
-
-async function fetchCandidates(): Promise<Candidate[]> {
-  const supabase = createServerClient();
-
-  const { data, error } = await supabase
-    .from("candidates")
-    .select("*")
-    .order("priority", { ascending: false })
-    .order("final_score", { ascending: false });
-
-  if (error) {
-    console.error("Failed to fetch candidates:", error.message);
-    return [];
-  }
-
-  return (data as Candidate[]) ?? [];
-}
-
-export default async function Home() {
-  const candidates = await fetchCandidates();
-
-  return (
-    <main className="mx-auto max-w-6xl px-6 py-12">
+    <div className="px-8 py-10">
       <header className="mb-10">
         <h1 className="text-3xl font-bold tracking-tight text-white">
-          Marley
+          Marley Dashboard
         </h1>
-        <p className="mt-1 text-sm text-zinc-400">
-          Vaccine candidate antigen rankings for canine visceral leishmaniasis
+        <p className="mt-2 max-w-2xl text-sm text-zinc-400">
+          Reverse vaccinology and drug discovery pipeline for canine visceral
+          leishmaniasis. Five computational modules spanning proteome analysis
+          through immune simulation.
         </p>
       </header>
 
-      <section>
-        <h2 className="mb-4 text-lg font-semibold text-zinc-200">
-          Candidate Rankings
+      <section className="mb-12">
+        <h2 className="mb-4 text-sm font-semibold uppercase tracking-wider text-zinc-500">
+          Key Metrics
         </h2>
-
-        {candidates.length === 0 ? (
-          <div
-            className="rounded-lg border border-zinc-800 bg-zinc-900/40 px-6 py-16 text-center"
-            data-testid="empty-state"
-          >
-            <p className="text-sm text-zinc-400">
-              No candidates found. Run the pipeline to populate results.
-            </p>
-          </div>
-        ) : (
-          <>
-            <div className="overflow-x-auto rounded-lg border border-zinc-800">
-              <table
-                className="w-full text-left text-sm"
-                data-testid="candidates-table"
-              >
-                <thead className="border-b border-zinc-800 bg-zinc-900/60 text-xs uppercase tracking-wider text-zinc-400">
-                  <tr>
-                    <th className="px-4 py-3">Rank</th>
-                    <th className="px-4 py-3">Gene ID</th>
-                    <th className="px-4 py-3">Gene Name</th>
-                    <th className="px-4 py-3 text-right">Final Score</th>
-                    <th className="px-4 py-3">Priority</th>
-                    <th className="px-4 py-3">Evidence</th>
-                    <th className="px-4 py-3">Source</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-zinc-800">
-                  {candidates.map((candidate, index) => (
-                    <tr
-                      key={candidate.gene_id}
-                      className="transition-colors hover:bg-zinc-900/40"
-                      data-testid={`candidate-row-${index}`}
-                    >
-                      <td className="px-4 py-3 font-mono text-zinc-500">
-                        {index + 1}
-                      </td>
-                      <td className="px-4 py-3 font-mono text-zinc-300">
-                        {candidate.gene_id}
-                      </td>
-                      <td className="px-4 py-3 font-semibold text-white">
-                        {candidate.gene_name}
-                      </td>
-                      <td className="px-4 py-3 text-right font-mono text-zinc-200">
-                        {candidate.final_score.toFixed(2)}
-                      </td>
-                      <td className="px-4 py-3">
-                        <PriorityBadge priority={candidate.priority} />
-                      </td>
-                      <td className="max-w-xs px-4 py-3 text-zinc-400">
-                        {Array.isArray(candidate.evidence) &&
-                        candidate.evidence.length > 0 ? (
-                          <ul className="list-inside list-disc space-y-0.5">
-                            {candidate.evidence.map((item) => (
-                              <li key={item} className="truncate text-xs">
-                                {item}
-                              </li>
-                            ))}
-                          </ul>
-                        ) : (
-                          <span className="text-xs text-zinc-600">--</span>
-                        )}
-                      </td>
-                      <td className="px-4 py-3 text-zinc-400">
-                        {candidate.source}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-
-            <p className="mt-3 text-xs text-zinc-600">
-              Showing {candidates.length} candidate
-              {candidates.length !== 1 ? "s" : ""} from Supabase
-            </p>
-          </>
-        )}
+        <div
+          className="grid grid-cols-2 gap-4 lg:grid-cols-3 xl:grid-cols-6"
+          data-testid="kpi-grid"
+        >
+          {kpis.map((kpi) => (
+            <KpiCard
+              key={kpi.title}
+              title={kpi.title}
+              value={kpi.value}
+              subtitle={kpi.subtitle}
+              accentColor={kpi.accent}
+            />
+          ))}
+        </div>
       </section>
-    </main>
+
+      <section>
+        <h2 className="mb-4 text-sm font-semibold uppercase tracking-wider text-zinc-500">
+          Pipeline Modules
+        </h2>
+        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+          {pipelineSteps.map((step) => (
+            <Link
+              key={step.id}
+              href={step.href}
+              className={`rounded-lg border ${step.color} p-5 transition-colors hover:brightness-125`}
+              data-testid={`pipeline-${step.id}`}
+            >
+              <div className="mb-2 flex items-center gap-2">
+                <span className="rounded bg-zinc-800 px-2 py-0.5 text-xs font-mono text-zinc-500">
+                  {step.id}
+                </span>
+                <h3 className="text-sm font-semibold text-white">
+                  {step.title}
+                </h3>
+              </div>
+              <p className="text-xs leading-relaxed text-zinc-400">
+                {step.description}
+              </p>
+            </Link>
+          ))}
+        </div>
+      </section>
+    </div>
   );
 }
