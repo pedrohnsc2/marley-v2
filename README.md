@@ -384,7 +384,29 @@ v2 drug targets (top 5 enzymes)
 
 **Pipeline validation:** Pentamidine (already used clinically against leishmaniasis) ranked #2, confirming the docking methodology produces biologically meaningful results.
 
-**Novel finding:** Methotrexate showed the strongest binding affinity (-8.07 kcal/mol) against GMP synthase (GMPS), a critical enzyme in the parasite's purine salvage pathway. This suggests Methotrexate analogs designed without immunosuppressive activity could be potent antileishmanial agents.
+**Novel finding:** Methotrexate showed the strongest binding affinity (-8.07 kcal/mol) against GMP synthase (GMPS), a critical enzyme in the parasite's purine salvage pathway. However, Methotrexate is immunosuppressive — counterproductive against *Leishmania*, where the host immune system is essential for parasite clearance. This motivated a follow-up screen of non-immunosuppressive analogs.
+
+### Antifolate analog screening
+
+9 non-immunosuppressive Methotrexate analogs (SMILES validated via PubChem) were docked against GMPS and TryR:
+
+| # | Target | Analog | Affinity (kcal/mol) | Immunosuppressive? | Status |
+|---|--------|--------|---------------------|-------------------|--------|
+| 1 | **TryR** | **Pemetrexed** | **-7.22** | Less than MTX | Approved (lung cancer) |
+| 2 | **TryR** | **Pralatrexate** | **-6.97** | Less than MTX | Approved (lymphoma) |
+| 3 | TryR | Raltitrexed | -6.57 | Less than MTX | Approved (colorectal cancer) |
+| 4 | TryR | Piritrexim | -6.56 | **No** | Experimental |
+| 5 | TryR | **Trimetrexate** | **-6.35** | **No** | Approved (tested against Leishmania) |
+| 6 | TryR | Metoprine | -6.09 | **No** | Experimental (tested against Leishmania) |
+| 7 | TryR | Pyrimethamine | -5.92 | **No** | Approved (antiparasitic) |
+| 8 | GMPS | Pralatrexate | -4.88 | Less than MTX | Approved |
+| 9 | GMPS | Pemetrexed | -4.76 | Less than MTX | Approved |
+
+**Key finding:** The analogs bind much more strongly to **TryR** (trypanothione reductase) than to GMPS. TryR is **absent in humans**, making it an ideal selective target. Pemetrexed (-7.22 kcal/mol) matched Methotrexate's original TryR affinity (-7.02) while being significantly less immunosuppressive.
+
+**Trimetrexate** is particularly notable — it has already been tested directly against *Leishmania* species in published research, is not immunosuppressive, and showed -6.35 kcal/mol binding affinity to the parasite's TryR.
+
+These results suggest that **existing FDA-approved antifolates could be repurposed as antileishmanial agents targeting trypanothione reductase** — a pathway that does not exist in humans.
 
 ### 3D Visualization — Methotrexate docked into GMPS
 
