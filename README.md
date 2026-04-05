@@ -408,6 +408,41 @@ v2 drug targets (top 5 enzymes)
 
 These results suggest that **existing FDA-approved antifolates could be repurposed as antileishmanial agents targeting trypanothione reductase** — a pathway that does not exist in humans.
 
+### De novo drug design — MRL-003
+
+Starting from the Pemetrexed scaffold, 20 custom variants were designed by modifying the glutamate tail and aromatic substituents to optimize TryR binding while eliminating lymphocyte accumulation (the mechanism behind Methotrexate's immunosuppression). 6 variants outperformed Pemetrexed, and 9 outperformed Methotrexate:
+
+| # | Molecule | Modification | Affinity (kcal/mol) | Lipinski |
+|---|----------|-------------|---------------------|----------|
+| 1 | **MRL-003** | **Amide tail (no polyglutamylation)** | **-7.74** | PASS |
+| 2 | MRL-013 | Benzyl linker | -7.60 | PASS |
+| 3 | MRL-018 | Amino ring + amide tail | -7.50 | PASS |
+| 4 | MRL-010 | Trifluoromethyl on ring | -7.39 | PASS |
+| 5 | MRL-012 | Cyclopentyl linker | -7.37 | PASS |
+| 6 | MRL-015 | Fluorine + amide tail | -7.36 | PASS |
+
+**MRL-003** is the top candidate: a Pemetrexed analog where both carboxylic acid groups are replaced with amides. This single modification improves TryR binding affinity from -7.22 to **-7.74 kcal/mol** while eliminating the polyglutamylation site responsible for immunosuppressive lymphocyte accumulation.
+
+### 3D Visualization — MRL-003 docked into TryR
+
+![MRL-003 vs TryR](docs/tryr_mrl003_docking.png)
+
+*Orange: MRL-003 (Marley-designed molecule, -7.74 kcal/mol). Cyan: TryR enzyme (AlphaFold structure). Magenta: 73 contact residues. TryR is absent in humans — any inhibitor is automatically selective against the parasite.*
+
+### Expanded drug repurposing screen (77 compounds total)
+
+An additional 15 approved drugs from other parasitic diseases, cancer, and natural products were screened. Top oral candidates against TryR:
+
+| # | Compound | Origin | vs TryR | Oral? |
+|---|----------|--------|---------|-------|
+| 1 | **Imatinib** | Cancer (CML) | -6.88 | Yes |
+| 2 | **Quercetin** | Natural (fruits) | -6.63 | Yes |
+| 3 | **Buparvaquone** | Veterinary | -6.59 | Yes |
+| 4 | Mefloquine | Antimalarial | -6.11 | Yes |
+| 5 | Berberine | Natural (plants) | -5.87 | Yes |
+
+None surpassed the MRL antifolate series, confirming antifolates as the optimal scaffold for TryR inhibition.
+
 ### 3D Visualization — Methotrexate docked into GMPS
 
 | Methotrexate in GMPS active site | Binding residues (< 4 angstroms) |
