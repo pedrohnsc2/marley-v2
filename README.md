@@ -273,6 +273,12 @@ Module 06 takes the ranked antigen candidates and designs a complete multi-epito
 
 Predicted using [ESMFold](https://esmatlas.com/about#esmfold). Structures visualized in [Mol*](https://molstar.org/viewer/). PyMOL and ChimeraX scripts auto-generated for region-colored visualization.
 
+### 3D Structure — Marley vaccine construct (ESMFold)
+
+![Marley vaccine 3D structure](docs/marley_vaccine_3d.png)
+
+*Predicted 3D structure of the 335 aa multi-epitope mRNA vaccine construct. Orange: tPA signal peptide. Blue: L7/L12 adjuvant (Th1 bias). Green: 11 CTL epitopes from L. infantum joined by AAY linkers. Structure predicted by ESMFold, visualized in PyMOL.*
+
 ### Computational comparison: Marley vs Leish-Tec
 
 [Leish-Tec](https://en.wikipedia.org/wiki/Leishmune) was the only MAPA-approved vaccine against canine visceral leishmaniasis in Brazil (96.41% efficacy in clinical trials), based on the recombinant A2 protein from *L. infantum*. It was suspended in 2023 due to manufacturing quality deviations.
