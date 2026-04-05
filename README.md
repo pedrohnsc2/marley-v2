@@ -27,10 +27,11 @@ Marley attacks canine leishmaniasis from two fronts:
 
 ## Pipeline stages
 
+### v1 — Vaccine antigen discovery
 ```
 TriTrypDB (L. infantum genome)
         ↓
-01_fetch_genome      — Downloads all annotated protein sequences (~8,500)
+01_fetch_genome       — Downloads all annotated protein sequences (~8,500)
         ↓
 02_filter_surface     — Filters surface-exposed proteins via SignalP 6.0
         ↓
@@ -41,6 +42,38 @@ TriTrypDB (L. infantum genome)
 05_report             — Generates ranked candidate list + Markdown report
         ↓
 06_construct          — Designs multi-epitope mRNA vaccine construct
+        ↓
+07_structure          — 3D structure prediction via ESMFold + PyMOL/ChimeraX
+```
+
+### v2 — Drug target discovery
+```
+UniProt (L. infantum enzymes)
+        ↓
+01_fetch_enzymes      — Downloads 52 enzymes across 5 metabolic pathways
+        ↓
+02_human_comparison   — BLAST against human proteome, identity scoring
+        ↓
+03_essentiality       — DEG database + knockout literature validation
+        ↓
+04_druggability       — Composite score + AlphaFold 3D links
+        ↓
+05_report             — Ranked targets + Markdown report
+```
+
+### v3 — Molecular docking
+```
+v2 top targets + AlphaFold structures
+        ↓
+06_fetch_structures   — AlphaFold PDB download + PDBQT conversion
+        ↓
+07_compound_library   — ChEMBL + 12 curated antileishmanial drugs
+        ↓
+08_docking            — AutoDock Vina (parallel, 50 simulations)
+        ↓
+09_admet_filter       — Lipinski Rule of 5 (RDKit) + ADMET scoring
+        ↓
+10_docking_report     — Top hits + PyMOL 3D visualization
 ```
 
 ---
