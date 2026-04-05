@@ -198,7 +198,7 @@ def _select_best_adjuvant(adjuvant_path: Path) -> dict:
             f"{adjuvant_path}"
         )
 
-    best = max(protein_candidates, key=lambda c: c.get("vaxijen_score", 0.0))
+    best = max(protein_candidates, key=lambda c: c.get("vaxijen_score") or 0.0)
     return best
 
 
@@ -476,11 +476,12 @@ def _build_comparison_report(
     lines.append("")
 
     # -- Adjuvant Selection --
-    adj_name = adjuvant.get("name", "Unknown")
-    adj_score = adjuvant.get("vaxijen_score", 0.0)
+    adj_name = adjuvant.get("name") or adjuvant.get("adjuvant_name", "Unknown")
+    adj_score = adjuvant.get("vaxijen_score")
+    adj_score_str = f"{adj_score:.4f}" if adj_score is not None else "N/A"
     lines.append("## Adjuvant Selection")
     lines.append(
-        f"- Best protein adjuvant: {adj_name} (VaxiJen={adj_score:.4f})"
+        f"- Best protein adjuvant: {adj_name} (VaxiJen={adj_score_str})"
     )
     lines.append(
         "- Recommended co-adjuvant: CpG ODN 2006 (Th1 bias for dogs)"
@@ -659,9 +660,9 @@ def reconstruct_optimized(
     adjuvant = _select_best_adjuvant(adjuvant_path)
     adjuvant_seq = adjuvant.get("sequence", "")
     logger.info(
-        "Selected adjuvant: %s (VaxiJen=%.4f)",
-        adjuvant.get("name", "Unknown"),
-        adjuvant.get("vaxijen_score", 0.0),
+        "Selected adjuvant: %s (VaxiJen=%s)",
+        adjuvant.get("name") or adjuvant.get("adjuvant_name", "Unknown"),
+        adjuvant.get("vaxijen_score") or "N/A",
     )
 
     # ------------------------------------------------------------------
