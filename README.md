@@ -472,6 +472,29 @@ An additional 15 approved drugs from other parasitic diseases, cancer, and natur
 
 None surpassed the MRL antifolate series, confirming antifolates as the optimal scaffold for TryR inhibition.
 
+### Selectivity validation — an honest negative result
+
+MRL-003 and all variants were docked against **human glutathione reductase (GR)** to check if they would also inhibit the human enzyme (causing side effects). The result was clear:
+
+| Compound | L. infantum TryR | Human GR | Delta | Selective? |
+|----------|:----------------:|:--------:|:-----:|:----------:|
+| MRL-003 (original) | -7.32 | -8.68 | -1.36 | **No** |
+| MRL-113 (best redesign) | -7.57 | -8.44 | -0.87 | **No** |
+| 0 / 20 redesigned variants | — | — | — | **None achieved selectivity** |
+
+**20 additional variants** were designed exploiting charge differences (cationic groups attracted to TryR's negative pocket), size expansion (filling TryR's wider cavity), and spermidine-mimicry (unique to trypanothione). None achieved the +1.5 kcal/mol selectivity threshold.
+
+**Why this happened:** TryR and human GR are evolutionary relatives — both flavoprotein disulfide reductases with similar active site architecture. Antifolate scaffolds (Pemetrexed-derived) bind well to both.
+
+**What this means for the project:**
+- The **vaccine (v1+v4) is unaffected** — epitope selection, mRNA construct, immune simulation, VaxiJen comparison with Leish-Tec all remain valid
+- The **52 drug targets (v2) remain valid** — the mapping and ranking are target-agnostic
+- **Antifolates are not the path to selective TryR inhibition** — this saves future researchers from pursuing the same dead end
+- **TryS (trypanothione synthetase, score 0.98) is the better drug target** — it is completely absent in humans with no homolog, eliminating the selectivity problem entirely
+- The **resistance analysis showed low risk** — all 21 binding site mutations were neutral (no single mutation destroys MRL-003 binding), confirming TryR's binding site is robust
+
+**In science, knowing what doesn't work is as valuable as knowing what does.** This negative result narrows the search space and redirects drug design efforts toward TryS — a target with inherent selectivity.
+
 ### 3D Visualization — Methotrexate docked into GMPS
 
 | Methotrexate in GMPS active site | Binding residues (< 4 angstroms) |
