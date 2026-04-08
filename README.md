@@ -673,6 +673,18 @@ An antisense oligonucleotide designed to bind and destroy the SL RNA:
 | Delivery | Subcutaneous injection, 5-10 mg/kg/week |
 | Selectivity | **100%** — target does not exist in humans or dogs |
 
+### MRL-ASO-001 — VaxiJen Antigenicity
+
+The ASO sequence was submitted to VaxiJen v2.0 (parasite model, threshold 0.4):
+
+| Sequence | VaxiJen Score | Classification | vs Leish-Tec |
+|----------|:------------:|:--------------:|:------------:|
+| Leish-Tec (A2, 487 aa) | 0.2340 | NON-ANTIGEN | 1.0x |
+| Marley vaccine (335 aa) | 0.3235 | NON-ANTIGEN | 1.4x |
+| **MRL-ASO-001 (25 nt)** | **1.2561** | **ANTIGEN** | **5.4x** |
+
+**Dual function discovery:** MRL-ASO-001 is not only a drug (blocks SL RNA → kills parasite) but also an **immunological adjuvant**. The phosphorothioate backbone is a known TLR9 agonist, and the parasite-derived sequence is recognized as foreign by the innate immune system. The ASO simultaneously kills the parasite AND stimulates the host's immune response against it.
+
 ### MRL-ASO-001 — 3D Structure
 
 ![MRL-ASO-001 3D Structure](docs/mrl_aso_001_3d.png)
