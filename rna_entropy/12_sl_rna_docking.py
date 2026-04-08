@@ -638,8 +638,9 @@ def _run_vina_docking(
         ) as out_fh:
             out_path = out_fh.name
 
+        vina_bin = str(Path(".venv/bin/vina"))
         cmd = [
-            "vina",
+            vina_bin,
             "--receptor", str(receptor_pdbqt),
             "--ligand", str(ligand_pdbqt),
             "--center_x", str(pocket["center_x"]),
