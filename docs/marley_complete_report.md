@@ -235,6 +235,12 @@ The top target identified by information theory analysis:
 | Dose | 5-10 mg/kg/week |
 | Selectivity | **100%** — target does not exist in host |
 
+### 4.4 MRL-ASO-001 — 3D Structure
+
+![MRL-ASO-001 3D Structure](mrl_aso_001_3d.png)
+
+*3D model of MRL-ASO-001 (25 nt antisense oligonucleotide). Magenta (flanks): LNA-modified nucleotides providing stability and nuclease resistance. Central region: DNA gap enabling RNase H cleavage of the SL RNA target. Yellow spheres: phosphorus atoms of the phosphorothioate backbone. Visualized in PyMOL.*
+
 ### 4.4 Oral Drug Attempt — Honest Negative Result
 
 15 RNA-binding small molecules docked against SL RNA 3D structure via AutoDock Vina. All returned +10.0 kcal/mol (no binding). The 39nt SL RNA lacks stable 3D pockets for small molecule binding. An oral drug against SL RNA would require experimental RNA structure + specialized software.

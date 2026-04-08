@@ -673,6 +673,12 @@ An antisense oligonucleotide designed to bind and destroy the SL RNA:
 | Delivery | Subcutaneous injection, 5-10 mg/kg/week |
 | Selectivity | **100%** — target does not exist in humans or dogs |
 
+### MRL-ASO-001 — 3D Structure
+
+![MRL-ASO-001 3D Structure](docs/mrl_aso_001_3d.png)
+
+*3D model of MRL-ASO-001 (25 nt). Magenta flanks: LNA-modified nucleotides (stability). Central region: DNA gap (RNase H cleavage). Yellow spheres: phosphorothioate backbone. Visualized in PyMOL.*
+
 ### Why ASO succeeded where small molecules failed
 
 | Approach | Target | Result | Why |
