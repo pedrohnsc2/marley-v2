@@ -660,3 +660,124 @@ class OptimizedConstruct:
             gc_content=float(data.get("gc_content", 0.0)),
             improvement_summary=data.get("improvement_summary", ""),
         )
+
+
+# ---------------------------------------------------------------------------
+# Module v4-RNA -- RNA information theory models
+# ---------------------------------------------------------------------------
+
+# Information score weights
+ENTROPY_DELTA_WEIGHT: float = 0.35
+CONSERVATION_WEIGHT_RNA: float = 0.25
+CODON_BIAS_WEIGHT: float = 0.20
+SL_RNA_WEIGHT: float = 0.10
+STRUCTURE_WEIGHT: float = 0.10
+
+
+@dataclass
+class RNATarget:
+    """An RNA target identified by Shannon entropy analysis.
+
+    Regions of low entropy in *L. infantum* that have high entropy in
+    humans are mathematically ideal targets — conserved in the parasite,
+    variable in the host.
+
+    Attributes:
+        gene_id: Unique identifier for the gene.
+        gene_name: Human-readable gene name.
+        sequence_rna: RNA sequence.
+        gc_content: Percentage of G+C nucleotides (expected ~60-63% in L. infantum).
+        shannon_entropy: Shannon entropy H(X) in bits (lower = more conserved).
+        human_entropy: Equivalent Shannon entropy in human homolog.
+        entropy_delta: Difference: human_entropy - shannon_entropy (higher = better target).
+        codon_bias_score: RSCU distance from human codon usage, normalized to [0.0, 1.0].
+        has_sl_rna: Whether the transcript has the 39nt spliced leader sequence.
+        min_free_energy: Minimum free energy of RNA secondary structure (kcal/mol).
+        conservation_score: Conservation across Leishmania strains in [0.0, 1.0].
+        information_score: Composite score in [0.0, 1.0] (higher = better target).
+        is_priority: True for targets with prior experimental validation.
+        evidence: Bibliographic reference or evidence summary.
+        status: Pipeline status (pending, approved, rejected, priority_validated).
+    """
+
+    gene_id: str
+    gene_name: str
+    sequence_rna: str = ""
+    gc_content: float = 0.0
+    shannon_entropy: float = 0.0
+    human_entropy: float = 0.0
+    entropy_delta: float = 0.0
+    codon_bias_score: float = 0.0
+    has_sl_rna: bool = False
+    min_free_energy: float = 0.0
+    conservation_score: float = 0.0
+    information_score: float = 0.0
+    is_priority: bool = False
+    evidence: str = ""
+    status: str = STATUS_PENDING
+
+    def compute_information_score(
+        self, max_delta: float = 2.0, max_mfe: float = 50.0
+    ) -> None:
+        """Calculate composite information score.
+
+        Formula:
+            (entropy_delta / max_delta) * 0.35
+            + (1 - shannon_entropy) * 0.25
+            + codon_bias_score * 0.20
+            + (1.0 if has_sl_rna else 0.0) * 0.10
+            + (abs(min_free_energy) / max_mfe) * 0.10
+        """
+        delta_norm = min(1.0, max(0.0, self.entropy_delta / max_delta))
+        conservation = min(1.0, max(0.0, 1.0 - self.shannon_entropy))
+        mfe_norm = min(1.0, abs(self.min_free_energy) / max_mfe) if max_mfe > 0 else 0.0
+        sl_bonus = 1.0 if self.has_sl_rna else 0.0
+
+        self.information_score = (
+            delta_norm * ENTROPY_DELTA_WEIGHT
+            + conservation * CONSERVATION_WEIGHT_RNA
+            + self.codon_bias_score * CODON_BIAS_WEIGHT
+            + sl_bonus * SL_RNA_WEIGHT
+            + mfe_norm * STRUCTURE_WEIGHT
+        )
+
+    def to_dict(self) -> dict:
+        """Serialize to a plain dict suitable for Supabase upsert."""
+        return {
+            "gene_id": self.gene_id,
+            "gene_name": self.gene_name,
+            "sequence_rna": self.sequence_rna,
+            "gc_content": self.gc_content,
+            "shannon_entropy": self.shannon_entropy,
+            "human_entropy": self.human_entropy,
+            "entropy_delta": self.entropy_delta,
+            "codon_bias_score": self.codon_bias_score,
+            "has_sl_rna": self.has_sl_rna,
+            "min_free_energy": self.min_free_energy,
+            "conservation_score": self.conservation_score,
+            "information_score": self.information_score,
+            "is_priority": self.is_priority,
+            "evidence": self.evidence,
+            "status": self.status,
+        }
+
+    @classmethod
+    def from_dict(cls, data: dict) -> "RNATarget":
+        """Construct an ``RNATarget`` from a dictionary."""
+        return cls(
+            gene_id=data["gene_id"],
+            gene_name=data["gene_name"],
+            sequence_rna=data.get("sequence_rna", ""),
+            gc_content=float(data.get("gc_content", 0.0)),
+            shannon_entropy=float(data.get("shannon_entropy", 0.0)),
+            human_entropy=float(data.get("human_entropy", 0.0)),
+            entropy_delta=float(data.get("entropy_delta", 0.0)),
+            codon_bias_score=float(data.get("codon_bias_score", 0.0)),
+            has_sl_rna=data.get("has_sl_rna", False),
+            min_free_energy=float(data.get("min_free_energy", 0.0)),
+            conservation_score=float(data.get("conservation_score", 0.0)),
+            information_score=float(data.get("information_score", 0.0)),
+            is_priority=data.get("is_priority", False),
+            evidence=data.get("evidence", ""),
+            status=data.get("status", STATUS_PENDING),
+        )

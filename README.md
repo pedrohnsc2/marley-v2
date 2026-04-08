@@ -22,6 +22,7 @@ Marley attacks canine leishmaniasis from two fronts:
 - **v1 (Vaccine)** — Identifies mRNA vaccine antigen candidates by filtering the *L. infantum* proteome through surface exposure, conservation, and immunogenicity predictions
 - **v2 (Drug Targets)** — Maps 52 enzymatic drug targets across 5 metabolic pathways, ranked by structural divergence from human homologs
 - **v3 (Molecular Docking)** — Screens approved drugs against top enzyme targets using AutoDock Vina, identifying candidate inhibitor molecules with 3D binding pose visualization
+- **v4-RNA (Information Theory)** — Applies Shannon entropy to the *L. infantum* transcriptome, identifying RNA regions that are mathematically conserved in the parasite and absent in humans
 
 ---
 
@@ -74,6 +75,25 @@ v2 top targets + AlphaFold structures
 09_admet_filter       — Lipinski Rule of 5 (RDKit) + ADMET scoring
         ↓
 10_docking_report     — Top hits + PyMOL 3D visualization
+```
+
+### v4-RNA — Information theory analysis
+```
+Transcriptome (UniProt + Ensembl)
+        ↓
+01_fetch_transcriptome — L. infantum + human mRNA sequences
+        ↓
+02_codon_usage         — RSCU calculation, codon bias scoring
+        ↓
+03_shannon_entropy     — Per-position entropy H(X) = -Σp(x)log₂p(x)
+        ↓
+04_sl_rna_analysis     — Spliced Leader mapping (39nt, conserved ~500M years)
+        ↓
+05_human_comparison    — Filter by entropy delta (parasite vs human)
+        ↓
+06_structure_prediction — RNA secondary structure (MFE via RNAfold)
+        ↓
+07_report              — information_score ranking + Markdown report
 ```
 
 ---
@@ -210,6 +230,14 @@ npm run dev
 | dt/08_docking | ✅ Complete | AutoDock Vina parallel docking, 50/60 pairs completed |
 | dt/09_admet_filter | ✅ Complete | Lipinski Rule of 5 (RDKit) + ADMET scoring |
 | dt/10_docking_report | ✅ Complete | Top hits CSV + Markdown report + PyMOL scripts |
+| **v4-RNA: Information Theory** | | |
+| rna/01_fetch_transcriptome | ✅ Complete | UniProt mRNA download (L. infantum + human) |
+| rna/02_codon_usage | ✅ Complete | RSCU calculation + codon bias scoring |
+| rna/03_shannon_entropy | ✅ Complete | Per-position Shannon entropy H(X) |
+| rna/04_sl_rna_analysis | ✅ Complete | Spliced Leader (39nt) mapping + BLAST vs human |
+| rna/05_human_comparison | ✅ Complete | Entropy delta filtering + priority classification |
+| rna/06_structure_prediction | ✅ Complete | RNA secondary structure (ViennaRNA/fallback MFE) |
+| rna/07_report | ✅ Complete | information_score ranking + 3 priority targets |
 
 ### End-to-end validation
 
