@@ -1,0 +1,597 @@
+{
+  "total_evaluated": 2700,
+  "n_position_pairs": 300,
+  "better_than_wildtype": 1769,
+  "best_double_mutant": {
+    "positions": [
+      12,
+      20
+    ],
+    "bases": [
+      "G",
+      "C"
+    ],
+    "mutation": "A13G+A21C",
+    "dg_double_kcal": -31.22,
+    "dg_single_a_kcal": -29.62,
+    "dg_single_b_kcal": -29.57,
+    "epistasis_ddg_kcal": 0.0,
+    "interaction_type": "additive"
+  },
+  "worst_double_mutant": {
+    "positions": [
+      1,
+      22
+    ],
+    "bases": [
+      "T",
+      "A"
+    ],
+    "mutation": "C2T+C23A",
+    "dg_double_kcal": -24.73,
+    "dg_single_a_kcal": -26.53,
+    "dg_single_b_kcal": -26.18,
+    "epistasis_ddg_kcal": 0.01,
+    "interaction_type": "additive"
+  },
+  "epistasis_statistics": {
+    "mean_epistasis_kcal": 0.0052,
+    "std_epistasis_kcal": 0.1022,
+    "min_epistasis_kcal": -0.74,
+    "max_epistasis_kcal": 0.6,
+    "total_synergistic": 14,
+    "total_antagonistic": 21,
+    "total_additive": 2665,
+    "fraction_synergistic": 0.0052
+  },
+  "top_synergistic": [
+    {
+      "positions": [
+        21,
+        22
+      ],
+      "bases": [
+        "C",
+        "G"
+      ],
+      "mutation": "G22C+C23G",
+      "dg_double_kcal": -27.73,
+      "dg_single_a_kcal": -27.73,
+      "dg_single_b_kcal": -27.23,
+      "epistasis_ddg_kcal": -0.74,
+      "interaction_type": "synergistic"
+    },
+    {
+      "positions": [
+        22,
+        23
+      ],
+      "bases": [
+        "G",
+        "C"
+      ],
+      "mutation": "C23G+G24C",
+      "dg_double_kcal": -27.47,
+      "dg_single_a_kcal": -27.23,
+      "dg_single_b_kcal": -27.47,
+      "epistasis_ddg_kcal": -0.74,
+      "interaction_type": "synergistic"
+    },
+    {
+      "positions": [
+        4,
+        5
+      ],
+      "bases": [
+        "T",
+        "G"
+      ],
+      "mutation": "A5T+A6G",
+      "dg_double_kcal": -28.86,
+      "dg_single_a_kcal": -27.69,
+      "dg_single_b_kcal": -28.54,
+      "epistasis_ddg_kcal": -0.6,
+      "interaction_type": "synergistic"
+    },
+    {
+      "positions": [
+        5,
+        6
+      ],
+      "bases": [
+        "T",
+        "G"
+      ],
+      "mutation": "A6T+A7G",
+      "dg_double_kcal": -29.06,
+      "dg_single_a_kcal": -27.41,
+      "dg_single_b_kcal": -29.02,
+      "epistasis_ddg_kcal": -0.6,
+      "interaction_type": "synergistic"
+    },
+    {
+      "positions": [
+        1,
+        2
+      ],
+      "bases": [
+        "T",
+        "T"
+      ],
+      "mutation": "C2T+A3T",
+      "dg_double_kcal": -27.12,
+      "dg_single_a_kcal": -26.53,
+      "dg_single_b_kcal": -27.97,
+      "epistasis_ddg_kcal": -0.59,
+      "interaction_type": "synergistic"
+    },
+    {
+      "positions": [
+        8,
+        9
+      ],
+      "bases": [
+        "A",
+        "A"
+      ],
+      "mutation": "T9A+G10A",
+      "dg_double_kcal": -27.4,
+      "dg_single_a_kcal": -27.97,
+      "dg_single_b_kcal": -26.81,
+      "epistasis_ddg_kcal": -0.59,
+      "interaction_type": "synergistic"
+    },
+    {
+      "positions": [
+        14,
+        15
+      ],
+      "bases": [
+        "C",
+        "A"
+      ],
+      "mutation": "T15C+T16A",
+      "dg_double_kcal": -29.38,
+      "dg_single_a_kcal": -28.79,
+      "dg_single_b_kcal": -27.97,
+      "epistasis_ddg_kcal": -0.59,
+      "interaction_type": "synergistic"
+    },
+    {
+      "positions": [
+        14,
+        15
+      ],
+      "bases": [
+        "A",
+        "A"
+      ],
+      "mutation": "T15A+T16A",
+      "dg_double_kcal": -28.57,
+      "dg_single_a_kcal": -28.0,
+      "dg_single_b_kcal": -27.97,
+      "epistasis_ddg_kcal": -0.57,
+      "interaction_type": "synergistic"
+    },
+    {
+      "positions": [
+        4,
+        5
+      ],
+      "bases": [
+        "T",
+        "T"
+      ],
+      "mutation": "A5T+A6T",
+      "dg_double_kcal": -27.69,
+      "dg_single_a_kcal": -27.69,
+      "dg_single_b_kcal": -27.41,
+      "epistasis_ddg_kcal": -0.56,
+      "interaction_type": "synergistic"
+    },
+    {
+      "positions": [
+        5,
+        6
+      ],
+      "bases": [
+        "T",
+        "T"
+      ],
+      "mutation": "A6T+A7T",
+      "dg_double_kcal": -27.69,
+      "dg_single_a_kcal": -27.41,
+      "dg_single_b_kcal": -27.69,
+      "epistasis_ddg_kcal": -0.56,
+      "interaction_type": "synergistic"
+    },
+    {
+      "positions": [
+        1,
+        2
+      ],
+      "bases": [
+        "G",
+        "C"
+      ],
+      "mutation": "C2G+A3C",
+      "dg_double_kcal": -29.46,
+      "dg_single_a_kcal": -27.66,
+      "dg_single_b_kcal": -29.22,
+      "epistasis_ddg_kcal": -0.55,
+      "interaction_type": "synergistic"
+    },
+    {
+      "positions": [
+        8,
+        9
+      ],
+      "bases": [
+        "G",
+        "C"
+      ],
+      "mutation": "T9G+G10C",
+      "dg_double_kcal": -29.77,
+      "dg_single_a_kcal": -29.22,
+      "dg_single_b_kcal": -27.97,
+      "epistasis_ddg_kcal": -0.55,
+      "interaction_type": "synergistic"
+    },
+    {
+      "positions": [
+        21,
+        22
+      ],
+      "bases": [
+        "C",
+        "A"
+      ],
+      "mutation": "G22C+C23A",
+      "dg_double_kcal": -26.49,
+      "dg_single_a_kcal": -27.73,
+      "dg_single_b_kcal": -26.18,
+      "epistasis_ddg_kcal": -0.55,
+      "interaction_type": "synergistic"
+    },
+    {
+      "positions": [
+        21,
+        22
+      ],
+      "bases": [
+        "T",
+        "G"
+      ],
+      "mutation": "G22T+C23G",
+      "dg_double_kcal": -26.45,
+      "dg_single_a_kcal": -26.64,
+      "dg_single_b_kcal": -27.23,
+      "epistasis_ddg_kcal": -0.55,
+      "interaction_type": "synergistic"
+    }
+  ],
+  "top_10_best_dg": [
+    {
+      "positions": [
+        12,
+        20
+      ],
+      "bases": [
+        "G",
+        "C"
+      ],
+      "mutation": "A13G+A21C",
+      "dg_double_kcal": -31.22,
+      "dg_single_a_kcal": -29.62,
+      "dg_single_b_kcal": -29.57,
+      "epistasis_ddg_kcal": 0.0,
+      "interaction_type": "additive"
+    },
+    {
+      "positions": [
+        12,
+        16
+      ],
+      "bases": [
+        "G",
+        "G"
+      ],
+      "mutation": "A13G+A17G",
+      "dg_double_kcal": -31.06,
+      "dg_single_a_kcal": -29.62,
+      "dg_single_b_kcal": -29.42,
+      "epistasis_ddg_kcal": 0.01,
+      "interaction_type": "additive"
+    },
+    {
+      "positions": [
+        12,
+        17
+      ],
+      "bases": [
+        "G",
+        "C"
+      ],
+      "mutation": "A13G+T18C",
+      "dg_double_kcal": -31.06,
+      "dg_single_a_kcal": -29.62,
+      "dg_single_b_kcal": -29.42,
+      "epistasis_ddg_kcal": 0.01,
+      "interaction_type": "additive"
+    },
+    {
+      "positions": [
+        12,
+        18
+      ],
+      "bases": [
+        "G",
+        "G"
+      ],
+      "mutation": "A13G+A19G",
+      "dg_double_kcal": -31.06,
+      "dg_single_a_kcal": -29.62,
+      "dg_single_b_kcal": -29.42,
+      "epistasis_ddg_kcal": 0.01,
+      "interaction_type": "additive"
+    },
+    {
+      "positions": [
+        12,
+        19
+      ],
+      "bases": [
+        "G",
+        "C"
+      ],
+      "mutation": "A13G+T20C",
+      "dg_double_kcal": -31.06,
+      "dg_single_a_kcal": -29.62,
+      "dg_single_b_kcal": -29.42,
+      "epistasis_ddg_kcal": 0.01,
+      "interaction_type": "additive"
+    },
+    {
+      "positions": [
+        16,
+        17
+      ],
+      "bases": [
+        "G",
+        "C"
+      ],
+      "mutation": "A17G+T18C",
+      "dg_double_kcal": -31.06,
+      "dg_single_a_kcal": -29.42,
+      "dg_single_b_kcal": -29.42,
+      "epistasis_ddg_kcal": -0.19,
+      "interaction_type": "additive"
+    },
+    {
+      "positions": [
+        18,
+        19
+      ],
+      "bases": [
+        "G",
+        "C"
+      ],
+      "mutation": "A19G+T20C",
+      "dg_double_kcal": -31.06,
+      "dg_single_a_kcal": -29.42,
+      "dg_single_b_kcal": -29.42,
+      "epistasis_ddg_kcal": -0.19,
+      "interaction_type": "additive"
+    },
+    {
+      "positions": [
+        11,
+        20
+      ],
+      "bases": [
+        "C",
+        "C"
+      ],
+      "mutation": "T12C+A21C",
+      "dg_double_kcal": -31.02,
+      "dg_single_a_kcal": -29.42,
+      "dg_single_b_kcal": -29.57,
+      "epistasis_ddg_kcal": 0.0,
+      "interaction_type": "additive"
+    },
+    {
+      "positions": [
+        12,
+        20
+      ],
+      "bases": [
+        "G",
+        "G"
+      ],
+      "mutation": "A13G+A21G",
+      "dg_double_kcal": -31.02,
+      "dg_single_a_kcal": -29.62,
+      "dg_single_b_kcal": -29.38,
+      "epistasis_ddg_kcal": 0.01,
+      "interaction_type": "additive"
+    },
+    {
+      "positions": [
+        16,
+        20
+      ],
+      "bases": [
+        "G",
+        "C"
+      ],
+      "mutation": "A17G+A21C",
+      "dg_double_kcal": -31.02,
+      "dg_single_a_kcal": -29.42,
+      "dg_single_b_kcal": -29.57,
+      "epistasis_ddg_kcal": 0.0,
+      "interaction_type": "additive"
+    }
+  ],
+  "top_10_worst_dg": [
+    {
+      "positions": [
+        1,
+        23
+      ],
+      "bases": [
+        "T",
+        "A"
+      ],
+      "mutation": "C2T+G24A",
+      "dg_double_kcal": -25.24,
+      "dg_single_a_kcal": -26.53,
+      "dg_single_b_kcal": -26.69,
+      "epistasis_ddg_kcal": 0.01,
+      "interaction_type": "additive"
+    },
+    {
+      "positions": [
+        1,
+        23
+      ],
+      "bases": [
+        "T",
+        "T"
+      ],
+      "mutation": "C2T+G24T",
+      "dg_double_kcal": -25.21,
+      "dg_single_a_kcal": -26.53,
+      "dg_single_b_kcal": -26.66,
+      "epistasis_ddg_kcal": 0.01,
+      "interaction_type": "additive"
+    },
+    {
+      "positions": [
+        1,
+        21
+      ],
+      "bases": [
+        "T",
+        "T"
+      ],
+      "mutation": "C2T+G22T",
+      "dg_double_kcal": -25.2,
+      "dg_single_a_kcal": -26.53,
+      "dg_single_b_kcal": -26.64,
+      "epistasis_ddg_kcal": 0.0,
+      "interaction_type": "additive"
+    },
+    {
+      "positions": [
+        1,
+        22
+      ],
+      "bases": [
+        "T",
+        "T"
+      ],
+      "mutation": "C2T+C23T",
+      "dg_double_kcal": -25.04,
+      "dg_single_a_kcal": -26.53,
+      "dg_single_b_kcal": -26.49,
+      "epistasis_ddg_kcal": 0.01,
+      "interaction_type": "additive"
+    },
+    {
+      "positions": [
+        3,
+        22
+      ],
+      "bases": [
+        "T",
+        "A"
+      ],
+      "mutation": "G4T+C23A",
+      "dg_double_kcal": -25.04,
+      "dg_single_a_kcal": -26.84,
+      "dg_single_b_kcal": -26.18,
+      "epistasis_ddg_kcal": 0.01,
+      "interaction_type": "additive"
+    },
+    {
+      "positions": [
+        21,
+        22
+      ],
+      "bases": [
+        "T",
+        "A"
+      ],
+      "mutation": "G22T+C23A",
+      "dg_double_kcal": -25.04,
+      "dg_single_a_kcal": -26.64,
+      "dg_single_b_kcal": -26.18,
+      "epistasis_ddg_kcal": -0.19,
+      "interaction_type": "additive"
+    },
+    {
+      "positions": [
+        22,
+        23
+      ],
+      "bases": [
+        "T",
+        "A"
+      ],
+      "mutation": "C23T+G24A",
+      "dg_double_kcal": -25.04,
+      "dg_single_a_kcal": -26.49,
+      "dg_single_b_kcal": -26.69,
+      "epistasis_ddg_kcal": 0.17,
+      "interaction_type": "additive"
+    },
+    {
+      "positions": [
+        9,
+        22
+      ],
+      "bases": [
+        "A",
+        "A"
+      ],
+      "mutation": "G10A+C23A",
+      "dg_double_kcal": -25.01,
+      "dg_single_a_kcal": -26.81,
+      "dg_single_b_kcal": -26.18,
+      "epistasis_ddg_kcal": 0.01,
+      "interaction_type": "additive"
+    },
+    {
+      "positions": [
+        9,
+        22
+      ],
+      "bases": [
+        "T",
+        "A"
+      ],
+      "mutation": "G10T+C23A",
+      "dg_double_kcal": -25.01,
+      "dg_single_a_kcal": -26.81,
+      "dg_single_b_kcal": -26.18,
+      "epistasis_ddg_kcal": 0.01,
+      "interaction_type": "additive"
+    },
+    {
+      "positions": [
+        1,
+        22
+      ],
+      "bases": [
+        "T",
+        "A"
+      ],
+      "mutation": "C2T+C23A",
+      "dg_double_kcal": -24.73,
+      "dg_single_a_kcal": -26.53,
+      "dg_single_b_kcal": -26.18,
+      "epistasis_ddg_kcal": 0.01,
+      "interaction_type": "additive"
+    }
+  ]
+}

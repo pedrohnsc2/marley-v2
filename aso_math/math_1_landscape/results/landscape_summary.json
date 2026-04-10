@@ -1,0 +1,28 @@
+{
+  "wildtype_dg_kcal": -27.97,
+  "wildtype_tm_celsius": 68.48,
+  "rank_among_single_mutants": {
+    "rank": 45,
+    "total": 76,
+    "description": "MRL-ASO-001 ocupa a posicao 45 de 76 variantes (incluindo WT e 75 mutantes simples)"
+  },
+  "percentile_binding_energy": {
+    "percentile": 41.33,
+    "description": "MRL-ASO-001 esta no percentil 41.33% de energia de ligacao (100% = melhor)"
+  },
+  "variants_near_optimum": {
+    "threshold_kcal": 2.0,
+    "count": 57,
+    "description": "57 variante(s) dentro de 2.0 kcal/mol do otimo global"
+  },
+  "robustness": {
+    "mean_abs_ddg_kcal": 0.8524,
+    "std_abs_ddg_kcal": 0.4877,
+    "description": "Score de robustez = 0.8524 kcal/mol (media de |ΔΔG| para mutacoes simples; valor alto = sequencia altamente otimizada)"
+  },
+  "single_mutants_better_than_wt": 44,
+  "double_mutants_better_than_wt": 1769,
+  "optimal_length_nt": 30,
+  "sliding_window_covers_optimal": true,
+  "sliding_window_dg_deviation_kcal": 0.0
+}

@@ -1,0 +1,153 @@
+# Platform B -- Recombinant E. coli Vaccine
+
+**Generated:** 2026-04-10T23:51:26.893703+00:00
+**Pipeline version:** 0.1.0
+
+## 1. Construct Redesign (B1)
+
+### Architecture
+
+```
+[NdeI/Met] - [His6] - [TEV site] - [L7/L12 adjuvant] - EAAAK - [Epitope cassette] - [Stop] - [XhoI]
+```
+
+| Property | Value |
+|---|---|
+| Total protein length | 278 aa |
+| Molecular weight | 30,174.16 Da (30.2 kDa) |
+| Isoelectric point (pI) | 5.87 |
+| Instability index | 38.02 (stable) |
+| Unique epitopes | 11 |
+| Internal NdeI sites | None |
+| Internal XhoI sites | None |
+
+### Modifications from mRNA Platform
+
+| Component | mRNA (Platform A) | E. coli (Platform B) |
+|---|---|---|
+| Signal peptide | tPA (23 aa) | Removed |
+| N-terminal tag | None | Met + His6 + TEV site |
+| Codon optimization | *Canis lupus* | *E. coli* K12 |
+| UTRs | 5' UTR + 3' UTR + poly(A) | None (bacterial) |
+| Cloning sites | None | NdeI / XhoI (pET-28a) |
+| Stop codon | TGA | TAA (preferred in E. coli) |
+
+### Epitope Cassette
+
+| # | Peptide | Linker |
+|---|---|---|
+| 1 | `RMMRSLTPF` | AAY |
+| 2 | `YIYETFASM` | AAY |
+| 3 | `SLMCVFYFK` | AAY |
+| 4 | `YLAALVPAL` | AAY |
+| 5 | `LIIEDLSLV` | AAY |
+| 6 | `FAFSVSARR` | AAY |
+| 7 | `MILGTFVRL` | AAY |
+| 8 | `MQNVTFVPK` | AAY |
+| 9 | `RILESISNV` | AAY |
+| 10 | `ILYNKISGL` | AAY |
+| 11 | `LLTANVCYK` | (C-terminal) |
+
+### Protein Sequence
+
+```
+MHHHHHHENLYFQSMAKLSTDELLDAFKEMTLLELSDFVKKFEETFEVTAAAPVAVAAAGAAPAGAAVEA
+AEEQSEFDVILEAAGDKKIGVIKVVREIVSGLGLKEAKDLVDGAPKPLLEKVAKEAADEAKAKLEAAGAT
+VTVKEAAAKRMMRSLTPFAAYYIYETFASMAAYSLMCVFYFKAAYYLAALVPALAAYLIIEDLSLVAAYF
+AFSVSARRAAYMILGTFVRLAAYMQNVTFVPKAAYRILESISNVAAYILYNKISGLAAYLLTANVCYK
+```
+
+## 2. Codon Optimization (B2)
+
+| Metric | Value | Target |
+|---|---|---|
+| DNA insert length | 846 nt | -- |
+| GC content | 54.4% | 40-60% |
+| CAI (Codon Adaptation Index) | 1.0000 | > 0.80 |
+| Rare codons (< 10%) | 0 | 0 |
+| Internal NdeI sites | None | None |
+| Internal XhoI sites | None | None |
+| Internal Shine-Dalgarno | None | None |
+| Homopolymer runs > 8 nt | 0 | 0 |
+
+**Warnings:**
+- 1 potencial(is) terminador(es) rho-independente(s)
+
+### DNA Insert Sequence
+
+```
+CATATGCATCATCATCATCATCATGAAAACCTGTATTTTCAGAGCATGGCGAAACTGAGCACCGATGAAC
+TGCTGGATGCGTTTAAAGAAATGACCCTGCTGGAACTGAGCGATTTTGTGAAAAAATTTGAAGAAACCTT
+TGAAGTGACCGCGGCGGCGCCGGTGGCGGTGGCGGCGGCGGGCGCGGCGCCGGCGGGCGCGGCGGTGGAA
+GCGGCGGAAGAACAGAGCGAATTTGATGTGATTCTGGAAGCGGCGGGCGATAAAAAAATTGGCGTGATTA
+AAGTGGTGCGTGAAATTGTGAGCGGCCTGGGCCTGAAAGAAGCGAAAGATCTGGTGGATGGCGCGCCGAA
+ACCGCTGCTGGAAAAAGTGGCGAAAGAAGCGGCGGATGAAGCGAAAGCGAAACTGGAAGCGGCGGGCGCG
+ACCGTGACCGTGAAAGAAGCGGCGGCGAAACGTATGATGCGTAGCCTGACCCCGTTTGCGGCGTATTATA
+TTTATGAAACCTTTGCGAGCATGGCGGCGTATAGCCTGATGTGCGTGTTTTATTTTAAAGCGGCGTATTA
+TCTGGCGGCGCTGGTGCCGGCGCTGGCGGCGTATCTGATTATTGAAGATCTGAGCCTGGTGGCGGCGTAT
+TTTGCGTTTAGCGTGAGCGCGCGTCGTGCGGCGTATATGATTCTGGGCACCTTTGTGCGTCTGGCGGCGT
+ATATGCAGAACGTGACCTTTGTGCCGAAAGCGGCGTATCGTATTCTGGAAAGCATTAGCAACGTGGCGGC
+GTATATTCTGTATAACAAAATTAGCGGCCTGGCGGCGTATCTGCTGACCGCGAACGTGTGCTATAAATAA
+CTCGAG
+```
+
+## 3. Purification Protocol (B3)
+
+**Expression system:** BL21(DE3) / pET-28a(+)
+**Induction:** 0.5 mM IPTG at OD600 = 0.6, 18.0C, 16.0h
+
+| Step | Method | Input (mg) | Output (mg) | Efficiency | Purity |
+|---|---|---|---|---|---|
+| 0. Lise Celular | Sonicacao (6x 30s pulsos, 50% amplitude,... | 35.0 | 33.2 | 95% | 10% |
+| 1. IMAC Ni-NTA (Captura) | Cromatografia de afinidade a metal imobi... | 33.2 | 29.9 | 90% | 80% |
+| 2. Clivagem TEV | Protease TEV (Tobacco Etch Virus NIa) | 29.9 | 25.6 | 86% | 80% |
+| 3. IMAC Reverso (Subtractivo) | Re-passagem em Ni-NTA | 25.6 | 21.8 | 85% | 95% |
+| 4. SEC (Polimento) | Cromatografia de Exclusao Molecular | 21.8 | 17.4 | 80% | 98% |
+
+| Metric | Value |
+|---|---|
+| Culture volume | 1.0 L |
+| Initial yield (expression) | 35.0 mg |
+| Final yield (purified) | 17.4 mg |
+| Final purity | 98.0% |
+| Overall recovery | 49.7% |
+| Expected yield range | 9.9 - 24.9 mg/L |
+
+## 4. Cost Model (B4)
+
+### Laboratory Scale (1L culture)
+
+| Item | Cost (USD) |
+|---|---|
+| Fermentation | $15.00/L |
+| Purification | $955.00/run |
+| Total per L | $970.00 |
+| **Cost per mg** | **$55.75** |
+| **Cost per dose (50 ug)** | **$4.7874** |
+| **Cost per animal (3 doses)** | **$8.3621** |
+
+### Industrial Scale (1000L fermentor, 0.1x factor)
+
+| Item | Cost (USD) |
+|---|---|
+| **Cost per mg** | **$5.5747** |
+| **Cost per dose (50 ug)** | **$2.2787** |
+| **Cost per animal (3 doses)** | **$0.8362** |
+
+### Cold Chain
+
+- **Storage:** 2-8°C
+- Proteina recombinante liofilizada ou em solucao; refrigerador padrao, sem necessidade de ultracongelamento (-80°C); vantagem significativa sobre vacinas de mRNA (que requerem -20°C a -80°C)
+
+### Per-Dose Breakdown
+
+| Component | Lab | Industrial |
+|---|---|---|
+| Protein | $2.7874 | $0.2787 |
+| QuilA adjuvant | $1.50 | $1.50 |
+| Formulation | $0.50 | $0.50 |
+| **Total** | **$4.7874** | **$2.2787** |
+
+---
+
+*Report generated by the Marley reverse vaccinology pipeline -- Platform B (E. coli recombinant)*

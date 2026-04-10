@@ -1,0 +1,206 @@
+{
+  "metadata": {
+    "generated": "2026-04-10T23:51:26.893703+00:00",
+    "pipeline_version": "0.1.0",
+    "platform": "B_ecoli_recombinant",
+    "source_construct": "/Users/pedronascimento/dev/marley/results/construct/construct_card.json"
+  },
+  "construct": {
+    "protein_sequence": "MHHHHHHENLYFQSMAKLSTDELLDAFKEMTLLELSDFVKKFEETFEVTAAAPVAVAAAGAAPAGAAVEAAEEQSEFDVILEAAGDKKIGVIKVVREIVSGLGLKEAKDLVDGAPKPLLEKVAKEAADEAKAKLEAAGATVTVKEAAAKRMMRSLTPFAAYYIYETFASMAAYSLMCVFYFKAAYYLAALVPALAAYLIIEDLSLVAAYFAFSVSARRAAYMILGTFVRLAAYMQNVTFVPKAAYRILESISNVAAYILYNKISGLAAYLLTANVCYK",
+    "length_aa": 278,
+    "molecular_weight_da": 30174.16,
+    "isoelectric_point": 5.87,
+    "instability_index": 38.02,
+    "is_stable": true,
+    "has_internal_ndei": false,
+    "has_internal_xhoi": false,
+    "unique_epitope_count": 11,
+    "unique_epitopes": [
+      "RMMRSLTPF",
+      "YIYETFASM",
+      "SLMCVFYFK",
+      "YLAALVPAL",
+      "LIIEDLSLV",
+      "FAFSVSARR",
+      "MILGTFVRL",
+      "MQNVTFVPK",
+      "RILESISNV",
+      "ILYNKISGL",
+      "LLTANVCYK"
+    ],
+    "components": {
+      "met_start": "M",
+      "his6_tag": "HHHHHH",
+      "tev_site": "ENLYFQS",
+      "adjuvant_l7l12": "MAKLSTDELLDAFKEMTLLELSDFVKKFEETFEVTAAAPVAVAAAGAAPAGAAVEAAEEQSEFDVILEAAGDKKIGVIKVVREIVSGLGLKEAKDLVDGAPKPLLEKVAKEAADEAKAKLEAAGATVTVK",
+      "linker_adjuvant": "EAAAK",
+      "epitope_cassette": "RMMRSLTPFAAYYIYETFASMAAYSLMCVFYFKAAYYLAALVPALAAYLIIEDLSLVAAYFAFSVSARRAAYMILGTFVRLAAYMQNVTFVPKAAYRILESISNVAAYILYNKISGLAAYLLTANVCYK",
+      "linker_ctl": "AAY"
+    }
+  },
+  "codon_optimization": {
+    "dna_sequence": "CATATGCATCATCATCATCATCATGAAAACCTGTATTTTCAGAGCATGGCGAAACTGAGCACCGATGAACTGCTGGATGCGTTTAAAGAAATGACCCTGCTGGAACTGAGCGATTTTGTGAAAAAATTTGAAGAAACCTTTGAAGTGACCGCGGCGGCGCCGGTGGCGGTGGCGGCGGCGGGCGCGGCGCCGGCGGGCGCGGCGGTGGAAGCGGCGGAAGAACAGAGCGAATTTGATGTGATTCTGGAAGCGGCGGGCGATAAAAAAATTGGCGTGATTAAAGTGGTGCGTGAAATTGTGAGCGGCCTGGGCCTGAAAGAAGCGAAAGATCTGGTGGATGGCGCGCCGAAACCGCTGCTGGAAAAAGTGGCGAAAGAAGCGGCGGATGAAGCGAAAGCGAAACTGGAAGCGGCGGGCGCGACCGTGACCGTGAAAGAAGCGGCGGCGAAACGTATGATGCGTAGCCTGACCCCGTTTGCGGCGTATTATATTTATGAAACCTTTGCGAGCATGGCGGCGTATAGCCTGATGTGCGTGTTTTATTTTAAAGCGGCGTATTATCTGGCGGCGCTGGTGCCGGCGCTGGCGGCGTATCTGATTATTGAAGATCTGAGCCTGGTGGCGGCGTATTTTGCGTTTAGCGTGAGCGCGCGTCGTGCGGCGTATATGATTCTGGGCACCTTTGTGCGTCTGGCGGCGTATATGCAGAACGTGACCTTTGTGCCGAAAGCGGCGTATCGTATTCTGGAAAGCATTAGCAACGTGGCGGCGTATATTCTGTATAACAAAATTAGCGGCCTGGCGGCGTATCTGCTGACCGCGAACGTGTGCTATAAATAACTCGAG",
+    "length_nt": 846,
+    "gc_content": 0.5444,
+    "cai": 1.0,
+    "rare_codons": [],
+    "restriction_sites_found": [],
+    "has_internal_ndei": false,
+    "has_internal_xhoi": false,
+    "has_shine_dalgarno": false,
+    "homopolymer_runs": [],
+    "warnings": [
+      "1 potencial(is) terminador(es) rho-independente(s)"
+    ]
+  },
+  "purification": {
+    "expression_system": "BL21(DE3)",
+    "expression_vector": "pET-28a(+)",
+    "expression_conditions": {
+      "strain": "BL21(DE3)",
+      "vector": "pET-28a(+)",
+      "iptg_mm": 0.5,
+      "induction_temp_c": 18.0,
+      "induction_time_h": 16.0,
+      "od600_induction": 0.6
+    },
+    "culture_volume_l": 1.0,
+    "initial_yield_mg": 35.0,
+    "final_yield_mg": 17.4,
+    "final_purity_pct": 98.0,
+    "overall_recovery_pct": 49.7,
+    "expected_yield_range_mg": [
+      9.94,
+      24.85
+    ],
+    "steps": [
+      {
+        "step_number": 0,
+        "name": "Lise Celular",
+        "method": "Sonicacao (6x 30s pulsos, 50% amplitude, gelo)",
+        "input_mg": 35.0,
+        "output_mg": 33.25,
+        "efficiency_pct": 95.0,
+        "purity_after_pct": 10.0,
+        "buffer": "50 mM Tris-HCl pH 8.0, 300 mM NaCl, 10 mM imidazol, 1 mM PMSF",
+        "conditions": "4°C, centrifugacao 20.000g 30 min",
+        "notes": "Lisozima 1 mg/mL pre-incubada 30 min; DNase I 10 ug/mL"
+      },
+      {
+        "step_number": 1,
+        "name": "IMAC Ni-NTA (Captura)",
+        "method": "Cromatografia de afinidade a metal imobilizado",
+        "input_mg": 33.25,
+        "output_mg": 29.93,
+        "efficiency_pct": 90.0,
+        "purity_after_pct": 80.0,
+        "buffer": "Lavagem: 50 mM Tris pH 8.0, 300 mM NaCl, 20 mM imidazol; Eluicao: gradiente 50-250 mM imidazol",
+        "conditions": "4°C, fluxo 1 mL/min, coluna HisTrap FF 5mL (GE Healthcare)",
+        "notes": "His6-tag se coordena com Ni2+ via ligacao de coordenacao; eluicao competitiva com imidazol; dialise overnight contra tampao TEV"
+      },
+      {
+        "step_number": 2,
+        "name": "Clivagem TEV",
+        "method": "Protease TEV (Tobacco Etch Virus NIa)",
+        "input_mg": 29.93,
+        "output_mg": 25.59,
+        "efficiency_pct": 85.5,
+        "purity_after_pct": 80.0,
+        "buffer": "50 mM Tris pH 8.0, 150 mM NaCl, 1 mM DTT, 0.5 mM EDTA",
+        "conditions": "4.0°C, 16.0h; razao TEV:substrato 1:50 (w/w)",
+        "notes": "Reconhecimento: ENLYFQ/S; apos clivagem resta Ser no N-terminal da proteina alvo; TEV e His6-tagged (sera removida no passo seguinte)"
+      },
+      {
+        "step_number": 3,
+        "name": "IMAC Reverso (Subtractivo)",
+        "method": "Re-passagem em Ni-NTA",
+        "input_mg": 25.59,
+        "output_mg": 21.75,
+        "efficiency_pct": 85.0,
+        "purity_after_pct": 95.0,
+        "buffer": "50 mM Tris pH 8.0, 300 mM NaCl, 20 mM imidazol",
+        "conditions": "4°C, coleta do flow-through",
+        "notes": "Proteina clivada nao tem His6-tag, entao nao liga na resina; TEV protease (His-tagged) e proteina nao-clivada ficam retidas"
+      },
+      {
+        "step_number": 4,
+        "name": "SEC (Polimento)",
+        "method": "Cromatografia de Exclusao Molecular",
+        "input_mg": 21.75,
+        "output_mg": 17.4,
+        "efficiency_pct": 80.0,
+        "purity_after_pct": 98.0,
+        "buffer": "20 mM Tris-HCl pH 8.0, 150 mM NaCl",
+        "conditions": "4°C, coluna Superdex 75 10/300 GL, fluxo 0.5 mL/min",
+        "notes": "MW esperado: 30.2 kDa (monomero); verificar por SDS-PAGE se ha oligomeros; fracoes centrais do pico simetrico"
+      }
+    ]
+  },
+  "cost": {
+    "lab_scale": {
+      "fermentation_cost_per_l": 15.0,
+      "purification_cost_per_run": 955.0,
+      "total_cost_per_l": 970.0,
+      "yield_mg_per_l": 17.4,
+      "cost_per_mg_usd": 55.7471,
+      "cost_per_dose_usd": 2.7874,
+      "cost_per_animal_usd": 8.3621
+    },
+    "industrial_scale": {
+      "scale_factor": 0.1,
+      "cost_per_mg_usd": 5.5747,
+      "cost_per_dose_usd": 0.2787,
+      "cost_per_animal_usd": 0.8362
+    },
+    "per_dose_total": {
+      "protein_lab_usd": 2.7874,
+      "protein_industrial_usd": 0.2787,
+      "adjuvant_quila_usd": 1.5,
+      "formulation_usd": 0.5,
+      "total_lab_usd": 4.7874,
+      "total_industrial_usd": 2.2787
+    },
+    "dosing": {
+      "dose_ug": 50.0,
+      "doses_per_animal": 3
+    },
+    "cold_chain": "2-8°C",
+    "cold_chain_note": "Proteina recombinante liofilizada ou em solucao; refrigerador padrao, sem necessidade de ultracongelamento (-80°C); vantagem significativa sobre vacinas de mRNA (que requerem -20°C a -80°C)",
+    "cost_breakdown": {
+      "fermentation": {
+        "lb_medium": 5.0,
+        "antibiotics_kanamicin": 2.0,
+        "iptg_05mm": 3.0,
+        "consumables": 5.0,
+        "subtotal_per_l": 15.0
+      },
+      "purification": {
+        "ni_nta_resin_per_use": 40.0,
+        "tev_protease": 870.0,
+        "sec_column_per_use": 20.0,
+        "buffers": 10.0,
+        "consumables": 15.0,
+        "subtotal_per_run": 955.0
+      },
+      "adjuvant_and_formulation": {
+        "quila_saponin_per_dose": 1.5,
+        "formulation_per_dose": 0.5,
+        "subtotal_per_dose": 2.0
+      },
+      "scale_comparison": {
+        "lab_1l_culture": {
+          "total_cost_usd": 970.0,
+          "yield_mg": 17.4,
+          "doses_produced": 348.0,
+          "cost_per_dose_usd": 4.7874
+        },
+        "industrial_1000l_culture": {
+          "estimated_total_cost_usd": 97000.0,
+          "estimated_yield_mg": 17400.0,
+          "doses_produced": 348000.0,
+          "cost_per_dose_usd": 2.2787
+        }
+      }
+    }
+  }
+}
