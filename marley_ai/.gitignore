@@ -1,0 +1,23 @@
+# Checkpoints de modelos (muito grandes para git)
+.models/
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.bin
+
+# Cache de embeddings e inferencia
+.cache/
+
+# Arquivos numpy grandes (embeddings pre-computados)
+# Nota: .npy pequenos em results/ sao rastreados normalmente
+*.npy.bak
+
+# FAISS indices (reconstruiveis)
+*.faiss
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
+
+# Grafos Neo4j
+neo4j_data/

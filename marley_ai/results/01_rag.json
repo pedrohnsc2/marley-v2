@@ -1,0 +1,21 @@
+{
+  "module": "01_rag",
+  "version": "0.1.0",
+  "generated_at": "2026-04-11T04:08:08.212966+00:00",
+  "runtime_seconds": 0.0,
+  "device": "",
+  "status": "stub",
+  "warnings": [],
+  "summary": {
+    "conclusion": "Modulo RAG em construcao. Indexara literatura de leishmaniose para consulta semantica.",
+    "key_metrics": {
+      "corpus_size": 0,
+      "index_size": 0,
+      "embedding_dim": 1024
+    }
+  },
+  "artifacts": [],
+  "metrics": {},
+  "dependencies": [],
+  "data": {}
+}

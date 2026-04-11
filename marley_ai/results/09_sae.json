@@ -1,0 +1,640 @@
+{
+  "module": "09_sae",
+  "version": "0.1.0",
+  "generated_at": "2026-04-11T02:38:55.465253+00:00",
+  "runtime_seconds": 0.74,
+  "device": "cpu",
+  "status": "success",
+  "warnings": [],
+  "summary": {
+    "conclusion": "SAE descobriu 10 features interpretaveis que distinguem epitopos de L. infantum de peptideos aleatorios. Feature mais seletiva: 'aromaticity_full_max_neg' (razao epitopo/controle: 1880461.5x). Reconstrucao R2=0.384, esparsidade=14.9%.",
+    "key_metrics": {
+      "input_dim": 72,
+      "hidden_dim": 256,
+      "reconstruction_r2": 0.3844,
+      "sparsity": 0.1492,
+      "n_features_found": 10,
+      "top_selectivity_ratio": 1880461.5031
+    }
+  },
+  "artifacts": [],
+  "metrics": {
+    "final_loss": 0.5925261269725107,
+    "final_mse": 0.589907587294418,
+    "final_l1": 0.052370793561856394,
+    "reconstruction_r2": 0.3844,
+    "reconstruction_mse": 0.589912,
+    "sparsity": 0.1492,
+    "alive_neurons": 256,
+    "dead_neurons": 0,
+    "total_neurons": 256,
+    "n_epochs": 2000,
+    "n_sequences": 66,
+    "n_epitopes": 11,
+    "n_additional_targets": 5,
+    "n_controls": 50
+  },
+  "dependencies": [
+    "vaccine_platforms.shared.epitopes",
+    "aso_math.config"
+  ],
+  "data": {
+    "interpreted_features": [
+      {
+        "rank": 1,
+        "neuron_index": 210,
+        "label": "aromaticity_full_max_neg",
+        "description": "Detecta baixa aromaticidade (stacking pi-pi, ligacao a ligantes) na regiao full. Correlacao dominante: full_max_aromaticity (r=-0.446).",
+        "mean_activation_epitopes": 0.018805,
+        "mean_activation_controls": 0.0,
+        "selectivity_ratio": 1880461.5031,
+        "top_correlated_properties": [
+          {
+            "property": "full_max_aromaticity",
+            "correlation": -0.4464
+          },
+          {
+            "property": "full_std_aromaticity",
+            "correlation": -0.3974
+          },
+          {
+            "property": "full_mean_flexibility",
+            "correlation": 0.2937
+          }
+        ],
+        "top_activating_sequences": [
+          {
+            "sequence": "Prohibitin_SPFH",
+            "activation": 0.1674
+          },
+          {
+            "sequence": "H2A_surface",
+            "activation": 0.0985
+          },
+          {
+            "sequence": "Epi_emp24/gp25L/p24_RMMRSLTPF",
+            "activation": 0.0349
+          },
+          {
+            "sequence": "Ctrl_007",
+            "activation": 0.0
+          },
+          {
+            "sequence": "Ctrl_003",
+            "activation": 0.0
+          }
+        ]
+      },
+      {
+        "rank": 2,
+        "neuron_index": 38,
+        "label": "hydrophobicity_full_min_pos",
+        "description": "Detecta alta hidrofobicidade (dominios transmembrana, nucleos) na regiao full. Correlacao dominante: full_min_hydrophobicity (r=0.541).",
+        "mean_activation_epitopes": 0.05361,
+        "mean_activation_controls": 0.001027,
+        "selectivity_ratio": 52.1834,
+        "top_correlated_properties": [
+          {
+            "property": "full_min_hydrophobicity",
+            "correlation": 0.541
+          },
+          {
+            "property": "cterm_min_hydrophobicity",
+            "correlation": 0.4137
+          },
+          {
+            "property": "nterm_max_flexibility",
+            "correlation": -0.4106
+          }
+        ],
+        "top_activating_sequences": [
+          {
+            "sequence": "Epi_hypothetical pr_YLAALVPAL",
+            "activation": 0.5556
+          },
+          {
+            "sequence": "Epi_emp24/gp25L/p24_RMMRSLTPF",
+            "activation": 0.2154
+          },
+          {
+            "sequence": "Epi_prohibitin_LIIEDLSLV",
+            "activation": 0.0868
+          },
+          {
+            "sequence": "Ctrl_013",
+            "activation": 0.0514
+          },
+          {
+            "sequence": "Ctrl_008",
+            "activation": 0.0
+          }
+        ]
+      },
+      {
+        "rank": 3,
+        "neuron_index": 190,
+        "label": "hydrophobicity_nterm_min_pos",
+        "description": "Detecta alta hidrofobicidade (dominios transmembrana, nucleos) na regiao nterm. Correlacao dominante: nterm_min_hydrophobicity (r=0.683).",
+        "mean_activation_epitopes": 0.249015,
+        "mean_activation_controls": 0.008783,
+        "selectivity_ratio": 28.3515,
+        "top_correlated_properties": [
+          {
+            "property": "nterm_min_hydrophobicity",
+            "correlation": 0.6832
+          },
+          {
+            "property": "full_min_charge",
+            "correlation": 0.5537
+          },
+          {
+            "property": "nterm_mean_hydrophobicity",
+            "correlation": 0.5431
+          }
+        ],
+        "top_activating_sequences": [
+          {
+            "sequence": "Epi_hypothetical pr_SLMCVFYFK",
+            "activation": 0.8644
+          },
+          {
+            "sequence": "Epi_hypothetical pr_FAFSVSARR",
+            "activation": 0.7321
+          },
+          {
+            "sequence": "Epi_hypothetical pr_YLAALVPAL",
+            "activation": 0.7016
+          },
+          {
+            "sequence": "Epi_emp24/gp25L/p24_MILGTFVRL",
+            "activation": 0.5448
+          },
+          {
+            "sequence": "Epi_prohibitin_ILYNKISGL",
+            "activation": 0.5009
+          }
+        ]
+      },
+      {
+        "rank": 4,
+        "neuron_index": 251,
+        "label": "hydrophobicity_full_mean_pos",
+        "description": "Detecta alta hidrofobicidade (dominios transmembrana, nucleos) na regiao full. Correlacao dominante: full_mean_hydrophobicity (r=0.473).",
+        "mean_activation_epitopes": 0.123635,
+        "mean_activation_controls": 0.004488,
+        "selectivity_ratio": 27.5507,
+        "top_correlated_properties": [
+          {
+            "property": "full_mean_hydrophobicity",
+            "correlation": 0.4732
+          },
+          {
+            "property": "nterm_mean_hydrophobicity",
+            "correlation": 0.4651
+          },
+          {
+            "property": "cterm_max_mol_weight",
+            "correlation": -0.3664
+          }
+        ],
+        "top_activating_sequences": [
+          {
+            "sequence": "Epi_prohibitin_LIIEDLSLV",
+            "activation": 0.6608
+          },
+          {
+            "sequence": "Epi_hypothetical pr_FAFSVSARR",
+            "activation": 0.3197
+          },
+          {
+            "sequence": "Epi_hypothetical pr_YLAALVPAL",
+            "activation": 0.2874
+          },
+          {
+            "sequence": "Ctrl_030",
+            "activation": 0.2244
+          },
+          {
+            "sequence": "Epi_emp24/gp25L/p24_RMMRSLTPF",
+            "activation": 0.2194
+          }
+        ]
+      },
+      {
+        "rank": 5,
+        "neuron_index": 151,
+        "label": "flexibility_nterm_max_neg",
+        "description": "Detecta baixa flexibilidade da cadeia (loops, desordem intrinseca) na regiao nterm. Correlacao dominante: nterm_max_flexibility (r=-0.528).",
+        "mean_activation_epitopes": 0.2242,
+        "mean_activation_controls": 0.009392,
+        "selectivity_ratio": 23.8712,
+        "top_correlated_properties": [
+          {
+            "property": "nterm_max_flexibility",
+            "correlation": -0.5283
+          },
+          {
+            "property": "full_mean_hydrophobicity",
+            "correlation": 0.4746
+          },
+          {
+            "property": "full_min_hydrophobicity",
+            "correlation": 0.4607
+          }
+        ],
+        "top_activating_sequences": [
+          {
+            "sequence": "Epi_hypothetical pr_YLAALVPAL",
+            "activation": 1.2275
+          },
+          {
+            "sequence": "Epi_prohibitin_ILYNKISGL",
+            "activation": 0.7779
+          },
+          {
+            "sequence": "Epi_GP63 - leishman_RILESISNV",
+            "activation": 0.5454
+          },
+          {
+            "sequence": "Epi_prohibitin_LIIEDLSLV",
+            "activation": 0.5365
+          },
+          {
+            "sequence": "Epi_hypothetical pr_FAFSVSARR",
+            "activation": 0.3555
+          }
+        ]
+      },
+      {
+        "rank": 6,
+        "neuron_index": 207,
+        "label": "hydrophobicity_nterm_min_pos",
+        "description": "Detecta alta hidrofobicidade (dominios transmembrana, nucleos) na regiao nterm. Correlacao dominante: nterm_min_hydrophobicity (r=0.402).",
+        "mean_activation_epitopes": 0.083814,
+        "mean_activation_controls": 0.004235,
+        "selectivity_ratio": 19.7927,
+        "top_correlated_properties": [
+          {
+            "property": "nterm_min_hydrophobicity",
+            "correlation": 0.4021
+          },
+          {
+            "property": "full_mean_hydrophobicity",
+            "correlation": 0.3819
+          },
+          {
+            "property": "nterm_mean_hydrophobicity",
+            "correlation": 0.3748
+          }
+        ],
+        "top_activating_sequences": [
+          {
+            "sequence": "Epi_emp24/gp25L/p24_MILGTFVRL",
+            "activation": 0.31
+          },
+          {
+            "sequence": "Epi_emp24/gp25L/p24_RMMRSLTPF",
+            "activation": 0.2348
+          },
+          {
+            "sequence": "Epi_hypothetical pr_SLMCVFYFK",
+            "activation": 0.2201
+          },
+          {
+            "sequence": "Epi_hypothetical pr_FAFSVSARR",
+            "activation": 0.2184
+          },
+          {
+            "sequence": "Epi_emp24/gp25L/p24_YIYETFASM",
+            "activation": 0.1744
+          }
+        ]
+      },
+      {
+        "rank": 7,
+        "neuron_index": 170,
+        "label": "hydrophobicity_nterm_min_pos",
+        "description": "Detecta alta hidrofobicidade (dominios transmembrana, nucleos) na regiao nterm. Correlacao dominante: nterm_min_hydrophobicity (r=0.650).",
+        "mean_activation_epitopes": 0.165855,
+        "mean_activation_controls": 0.009075,
+        "selectivity_ratio": 18.2761,
+        "top_correlated_properties": [
+          {
+            "property": "nterm_min_hydrophobicity",
+            "correlation": 0.6499
+          },
+          {
+            "property": "nterm_mean_hydrophobicity",
+            "correlation": 0.5422
+          },
+          {
+            "property": "full_mean_hydrophobicity",
+            "correlation": 0.5058
+          }
+        ],
+        "top_activating_sequences": [
+          {
+            "sequence": "Epi_hypothetical pr_SLMCVFYFK",
+            "activation": 0.7231
+          },
+          {
+            "sequence": "Epi_emp24/gp25L/p24_MILGTFVRL",
+            "activation": 0.6314
+          },
+          {
+            "sequence": "Ctrl_003",
+            "activation": 0.4202
+          },
+          {
+            "sequence": "Epi_hypothetical pr_YLAALVPAL",
+            "activation": 0.3664
+          },
+          {
+            "sequence": "Epi_cysteine peptid_LLTANVCYK",
+            "activation": 0.3615
+          }
+        ]
+      },
+      {
+        "rank": 8,
+        "neuron_index": 218,
+        "label": "hydrophobicity_full_min_pos",
+        "description": "Detecta alta hidrofobicidade (dominios transmembrana, nucleos) na regiao full. Correlacao dominante: full_min_hydrophobicity (r=0.544).",
+        "mean_activation_epitopes": 0.198245,
+        "mean_activation_controls": 0.016855,
+        "selectivity_ratio": 11.7618,
+        "top_correlated_properties": [
+          {
+            "property": "full_min_hydrophobicity",
+            "correlation": 0.5442
+          },
+          {
+            "property": "full_mean_hydrophobicity",
+            "correlation": 0.5004
+          },
+          {
+            "property": "cterm_max_mol_weight",
+            "correlation": -0.4799
+          }
+        ],
+        "top_activating_sequences": [
+          {
+            "sequence": "Epi_hypothetical pr_YLAALVPAL",
+            "activation": 1.2355
+          },
+          {
+            "sequence": "Epi_prohibitin_LIIEDLSLV",
+            "activation": 0.7048
+          },
+          {
+            "sequence": "Ctrl_004",
+            "activation": 0.6411
+          },
+          {
+            "sequence": "Epi_GP63 - leishman_RILESISNV",
+            "activation": 0.5969
+          },
+          {
+            "sequence": "GP63_catalytic",
+            "activation": 0.4147
+          }
+        ]
+      },
+      {
+        "rank": 9,
+        "neuron_index": 117,
+        "label": "hydrophobicity_cterm_min_pos",
+        "description": "Detecta alta hidrofobicidade (dominios transmembrana, nucleos) na regiao cterm. Correlacao dominante: cterm_min_hydrophobicity (r=0.399).",
+        "mean_activation_epitopes": 0.029199,
+        "mean_activation_controls": 0.003603,
+        "selectivity_ratio": 8.1036,
+        "top_correlated_properties": [
+          {
+            "property": "cterm_min_hydrophobicity",
+            "correlation": 0.3989
+          },
+          {
+            "property": "nterm_mean_mol_weight",
+            "correlation": 0.2998
+          },
+          {
+            "property": "nterm_mean_aromaticity",
+            "correlation": 0.2872
+          }
+        ],
+        "top_activating_sequences": [
+          {
+            "sequence": "Epi_emp24/gp25L/p24_YIYETFASM",
+            "activation": 0.4672
+          },
+          {
+            "sequence": "Ctrl_027",
+            "activation": 0.1802
+          },
+          {
+            "sequence": "Ctrl_049",
+            "activation": 0.0
+          },
+          {
+            "sequence": "Ctrl_007",
+            "activation": 0.0
+          },
+          {
+            "sequence": "Ctrl_002",
+            "activation": 0.0
+          }
+        ]
+      },
+      {
+        "rank": 10,
+        "neuron_index": 158,
+        "label": "flexibility_cterm_max_neg",
+        "description": "Detecta baixa flexibilidade da cadeia (loops, desordem intrinseca) na regiao cterm. Correlacao dominante: cterm_max_flexibility (r=-0.334).",
+        "mean_activation_epitopes": 0.033963,
+        "mean_activation_controls": 0.004207,
+        "selectivity_ratio": 8.0723,
+        "top_correlated_properties": [
+          {
+            "property": "cterm_max_flexibility",
+            "correlation": -0.3336
+          },
+          {
+            "property": "nterm_mean_hydrophobicity",
+            "correlation": 0.2908
+          },
+          {
+            "property": "nterm_min_hydrophobicity",
+            "correlation": 0.2658
+          }
+        ],
+        "top_activating_sequences": [
+          {
+            "sequence": "Epi_cysteine peptid_LLTANVCYK",
+            "activation": 0.4069
+          },
+          {
+            "sequence": "Ctrl_028",
+            "activation": 0.2104
+          },
+          {
+            "sequence": "KMP11_core",
+            "activation": 0.0838
+          },
+          {
+            "sequence": "Epi_hypothetical pr_SLMCVFYFK",
+            "activation": 0.0527
+          },
+          {
+            "sequence": "Ctrl_007",
+            "activation": 0.0
+          }
+        ]
+      }
+    ],
+    "top_importance_indices": [
+      190,
+      207,
+      251,
+      170,
+      222,
+      151,
+      0,
+      20,
+      218,
+      209
+    ],
+    "top_importance_scores": [
+      1.0804,
+      1.0148,
+      0.9253,
+      0.8992,
+      0.8722,
+      0.8452,
+      0.8123,
+      0.7414,
+      0.7073,
+      0.6982
+    ],
+    "config": {
+      "input_dim": 72,
+      "hidden_dim": 256,
+      "sparsity_penalty": 0.05,
+      "learning_rate": 0.005,
+      "n_epochs": 2000,
+      "seed": 42
+    },
+    "sequences": {
+      "epitopes": {
+        "Epi_emp24/gp25L/p24_RMMRSLTPF": "RMMRSLTPF",
+        "Epi_emp24/gp25L/p24_YIYETFASM": "YIYETFASM",
+        "Epi_hypothetical pr_SLMCVFYFK": "SLMCVFYFK",
+        "Epi_hypothetical pr_YLAALVPAL": "YLAALVPAL",
+        "Epi_prohibitin_LIIEDLSLV": "LIIEDLSLV",
+        "Epi_hypothetical pr_FAFSVSARR": "FAFSVSARR",
+        "Epi_emp24/gp25L/p24_MILGTFVRL": "MILGTFVRL",
+        "Epi_prohibitin_MQNVTFVPK": "MQNVTFVPK",
+        "Epi_GP63 - leishman_RILESISNV": "RILESISNV",
+        "Epi_prohibitin_ILYNKISGL": "ILYNKISGL",
+        "Epi_cysteine peptid_LLTANVCYK": "LLTANVCYK"
+      },
+      "additional_targets": {
+        "GP63_catalytic": "VATHEIGHVLGLAHQ",
+        "Prohibitin_SPFH": "AQNLEKQIIEQRKTV",
+        "CPB_prodomain": "ERFNINKDLTEEFRK",
+        "H2A_surface": "SGRGKQGGKTRAKAK",
+        "KMP11_core": "AEDKLTQEQLANFQK"
+      },
+      "n_controls": 50
+    },
+    "training_history": {
+      "loss": [
+        0.48317,
+        0.517173,
+        0.539269,
+        0.554521,
+        0.56504,
+        0.572288,
+        0.577518,
+        0.58135,
+        0.583863,
+        0.5857,
+        0.586975,
+        0.587869,
+        0.588601,
+        0.589186,
+        0.589674,
+        0.590153,
+        0.590631,
+        0.591108,
+        0.591584,
+        0.592058
+      ],
+      "mse": [
+        0.47903,
+        0.513587,
+        0.536002,
+        0.551458,
+        0.562111,
+        0.569447,
+        0.57474,
+        0.578617,
+        0.581158,
+        0.583016,
+        0.584304,
+        0.585208,
+        0.585947,
+        0.586538,
+        0.58703,
+        0.587513,
+        0.587996,
+        0.588477,
+        0.588957,
+        0.589435
+      ],
+      "l1": [
+        0.082809,
+        0.071724,
+        0.065353,
+        0.061267,
+        0.058586,
+        0.056806,
+        0.055555,
+        0.054658,
+        0.054086,
+        0.053677,
+        0.053403,
+        0.05322,
+        0.053075,
+        0.052965,
+        0.052877,
+        0.052792,
+        0.052707,
+        0.052622,
+        0.052538,
+        0.052454
+      ],
+      "sparsity": [
+        0.2163,
+        0.1911,
+        0.1776,
+        0.1689,
+        0.1623,
+        0.1587,
+        0.1562,
+        0.1541,
+        0.1525,
+        0.1517,
+        0.151,
+        0.1504,
+        0.1502,
+        0.1501,
+        0.15,
+        0.15,
+        0.1499,
+        0.1496,
+        0.1496,
+        0.1493
+      ]
+    }
+  }
+}

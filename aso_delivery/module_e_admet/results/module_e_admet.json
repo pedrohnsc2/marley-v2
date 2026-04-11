@@ -1,7 +1,7 @@
 {
   "module": "module_e_admet",
   "version": "1.0.0",
-  "generated_at": "2026-04-11T00:24:01.044176+00:00",
+  "generated_at": "2026-04-11T02:20:03.929048+00:00",
   "runtime_seconds": 0.0,
   "status": "success",
   "executive_summary": "MRL-ASO-001 has a favorable ADMET profile for treating canine visceral leishmaniasis via subcutaneous injection. **Absorption:** 87.0% bioavailability after SC injection, Tmax 2-4 hours. **Distribution:** Vd,ss = 0.25 L/kg with preferential accumulation in liver (Kp 30x) and spleen (Kp 15x) — the primary sites of L. infantum infection. **Metabolism:** No CYP450 involvement; degraded by nucleases with LNA flanks providing exonuclease resistance. **Excretion:** Renal elimination of shortened metabolites; terminal half-life 21 days enabling weekly dosing. **Toxicity:** Therapeutic index 8.0x (NOAEL/dose) with manageable class effects (ISR, mild thrombocytopenia risk). TLR9 activation by CpG motifs provides DUAL therapeutic function: direct SL RNA knockdown AND innate immune activation against Leishmania.",

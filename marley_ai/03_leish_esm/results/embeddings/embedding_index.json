@@ -1,0 +1,177 @@
+{
+  "epitope_01_emp24/gp25L/p24": {
+    "path": "/Users/pedronascimento/dev/marley/marley_ai/03_leish_esm/results/embeddings/epitope_01_emp24_gp25L_p24.npy",
+    "shape": [
+      1280
+    ],
+    "dtype": "float32"
+  },
+  "epitope_02_emp24/gp25L/p24": {
+    "path": "/Users/pedronascimento/dev/marley/marley_ai/03_leish_esm/results/embeddings/epitope_02_emp24_gp25L_p24.npy",
+    "shape": [
+      1280
+    ],
+    "dtype": "float32"
+  },
+  "epitope_03_hypothetical": {
+    "path": "/Users/pedronascimento/dev/marley/marley_ai/03_leish_esm/results/embeddings/epitope_03_hypothetical.npy",
+    "shape": [
+      1280
+    ],
+    "dtype": "float32"
+  },
+  "epitope_04_hypothetical": {
+    "path": "/Users/pedronascimento/dev/marley/marley_ai/03_leish_esm/results/embeddings/epitope_04_hypothetical.npy",
+    "shape": [
+      1280
+    ],
+    "dtype": "float32"
+  },
+  "epitope_05_prohibitin": {
+    "path": "/Users/pedronascimento/dev/marley/marley_ai/03_leish_esm/results/embeddings/epitope_05_prohibitin.npy",
+    "shape": [
+      1280
+    ],
+    "dtype": "float32"
+  },
+  "epitope_06_hypothetical": {
+    "path": "/Users/pedronascimento/dev/marley/marley_ai/03_leish_esm/results/embeddings/epitope_06_hypothetical.npy",
+    "shape": [
+      1280
+    ],
+    "dtype": "float32"
+  },
+  "epitope_07_emp24/gp25L/p24": {
+    "path": "/Users/pedronascimento/dev/marley/marley_ai/03_leish_esm/results/embeddings/epitope_07_emp24_gp25L_p24.npy",
+    "shape": [
+      1280
+    ],
+    "dtype": "float32"
+  },
+  "epitope_08_prohibitin": {
+    "path": "/Users/pedronascimento/dev/marley/marley_ai/03_leish_esm/results/embeddings/epitope_08_prohibitin.npy",
+    "shape": [
+      1280
+    ],
+    "dtype": "float32"
+  },
+  "epitope_09_GP63": {
+    "path": "/Users/pedronascimento/dev/marley/marley_ai/03_leish_esm/results/embeddings/epitope_09_GP63.npy",
+    "shape": [
+      1280
+    ],
+    "dtype": "float32"
+  },
+  "epitope_10_prohibitin": {
+    "path": "/Users/pedronascimento/dev/marley/marley_ai/03_leish_esm/results/embeddings/epitope_10_prohibitin.npy",
+    "shape": [
+      1280
+    ],
+    "dtype": "float32"
+  },
+  "epitope_11_cysteine": {
+    "path": "/Users/pedronascimento/dev/marley/marley_ai/03_leish_esm/results/embeddings/epitope_11_cysteine.npy",
+    "shape": [
+      1280
+    ],
+    "dtype": "float32"
+  },
+  "source_GP63_leishmanolysin": {
+    "path": "/Users/pedronascimento/dev/marley/marley_ai/03_leish_esm/results/embeddings/source_GP63_leishmanolysin.npy",
+    "shape": [
+      1280
+    ],
+    "dtype": "float32"
+  },
+  "source_CPB_cysteine_peptidase_B": {
+    "path": "/Users/pedronascimento/dev/marley/marley_ai/03_leish_esm/results/embeddings/source_CPB_cysteine_peptidase_B.npy",
+    "shape": [
+      1280
+    ],
+    "dtype": "float32"
+  },
+  "source_prohibitin": {
+    "path": "/Users/pedronascimento/dev/marley/marley_ai/03_leish_esm/results/embeddings/source_prohibitin.npy",
+    "shape": [
+      1280
+    ],
+    "dtype": "float32"
+  },
+  "source_p24_GOLD": {
+    "path": "/Users/pedronascimento/dev/marley/marley_ai/03_leish_esm/results/embeddings/source_p24_GOLD.npy",
+    "shape": [
+      1280
+    ],
+    "dtype": "float32"
+  },
+  "source_hypothetical_conserved": {
+    "path": "/Users/pedronascimento/dev/marley/marley_ai/03_leish_esm/results/embeddings/source_hypothetical_conserved.npy",
+    "shape": [
+      1280
+    ],
+    "dtype": "float32"
+  },
+  "drug_target_A2_amastigote": {
+    "path": "/Users/pedronascimento/dev/marley/marley_ai/03_leish_esm/results/embeddings/drug_target_A2_amastigote.npy",
+    "shape": [
+      1280
+    ],
+    "dtype": "float32"
+  },
+  "drug_target_HGPRT": {
+    "path": "/Users/pedronascimento/dev/marley/marley_ai/03_leish_esm/results/embeddings/drug_target_HGPRT.npy",
+    "shape": [
+      1280
+    ],
+    "dtype": "float32"
+  },
+  "drug_target_TryR_trypanothione_reductase": {
+    "path": "/Users/pedronascimento/dev/marley/marley_ai/03_leish_esm/results/embeddings/drug_target_TryR_trypanothione_reductase.npy",
+    "shape": [
+      1280
+    ],
+    "dtype": "float32"
+  },
+  "adjuvant_L7_L12": {
+    "path": "/Users/pedronascimento/dev/marley/marley_ai/03_leish_esm/results/embeddings/adjuvant_L7_L12.npy",
+    "shape": [
+      1280
+    ],
+    "dtype": "float32"
+  },
+  "control_random_01": {
+    "path": "/Users/pedronascimento/dev/marley/marley_ai/03_leish_esm/results/embeddings/control_random_01.npy",
+    "shape": [
+      1280
+    ],
+    "dtype": "float32"
+  },
+  "control_random_02": {
+    "path": "/Users/pedronascimento/dev/marley/marley_ai/03_leish_esm/results/embeddings/control_random_02.npy",
+    "shape": [
+      1280
+    ],
+    "dtype": "float32"
+  },
+  "control_random_03": {
+    "path": "/Users/pedronascimento/dev/marley/marley_ai/03_leish_esm/results/embeddings/control_random_03.npy",
+    "shape": [
+      1280
+    ],
+    "dtype": "float32"
+  },
+  "control_random_04": {
+    "path": "/Users/pedronascimento/dev/marley/marley_ai/03_leish_esm/results/embeddings/control_random_04.npy",
+    "shape": [
+      1280
+    ],
+    "dtype": "float32"
+  },
+  "control_random_05": {
+    "path": "/Users/pedronascimento/dev/marley/marley_ai/03_leish_esm/results/embeddings/control_random_05.npy",
+    "shape": [
+      1280
+    ],
+    "dtype": "float32"
+  }
+}

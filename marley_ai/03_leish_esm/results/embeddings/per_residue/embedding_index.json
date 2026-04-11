@@ -1,0 +1,42 @@
+{
+  "source_GP63_leishmanolysin": {
+    "path": "/Users/pedronascimento/dev/marley/marley_ai/03_leish_esm/results/embeddings/per_residue/source_GP63_leishmanolysin.npy",
+    "shape": [
+      234,
+      1280
+    ],
+    "dtype": "float32"
+  },
+  "source_CPB_cysteine_peptidase_B": {
+    "path": "/Users/pedronascimento/dev/marley/marley_ai/03_leish_esm/results/embeddings/per_residue/source_CPB_cysteine_peptidase_B.npy",
+    "shape": [
+      236,
+      1280
+    ],
+    "dtype": "float32"
+  },
+  "source_prohibitin": {
+    "path": "/Users/pedronascimento/dev/marley/marley_ai/03_leish_esm/results/embeddings/per_residue/source_prohibitin.npy",
+    "shape": [
+      237,
+      1280
+    ],
+    "dtype": "float32"
+  },
+  "source_p24_GOLD": {
+    "path": "/Users/pedronascimento/dev/marley/marley_ai/03_leish_esm/results/embeddings/per_residue/source_p24_GOLD.npy",
+    "shape": [
+      236,
+      1280
+    ],
+    "dtype": "float32"
+  },
+  "source_hypothetical_conserved": {
+    "path": "/Users/pedronascimento/dev/marley/marley_ai/03_leish_esm/results/embeddings/per_residue/source_hypothetical_conserved.npy",
+    "shape": [
+      237,
+      1280
+    ],
+    "dtype": "float32"
+  }
+}

@@ -1,0 +1,146 @@
+{
+  "module": "08_rl_ppo",
+  "version": "0.2.0",
+  "generated_at": "2026-04-11T02:38:50.892237+00:00",
+  "runtime_seconds": 4.4,
+  "device": "cpu",
+  "status": "completed",
+  "warnings": [],
+  "summary": {
+    "conclusion": "Agente REINFORCE treinado por 500 episodios. Top variante: reward 0.9835 (baseline: 0.7652). Sequencia: ACAGCCACCGCCGTATCCGCATCTT.",
+    "key_metrics": {
+      "n_episodes": 500,
+      "baseline_reward": 0.765151111111111,
+      "best_reward": 0.9834666666666667,
+      "best_dg": -36.83,
+      "best_tm": 83.17,
+      "improvement_pct": 28.53
+    }
+  },
+  "artifacts": [],
+  "metrics": {
+    "mean_reward": 0.14760500914899333,
+    "std_reward": 0.019817140525673155,
+    "max_reward": 0.18608596925243845,
+    "min_reward": 0.001976386693778445,
+    "baseline": 0.14669043084947112,
+    "n_episodes": 500,
+    "mean_last_50": 0.14760500914899333
+  },
+  "dependencies": [
+    "aso_math.thermo"
+  ],
+  "data": {
+    "baseline": {
+      "sequence": "ACAGAAACTGATACTTATATAGCGT",
+      "length": 25,
+      "dg_binding": -27.97,
+      "tm": 68.48,
+      "gc_content": 0.32,
+      "hairpin_dg": 0.0,
+      "self_dimer_dg": -2.56,
+      "n_lna": 10,
+      "n_ps": 25,
+      "reward": 0.765151111111111
+    },
+    "best_variants": [
+      {
+        "sequence": "ACAGCCACCGCCGTATCCGCATCTT",
+        "length": 25,
+        "dg_binding": -36.83,
+        "tm": 83.17,
+        "gc_content": 0.6,
+        "hairpin_dg": 0.0,
+        "self_dimer_dg": -1.26,
+        "n_lna": 11,
+        "n_ps": 15,
+        "reward": 0.9834666666666667
+      },
+      {
+        "sequence": "TGCGGGACAGCGTCTTCTATCGGGT",
+        "length": 25,
+        "dg_binding": -36.18,
+        "tm": 82.21,
+        "gc_content": 0.6,
+        "hairpin_dg": 0.0,
+        "self_dimer_dg": -1.8,
+        "n_lna": 10,
+        "n_ps": 15,
+        "reward": 0.9755999999999999
+      },
+      {
+        "sequence": "TCAGCACCTGTACCATCCACGGCGT",
+        "length": 25,
+        "dg_binding": -36.37,
+        "tm": 82.69,
+        "gc_content": 0.6,
+        "hairpin_dg": 0.0,
+        "self_dimer_dg": -2.65,
+        "n_lna": 7,
+        "n_ps": 18,
+        "reward": 0.9720666666666667
+      },
+      {
+        "sequence": "GCCGAGCCATCGTGACAATCAGCGT",
+        "length": 25,
+        "dg_binding": -36.67,
+        "tm": 82.42,
+        "gc_content": 0.6,
+        "hairpin_dg": 0.0,
+        "self_dimer_dg": -2.51,
+        "n_lna": 12,
+        "n_ps": 20,
+        "reward": 0.9718
+      },
+      {
+        "sequence": "AGCGGCACAGACGGTACTAAGGCGA",
+        "length": 25,
+        "dg_binding": -36.41,
+        "tm": 82.28,
+        "gc_content": 0.6,
+        "hairpin_dg": 0.0,
+        "self_dimer_dg": -2.53,
+        "n_lna": 11,
+        "n_ps": 17,
+        "reward": 0.9710444444444445
+      }
+    ],
+    "greedy_evaluation": {
+      "greedy_reward": 0.05191111111111113,
+      "greedy_metrics": {
+        "sequence": "ACAGAAACTGGTACTTATATAGCGT",
+        "length": 25,
+        "dg_binding": -29.07,
+        "tm": 70.44,
+        "gc_content": 0.36,
+        "hairpin_dg": 0.0,
+        "self_dimer_dg": -2.56,
+        "n_lna": 10,
+        "n_ps": 25,
+        "reward": 0.8170622222222221
+      }
+    },
+    "reward_history_summary": {
+      "first_10_mean": 0.11140288888888898,
+      "last_10_mean": 0.15119166666666675,
+      "overall_mean": 0.1421188200000001,
+      "overall_std": 0.04244568309964224,
+      "max": 0.2183155555555557,
+      "min": -0.057851111111111075
+    },
+    "config": {
+      "n_episodes": 500,
+      "max_steps_per_episode": 50,
+      "learning_rate": 0.001,
+      "gamma": 0.99,
+      "reward_weights": {
+        "dg_binding": 0.3,
+        "tm": 0.2,
+        "gc_content": 0.15,
+        "hairpin": 0.15,
+        "self_dimer": 0.1,
+        "length_penalty": 0.1
+      }
+    }
+  }
+}

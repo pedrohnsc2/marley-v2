@@ -1,8 +1,8 @@
 {
   "module": "module_f_immune_sde",
   "version": "1.0.0",
-  "generated_at": "2026-04-11T00:26:00.290655+00:00",
-  "runtime_seconds": 119.18,
+  "generated_at": "2026-04-11T02:22:06.459712+00:00",
+  "runtime_seconds": 122.52,
   "status": "success",
   "all_tests_passed": true,
   "executive_summary": "MRL-ASO-001 demonstrates effective dual-function activity against intracellular L. infantum amastigotes. Deterministic model: 100.0% parasite reduction at 168h with clearance in 14.1h. Stochastic model (N=1000): 100.0% clearance probability, mean t_90% = 14.0 +/- 1.4h. Synergy index (speed) = 0.7754 (SUB-ADDITIVE): the antisense mechanism dominates at standard dose (10 uM), with TLR9-mediated NO production providing complementary killing. Both mechanisms independently achieve clearance, providing mechanistic redundancy. EC50 = 0.1 uM, EC90 = 0.413 uM.",

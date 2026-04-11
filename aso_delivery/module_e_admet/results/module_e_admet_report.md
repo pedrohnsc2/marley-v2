@@ -1,6 +1,6 @@
 # Module E: Full ADMET Profile of MRL-ASO-001 in Canis lupus familiaris
 
-**Generated:** 2026-04-11 00:24 UTC
+**Generated:** 2026-04-11 02:20 UTC
 **Module version:** 1.0.0
 **Target animal:** Canis lupus familiaris, 15.0 kg reference weight
 

@@ -1,0 +1,59 @@
+{
+  "title": "MRL-ASO-001 Delivery Pipeline Report",
+  "generated_at": "2026-04-11T02:22:06.473751+00:00",
+  "total_runtime_seconds": 122.66000000000001,
+  "modules_executed": 6,
+  "modules_succeeded": 6,
+  "modules_failed": 0,
+  "all_passed": true,
+  "module_results": [
+    {
+      "module": "A",
+      "path": "aso_delivery.module_a_stability.run",
+      "status": "success",
+      "duration_seconds": 0.01,
+      "module_status": "success",
+      "executive_summary": "MRL-ASO-001 PASSES all phagolysosomal stability tests. At pH 4.5: dG = -23.97 kcal/mol (threshold: -15.0 kcal/mol), fraction bound = 1.0000, gapmer half-life = 1083.04 hours, LNA geometry maintained at 99.0% C3'-endo. The LNA-DNA-LNA gapmer with full PS backbone is well-suited for the hostile phagolysosomal environment of L. infantum amastigotes."
+    },
+    {
+      "module": "B",
+      "path": "aso_delivery.module_b_membrane.run",
+      "status": "success",
+      "duration_seconds": 0.01,
+      "module_status": "success",
+      "executive_summary": "MRL-ASO-001 PASSES the membrane permeability assessment. While passive diffusion is thermodynamically impossible (membrane barrier >> 20 kT), macrophage uptake via receptor-mediated endocytosis (scavenger receptors) achieves an estimated intracellular concentration of 200246 nM in the phagolysosome at 1 uM extracellular dose. This exceeds the effective threshold of 100 nM. Macrophages provide a 19x uptake advantage over non-phagocytic cells due to high SR-A expression and constitutive pinocytosis. Critically, no endosomal escape is needed because the target (SL RNA) resides in the same phagolysosomal compartment where the ASO accumulates after endocytic uptake."
+    },
+    {
+      "module": "C",
+      "path": "aso_delivery.module_c_conjugate.run",
+      "status": "success",
+      "duration_seconds": 0.01,
+      "module_status": "success",
+      "executive_summary": "Module C evaluated five conjugation strategies for macrophage-targeted delivery of MRL-ASO-001. **Trimannose-ASO (trivalent cluster)** is the recommended strategy with a composite score of 0.715 and expected 9.7x uptake improvement over naked ASO. The mannose receptor (MRC1/CD206) pathway delivers cargo directly to lysosomes/phagolysosomes where L. infantum amastigotes reside, eliminating the need for endosomal escape. GalNAc conjugation was confirmed UNSUITABLE: ASGPR is hepatocyte-exclusive with zero expression on macrophages."
+    },
+    {
+      "module": "D",
+      "path": "aso_delivery.module_d_lnp.run",
+      "status": "success",
+      "duration_seconds": 0.01,
+      "module_status": "success",
+      "executive_summary": "LNP encapsulation is RECOMMENDED for MRL-ASO-001 delivery to macrophages. Key metrics: encapsulation efficiency = 99% (N/P 8), phagolysosomal release = 100%, particle diameter = 87 nm (phagocytable), mannose-targeted uptake = 3.5x vs untargeted. The pH-responsive release of DLin-MC3-DMA (pKa 6.44) delivers the ASO cargo directly to the phagolysosome where L. infantum amastigotes and their SL RNA reside. Lyophilization enables deployment in endemic regions of Brazil without cold chain infrastructure."
+    },
+    {
+      "module": "E",
+      "path": "aso_delivery.module_e_admet.run",
+      "status": "success",
+      "duration_seconds": 0.08,
+      "module_status": "success",
+      "executive_summary": "MRL-ASO-001 has a favorable ADMET profile for treating canine visceral leishmaniasis via subcutaneous injection. **Absorption:** 87.0% bioavailability after SC injection, Tmax 2-4 hours. **Distribution:** Vd,ss = 0.25 L/kg with preferential accumulation in liver (Kp 30x) and spleen (Kp 15x) — the primary sites of L. infantum infection. **Metabolism:** No CYP450 involvement; degraded by nucleases with LNA flanks providing exonuclease resistance. **Excretion:** Renal elimination of shortened metabolites; terminal half-life 21 days enabling weekly dosing. **Toxicity:** Therapeutic index 8.0x (NOAEL/dose) with manageable class effects (ISR, mild thrombocytopenia risk). TLR9 activation by CpG motifs provides DUAL therapeutic function: direct SL RNA knockdown AND innate immune activation against Leishmania."
+    },
+    {
+      "module": "F",
+      "path": "aso_delivery.module_f_immune_sde.run",
+      "status": "success",
+      "duration_seconds": 122.54,
+      "module_status": "success",
+      "executive_summary": "MRL-ASO-001 demonstrates effective dual-function activity against intracellular L. infantum amastigotes. Deterministic model: 100.0% parasite reduction at 168h with clearance in 14.1h. Stochastic model (N=1000): 100.0% clearance probability, mean t_90% = 14.0 +/- 1.4h. Synergy index (speed) = 0.7754 (SUB-ADDITIVE): the antisense mechanism dominates at standard dose (10 uM), with TLR9-mediated NO production providing complementary killing. Both mechanisms independently achieve clearance, providing mechanistic redundancy. EC50 = 0.1 uM, EC90 = 0.413 uM."
+    }
+  ]
+}

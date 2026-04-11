@@ -1,0 +1,149 @@
+{
+  "title": "MRL-ASO-001 Delivery Validation Certificate v1.0",
+  "version": "1.0",
+  "generated_at": "2026-04-11T02:22:29.933277+00:00",
+  "molecule": {
+    "name": "MRL-ASO-001",
+    "type": "25-nt LNA-DNA-LNA gapmer",
+    "length": 25,
+    "target": "Leishmania infantum SL RNA",
+    "backbone": "full phosphorothioate (PS)"
+  },
+  "composite_score": 60,
+  "max_score": 60,
+  "overall_verdict": "VALIDATED",
+  "dimension_assessments": [
+    {
+      "dimension": "A. PHAGOLYSOSOMAL STABILITY",
+      "score": 10,
+      "max_score": 10,
+      "verdict": "PASS",
+      "details": {
+        "ph_4_5_dg_kcal": -23.9655,
+        "ph_4_5_fraction_bound": 1.0,
+        "gapmer_halflife_hours": 1083.04,
+        "c3_endo_fraction_pH_4_5": 0.99,
+        "ph_functional": true,
+        "nuclease_window_met": true,
+        "lna_geometry_maintained": true
+      },
+      "notes": [
+        "pH 4.5 stability: dG = -23.97 kcal/mol, fraction bound = 1.0000",
+        "Nuclease resistance: gapmer half-life = 1083.0 hours",
+        "LNA conformation: C3'-endo at pH 4.5 = 99.0%",
+        "All tests passed: Yes (3/3)"
+      ]
+    },
+    {
+      "dimension": "B. MEMBRANE PERMEATION",
+      "score": 10,
+      "max_score": 10,
+      "verdict": "PASS",
+      "details": {
+        "total_intracellular_conc_nm": 200246.06,
+        "concentration_vs_threshold": 2002.4605999999999,
+        "concentration_sufficient": true,
+        "dominant_pathway": "receptor_mediated",
+        "macrophage_advantage_factor": 18.7
+      },
+      "notes": [
+        "Intracellular concentration: 200246 nM (2002x threshold)",
+        "Dominant pathway: receptor_mediated",
+        "Macrophage advantage: 18.7x over non-phagocytic cells",
+        "Endosomal escape required: No (target in phagolysosome)"
+      ]
+    },
+    {
+      "dimension": "C. CONJUGATE DELIVERY",
+      "score": 10,
+      "max_score": 10,
+      "verdict": "PASS",
+      "details": {
+        "best_conjugate": "Trimannose-ASO (trivalent cluster)",
+        "recommendation_score": 0.7148,
+        "expected_uptake_fold": 9.68,
+        "target_receptor": "MRC1 (CD206)",
+        "n_strategies_evaluated": 5,
+        "galnac_excluded": true
+      },
+      "notes": [
+        "Best strategy: Trimannose-ASO (trivalent cluster) (score: 0.7148)",
+        "Expected uptake: 9.7x vs naked ASO",
+        "Target receptor: MRC1 (CD206)",
+        "Strategies evaluated: 5",
+        "GalNAc excluded: Yes (ASGPR absent on macrophages)"
+      ]
+    },
+    {
+      "dimension": "D. LNP FORMULATION",
+      "score": 10,
+      "max_score": 10,
+      "verdict": "PASS",
+      "details": {
+        "encapsulation_efficiency": 0.9877,
+        "np_ratio": 8.0,
+        "release_at_target_ph": 0.999574,
+        "particle_diameter_nm": 87.0,
+        "macrophage_uptake_fold": 3.5,
+        "criteria_met": 4,
+        "criteria_detail": {
+          "encapsulation_ge_80pct": true,
+          "release_ge_90pct": true,
+          "size_50_200nm": true,
+          "uptake_ge_2x": true
+        }
+      },
+      "notes": [
+        "Encapsulation efficiency: 98.8% (N/P ratio: 8)",
+        "Phagolysosomal release: 100.0% at pH 4.5",
+        "Particle diameter: 87 nm (phagocytable range)",
+        "Macrophage uptake: 3.5x (mannose-targeted)",
+        "Criteria met: 4/4"
+      ]
+    },
+    {
+      "dimension": "E. ADMET PROFILE",
+      "score": 10,
+      "max_score": 10,
+      "verdict": "PASS",
+      "details": {
+        "therapeutic_index": 8.0,
+        "bioavailability_percent": 87.0,
+        "terminal_half_life_days": 21.0,
+        "vd_ss_l_per_kg": 0.25,
+        "risk_classification": "ACCEPTABLE — favorable therapeutic index for a lethal disease"
+      },
+      "notes": [
+        "Therapeutic index: 8.0 (NOAEL/dose)",
+        "Bioavailability (SC): 87%",
+        "Terminal half-life: 21 days (enables weekly dosing)",
+        "Vd,ss: 0.25 L/kg (hepatosplenic tropism)",
+        "Risk classification: ACCEPTABLE — favorable therapeutic index for a lethal disease"
+      ]
+    },
+    {
+      "dimension": "F. IMMUNE RESPONSE (SDE)",
+      "score": 10,
+      "max_score": 10,
+      "verdict": "PASS",
+      "details": {
+        "parasite_reduction_pct": 100.0,
+        "clearance_probability": 1.0,
+        "mean_clearance_time_hours": 14.03,
+        "clearance_time_det_hours": 14.1,
+        "ec50_um": 0.1,
+        "ec90_um": 0.413,
+        "synergy_index_speed": 0.7754,
+        "synergy_classification": "SUB-ADDITIVE"
+      },
+      "notes": [
+        "Parasite reduction (ODE): 100.0%",
+        "Clearance probability (SDE, N=1000): 100.0%",
+        "Mean clearance time: 14.0 hours",
+        "EC50 = 0.1 uM, EC90 = 0.413 uM",
+        "Synergy index: 0.7754 (SUB-ADDITIVE)"
+      ]
+    }
+  ],
+  "certificate_text": "+================================================================+\n| MRL-ASO-001 DELIVERY VALIDATION CERTIFICATE                    |\n| Version 1.0                                                    |\n+----------------------------------------------------------------+\n|                                                                |\n|   A. PHAGOLYSOSOMAL STABILITY              [10/10] [PASS]      |\n|     - pH 4.5 stability: dG = -23.97 kcal/mol, fraction bound   |\n|       = 1.0000                                                 |\n|     - Nuclease resistance: gapmer half-life = 1083.0 hours     |\n|     - LNA conformation: C3'-endo at pH 4.5 = 99.0%             |\n|     - All tests passed: Yes (3/3)                              |\n|                                                                |\n|   B. MEMBRANE PERMEATION                   [10/10] [PASS]      |\n|     - Intracellular concentration: 200246 nM (2002x            |\n|       threshold)                                               |\n|     - Dominant pathway: receptor_mediated                      |\n|     - Macrophage advantage: 18.7x over non-phagocytic cells    |\n|     - Endosomal escape required: No (target in                 |\n|       phagolysosome)                                           |\n|                                                                |\n|   C. CONJUGATE DELIVERY                    [10/10] [PASS]      |\n|     - Best strategy: Trimannose-ASO (trivalent cluster)        |\n|       (score: 0.7148)                                          |\n|     - Expected uptake: 9.7x vs naked ASO                       |\n|     - Target receptor: MRC1 (CD206)                            |\n|     - Strategies evaluated: 5                                  |\n|     - GalNAc excluded: Yes (ASGPR absent on macrophages)       |\n|                                                                |\n|   D. LNP FORMULATION                       [10/10] [PASS]      |\n|     - Encapsulation efficiency: 98.8% (N/P ratio: 8)           |\n|     - Phagolysosomal release: 100.0% at pH 4.5                 |\n|     - Particle diameter: 87 nm (phagocytable range)            |\n|     - Macrophage uptake: 3.5x (mannose-targeted)               |\n|     - Criteria met: 4/4                                        |\n|                                                                |\n|   E. ADMET PROFILE                         [10/10] [PASS]      |\n|     - Therapeutic index: 8.0 (NOAEL/dose)                      |\n|     - Bioavailability (SC): 87%                                |\n|     - Terminal half-life: 21 days (enables weekly dosing)      |\n|     - Vd,ss: 0.25 L/kg (hepatosplenic tropism)                 |\n|     - Risk classification: ACCEPTABLE — favorable              |\n|       therapeutic index for a lethal disease                   |\n|                                                                |\n|   F. IMMUNE RESPONSE (SDE)                 [10/10] [PASS]      |\n|     - Parasite reduction (ODE): 100.0%                         |\n|     - Clearance probability (SDE, N=1000): 100.0%              |\n|     - Mean clearance time: 14.0 hours                          |\n|     - EC50 = 0.1 uM, EC90 = 0.413 uM                           |\n|     - Synergy index: 0.7754 (SUB-ADDITIVE)                     |\n|                                                                |\n+----------------------------------------------------------------+\n|   COMPOSITE SCORE: 60/60                                       |\n|   OVERALL VERDICT: VALIDATED                                   |\n|                                                                |\n|   Generated: 2026-04-11 02:22:29 UTC                           |\n|   Target: Leishmania infantum SL RNA                           |\n|   ASO: MRL-ASO-001 (25-nt LNA-DNA-LNA gapmer, PS)              |\n+================================================================+\n\nMethodological note:\nThis certificate evaluates the delivery pipeline for MRL-ASO-001\nusing computational models for pH stability (nearest-neighbor\nthermodynamics), membrane permeation (Born solvation / endocytosis),\nconjugate selection (receptor binding + avidity), LNP formulation\n(Helfrich theory + pH-responsive lipids), ADMET (2-compartment PK),\nand immune response (Langevin SDE + Monte Carlo simulation).\nResults are computational predictions, not experimental validation.\n"
+}

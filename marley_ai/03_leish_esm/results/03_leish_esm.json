@@ -1,0 +1,493 @@
+{
+  "module": "03_leish_esm",
+  "version": "0.1.0",
+  "generated_at": "2026-04-11T03:28:33.838772+00:00",
+  "runtime_seconds": 7.66,
+  "device": "mps",
+  "status": "success",
+  "warnings": [],
+  "summary": {
+    "conclusion": "Embeddings ESM-2 gerados para 25 sequencias de L. infantum (esm2_t33_650M_UR50D, dim=1280). Similaridade media=0.933. 286 pares com sim > 0.80. Analise epitopica em 5 proteinas-fonte.",
+    "key_metrics": {
+      "n_sequences": 25,
+      "embedding_dim": 1280,
+      "model": "esm2_t33_650M_UR50D",
+      "backend": "fair-esm",
+      "device": "mps",
+      "n_epitopes": 11,
+      "n_source_proteins": 5,
+      "n_drug_targets": 3,
+      "n_controls": 5,
+      "mean_similarity": 0.9332,
+      "n_similar_pairs": 286,
+      "n_clusters": 4,
+      "n_epitope_analyses": 5
+    }
+  },
+  "artifacts": [
+    "/Users/pedronascimento/dev/marley/marley_ai/03_leish_esm/results/embeddings/epitope_01_emp24_gp25L_p24.npy",
+    "/Users/pedronascimento/dev/marley/marley_ai/03_leish_esm/results/embeddings/epitope_02_emp24_gp25L_p24.npy",
+    "/Users/pedronascimento/dev/marley/marley_ai/03_leish_esm/results/embeddings/epitope_03_hypothetical.npy",
+    "/Users/pedronascimento/dev/marley/marley_ai/03_leish_esm/results/embeddings/epitope_04_hypothetical.npy",
+    "/Users/pedronascimento/dev/marley/marley_ai/03_leish_esm/results/embeddings/epitope_05_prohibitin.npy",
+    "/Users/pedronascimento/dev/marley/marley_ai/03_leish_esm/results/embeddings/epitope_06_hypothetical.npy",
+    "/Users/pedronascimento/dev/marley/marley_ai/03_leish_esm/results/embeddings/epitope_07_emp24_gp25L_p24.npy",
+    "/Users/pedronascimento/dev/marley/marley_ai/03_leish_esm/results/embeddings/epitope_08_prohibitin.npy",
+    "/Users/pedronascimento/dev/marley/marley_ai/03_leish_esm/results/embeddings/epitope_09_GP63.npy",
+    "/Users/pedronascimento/dev/marley/marley_ai/03_leish_esm/results/embeddings/epitope_10_prohibitin.npy",
+    "/Users/pedronascimento/dev/marley/marley_ai/03_leish_esm/results/embeddings/epitope_11_cysteine.npy",
+    "/Users/pedronascimento/dev/marley/marley_ai/03_leish_esm/results/embeddings/source_GP63_leishmanolysin.npy",
+    "/Users/pedronascimento/dev/marley/marley_ai/03_leish_esm/results/embeddings/source_CPB_cysteine_peptidase_B.npy",
+    "/Users/pedronascimento/dev/marley/marley_ai/03_leish_esm/results/embeddings/source_prohibitin.npy",
+    "/Users/pedronascimento/dev/marley/marley_ai/03_leish_esm/results/embeddings/source_p24_GOLD.npy",
+    "/Users/pedronascimento/dev/marley/marley_ai/03_leish_esm/results/embeddings/source_hypothetical_conserved.npy",
+    "/Users/pedronascimento/dev/marley/marley_ai/03_leish_esm/results/embeddings/drug_target_A2_amastigote.npy",
+    "/Users/pedronascimento/dev/marley/marley_ai/03_leish_esm/results/embeddings/drug_target_HGPRT.npy",
+    "/Users/pedronascimento/dev/marley/marley_ai/03_leish_esm/results/embeddings/drug_target_TryR_trypanothione_reductase.npy",
+    "/Users/pedronascimento/dev/marley/marley_ai/03_leish_esm/results/embeddings/adjuvant_L7_L12.npy",
+    "/Users/pedronascimento/dev/marley/marley_ai/03_leish_esm/results/embeddings/control_random_01.npy",
+    "/Users/pedronascimento/dev/marley/marley_ai/03_leish_esm/results/embeddings/control_random_02.npy",
+    "/Users/pedronascimento/dev/marley/marley_ai/03_leish_esm/results/embeddings/control_random_03.npy",
+    "/Users/pedronascimento/dev/marley/marley_ai/03_leish_esm/results/embeddings/control_random_04.npy",
+    "/Users/pedronascimento/dev/marley/marley_ai/03_leish_esm/results/embeddings/control_random_05.npy",
+    "/Users/pedronascimento/dev/marley/marley_ai/03_leish_esm/results/embeddings/embedding_index.json"
+  ],
+  "metrics": {
+    "embedding_norms": {
+      "mean": 9.6243,
+      "min": 7.4158,
+      "max": 10.0357
+    },
+    "similarity": {
+      "names": [
+        "adjuvant_L7_L12",
+        "control_random_01",
+        "control_random_02",
+        "control_random_03",
+        "control_random_04",
+        "control_random_05",
+        "drug_target_A2_amastigote",
+        "drug_target_HGPRT",
+        "drug_target_TryR_trypanothione_reductase",
+        "epitope_01_emp24/gp25L/p24",
+        "epitope_02_emp24/gp25L/p24",
+        "epitope_03_hypothetical",
+        "epitope_04_hypothetical",
+        "epitope_05_prohibitin",
+        "epitope_06_hypothetical",
+        "epitope_07_emp24/gp25L/p24",
+        "epitope_08_prohibitin",
+        "epitope_09_GP63",
+        "epitope_10_prohibitin",
+        "epitope_11_cysteine",
+        "source_CPB_cysteine_peptidase_B",
+        "source_GP63_leishmanolysin",
+        "source_hypothetical_conserved",
+        "source_p24_GOLD",
+        "source_prohibitin"
+      ],
+      "matrix_shape": [
+        25,
+        25
+      ],
+      "mean_similarity": 0.9332183599472046,
+      "median_similarity": 0.9451311230659485
+    }
+  },
+  "dependencies": [],
+  "data": {
+    "dataset_counts": {
+      "epitope": 11,
+      "source_protein": 5,
+      "drug_target": 3,
+      "adjuvant": 1,
+      "control": 5
+    },
+    "similar_pairs": [
+      {
+        "a": "epitope_09_GP63",
+        "b": "epitope_10_prohibitin",
+        "similarity": 0.9882
+      },
+      {
+        "a": "epitope_05_prohibitin",
+        "b": "epitope_09_GP63",
+        "similarity": 0.9875
+      },
+      {
+        "a": "drug_target_HGPRT",
+        "b": "source_GP63_leishmanolysin",
+        "similarity": 0.9872
+      },
+      {
+        "a": "epitope_10_prohibitin",
+        "b": "epitope_11_cysteine",
+        "similarity": 0.9867
+      },
+      {
+        "a": "epitope_02_emp24/gp25L/p24",
+        "b": "epitope_09_GP63",
+        "similarity": 0.9858
+      },
+      {
+        "a": "control_random_01",
+        "b": "control_random_05",
+        "similarity": 0.9854
+      },
+      {
+        "a": "control_random_01",
+        "b": "control_random_02",
+        "similarity": 0.984
+      },
+      {
+        "a": "source_GP63_leishmanolysin",
+        "b": "source_p24_GOLD",
+        "similarity": 0.9838
+      },
+      {
+        "a": "epitope_09_GP63",
+        "b": "epitope_11_cysteine",
+        "similarity": 0.9837
+      },
+      {
+        "a": "epitope_08_prohibitin",
+        "b": "epitope_11_cysteine",
+        "similarity": 0.9835
+      },
+      {
+        "a": "epitope_02_emp24/gp25L/p24",
+        "b": "epitope_10_prohibitin",
+        "similarity": 0.9833
+      },
+      {
+        "a": "epitope_02_emp24/gp25L/p24",
+        "b": "epitope_11_cysteine",
+        "similarity": 0.9827
+      },
+      {
+        "a": "epitope_07_emp24/gp25L/p24",
+        "b": "epitope_11_cysteine",
+        "similarity": 0.9827
+      },
+      {
+        "a": "epitope_07_emp24/gp25L/p24",
+        "b": "epitope_08_prohibitin",
+        "similarity": 0.9826
+      },
+      {
+        "a": "control_random_03",
+        "b": "control_random_04",
+        "similarity": 0.9826
+      },
+      {
+        "a": "drug_target_HGPRT",
+        "b": "drug_target_TryR_trypanothione_reductase",
+        "similarity": 0.9822
+      },
+      {
+        "a": "drug_target_HGPRT",
+        "b": "source_prohibitin",
+        "similarity": 0.9821
+      },
+      {
+        "a": "epitope_02_emp24/gp25L/p24",
+        "b": "epitope_05_prohibitin",
+        "similarity": 0.982
+      },
+      {
+        "a": "epitope_05_prohibitin",
+        "b": "epitope_10_prohibitin",
+        "similarity": 0.9817
+      },
+      {
+        "a": "source_p24_GOLD",
+        "b": "source_prohibitin",
+        "similarity": 0.9815
+      }
+    ],
+    "clusters": {
+      "0": [
+        "drug_target_A2_amastigote"
+      ],
+      "1": [
+        "epitope_01_emp24/gp25L/p24",
+        "epitope_02_emp24/gp25L/p24",
+        "epitope_03_hypothetical",
+        "epitope_04_hypothetical",
+        "epitope_05_prohibitin",
+        "epitope_06_hypothetical",
+        "epitope_07_emp24/gp25L/p24",
+        "epitope_08_prohibitin",
+        "epitope_09_GP63",
+        "epitope_10_prohibitin",
+        "epitope_11_cysteine"
+      ],
+      "2": [
+        "control_random_01",
+        "control_random_02",
+        "control_random_03",
+        "control_random_04",
+        "control_random_05",
+        "source_GP63_leishmanolysin",
+        "source_hypothetical_conserved"
+      ],
+      "3": [
+        "adjuvant_L7_L12",
+        "drug_target_HGPRT",
+        "drug_target_TryR_trypanothione_reductase",
+        "source_CPB_cysteine_peptidase_B",
+        "source_p24_GOLD",
+        "source_prohibitin"
+      ]
+    },
+    "epitope_analysis": {
+      "source_GP63_leishmanolysin": {
+        "epitope_positions": [
+          {
+            "start": 127,
+            "end": 136,
+            "peptide": "RILESISNV"
+          }
+        ],
+        "divergence_score": 0.0187,
+        "cosine_similarity": 0.9813,
+        "epitope_mean_norm": 10.4784,
+        "background_mean_norm": 10.4454,
+        "norm_ratio": 1.0032
+      },
+      "source_CPB_cysteine_peptidase_B": {
+        "epitope_positions": [
+          {
+            "start": 192,
+            "end": 201,
+            "peptide": "LLTANVCYK"
+          }
+        ],
+        "divergence_score": 0.061,
+        "cosine_similarity": 0.939,
+        "epitope_mean_norm": 10.2985,
+        "background_mean_norm": 10.2356,
+        "norm_ratio": 1.0061
+      },
+      "source_prohibitin": {
+        "epitope_positions": [
+          {
+            "start": 212,
+            "end": 221,
+            "peptide": "MQNVTFVPK"
+          },
+          {
+            "start": 22,
+            "end": 31,
+            "peptide": "ILYNKISGL"
+          }
+        ],
+        "divergence_score": 0.0114,
+        "cosine_similarity": 0.9886,
+        "epitope_mean_norm": 10.3825,
+        "background_mean_norm": 10.3752,
+        "norm_ratio": 1.0007
+      },
+      "source_p24_GOLD": {
+        "epitope_positions": [
+          {
+            "start": 53,
+            "end": 62,
+            "peptide": "RMMRSLTPF"
+          },
+          {
+            "start": 142,
+            "end": 151,
+            "peptide": "YIYETFASM"
+          },
+          {
+            "start": 180,
+            "end": 189,
+            "peptide": "MILGTFVRL"
+          }
+        ],
+        "divergence_score": 0.0104,
+        "cosine_similarity": 0.9896,
+        "epitope_mean_norm": 10.3938,
+        "background_mean_norm": 10.4254,
+        "norm_ratio": 0.997
+      },
+      "source_hypothetical_conserved": {
+        "epitope_positions": [
+          {
+            "start": 133,
+            "end": 142,
+            "peptide": "SLMCVFYFK"
+          },
+          {
+            "start": 167,
+            "end": 176,
+            "peptide": "YLAALVPAL"
+          },
+          {
+            "start": 208,
+            "end": 217,
+            "peptide": "FAFSVSARR"
+          }
+        ],
+        "divergence_score": 0.0091,
+        "cosine_similarity": 0.9909,
+        "epitope_mean_norm": 10.5032,
+        "background_mean_norm": 10.5418,
+        "norm_ratio": 0.9963
+      }
+    },
+    "sequences": {
+      "epitope_01_emp24/gp25L/p24": {
+        "category": "epitope",
+        "length": 9,
+        "gene_id": "LINF_240013900",
+        "description": "Epitopo RMMRSLTPF de emp24/gp25L/p24 family/GOLD (alelo DLA-8803401, IC50=11.16 nM)"
+      },
+      "epitope_02_emp24/gp25L/p24": {
+        "category": "epitope",
+        "length": 9,
+        "gene_id": "LINF_240013900",
+        "description": "Epitopo YIYETFASM de emp24/gp25L/p24 family/GOLD (alelo DLA-8850101, IC50=18.78 nM)"
+      },
+      "epitope_03_hypothetical": {
+        "category": "epitope",
+        "length": 9,
+        "gene_id": "LINF_230010300",
+        "description": "Epitopo SLMCVFYFK de hypothetical protein - conserved (alelo DLA-8850801, IC50=33.78 nM)"
+      },
+      "epitope_04_hypothetical": {
+        "category": "epitope",
+        "length": 9,
+        "gene_id": "LINF_230010300",
+        "description": "Epitopo YLAALVPAL de hypothetical protein - conserved (alelo DLA-8850101, IC50=38.17 nM)"
+      },
+      "epitope_05_prohibitin": {
+        "category": "epitope",
+        "length": 9,
+        "gene_id": "LINF_160022200",
+        "description": "Epitopo LIIEDLSLV de prohibitin (alelo DLA-8850101, IC50=64.12 nM)"
+      },
+      "epitope_06_hypothetical": {
+        "category": "epitope",
+        "length": 9,
+        "gene_id": "LINF_230010300",
+        "description": "Epitopo FAFSVSARR de hypothetical protein - conserved (alelo DLA-8850801, IC50=64.65 nM)"
+      },
+      "epitope_07_emp24/gp25L/p24": {
+        "category": "epitope",
+        "length": 9,
+        "gene_id": "LINF_240013900",
+        "description": "Epitopo MILGTFVRL de emp24/gp25L/p24 family/GOLD (alelo DLA-8850101, IC50=72.87 nM)"
+      },
+      "epitope_08_prohibitin": {
+        "category": "epitope",
+        "length": 9,
+        "gene_id": "LINF_160022200",
+        "description": "Epitopo MQNVTFVPK de prohibitin (alelo DLA-8850801, IC50=75.37 nM)"
+      },
+      "epitope_09_GP63": {
+        "category": "epitope",
+        "length": 9,
+        "gene_id": "LINF_100010400",
+        "description": "Epitopo RILESISNV de GP63 - leishmanolysin (alelo DLA-8850101, IC50=97.44 nM)"
+      },
+      "epitope_10_prohibitin": {
+        "category": "epitope",
+        "length": 9,
+        "gene_id": "LINF_160022200",
+        "description": "Epitopo ILYNKISGL de prohibitin (alelo DLA-8803401, IC50=97.63 nM)"
+      },
+      "epitope_11_cysteine": {
+        "category": "epitope",
+        "length": 9,
+        "gene_id": "LINF_080014800",
+        "description": "Epitopo LLTANVCYK de cysteine peptidase B (CPB) (alelo DLA-8850801, IC50=117.96 nM)"
+      },
+      "source_GP63_leishmanolysin": {
+        "category": "source_protein",
+        "length": 234,
+        "gene_id": "LINF_100010400",
+        "description": "Metalopeptidase de superficie — evasao imune"
+      },
+      "source_CPB_cysteine_peptidase_B": {
+        "category": "source_protein",
+        "length": 236,
+        "gene_id": "LINF_080014800",
+        "description": "Cisteina protease — fator de virulencia"
+      },
+      "source_prohibitin": {
+        "category": "source_protein",
+        "length": 237,
+        "gene_id": "LINF_160022200",
+        "description": "Chaperone mitocondrial — essencial para o parasita"
+      },
+      "source_p24_GOLD": {
+        "category": "source_protein",
+        "length": 236,
+        "gene_id": "LINF_240013900",
+        "description": "Proteina p24/GOLD — transporte vesicular"
+      },
+      "source_hypothetical_conserved": {
+        "category": "source_protein",
+        "length": 237,
+        "gene_id": "LINF_230010300",
+        "description": "Proteina hipotetica conservada — funcao desconhecida"
+      },
+      "drug_target_A2_amastigote": {
+        "category": "drug_target",
+        "length": 139,
+        "gene_id": "",
+        "description": "Proteina A2 — especifica de amastigota"
+      },
+      "drug_target_HGPRT": {
+        "category": "drug_target",
+        "length": 187,
+        "gene_id": "",
+        "description": "HGPRT — via de salvage de purinas"
+      },
+      "drug_target_TryR_trypanothione_reductase": {
+        "category": "drug_target",
+        "length": 189,
+        "gene_id": "",
+        "description": "Tripanotiona redutase — metabolismo tiol unico"
+      },
+      "adjuvant_L7_L12": {
+        "category": "adjuvant",
+        "length": 130,
+        "gene_id": "",
+        "description": "Adjuvante L7/L12 ribosomal — ativador de TLR4"
+      },
+      "control_random_01": {
+        "category": "control",
+        "length": 234,
+        "gene_id": "",
+        "description": "Controle aleatorio — 234 aminoacidos"
+      },
+      "control_random_02": {
+        "category": "control",
+        "length": 234,
+        "gene_id": "",
+        "description": "Controle aleatorio — 234 aminoacidos"
+      },
+      "control_random_03": {
+        "category": "control",
+        "length": 236,
+        "gene_id": "",
+        "description": "Controle aleatorio — 236 aminoacidos"
+      },
+      "control_random_04": {
+        "category": "control",
+        "length": 237,
+        "gene_id": "",
+        "description": "Controle aleatorio — 237 aminoacidos"
+      },
+      "control_random_05": {
+        "category": "control",
+        "length": 234,
+        "gene_id": "",
+        "description": "Controle aleatorio — 234 aminoacidos"
+      }
+    }
+  }
+}

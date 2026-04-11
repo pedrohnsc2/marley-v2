@@ -1,0 +1,67 @@
++================================================================+
+| MRL-ASO-001 DELIVERY VALIDATION CERTIFICATE                    |
+| Version 1.0                                                    |
++----------------------------------------------------------------+
+|                                                                |
+|   A. PHAGOLYSOSOMAL STABILITY              [10/10] [PASS]      |
+|     - pH 4.5 stability: dG = -23.97 kcal/mol, fraction bound   |
+|       = 1.0000                                                 |
+|     - Nuclease resistance: gapmer half-life = 1083.0 hours     |
+|     - LNA conformation: C3'-endo at pH 4.5 = 99.0%             |
+|     - All tests passed: Yes (3/3)                              |
+|                                                                |
+|   B. MEMBRANE PERMEATION                   [10/10] [PASS]      |
+|     - Intracellular concentration: 200246 nM (2002x            |
+|       threshold)                                               |
+|     - Dominant pathway: receptor_mediated                      |
+|     - Macrophage advantage: 18.7x over non-phagocytic cells    |
+|     - Endosomal escape required: No (target in                 |
+|       phagolysosome)                                           |
+|                                                                |
+|   C. CONJUGATE DELIVERY                    [10/10] [PASS]      |
+|     - Best strategy: Trimannose-ASO (trivalent cluster)        |
+|       (score: 0.7148)                                          |
+|     - Expected uptake: 9.7x vs naked ASO                       |
+|     - Target receptor: MRC1 (CD206)                            |
+|     - Strategies evaluated: 5                                  |
+|     - GalNAc excluded: Yes (ASGPR absent on macrophages)       |
+|                                                                |
+|   D. LNP FORMULATION                       [10/10] [PASS]      |
+|     - Encapsulation efficiency: 98.8% (N/P ratio: 8)           |
+|     - Phagolysosomal release: 100.0% at pH 4.5                 |
+|     - Particle diameter: 87 nm (phagocytable range)            |
+|     - Macrophage uptake: 3.5x (mannose-targeted)               |
+|     - Criteria met: 4/4                                        |
+|                                                                |
+|   E. ADMET PROFILE                         [10/10] [PASS]      |
+|     - Therapeutic index: 8.0 (NOAEL/dose)                      |
+|     - Bioavailability (SC): 87%                                |
+|     - Terminal half-life: 21 days (enables weekly dosing)      |
+|     - Vd,ss: 0.25 L/kg (hepatosplenic tropism)                 |
+|     - Risk classification: ACCEPTABLE — favorable              |
+|       therapeutic index for a lethal disease                   |
+|                                                                |
+|   F. IMMUNE RESPONSE (SDE)                 [10/10] [PASS]      |
+|     - Parasite reduction (ODE): 100.0%                         |
+|     - Clearance probability (SDE, N=1000): 100.0%              |
+|     - Mean clearance time: 14.0 hours                          |
+|     - EC50 = 0.1 uM, EC90 = 0.413 uM                           |
+|     - Synergy index: 0.7754 (SUB-ADDITIVE)                     |
+|                                                                |
++----------------------------------------------------------------+
+|   COMPOSITE SCORE: 60/60                                       |
+|   OVERALL VERDICT: VALIDATED                                   |
+|                                                                |
+|   Generated: 2026-04-11 02:22:29 UTC                           |
+|   Target: Leishmania infantum SL RNA                           |
+|   ASO: MRL-ASO-001 (25-nt LNA-DNA-LNA gapmer, PS)              |
++================================================================+
+
+Methodological note:
+This certificate evaluates the delivery pipeline for MRL-ASO-001
+using computational models for pH stability (nearest-neighbor
+thermodynamics), membrane permeation (Born solvation / endocytosis),
+conjugate selection (receptor binding + avidity), LNP formulation
+(Helfrich theory + pH-responsive lipids), ADMET (2-compartment PK),
+and immune response (Langevin SDE + Monte Carlo simulation).
+Results are computational predictions, not experimental validation.

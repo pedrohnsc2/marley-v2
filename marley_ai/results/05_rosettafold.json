@@ -1,0 +1,192 @@
+{
+  "module": "05_rosettafold",
+  "version": "1.0.0",
+  "generated_at": "2026-04-11T03:28:58.391668+00:00",
+  "runtime_seconds": 0.54,
+  "device": "mps",
+  "status": "complete",
+  "warnings": [],
+  "summary": {
+    "conclusion": "O duplex ASO:SL RNA adota geometria A-form com rise=2.81 A e twist=33.0 graus, consistente com hibrido RNA:DNA. Detectadas 41 pontes de hidrogenio Watson-Crick e 44 no total. A energia livre de ligacao predita (dG=-27.38 kcal/mol) e strong e desvia 2.1% do valor experimental (-27.97 kcal/mol). Tm predita: 73.7 C vs experimental 68.48 C. O sulco menor do duplex e acessivel para a RNase H (score=1.00), indicando que o ASO pode mediar clivagem do SL RNA via mecanismo RNase H1. O design gapmer com 6 posicoes LNA nos flancos estabiliza o duplex em ~3.5 kcal/mol adicionais, enquanto o gap DNA central preserva a ativacao de RNase H.",
+    "key_metrics": {
+      "dg_predicted_kcal_mol": -27.38,
+      "tm_predicted_celsius": 73.7,
+      "helix_form": "A",
+      "rnase_h_accessible": true,
+      "binding_class": "strong",
+      "structural_quality": "excellent"
+    }
+  },
+  "artifacts": [
+    "/Users/pedronascimento/dev/marley/marley_ai/05_rosettafold/structures/sl_rna_free_model.pdb",
+    "/Users/pedronascimento/dev/marley/marley_ai/05_rosettafold/structures/aso_sl_duplex_model.pdb",
+    "/Users/pedronascimento/dev/marley/marley_ai/05_rosettafold/structures/aso_sl_complex_model.pdb"
+  ],
+  "metrics": {
+    "n_atoms_duplex": 563,
+    "n_atoms_complex": 716,
+    "n_hbonds_wc": 41,
+    "n_hbonds_total": 44,
+    "helix_form": "A",
+    "dg_predicted": -27.38,
+    "dg_experimental": -27.97,
+    "dg_deviation_pct": 2.1,
+    "tm_predicted": 73.7,
+    "tm_experimental": 68.48,
+    "rnase_h_accessible": true,
+    "structural_quality": "excellent",
+    "binding_class": "strong"
+  },
+  "dependencies": [],
+  "data": {
+    "structural_analysis": {
+      "helical_parameters": {
+        "mean_rise_angstrom": 2.81,
+        "std_rise": 0.0,
+        "mean_twist_degrees": 33.0,
+        "std_twist": 2.6,
+        "bp_per_turn": 10.9,
+        "n_base_pairs": 25,
+        "helix_length_angstrom": 67.4,
+        "helix_form": "A"
+      },
+      "groove_analysis": {
+        "major_groove_width_angstrom": 6.9,
+        "minor_groove_width_angstrom": 11.0,
+        "minor_to_major_ratio": 1.59
+      },
+      "hydrogen_bonds": {
+        "total": 44,
+        "watson_crick": 41,
+        "wobble": 2,
+        "non_canonical": 1
+      },
+      "rmsd": {
+        "vs_existing_pdb_angstrom": 10.66
+      },
+      "sasa": {
+        "free_rna_angstrom2": 6336.2,
+        "bound_complex_angstrom2": 7325.1,
+        "delta_sasa_angstrom2": -988.9
+      },
+      "rnase_h_accessibility": {
+        "accessible": true,
+        "score": 1.0
+      },
+      "structural_quality": "excellent"
+    },
+    "binding_energy": {
+      "components": {
+        "nearest_neighbor": {
+          "dg_kcal_mol": -24.07,
+          "description": "Parametros nearest-neighbor RNA:DNA hibrido (Sugimoto 1995). dH=-207.4 kcal/mol, dS=-591.1 cal/(mol*K)"
+        },
+        "base_stacking": {
+          "dg_kcal_mol": -26.3,
+          "n_contributions": 24
+        },
+        "hydrogen_bonding": {
+          "dg_kcal_mol": -116.0,
+          "n_contributions": 25
+        },
+        "electrostatic": {
+          "dg_kcal_mol": 6.05,
+          "description": "Repulsao eletrostatica entre backbones de fosfato. Blindada por contra-ions em condicoes fisiologicas."
+        },
+        "desolvation_penalty": {
+          "dg_kcal_mol": 5.0
+        },
+        "lna_stabilization": {
+          "dg_kcal_mol": -3.51,
+          "n_positions": 6,
+          "description": "Estabilizacao por modificacoes LNA nas extremidades do gapmer. 6 posicoes LNA (+4.0 C/mod)."
+        },
+        "ps_backbone": {
+          "dg_kcal_mol": 0.2,
+          "n_positions": 19
+        }
+      },
+      "totals": {
+        "dg_total_kcal_mol": -27.38,
+        "dh_total_kcal_mol": -207.4,
+        "ds_total_cal_mol_k": -591.1,
+        "predicted_tm_celsius": 73.7
+      },
+      "experimental_comparison": {
+        "experimental_dg_kcal_mol": -27.97,
+        "experimental_tm_celsius": 68.48,
+        "dg_deviation_percent": 2.1,
+        "tm_deviation_celsius": 5.2
+      },
+      "classification": {
+        "is_functional": true,
+        "binding_class": "strong",
+        "threshold_kcal_mol": -15.0
+      },
+      "lna_vs_dna": {
+        "n_lna": 6.0,
+        "n_dna_gap": 19.0,
+        "dg_lna_total": -3.51,
+        "dg_preorganization": -3.0,
+        "dg_tm_effect": -0.51,
+        "dtm_total": 24.0,
+        "fraction_lna": 0.24
+      }
+    },
+    "sequences": {
+      "sl_rna": "AACUAACGCUAUAUAAGUAUCAGUUUCUGUACUUAUAUG",
+      "sl_rna_dna_template": "AACTAACGCTATATAAGTATCAGTTTCTGTACTTATATG",
+      "aso": "ACAGAAACTGATACTTATATAGCGT",
+      "target_region": "ACGCUAUAUAAGUAUCAGUUUCUGU",
+      "target_start": 5,
+      "target_end": 30
+    },
+    "modifications": {
+      "lna_positions": [
+        0,
+        1,
+        2,
+        21,
+        22,
+        23
+      ],
+      "ps_backbone": true,
+      "gapmer_design": {
+        "5prime_flank_lna": [
+          0,
+          1,
+          2
+        ],
+        "dna_gap": [
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20
+        ],
+        "3prime_flank_lna": [
+          21,
+          22,
+          23
+        ]
+      }
+    },
+    "existing_pdbs_analyzed": {
+      "aso_pdb": "/Users/pedronascimento/dev/marley/data/structures/MRL_ASO_001.pdb",
+      "sl_rna_pdb": "/Users/pedronascimento/dev/marley/data/sl_rna_3d/sl_rna.pdb"
+    }
+  }
+}

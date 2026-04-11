@@ -1,7 +1,7 @@
 {
   "module": "module_c_conjugate",
   "version": "1.0.0",
-  "generated_at": "2026-04-11T00:23:59.635322+00:00",
+  "generated_at": "2026-04-11T02:20:03.844129+00:00",
   "runtime_seconds": 0.0,
   "status": "success",
   "executive_summary": "Module C evaluated five conjugation strategies for macrophage-targeted delivery of MRL-ASO-001. **Trimannose-ASO (trivalent cluster)** is the recommended strategy with a composite score of 0.715 and expected 9.7x uptake improvement over naked ASO. The mannose receptor (MRC1/CD206) pathway delivers cargo directly to lysosomes/phagolysosomes where L. infantum amastigotes reside, eliminating the need for endosomal escape. GalNAc conjugation was confirmed UNSUITABLE: ASGPR is hepatocyte-exclusive with zero expression on macrophages.",
