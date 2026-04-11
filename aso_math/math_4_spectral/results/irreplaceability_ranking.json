@@ -1,0 +1,169 @@
+{
+  "lambda2_original": 0.838032,
+  "ranking": [
+    {
+      "node_id": "SL_RNA",
+      "lambda2_after_removal": 0.313808,
+      "lambda2_drop": 0.524224,
+      "fractional_drop": 0.625542,
+      "components_after_removal": 1,
+      "network_fragmented": false,
+      "fragments_created": 0
+    },
+    {
+      "node_id": "U4",
+      "lambda2_after_removal": 0.540669,
+      "lambda2_drop": 0.297363,
+      "fractional_drop": 0.354835,
+      "components_after_removal": 1,
+      "network_fragmented": false,
+      "fragments_created": 0
+    },
+    {
+      "node_id": "SmB",
+      "lambda2_after_removal": 0.545686,
+      "lambda2_drop": 0.292345,
+      "fractional_drop": 0.348848,
+      "components_after_removal": 1,
+      "network_fragmented": false,
+      "fragments_created": 0
+    },
+    {
+      "node_id": "U5",
+      "lambda2_after_removal": 0.581685,
+      "lambda2_drop": 0.256346,
+      "fractional_drop": 0.305891,
+      "components_after_removal": 1,
+      "network_fragmented": false,
+      "fragments_created": 0
+    },
+    {
+      "node_id": "SmD1",
+      "lambda2_after_removal": 0.622128,
+      "lambda2_drop": 0.215904,
+      "fractional_drop": 0.257632,
+      "components_after_removal": 1,
+      "network_fragmented": false,
+      "fragments_created": 0
+    },
+    {
+      "node_id": "SmD2",
+      "lambda2_after_removal": 0.624923,
+      "lambda2_drop": 0.213109,
+      "fractional_drop": 0.254297,
+      "components_after_removal": 1,
+      "network_fragmented": false,
+      "fragments_created": 0
+    },
+    {
+      "node_id": "SmF",
+      "lambda2_after_removal": 0.648079,
+      "lambda2_drop": 0.189953,
+      "fractional_drop": 0.226665,
+      "components_after_removal": 1,
+      "network_fragmented": false,
+      "fragments_created": 0
+    },
+    {
+      "node_id": "SmG",
+      "lambda2_after_removal": 0.651228,
+      "lambda2_drop": 0.186803,
+      "fractional_drop": 0.222907,
+      "components_after_removal": 1,
+      "network_fragmented": false,
+      "fragments_created": 0
+    },
+    {
+      "node_id": "SmE",
+      "lambda2_after_removal": 0.74874,
+      "lambda2_drop": 0.089291,
+      "fractional_drop": 0.106549,
+      "components_after_removal": 1,
+      "network_fragmented": false,
+      "fragments_created": 0
+    },
+    {
+      "node_id": "U2",
+      "lambda2_after_removal": 0.757297,
+      "lambda2_drop": 0.080734,
+      "fractional_drop": 0.096338,
+      "components_after_removal": 1,
+      "network_fragmented": false,
+      "fragments_created": 0
+    },
+    {
+      "node_id": "U6",
+      "lambda2_after_removal": 0.791963,
+      "lambda2_drop": 0.046069,
+      "fractional_drop": 0.054972,
+      "components_after_removal": 1,
+      "network_fragmented": false,
+      "fragments_created": 0
+    },
+    {
+      "node_id": "Prp8",
+      "lambda2_after_removal": 0.835634,
+      "lambda2_drop": 0.002397,
+      "fractional_drop": 0.00286,
+      "components_after_removal": 1,
+      "network_fragmented": false,
+      "fragments_created": 0
+    },
+    {
+      "node_id": "SmD3",
+      "lambda2_after_removal": 0.837589,
+      "lambda2_drop": 0.000443,
+      "fractional_drop": 0.000528,
+      "components_after_removal": 1,
+      "network_fragmented": false,
+      "fragments_created": 0
+    },
+    {
+      "node_id": "Snu114",
+      "lambda2_after_removal": 0.838322,
+      "lambda2_drop": -0.00029,
+      "fractional_drop": -0.000346,
+      "components_after_removal": 1,
+      "network_fragmented": false,
+      "fragments_created": 0
+    },
+    {
+      "node_id": "U1",
+      "lambda2_after_removal": 0.856158,
+      "lambda2_drop": -0.018126,
+      "fractional_drop": -0.02163,
+      "components_after_removal": 1,
+      "network_fragmented": false,
+      "fragments_created": 0
+    },
+    {
+      "node_id": "NHP2L1",
+      "lambda2_after_removal": 0.857424,
+      "lambda2_drop": -0.019392,
+      "fractional_drop": -0.02314,
+      "components_after_removal": 1,
+      "network_fragmented": false,
+      "fragments_created": 0
+    },
+    {
+      "node_id": "SLA1",
+      "lambda2_after_removal": 0.867441,
+      "lambda2_drop": -0.029409,
+      "fractional_drop": -0.035093,
+      "components_after_removal": 1,
+      "network_fragmented": false,
+      "fragments_created": 0
+    }
+  ],
+  "sl_rna_rank": 1,
+  "sl_rna_is_most_critical": true,
+  "most_critical_node": "SL_RNA",
+  "comparison_sl_vs_u2": {
+    "sl_rna_fractional_drop": 0.625542,
+    "u2_fractional_drop": 0.096338,
+    "sl_rna_advantage": 0.529204,
+    "sl_rna_over_u2_ratio": 6.4932,
+    "sl_rna_fragments_network": false,
+    "u2_fragments_network": false
+  }
+}

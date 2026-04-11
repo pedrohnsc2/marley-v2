@@ -1,0 +1,367 @@
+{
+  "module": "module_a_stability",
+  "version": "1.0.0",
+  "generated_at": "2026-04-10T23:50:59.092669+00:00",
+  "runtime_seconds": 0.0,
+  "status": "success",
+  "all_tests_passed": true,
+  "executive_summary": "MRL-ASO-001 PASSES all phagolysosomal stability tests. At pH 4.5: dG = -23.97 kcal/mol (threshold: -15.0 kcal/mol), fraction bound = 1.0000, gapmer half-life = 1083.04 hours, LNA geometry maintained at 99.0% C3'-endo. The LNA-DNA-LNA gapmer with full PS backbone is well-suited for the hostile phagolysosomal environment of L. infantum amastigotes.",
+  "overall_conclusion": "MRL-ASO-001 demonstrates robust stability across all four analyses:\n\n1. **pH stability:** dG decreases from -28.0 kcal/mol (pH 7.4) to -23.97 kcal/mol (pH 4.5), a loss of only 4.03 kcal/mol. The duplex remains far below the functional threshold (-15.0 kcal/mol).\n\n2. **Nuclease resistance:** The LNA-DNA-LNA gapmer with PS backbone has an estimated half-life of 1083.04 hours at pH 4.5, far exceeding the 24-hour therapeutic window requirement.\n\n3. **LNA conformation:** The methylene bridge maintains C3'-endo sugar pucker at 99.0% even at pH 4.5, ensuring optimal hybridization geometry.\n\n4. **FDA comparison:** MRL-ASO-001's chemistry (LNA gapmer, full PS) matches or exceeds the stability profiles of clinically approved ASOs like mipomersen that operate in similar acidic compartments.\n\n**The ASO is predicted to remain stable and functional in the phagolysosomal environment of canine macrophages.**",
+  "aso_specifications": {
+    "name": "MRL-ASO-001",
+    "length_nt": 25,
+    "gapmer_design": "5-15-5 (LNA-DNA-LNA)",
+    "backbone": "full phosphorothioate (PS)",
+    "dg_neutral_kcal": -28.0,
+    "tm_dna_celsius": 61.4,
+    "tm_lna_celsius": 108.5
+  },
+  "ph_stability_profile": {
+    "profile": {
+      "pH_7.4": {
+        "ph": 7.4,
+        "compartment": "blood_plasma",
+        "delta_g_kcal": -27.9931,
+        "delta_g_correction_kcal": 0.0069,
+        "tm_celsius": 108.48,
+        "fraction_bound": 1.0,
+        "functional": true,
+        "protonation_detail": {
+          "fraction_protonated_C": 0.000631,
+          "fraction_protonated_A": 0.000126,
+          "ddg_cytosines": 0.005,
+          "ddg_adenines": 0.0019
+        }
+      },
+      "pH_6.5": {
+        "ph": 6.5,
+        "compartment": "early_endosome",
+        "delta_g_kcal": -27.9451,
+        "delta_g_correction_kcal": 0.0549,
+        "tm_celsius": 108.34,
+        "fraction_bound": 1.0,
+        "functional": true,
+        "protonation_detail": {
+          "fraction_protonated_C": 0.004987,
+          "fraction_protonated_A": 0.000999,
+          "ddg_cytosines": 0.0399,
+          "ddg_adenines": 0.015
+        }
+      },
+      "pH_5.0": {
+        "ph": 5.0,
+        "compartment": "late_endosome",
+        "delta_g_kcal": -26.4457,
+        "delta_g_correction_kcal": 1.5543,
+        "tm_celsius": 103.84,
+        "fraction_bound": 1.0,
+        "functional": true,
+        "protonation_detail": {
+          "fraction_protonated_C": 0.136807,
+          "fraction_protonated_A": 0.030653,
+          "ddg_cytosines": 1.0945,
+          "ddg_adenines": 0.4598
+        }
+      },
+      "pH_4.5": {
+        "ph": 4.5,
+        "compartment": "phagolysosome",
+        "delta_g_kcal": -23.9655,
+        "delta_g_correction_kcal": 4.0345,
+        "tm_celsius": 96.4,
+        "fraction_bound": 1.0,
+        "functional": true,
+        "protonation_detail": {
+          "fraction_protonated_C": 0.333861,
+          "fraction_protonated_A": 0.090909,
+          "ddg_cytosines": 2.6709,
+          "ddg_adenines": 1.3636
+        }
+      }
+    },
+    "functional_at_target_ph": true,
+    "dg_threshold_kcal": -15.0
+  },
+  "nuclease_resistance": {
+    "PO_halflife_hours": 1.39,
+    "PS_halflife_hours": 693.15,
+    "LNA_gapmer_halflife_hours": 1083.04,
+    "therapeutic_window_met": true,
+    "profiles": {
+      "PO": {
+        "backbone_type": "PO (phosphodiester)",
+        "k_degradation": 0.5,
+        "half_life_hours": 1.39,
+        "fraction_at_24h": 6e-06,
+        "fraction_at_48h": 0.0,
+        "therapeutic_window_met": false
+      },
+      "PS": {
+        "backbone_type": "PS (phosphorothioate)",
+        "k_degradation": 0.001,
+        "half_life_hours": 693.15,
+        "fraction_at_24h": 0.976286,
+        "fraction_at_48h": 0.953134,
+        "therapeutic_window_met": true
+      },
+      "LNA_gapmer": {
+        "backbone_type": "LNA-DNA-LNA gapmer (PS backbone)",
+        "k_degradation": 0.00064,
+        "half_life_hours": 1083.04,
+        "fraction_at_24h": 0.984757,
+        "fraction_at_48h": 0.969747,
+        "therapeutic_window_met": true
+      }
+    },
+    "gapmer_model": {
+      "lna_5prime_length": 5,
+      "dna_gap_length": 15,
+      "lna_3prime_length": 5,
+      "k_lna_flank": 0.0001,
+      "k_dna_gap": 0.001,
+      "k_effective": 0.00064,
+      "half_life_hours": 1083.04
+    },
+    "resistance_ratios": {
+      "PS_vs_PO": 500.0,
+      "gapmer_vs_PO": 781.2
+    },
+    "degradation_curves": {
+      "PO": [
+        {
+          "time_hours": 0,
+          "fraction_remaining": 1.0
+        },
+        {
+          "time_hours": 1,
+          "fraction_remaining": 0.606531
+        },
+        {
+          "time_hours": 2,
+          "fraction_remaining": 0.367879
+        },
+        {
+          "time_hours": 4,
+          "fraction_remaining": 0.135335
+        },
+        {
+          "time_hours": 6,
+          "fraction_remaining": 0.049787
+        },
+        {
+          "time_hours": 12,
+          "fraction_remaining": 0.002479
+        },
+        {
+          "time_hours": 24,
+          "fraction_remaining": 6e-06
+        },
+        {
+          "time_hours": 48,
+          "fraction_remaining": 0.0
+        },
+        {
+          "time_hours": 72,
+          "fraction_remaining": 0.0
+        },
+        {
+          "time_hours": 96,
+          "fraction_remaining": 0.0
+        }
+      ],
+      "PS": [
+        {
+          "time_hours": 0,
+          "fraction_remaining": 1.0
+        },
+        {
+          "time_hours": 1,
+          "fraction_remaining": 0.999
+        },
+        {
+          "time_hours": 2,
+          "fraction_remaining": 0.998002
+        },
+        {
+          "time_hours": 4,
+          "fraction_remaining": 0.996008
+        },
+        {
+          "time_hours": 6,
+          "fraction_remaining": 0.994018
+        },
+        {
+          "time_hours": 12,
+          "fraction_remaining": 0.988072
+        },
+        {
+          "time_hours": 24,
+          "fraction_remaining": 0.976286
+        },
+        {
+          "time_hours": 48,
+          "fraction_remaining": 0.953134
+        },
+        {
+          "time_hours": 72,
+          "fraction_remaining": 0.930531
+        },
+        {
+          "time_hours": 96,
+          "fraction_remaining": 0.908464
+        }
+      ],
+      "LNA_gapmer": [
+        {
+          "time_hours": 0,
+          "fraction_remaining": 1.0
+        },
+        {
+          "time_hours": 1,
+          "fraction_remaining": 0.99936
+        },
+        {
+          "time_hours": 2,
+          "fraction_remaining": 0.998721
+        },
+        {
+          "time_hours": 4,
+          "fraction_remaining": 0.997443
+        },
+        {
+          "time_hours": 6,
+          "fraction_remaining": 0.996167
+        },
+        {
+          "time_hours": 12,
+          "fraction_remaining": 0.992349
+        },
+        {
+          "time_hours": 24,
+          "fraction_remaining": 0.984757
+        },
+        {
+          "time_hours": 48,
+          "fraction_remaining": 0.969747
+        },
+        {
+          "time_hours": 72,
+          "fraction_remaining": 0.954966
+        },
+        {
+          "time_hours": 96,
+          "fraction_remaining": 0.940409
+        }
+      ]
+    }
+  },
+  "lna_stability": {
+    "profile": {
+      "pH_7.4": {
+        "ph": 7.4,
+        "compartment": "blood_plasma",
+        "c3_endo_fraction_lna": 0.99,
+        "c3_endo_fraction_dna": 0.36,
+        "geometry_maintained": true,
+        "free_energy_penalty_kcal": 0.0,
+        "n_lna_residues": 10,
+        "n_dna_residues": 15
+      },
+      "pH_6.5": {
+        "ph": 6.5,
+        "compartment": "early_endosome",
+        "c3_endo_fraction_lna": 0.99,
+        "c3_endo_fraction_dna": 0.333,
+        "geometry_maintained": true,
+        "free_energy_penalty_kcal": 0.2025,
+        "n_lna_residues": 10,
+        "n_dna_residues": 15
+      },
+      "pH_5.0": {
+        "ph": 5.0,
+        "compartment": "late_endosome",
+        "c3_endo_fraction_lna": 0.99,
+        "c3_endo_fraction_dna": 0.288,
+        "geometry_maintained": true,
+        "free_energy_penalty_kcal": 0.54,
+        "n_lna_residues": 10,
+        "n_dna_residues": 15
+      },
+      "pH_4.5": {
+        "ph": 4.5,
+        "compartment": "phagolysosome",
+        "c3_endo_fraction_lna": 0.99,
+        "c3_endo_fraction_dna": 0.273,
+        "geometry_maintained": true,
+        "free_energy_penalty_kcal": 0.6525,
+        "n_lna_residues": 10,
+        "n_dna_residues": 15
+      }
+    },
+    "c3_endo_fraction_pH_7_4": 0.99,
+    "c3_endo_fraction_pH_4_5": 0.99,
+    "geometry_maintained": true,
+    "lna_tm_boost_per_residue_celsius": 4.71,
+    "total_lna_residues": 10,
+    "reference": "Vester B, Wengel J (2004) Biochemistry 43(42):13233-13241"
+  },
+  "fda_comparison": {
+    "nusinersen": {
+      "brand_name": "Spinraza",
+      "approval_year": 2016,
+      "indication": "Spinal muscular atrophy (SMA)",
+      "length_nt": 18,
+      "chemistry": "2'-O-methoxyethyl (2'-MOE) phosphorothioate",
+      "backbone": "full PS",
+      "gapmer_design": "N/A (uniform 2'-MOE, splice-switching)",
+      "route": "intrathecal",
+      "target_ph": 7.3,
+      "half_life_hours": 3240.0,
+      "mechanism": "splice-switching (steric block)",
+      "reference": "Finkel RS et al. (2017) NEJM 377(18):1723-1732"
+    },
+    "mipomersen": {
+      "brand_name": "Kynamro",
+      "approval_year": 2013,
+      "indication": "Homozygous familial hypercholesterolemia (HoFH)",
+      "length_nt": 20,
+      "chemistry": "2'-O-methoxyethyl (2'-MOE) gapmer phosphorothioate",
+      "backbone": "full PS",
+      "gapmer_design": "5-10-5",
+      "route": "subcutaneous",
+      "target_ph": 4.5,
+      "half_life_hours": 720.0,
+      "mechanism": "RNase H1-mediated mRNA degradation",
+      "reference": "Raal FJ et al. (2010) Lancet 375(9719):998-1006"
+    },
+    "inotersen": {
+      "brand_name": "Tegsedi",
+      "approval_year": 2018,
+      "indication": "Hereditary transthyretin amyloidosis (hATTR)",
+      "length_nt": 20,
+      "chemistry": "2'-O-methoxyethyl (2'-MOE) gapmer phosphorothioate",
+      "backbone": "full PS",
+      "gapmer_design": "5-10-5",
+      "route": "subcutaneous",
+      "target_ph": 4.5,
+      "half_life_hours": 624.0,
+      "mechanism": "RNase H1-mediated mRNA degradation",
+      "reference": "Benson MD et al. (2018) NEJM 379(1):22-31"
+    },
+    "mrl_aso_001": {
+      "brand_name": "N/A (preclinical)",
+      "approval_year": 0,
+      "indication": "Canine visceral leishmaniasis",
+      "length_nt": 25,
+      "chemistry": "LNA-DNA-LNA gapmer phosphorothioate",
+      "backbone": "full PS",
+      "gapmer_design": "5-15-5",
+      "route": "to be determined (parenteral expected)",
+      "target_ph": 4.5,
+      "half_life_hours": 1083.04,
+      "mechanism": "RNase H1-mediated SL RNA degradation",
+      "reference": "This work (computational)",
+      "unique_advantage": "Target (SL RNA) and ASO colocalize in phagolysosome — no endosomal escape required. LNA flanks provide superior nuclease resistance vs 2'-MOE at pH 4.5."
+    }
+  }
+}

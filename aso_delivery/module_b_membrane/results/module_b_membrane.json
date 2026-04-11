@@ -1,0 +1,233 @@
+{
+  "module": "module_b_membrane",
+  "version": "1.0.0",
+  "generated_at": "2026-04-11T00:23:59.596912+00:00",
+  "runtime_seconds": 0.0,
+  "status": "success",
+  "all_tests_passed": true,
+  "executive_summary": "MRL-ASO-001 PASSES the membrane permeability assessment. While passive diffusion is thermodynamically impossible (membrane barrier >> 20 kT), macrophage uptake via receptor-mediated endocytosis (scavenger receptors) achieves an estimated intracellular concentration of 200246 nM in the phagolysosome at 1 uM extracellular dose. This exceeds the effective threshold of 100 nM. Macrophages provide a 19x uptake advantage over non-phagocytic cells due to high SR-A expression and constitutive pinocytosis. Critically, no endosomal escape is needed because the target (SL RNA) resides in the same phagolysosomal compartment where the ASO accumulates after endocytic uptake.",
+  "overall_conclusion": "MRL-ASO-001 demonstrates a favorable delivery profile for macrophage-targeted therapy against L. infantum:\n\n1. **Physicochemical profile:** MW 8774 Da, charge -24 at pH 7.4 confirms that passive membrane permeation is impossible, as expected for ASOs.\n\n2. **Membrane barrier:** The total energy barrier exceeds 20 kT, dominated by Born solvation energy. This is consistent with the known requirement for active uptake mechanisms for all therapeutic ASOs.\n\n3. **Endocytic uptake:** Receptor-mediated endocytosis via scavenger receptors (SR-A) is the dominant pathway, achieving 200246 nM in the phagolysosome. Macrophages have a 19x advantage over non-phagocytic cells.\n\n4. **Clinical comparison:** Unlike mipomersen and inotersen, which require endosomal escape (~1-2% efficiency) to reach cytoplasmic mRNA, MRL-ASO-001's target (SL RNA) is in the phagolysosome — the SAME compartment where ASOs naturally accumulate after endocytosis. This eliminates the most significant bottleneck in ASO delivery.\n\n**The PS backbone provides natural tropism for macrophages, making MRL-ASO-001 uniquely suited for anti-leishmanial therapy without complex formulation.**",
+  "aso_specifications": {
+    "name": "MRL-ASO-001",
+    "length_nt": 25,
+    "gapmer_design": "5-15-5 (LNA-DNA-LNA)",
+    "backbone": "full phosphorothioate (PS)",
+    "n_ps_linkages": 24,
+    "n_lna_residues": 10,
+    "extracellular_conc_um": 1.0
+  },
+  "physicochemical_properties": {
+    "PO_unmodified": {
+      "name": "25-mer PO (unmodified)",
+      "length_nt": 25,
+      "n_ps_linkages": 24,
+      "n_lna_residues": 0,
+      "molecular_weight_da": 8634.0,
+      "logp": -24.0,
+      "logd_ph74": -36.0,
+      "logd_ph45": -35.99,
+      "net_charge_ph74": -24.0,
+      "net_charge_ph45": -23.98,
+      "hydrodynamic_radius_nm": 2.72,
+      "lipinski_violations": 4
+    },
+    "PS_phosphorothioate": {
+      "name": "25-mer PS (phosphorothioate)",
+      "length_nt": 25,
+      "n_ps_linkages": 24,
+      "n_lna_residues": 0,
+      "molecular_weight_da": 8634.0,
+      "logp": -18.0,
+      "logd_ph74": -30.0,
+      "logd_ph45": -29.99,
+      "net_charge_ph74": -24.0,
+      "net_charge_ph45": -23.98,
+      "hydrodynamic_radius_nm": 2.72,
+      "lipinski_violations": 4
+    },
+    "LNA_gapmer_PS": {
+      "name": "MRL-ASO-001",
+      "length_nt": 25,
+      "n_ps_linkages": 24,
+      "n_lna_residues": 10,
+      "molecular_weight_da": 8774.0,
+      "logp": -17.8,
+      "logd_ph74": -29.8,
+      "logd_ph45": -29.79,
+      "net_charge_ph74": -24.0,
+      "net_charge_ph45": -23.98,
+      "hydrodynamic_radius_nm": 2.72,
+      "lipinski_violations": 4
+    },
+    "conclusion": "MRL-ASO-001 has MW 8774 Da, net charge -24 at pH 7.4, and logD -29.8. This places it firmly outside the drug-likeness space for passive membrane permeation (4/4 Lipinski violations). Active uptake mechanisms are required."
+  },
+  "membrane_interaction": {
+    "25_mer_PO_unmodified": {
+      "interaction": {
+        "name": "25-mer PO (unmodified)",
+        "backbone_type": "PO",
+        "electrostatic_kcal": 0.521,
+        "hydrophobic_kcal": 7.2,
+        "born_solvation_kcal": 171.01,
+        "total_barrier_kcal": 178.73,
+        "barrier_in_kt": 290.0,
+        "passive_diffusion_feasible": false
+      },
+      "partition": {
+        "name": "25-mer PO (unmodified)",
+        "backbone_type": "PO",
+        "barrier_kcal": 178.73,
+        "log_k_partition": -125.9,
+        "k_partition": 1.1116204903603312e-126,
+        "passive_permeability_cm_s": 2.779051225900828e-128
+      }
+    },
+    "25_mer_PS_phosphorothioate": {
+      "interaction": {
+        "name": "25-mer PS (phosphorothioate)",
+        "backbone_type": "PS",
+        "electrostatic_kcal": 0.521,
+        "hydrophobic_kcal": -2.4,
+        "born_solvation_kcal": 171.01,
+        "total_barrier_kcal": 169.13,
+        "barrier_in_kt": 274.4,
+        "passive_diffusion_feasible": false
+      },
+      "partition": {
+        "name": "25-mer PS (phosphorothioate)",
+        "backbone_type": "PS",
+        "barrier_kcal": 169.13,
+        "log_k_partition": -119.2,
+        "k_partition": 6.474978779721095e-120,
+        "passive_permeability_cm_s": 1.6187446949302736e-121
+      }
+    },
+    "MRL_ASO_001": {
+      "interaction": {
+        "name": "MRL-ASO-001",
+        "backbone_type": "PS",
+        "electrostatic_kcal": 0.521,
+        "hydrophobic_kcal": -2.4,
+        "born_solvation_kcal": 171.01,
+        "total_barrier_kcal": 169.13,
+        "barrier_in_kt": 274.4,
+        "passive_diffusion_feasible": false
+      },
+      "partition": {
+        "name": "MRL-ASO-001",
+        "backbone_type": "PS",
+        "barrier_kcal": 169.13,
+        "log_k_partition": -119.2,
+        "k_partition": 6.474978779721095e-120,
+        "passive_permeability_cm_s": 1.6187446949302736e-121
+      }
+    },
+    "conclusion": "The total membrane barrier for MRL-ASO-001 is 169.1 kcal/mol (274 kT). Passive diffusion is infeasible (threshold: 20 kT). The Born solvation term dominates, reflecting the enormous cost of transferring 24 negative charges from water (dielectric 74) to lipid (dielectric 2). Active endocytosis is the ONLY viable uptake mechanism."
+  },
+  "endocytosis": {
+    "extracellular_conc_um": 1.0,
+    "pathways": {
+      "pinocytosis": {
+        "name": "Fluid-phase pinocytosis",
+        "mechanism": "Non-selective internalization of extracellular fluid in vesicles. ASO enters passively with bulk fluid. Vesicles delivered to phagolysosome. Macrophages internalize ~100% cell volume per hour.",
+        "rate_constant_per_hour": 0.005,
+        "efficiency_24h": 0.1131,
+        "intracellular_conc_nm": 1615.42,
+        "is_dominant_in_macrophages": false,
+        "key_reference": "Steinman RM et al. (1976) J Cell Biol 68(3):665-687",
+        "notes": "Low efficiency per unit time but constitutive and non-saturable. 5-10x more active in macrophages than in fibroblasts. Contributes ~10-15% of total ASO uptake in macrophages."
+      },
+      "receptor_mediated": {
+        "name": "Receptor-mediated endocytosis (scavenger receptors)",
+        "mechanism": "PS backbone is recognized by scavenger receptor class A (SR-A) and stabilin-1/2 on macrophages. High-affinity binding (Kd ~30 nM) leads to clathrin-coated pit formation and internalization. Receptors recycle every ~4 minutes for ~15 cycles/hour.",
+        "rate_constant_per_hour": 0.03,
+        "efficiency_24h": 0.5132,
+        "intracellular_conc_nm": 197015.22,
+        "is_dominant_in_macrophages": true,
+        "key_reference": "Butler M et al. (2000) J Pharmacol Exp Ther 292(2):547-555",
+        "notes": "Dominant uptake mechanism in macrophages. Receptor occupancy at 1.0 uM: 97.1%. ~100,000 SR-A receptors per macrophage with 15 internalization cycles/hour. PS backbone provides NATURAL tropism for macrophages — no targeting ligand needed."
+      },
+      "gymnosis": {
+        "name": "Gymnosis (free uptake)",
+        "mechanism": "Free cellular uptake without transfection reagents. Demonstrated for PS-ASOs at 1-10 uM concentrations. Mechanism involves adsorptive endocytosis and membrane-stimulated pinocytosis. Effective after 24-72 hours of exposure.",
+        "rate_constant_per_hour": 0.005,
+        "efficiency_24h": 0.1131,
+        "intracellular_conc_nm": 1615.42,
+        "is_dominant_in_macrophages": false,
+        "key_reference": "Stein CA et al. (2010) Nucleic Acids Res 38(5):e3",
+        "notes": "Clinically relevant: no formulation needed. Works at achievable plasma concentrations. Particularly effective for PS-ASOs due to protein binding and membrane adsorption properties. More active in phagocytic cells."
+      }
+    },
+    "total_efficiency_24h": 0.6171,
+    "total_intracellular_conc_nm": 200246.06,
+    "effective_concentration_threshold_nm": 100.0,
+    "concentration_sufficient": true,
+    "dominant_pathway": "receptor_mediated",
+    "macrophage_advantage_factor": 18.7
+  },
+  "clinical_comparison": {
+    "nusinersen": {
+      "brand_name": "Spinraza",
+      "approval_year": 2016,
+      "route": "intrathecal",
+      "target_cell": "motor neurons (CNS)",
+      "membrane_barrier": "bypassed (direct CNS injection)",
+      "uptake_mechanism": "Gymnosis + receptor-mediated in CNS cells",
+      "delivery_challenge": "Blood-brain barrier (bypassed by IT injection)",
+      "ps_tropism_relevant": false,
+      "formulation": "Preservative-free solution in artificial CSF",
+      "intracellular_target": "Pre-mRNA (nucleus, splice switching)",
+      "endosomal_escape_needed": true,
+      "key_reference": "Finkel RS et al. (2017) NEJM 377(18):1723-1732"
+    },
+    "mipomersen": {
+      "brand_name": "Kynamro",
+      "approval_year": 2013,
+      "route": "subcutaneous",
+      "target_cell": "hepatocytes",
+      "membrane_barrier": "ASGPR + scavenger receptor uptake",
+      "uptake_mechanism": "ASGPR-mediated endocytosis (liver-specific) + scavenger receptor (SR-A, stabilin-2)",
+      "delivery_challenge": "Must escape endosome to reach cytoplasmic mRNA. Only ~1-2% of internalized ASO escapes endosome.",
+      "ps_tropism_relevant": true,
+      "formulation": "Aqueous solution for SC injection",
+      "intracellular_target": "APOB-100 mRNA (cytoplasm, RNase H)",
+      "endosomal_escape_needed": true,
+      "key_reference": "Raal FJ et al. (2010) Lancet 375(9719):998-1006"
+    },
+    "inotersen": {
+      "brand_name": "Tegsedi",
+      "approval_year": 2018,
+      "route": "subcutaneous",
+      "target_cell": "hepatocytes",
+      "membrane_barrier": "ASGPR + scavenger receptor uptake",
+      "uptake_mechanism": "Similar to mipomersen: ASGPR + scavenger receptors. Enhanced by protein binding (albumin shuttle).",
+      "delivery_challenge": "Endosomal escape rate-limiting (~1-2%). Requires high doses (300 mg/week) to compensate.",
+      "ps_tropism_relevant": true,
+      "formulation": "Aqueous solution for SC injection",
+      "intracellular_target": "TTR mRNA (cytoplasm, RNase H)",
+      "endosomal_escape_needed": true,
+      "key_reference": "Benson MD et al. (2018) NEJM 379(1):22-31"
+    },
+    "mrl_aso_001": {
+      "brand_name": "N/A (preclinical)",
+      "approval_year": 0,
+      "route": "to be determined (parenteral expected)",
+      "target_cell": "macrophages (L. infantum-infected)",
+      "membrane_barrier": "SR-A mediated uptake (PS tropism)",
+      "uptake_mechanism": "Receptor-mediated endocytosis via SR-A (dominant). Gymnosis contributes at therapeutic concentrations. Macrophage pinocytosis provides additional uptake.",
+      "delivery_challenge": "NO endosomal escape needed. Target RNA (SL RNA) is in the SAME compartment (phagolysosome) where ASO accumulates after endocytic uptake. This is a fundamental advantage.",
+      "ps_tropism_relevant": true,
+      "formulation": "TBD (naked ASO may be sufficient for macrophage delivery)",
+      "intracellular_target": "L. infantum SL RNA (phagolysosome, RNase H)",
+      "endosomal_escape_needed": false,
+      "key_reference": "This work (computational)",
+      "unique_advantages": [
+        "PS backbone provides natural tropism for macrophages via SR-A",
+        "No endosomal escape needed (target is in phagolysosome)",
+        "Macrophages are professional phagocytes (5-10x higher uptake)",
+        "Infected macrophages may have enhanced endocytic activity",
+        "LNA flanks provide nuclease resistance in acidic phagolysosome"
+      ]
+    }
+  }
+}

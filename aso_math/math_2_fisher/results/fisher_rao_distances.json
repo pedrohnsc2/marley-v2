@@ -1,0 +1,286 @@
+{
+  "k1": {
+    "k": 1,
+    "source_names": [
+      "sl_rna",
+      "human",
+      "canine",
+      "random"
+    ],
+    "distance_matrix": [
+      [
+        0.0,
+        0.4211100140014105,
+        0.3825874344995635,
+        0.0830686923211038
+      ],
+      [
+        0.4211100140014105,
+        0.0,
+        0.04004280289402107,
+        0.45199456814251177
+      ],
+      [
+        0.3825874344995635,
+        0.04004280289402107,
+        0.0,
+        0.41212362417804954
+      ],
+      [
+        0.0830686923211038,
+        0.45199456814251177,
+        0.41212362417804954,
+        0.0
+      ]
+    ],
+    "pairwise_distances": [
+      {
+        "source_a": "sl_rna",
+        "source_b": "human",
+        "fisher_rao_distance": 0.42111
+      },
+      {
+        "source_a": "sl_rna",
+        "source_b": "canine",
+        "fisher_rao_distance": 0.382587
+      },
+      {
+        "source_a": "sl_rna",
+        "source_b": "random",
+        "fisher_rao_distance": 0.083069
+      },
+      {
+        "source_a": "human",
+        "source_b": "canine",
+        "fisher_rao_distance": 0.040043
+      },
+      {
+        "source_a": "human",
+        "source_b": "random",
+        "fisher_rao_distance": 0.451995
+      },
+      {
+        "source_a": "canine",
+        "source_b": "random",
+        "fisher_rao_distance": 0.412124
+      }
+    ],
+    "sl_to_human": 0.42111,
+    "sl_to_canine": 0.382587,
+    "sl_to_random": 0.083069,
+    "human_to_canine": 0.040043
+  },
+  "k2": {
+    "k": 2,
+    "source_names": [
+      "sl_rna",
+      "human",
+      "canine",
+      "random"
+    ],
+    "distance_matrix": [
+      [
+        0.0,
+        0.6042402077969045,
+        0.5630203814788318,
+        0.4172302180543538
+      ],
+      [
+        0.6042402077969045,
+        0.0,
+        0.05662718311765293,
+        0.636448944775051
+      ],
+      [
+        0.5630203814788318,
+        0.05662718311765293,
+        0.0,
+        0.5807575840528354
+      ],
+      [
+        0.4172302180543538,
+        0.636448944775051,
+        0.5807575840528354,
+        0.0
+      ]
+    ],
+    "pairwise_distances": [
+      {
+        "source_a": "sl_rna",
+        "source_b": "human",
+        "fisher_rao_distance": 0.60424
+      },
+      {
+        "source_a": "sl_rna",
+        "source_b": "canine",
+        "fisher_rao_distance": 0.56302
+      },
+      {
+        "source_a": "sl_rna",
+        "source_b": "random",
+        "fisher_rao_distance": 0.41723
+      },
+      {
+        "source_a": "human",
+        "source_b": "canine",
+        "fisher_rao_distance": 0.056627
+      },
+      {
+        "source_a": "human",
+        "source_b": "random",
+        "fisher_rao_distance": 0.636449
+      },
+      {
+        "source_a": "canine",
+        "source_b": "random",
+        "fisher_rao_distance": 0.580758
+      }
+    ],
+    "sl_to_human": 0.60424,
+    "sl_to_canine": 0.56302,
+    "sl_to_random": 0.41723,
+    "human_to_canine": 0.056627
+  },
+  "k3": {
+    "k": 3,
+    "source_names": [
+      "sl_rna",
+      "human",
+      "canine",
+      "random"
+    ],
+    "distance_matrix": [
+      [
+        0.0,
+        0.5167291125029538,
+        0.48751482780746275,
+        0.673991188247684
+      ],
+      [
+        0.5167291125029538,
+        0.0,
+        0.06935153516593426,
+        0.776430225341348
+      ],
+      [
+        0.48751482780746275,
+        0.06935153516593426,
+        0.0,
+        0.7090293290001137
+      ],
+      [
+        0.673991188247684,
+        0.776430225341348,
+        0.7090293290001137,
+        0.0
+      ]
+    ],
+    "pairwise_distances": [
+      {
+        "source_a": "sl_rna",
+        "source_b": "human",
+        "fisher_rao_distance": 0.516729
+      },
+      {
+        "source_a": "sl_rna",
+        "source_b": "canine",
+        "fisher_rao_distance": 0.487515
+      },
+      {
+        "source_a": "sl_rna",
+        "source_b": "random",
+        "fisher_rao_distance": 0.673991
+      },
+      {
+        "source_a": "human",
+        "source_b": "canine",
+        "fisher_rao_distance": 0.069352
+      },
+      {
+        "source_a": "human",
+        "source_b": "random",
+        "fisher_rao_distance": 0.77643
+      },
+      {
+        "source_a": "canine",
+        "source_b": "random",
+        "fisher_rao_distance": 0.709029
+      }
+    ],
+    "sl_to_human": 0.516729,
+    "sl_to_canine": 0.487515,
+    "sl_to_random": 0.673991,
+    "human_to_canine": 0.069352
+  },
+  "k4": {
+    "k": 4,
+    "source_names": [
+      "sl_rna",
+      "human",
+      "canine",
+      "random"
+    ],
+    "distance_matrix": [
+      [
+        0.0,
+        0.3065356393456974,
+        0.2924325671263062,
+        0.8362054261866164
+      ],
+      [
+        0.3065356393456974,
+        0.0,
+        0.08007757967676586,
+        0.8924629200344508
+      ],
+      [
+        0.2924325671263062,
+        0.08007757967676586,
+        0.0,
+        0.8156354647355438
+      ],
+      [
+        0.8362054261866164,
+        0.8924629200344508,
+        0.8156354647355438,
+        0.0
+      ]
+    ],
+    "pairwise_distances": [
+      {
+        "source_a": "sl_rna",
+        "source_b": "human",
+        "fisher_rao_distance": 0.306536
+      },
+      {
+        "source_a": "sl_rna",
+        "source_b": "canine",
+        "fisher_rao_distance": 0.292433
+      },
+      {
+        "source_a": "sl_rna",
+        "source_b": "random",
+        "fisher_rao_distance": 0.836205
+      },
+      {
+        "source_a": "human",
+        "source_b": "canine",
+        "fisher_rao_distance": 0.080078
+      },
+      {
+        "source_a": "human",
+        "source_b": "random",
+        "fisher_rao_distance": 0.892463
+      },
+      {
+        "source_a": "canine",
+        "source_b": "random",
+        "fisher_rao_distance": 0.815635
+      }
+    ],
+    "sl_to_human": 0.306536,
+    "sl_to_canine": 0.292433,
+    "sl_to_random": 0.836205,
+    "human_to_canine": 0.080078
+  }
+}

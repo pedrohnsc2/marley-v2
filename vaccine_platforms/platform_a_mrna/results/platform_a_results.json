@@ -1,0 +1,646 @@
+{
+  "metadata": {
+    "generated": "2026-04-11T00:26:02.780759+00:00",
+    "pipeline_version": "0.1.0",
+    "platform": "A_mrna_optimization",
+    "source_construct": "/Users/pedronascimento/dev/marley/results/construct/construct_card.json",
+    "source_construct_length_aa": 335,
+    "source_mrna_length_nt": 1449
+  },
+  "epitope_redundancy": {
+    "total_epitopes": 11,
+    "unique_source_genes": 5,
+    "unique_alleles": 3,
+    "pairwise_comparisons_count": 55,
+    "redundant_pairs_count": 0,
+    "redundant_pairs": [],
+    "top_similar_pairs": [
+      {
+        "epitope_a": "LIIEDLSLV",
+        "epitope_b": "RILESISNV",
+        "hamming_similarity": 0.4444,
+        "same_gene": false,
+        "same_allele": true
+      },
+      {
+        "epitope_a": "MILGTFVRL",
+        "epitope_b": "MQNVTFVPK",
+        "hamming_similarity": 0.4444,
+        "same_gene": false,
+        "same_allele": false
+      },
+      {
+        "epitope_a": "YIYETFASM",
+        "epitope_b": "MILGTFVRL",
+        "hamming_similarity": 0.3333,
+        "same_gene": true,
+        "same_allele": true
+      },
+      {
+        "epitope_a": "YLAALVPAL",
+        "epitope_b": "LLTANVCYK",
+        "hamming_similarity": 0.3333,
+        "same_gene": false,
+        "same_allele": false
+      },
+      {
+        "epitope_a": "RMMRSLTPF",
+        "epitope_b": "RILESISNV",
+        "hamming_similarity": 0.2222,
+        "same_gene": false,
+        "same_allele": false
+      },
+      {
+        "epitope_a": "YIYETFASM",
+        "epitope_b": "LIIEDLSLV",
+        "hamming_similarity": 0.2222,
+        "same_gene": false,
+        "same_allele": true
+      },
+      {
+        "epitope_a": "YIYETFASM",
+        "epitope_b": "MQNVTFVPK",
+        "hamming_similarity": 0.2222,
+        "same_gene": false,
+        "same_allele": false
+      },
+      {
+        "epitope_a": "YIYETFASM",
+        "epitope_b": "RILESISNV",
+        "hamming_similarity": 0.2222,
+        "same_gene": false,
+        "same_allele": true
+      },
+      {
+        "epitope_a": "SLMCVFYFK",
+        "epitope_b": "MQNVTFVPK",
+        "hamming_similarity": 0.2222,
+        "same_gene": false,
+        "same_allele": true
+      },
+      {
+        "epitope_a": "SLMCVFYFK",
+        "epitope_b": "LLTANVCYK",
+        "hamming_similarity": 0.2222,
+        "same_gene": false,
+        "same_allele": true
+      }
+    ],
+    "construct_variants": [
+      {
+        "epitope_count": 11,
+        "epitopes_included": [
+          "RMMRSLTPF",
+          "YIYETFASM",
+          "SLMCVFYFK",
+          "YLAALVPAL",
+          "LIIEDLSLV",
+          "FAFSVSARR",
+          "MILGTFVRL",
+          "MQNVTFVPK",
+          "RILESISNV",
+          "ILYNKISGL",
+          "LLTANVCYK"
+        ],
+        "epitopes_removed": [],
+        "protein_length_aa": 287,
+        "molecular_weight_da": 30707.73,
+        "instability_index": 32.02,
+        "is_stable": true,
+        "antigenicity_proxy": 0.6245,
+        "allele_coverage": {
+          "DLA-8803401": 2,
+          "DLA-8850101": 5,
+          "DLA-8850801": 4
+        },
+        "gene_coverage": {
+          "emp24/gp25L/p24 family/GOLD": 3,
+          "hypothetical protein - conserved": 3,
+          "prohibitin": 3,
+          "GP63 - leishmanolysin": 1,
+          "cysteine peptidase B (CPB)": 1
+        },
+        "theoretical_coverage_pct": 100.0
+      },
+      {
+        "epitope_count": 9,
+        "epitopes_included": [
+          "RMMRSLTPF",
+          "YIYETFASM",
+          "SLMCVFYFK",
+          "YLAALVPAL",
+          "LIIEDLSLV",
+          "FAFSVSARR",
+          "MILGTFVRL",
+          "MQNVTFVPK",
+          "RILESISNV"
+        ],
+        "epitopes_removed": [
+          "LLTANVCYK",
+          "ILYNKISGL"
+        ],
+        "protein_length_aa": 263,
+        "molecular_weight_da": 28088.64,
+        "instability_index": 32.72,
+        "is_stable": true,
+        "antigenicity_proxy": 0.6231,
+        "allele_coverage": {
+          "DLA-8803401": 1,
+          "DLA-8850101": 5,
+          "DLA-8850801": 3
+        },
+        "gene_coverage": {
+          "emp24/gp25L/p24 family/GOLD": 3,
+          "hypothetical protein - conserved": 3,
+          "prohibitin": 2,
+          "GP63 - leishmanolysin": 1
+        },
+        "theoretical_coverage_pct": 92.38
+      },
+      {
+        "epitope_count": 7,
+        "epitopes_included": [
+          "RMMRSLTPF",
+          "YIYETFASM",
+          "SLMCVFYFK",
+          "YLAALVPAL",
+          "LIIEDLSLV",
+          "FAFSVSARR",
+          "MILGTFVRL"
+        ],
+        "epitopes_removed": [
+          "LLTANVCYK",
+          "ILYNKISGL",
+          "RILESISNV",
+          "MQNVTFVPK"
+        ],
+        "protein_length_aa": 239,
+        "molecular_weight_da": 25420.53,
+        "instability_index": 31.61,
+        "is_stable": true,
+        "antigenicity_proxy": 0.627,
+        "allele_coverage": {
+          "DLA-8803401": 1,
+          "DLA-8850101": 4,
+          "DLA-8850801": 2
+        },
+        "gene_coverage": {
+          "emp24/gp25L/p24 family/GOLD": 3,
+          "hypothetical protein - conserved": 3,
+          "prohibitin": 1
+        },
+        "theoretical_coverage_pct": 84.08
+      }
+    ],
+    "minimum_epitopes_95pct_coverage": 11,
+    "recommendation": "Nenhum par redundante encontrado. Todos os 11 epitopos sao suficientemente distintos em sequencia e especificidade alelica. Recomenda-se manter o construto completo com 11 epitopos."
+  },
+  "pseudouridine_optimization": {
+    "mrna_length_nt": 1008,
+    "total_uridines": 154,
+    "uridine_fraction": 0.1528,
+    "gc_content": 0.6726,
+    "uridine_context_summary": {
+      "high_bp_score_count": 5,
+      "medium_bp_score_count": 149,
+      "low_bp_score_count": 0,
+      "avg_base_pair_score": 0.4198
+    },
+    "strategies": [
+      {
+        "fraction": 0.3,
+        "label": "30% psiU (selective top-ranked)",
+        "uridines_substituted": 46,
+        "uridines_total": 154,
+        "estimated_translation_fold": 1.65,
+        "estimated_immunogenicity_reduction_pct": 25.5,
+        "estimated_cost_factor": 1.15
+      },
+      {
+        "fraction": 0.5,
+        "label": "50% psiU (selective top-ranked)",
+        "uridines_substituted": 77,
+        "uridines_total": 154,
+        "estimated_translation_fold": 1.92,
+        "estimated_immunogenicity_reduction_pct": 42.5,
+        "estimated_cost_factor": 1.25
+      },
+      {
+        "fraction": 1.0,
+        "label": "100% psiU (full substitution)",
+        "uridines_substituted": 154,
+        "uridines_total": 154,
+        "estimated_translation_fold": 2.5,
+        "estimated_immunogenicity_reduction_pct": 85.0,
+        "estimated_cost_factor": 1.5
+      }
+    ],
+    "optimal_fraction": 0.5,
+    "optimal_rationale": "A substituicao de 50% das uridinas (priorizando posicoes em stems de estrutura secundaria) oferece o melhor equilibrio entre: (1) aumento de ~1.75x na eficiencia de traducao, (2) reducao de ~42% na ativacao imune inata (TLR7/8), (3) custo incremental moderado de ~1.25x. A substituicao total (100%) maximiza traducao (~2.5x) e reduz imunogenicidade em ~85%, mas o custo de m1psi-UTP e significativo para producao em escala veterinaria. Para um primeiro candidato pre-clinico, 50% seletivo e a abordagem mais custo-efetiva. Na fase clinica, 100% pode ser justificado pelo beneficio imunologico."
+  },
+  "lnp_formulation": {
+    "dose": {
+      "target_species": "Canis lupus familiaris",
+      "body_weight_kg": 15.0,
+      "dose_ug_per_kg": 30.0,
+      "dose_range_ug_per_kg": [
+        10.0,
+        100.0
+      ],
+      "total_dose_ug": 450.0,
+      "total_dose_nmol": 1.3528,
+      "mrna_length_nt": 1008,
+      "doses_per_animal": 2,
+      "total_mrna_per_animal_ug": 900.0
+    },
+    "lnp_composition": {
+      "molar_ratios_pct": {
+        "ionizable_lipid_SM102": 50.0,
+        "DSPC": 10.0,
+        "cholesterol": 38.5,
+        "PEG_DMG_2000": 1.5
+      },
+      "np_ratio": 6.0,
+      "ionizable_lipid_nmol": 8181.73,
+      "dspc_nmol": 1636.35,
+      "cholesterol_nmol": 6299.94,
+      "peg_lipid_nmol": 245.45,
+      "total_lipid_mass_ug": 9146.16,
+      "lipid_to_mrna_ratio_w_w": 20.32,
+      "encapsulation_efficiency_pct": 95.0
+    },
+    "np_ratio_optimization": [
+      {
+        "np_ratio": 6.0,
+        "ionizable_lipid_nmol": 8181.73,
+        "total_lipid_mass_ug": 9146.16,
+        "estimated_encapsulation_pct": 96.3,
+        "estimated_transfection_score": 0.98,
+        "is_optimal": true
+      },
+      {
+        "np_ratio": 7.0,
+        "ionizable_lipid_nmol": 9545.36,
+        "total_lipid_mass_ug": 10670.52,
+        "estimated_encapsulation_pct": 96.7,
+        "estimated_transfection_score": 0.995,
+        "is_optimal": false
+      },
+      {
+        "np_ratio": 8.0,
+        "ionizable_lipid_nmol": 10908.98,
+        "total_lipid_mass_ug": 12194.88,
+        "estimated_encapsulation_pct": 97.0,
+        "estimated_transfection_score": 1.0,
+        "is_optimal": false
+      },
+      {
+        "np_ratio": 9.0,
+        "ionizable_lipid_nmol": 12272.6,
+        "total_lipid_mass_ug": 13719.23,
+        "estimated_encapsulation_pct": 96.7,
+        "estimated_transfection_score": 0.995,
+        "is_optimal": false
+      },
+      {
+        "np_ratio": 10.0,
+        "ionizable_lipid_nmol": 13636.22,
+        "total_lipid_mass_ug": 15243.59,
+        "estimated_encapsulation_pct": 96.3,
+        "estimated_transfection_score": 0.98,
+        "is_optimal": false
+      },
+      {
+        "np_ratio": 11.0,
+        "ionizable_lipid_nmol": 14999.85,
+        "total_lipid_mass_ug": 16767.95,
+        "estimated_encapsulation_pct": 96.0,
+        "estimated_transfection_score": 0.855,
+        "is_optimal": false
+      },
+      {
+        "np_ratio": 12.0,
+        "ionizable_lipid_nmol": 16363.47,
+        "total_lipid_mass_ug": 18292.31,
+        "estimated_encapsulation_pct": 95.7,
+        "estimated_transfection_score": 0.72,
+        "is_optimal": false
+      }
+    ],
+    "storage_options": [
+      {
+        "label": "Ultra-frozen (-70 C)",
+        "temperature_c": -70.0,
+        "shelf_life_months": 6,
+        "cold_chain": "Ultra-cold chain required (-60 to -80 C)",
+        "logistics_note": "Requer freezer -80 C; cadeia fria cara e complexa para areas rurais endemicas no Brasil (Nordeste, Norte)",
+        "feasibility": "Laboratorial e centros urbanos"
+      },
+      {
+        "label": "Frozen (-20 C)",
+        "temperature_c": -20.0,
+        "shelf_life_months": 3,
+        "cold_chain": "Standard freezer (-15 to -25 C)",
+        "logistics_note": "Freezer domestico/comercial; viavel para clinicas veterinarias urbanas e hospitais veterinarios",
+        "feasibility": "Ampla distribuicao urbana"
+      },
+      {
+        "label": "Refrigerated (2-8 C, lyophilized)",
+        "temperature_c": 5.0,
+        "shelf_life_months": 12,
+        "cold_chain": "Standard refrigerator (2-8 C)",
+        "logistics_note": "Liofilizacao permite armazenamento em geladeira padrao; reconstituicao antes do uso; melhor opcao para campo e campanhas de vacinacao em areas endemicas",
+        "feasibility": "Distribuicao ampla incluindo areas rurais"
+      }
+    ],
+    "cost_laboratory": {
+      "ivt_usd": 225.0,
+      "lipids_usd": 0.0127,
+      "formulation_usd": 15.0,
+      "qc_usd": 20.0,
+      "total_per_dose_usd": 260.01,
+      "total_per_animal_usd": 520.03,
+      "lipid_breakdown": {
+        "ionizable_lipid_SM102": 0.012,
+        "DSPC": 0.0002,
+        "cholesterol": 0.0,
+        "PEG_DMG_2000": 0.0005
+      }
+    },
+    "cost_industrial": {
+      "ivt_usd": 2.25,
+      "lipids_usd": 0.000635,
+      "formulation_usd": 1.5,
+      "qc_usd": 2.0,
+      "total_per_dose_usd": 5.7506,
+      "total_per_animal_usd": 11.5013,
+      "lipid_breakdown": {
+        "ionizable_lipid_SM102": 0.0006,
+        "DSPC": 1e-05,
+        "cholesterol": 1e-06,
+        "PEG_DMG_2000": 2.5e-05
+      }
+    },
+    "veterinary_mrna_comparison": {
+      "approved_veterinary_mrna_vaccines": [],
+      "note": "Ate 2025, nenhuma vacina de mRNA foi aprovada para uso veterinario em caes. As vacinas de mRNA aprovadas sao exclusivamente para humanos (COVID-19: BNT162b2/Comirnaty, mRNA-1273/Spikevax).",
+      "experimental_veterinary_mrna": [
+        {
+          "target": "PRRS virus (suinos)",
+          "species": "Sus scrofa (suino)",
+          "status": "Pre-clinico",
+          "developer": "Varios grupos academicos",
+          "reference": "Lutz et al., npj Vaccines, 2023"
+        },
+        {
+          "target": "Influenza equina",
+          "species": "Equus caballus (equino)",
+          "status": "Fase I/II",
+          "developer": "CureVac / colaboracao academica",
+          "reference": "Schnee et al., PLoS Pathog, 2016"
+        },
+        {
+          "target": "Raiva (prova de conceito)",
+          "species": "Multiplas especies",
+          "status": "Pre-clinico",
+          "developer": "CureVac",
+          "reference": "Alberer et al., Lancet, 2017"
+        }
+      ],
+      "regulatory_pathway": "No Brasil: MAPA (Ministerio da Agricultura) regulamenta biologicos veterinarios. Nao existe via regulatoria especifica para mRNA veterinario -- seria necessario processo de novo. Nos EUA: USDA-APHIS Center for Veterinary Biologics (CVB) aceita novas tecnologias via 9 CFR Part 113, com requerimento de demonstracao de seguranca, pureza e potencia.",
+      "advantage_over_protein": "mRNA-LNP elimina necessidade de expressao recombinante, purificacao e refolding. Producao mais rapida e escalavel. Contudo, cold chain mais exigente e custo de NTPs modificados sao desvantagens para mercado veterinario (sensivel a preco)."
+    },
+    "recommendation": "Para um cao de 15 kg, recomenda-se 450 ug de mRNA por dose (30 ug/kg), formulado em LNP com composicao SM-102:DSPC:Chol:PEG-DMG (50:10:38.5:1.5 mol%) e razao N/P = 6. Regime de 2 doses (primo + reforco). Para distribuicao em areas endemicas brasileiras, a formulacao liofilizada (2-8 C, 12 meses de validade) e a mais adequada, apesar do custo adicional de liofilizacao. Custo estimado por animal: $520.03 (lab) / $11.50 (industrial)."
+  },
+  "strategic_analysis": {
+    "market": {
+      "total_dogs_brazil": 54200000,
+      "dogs_at_risk": 35230000,
+      "dogs_at_risk_fraction_pct": 65.0,
+      "seroprevalence_mean_pct": 25.0,
+      "estimated_infected_dogs": 8807500,
+      "addressable_market_dogs": 7046000,
+      "addressable_market_doses_year": 14092000,
+      "market_value_brl_year": 880750000.0,
+      "market_value_usd_year": 158535000.0,
+      "human_cases_per_year": 3500,
+      "human_fatality_rate_pct": 8.0,
+      "annual_control_cost_brl": 350000000.0,
+      "competitor_leish_tec_price_brl": 250.0
+    },
+    "sovereignty_argument": {
+      "title": "Soberania vacinal em mRNA: do COVID-19 a One Health",
+      "context": "A pandemia de COVID-19 expôs a dependencia do Brasil de tecnologia estrangeira para vacinas de mRNA. O pais foi um dos ultimos a acessar vacinas de mRNA, com impacto direto em mortalidade. Desde entao, o governo brasileiro investiu em capacidade nacional de mRNA.",
+      "covid19_precedent": "Em 2023, Bio-Manguinhos/Fiocruz firmou acordo de transferencia de tecnologia com BioNTech para producao de vacinas de mRNA no Brasil. A planta de producao em Santa Cruz (RJ) esta em fase de instalacao. O investimento total excede R$ 1 bilhao.",
+      "brazil_mrna_capacity": "A infraestrutura de mRNA em instalacao no Brasil pode ser utilizada para multiplos produtos alem de COVID-19. Vacinas veterinarias de mRNA sao candidatas naturais: mesma plataforma tecnologica, menor barreira regulatoria que saude humana, demanda interna massiva (leishmaniose e endemica no pais).",
+      "one_health": "A leishmaniose visceral e uma zoonose: o cao e o principal reservatorio urbano de Leishmania infantum. Vacinar caes reduz a prevalencia canina e, consequentemente, a transmissao para humanos. O PNCLV (Programa Nacional de Controle da LV) do Ministerio da Saude atualmente depende de eutanasia de caes soropositivos -- estrategia eticamente controversa e de eficacia limitada. Uma vacina eficaz transformaria o programa.",
+      "strategic_value": "Desenvolver a primeira vacina de mRNA veterinaria do Brasil: (1) demonstra dominio da plataforma de mRNA para alem de COVID, (2) cria precedente regulatorio para mRNA veterinario no MAPA, (3) gera propriedade intelectual nacional, (4) reduz gastos publicos com controle de LV (~R$ 350 M/ano), (5) posiciona o Brasil como lider em One Health no G20."
+    },
+    "funding_sources": [
+      {
+        "name": "BNDES Saude Animal",
+        "institution": "Banco Nacional de Desenvolvimento Economico e Social",
+        "description": "Linha de credito para inovacao em saude animal. Prioridade para projetos que reduzam dependencia de importacoes e desenvolvam tecnologia nacional.",
+        "typical_amount_brl_min": 2000000.0,
+        "typical_amount_brl_max": 20000000.0,
+        "probability_pct": 35.0,
+        "timeline_months_min": 12,
+        "timeline_months_max": 24,
+        "requirements": [
+          "Empresa brasileira como proponente (parceria academia-industria)",
+          "Plano de negocio com viabilidade economica",
+          "Contrapartida financeira da empresa (20-40%)",
+          "Producao nacional obrigatoria"
+        ],
+        "strategic_fit": "Forte alinhamento: vacina veterinaria com tecnologia nacional de mRNA, reducao de importacao de biologicos. Contudo, exige parceiro industrial ja estabelecido.",
+        "score": 6.5
+      },
+      {
+        "name": "FINEP Inovacao",
+        "institution": "Financiadora de Estudos e Projetos",
+        "description": "Subvencao economica e credito para inovacao tecnologica. Programa Tecnova e Chamadas Publicas de Subvencao Economica financiam P&D em saude animal e biotecnologia.",
+        "typical_amount_brl_min": 500000.0,
+        "typical_amount_brl_max": 10000000.0,
+        "probability_pct": 40.0,
+        "timeline_months_min": 8,
+        "timeline_months_max": 18,
+        "requirements": [
+          "Projeto de inovacao tecnologica com diferencial claro",
+          "Equipe tecnica qualificada (doutores, patentes)",
+          "Infraestrutura laboratorial comprovada",
+          "Potencial de mercado documentado"
+        ],
+        "strategic_fit": "Excelente: FINEP historicamente financia vacinas e biotecnologia. A tecnologia de mRNA se enquadra em 'inovacao de fronteira'. Subvencao economica (nao-reembolsavel) e ideal para fase pre-clinica.",
+        "score": 7.5
+      },
+      {
+        "name": "MCTI / CNPq -- Chamada Universal + INCT",
+        "institution": "Ministerio da Ciencia, Tecnologia e Inovacao",
+        "description": "Financiamento academico via editais universais do CNPq e Institutos Nacionais de Ciencia e Tecnologia (INCTs). Valores menores, mas sem exigencia de parceiro industrial.",
+        "typical_amount_brl_min": 100000.0,
+        "typical_amount_brl_max": 2000000.0,
+        "probability_pct": 55.0,
+        "timeline_months_min": 6,
+        "timeline_months_max": 12,
+        "requirements": [
+          "Pesquisador com vinculo institucional (universidade/instituto)",
+          "Curriculo Lattes atualizado com producao relevante",
+          "Projeto com impacto cientifico e social",
+          "Parceria inter-institucional (bonus na avaliacao)"
+        ],
+        "strategic_fit": "Muito bom para fase de prova de conceito e estudos pre-clinicos. Valores menores limitam escala, mas a alta probabilidade de aprovacao e a flexibilidade de uso compensam.",
+        "score": 7.0
+      },
+      {
+        "name": "FAPESP / FAPs estaduais -- PIPE/PAPPE",
+        "institution": "Fundacoes Estaduais de Amparo a Pesquisa",
+        "description": "Programas de inovacao para pequenas empresas (PIPE/SP, PAPPE/outros estados). Financiam P&D em parceria com ICTs. Especialmente forte em SP (FAPESP PIPE) e MG (FAPEMIG).",
+        "typical_amount_brl_min": 200000.0,
+        "typical_amount_brl_max": 2500000.0,
+        "probability_pct": 45.0,
+        "timeline_months_min": 6,
+        "timeline_months_max": 18,
+        "requirements": [
+          "Empresa de pequeno porte (EPP) como proponente",
+          "Sede no estado da FAP financiadora",
+          "Projeto com potencial de produto comercializavel",
+          "Pesquisador vinculado a ICT como co-PI"
+        ],
+        "strategic_fit": "Bom para MVP e prova de conceito. PIPE-FAPESP tem historico de apoiar startups de biotecnologia. Ideal se houver spin-off academico ou empresa incubada.",
+        "score": 6.0
+      },
+      {
+        "name": "Fiocruz / Biomanguinhos -- Parceria Tecnologica",
+        "institution": "Fundacao Oswaldo Cruz / Bio-Manguinhos",
+        "description": "Parceria de desenvolvimento tecnologico (PDT) com Bio-Manguinhos. Biomanguinhos e o maior produtor de vacinas do Brasil e esta investindo em plataforma de mRNA desde o COVID-19.",
+        "typical_amount_brl_min": 5000000.0,
+        "typical_amount_brl_max": 50000000.0,
+        "probability_pct": 20.0,
+        "timeline_months_min": 18,
+        "timeline_months_max": 36,
+        "requirements": [
+          "Tecnologia com potencial de transferencia para producao",
+          "Dados pre-clinicos robustos (eficacia em modelo animal)",
+          "Alinhamento com portfolio de Biomanguinhos",
+          "Demanda de saude publica comprovada"
+        ],
+        "strategic_fit": "O melhor cenario de longo prazo: Biomanguinhos instalou planta de mRNA em 2023 (acordo com BioNTech) para produzir vacinas de mRNA no Brasil. A leishmaniose e uma das prioridades do SUS. Contudo, o foco historico e saude humana -- seria necessario argumentar o controle da LVC como estrategia One Health para reduzir casos humanos.",
+        "score": 8.0
+      },
+      {
+        "name": "USDA SBIR / International Collaborations",
+        "institution": "US Department of Agriculture",
+        "description": "Small Business Innovation Research (SBIR) grants para biologicos veterinarios inovadores. Aberto a colaboracoes internacionais em certos programas.",
+        "typical_amount_brl_min": 750000.0,
+        "typical_amount_brl_max": 5000000.0,
+        "probability_pct": 15.0,
+        "timeline_months_min": 12,
+        "timeline_months_max": 24,
+        "requirements": [
+          "Empresa ou instituicao com presenca nos EUA (ou colaborador)",
+          "Proposta em ingles com dados preliminares",
+          "Via regulatoria USDA-CVB mapeada",
+          "Potencial de comercializacao nos EUA"
+        ],
+        "strategic_fit": "Nicho: LV nao e endemica nos EUA, mas importacao de caes infectados do Mediterraneo e da America Latina e preocupacao crescente. O USDA-APHIS emitiu alertas sobre L. infantum em foxhounds americanos. Argumento de biosseguranca valido, mas a probabilidade e mais baixa.",
+        "score": 4.5
+      }
+    ],
+    "funding_ranked_by_score": [
+      "Fiocruz / Biomanguinhos -- Parceria Tecnologica",
+      "FINEP Inovacao",
+      "MCTI / CNPq -- Chamada Universal + INCT",
+      "BNDES Saude Animal",
+      "FAPESP / FAPs estaduais -- PIPE/PAPPE",
+      "USDA SBIR / International Collaborations"
+    ],
+    "regulatory_usda": {
+      "agency": "USDA-APHIS Center for Veterinary Biologics (CVB)",
+      "regulation": "9 CFR Parts 101-118",
+      "process": [
+        {
+          "step": 1,
+          "name": "Pre-Submission Meeting",
+          "description": "Reuniao com CVB para discutir nova tecnologia (mRNA-LNP). Definir requisitos de seguranca, pureza e potencia.",
+          "timeline_months": "1-2"
+        },
+        {
+          "step": 2,
+          "name": "Outline of Production",
+          "description": "Documento detalhando processo de producao, controle de qualidade e testes de liberacao.",
+          "timeline_months": "3-6"
+        },
+        {
+          "step": 3,
+          "name": "Experimental Studies (9 CFR 103.3)",
+          "description": "Estudos de seguranca e eficacia em animais alvo (caes). Minimo: estudo de seguranca (back-passage, overdose) + estudo de eficacia (challenge ou soroconversao).",
+          "timeline_months": "12-24"
+        },
+        {
+          "step": 4,
+          "name": "Product License Application",
+          "description": "Submissao de dossiê completo com dados de producao, QC, seguranca e eficacia.",
+          "timeline_months": "6-12"
+        },
+        {
+          "step": 5,
+          "name": "Establishment License",
+          "description": "Licenciamento da planta de producao (GMP veterinario). Inspecao in loco pelo CVB.",
+          "timeline_months": "6-12"
+        }
+      ],
+      "total_estimated_timeline": "2-5 anos",
+      "key_considerations": [
+        "Nao existe via acelerada especifica para mRNA veterinario",
+        "CVB e receptivo a novas tecnologias (aprovaram vacina de DNA para WNV em equinos)",
+        "Dados de seguranca sao mais criticos que eficacia para primeira aprovacao",
+        "Possibilidade de conditional license para uso emergencial"
+      ]
+    },
+    "regulatory_brazil": {
+      "agency": "MAPA - Secretaria de Defesa Agropecuaria (SDA)",
+      "regulation": "Decreto 5.053/2004 + IN MAPA 44/2007",
+      "process": [
+        {
+          "step": 1,
+          "name": "Consulta Previa ao MAPA",
+          "description": "Consulta formal ao Departamento de Saude Animal sobre viabilidade regulatoria de vacina de mRNA para caes.",
+          "timeline_months": "2-4"
+        },
+        {
+          "step": 2,
+          "name": "Desenvolvimento e Testes Pre-Clinicos",
+          "description": "Estudos de seguranca e imunogenicidade em modelo animal. Laboratorio credenciado pelo MAPA.",
+          "timeline_months": "12-18"
+        },
+        {
+          "step": 3,
+          "name": "Submissao de Dossie Tecnico",
+          "description": "Documentacao completa: composicao, processo de producao, controle de qualidade, estudos de seguranca e eficacia.",
+          "timeline_months": "6-12"
+        },
+        {
+          "step": 4,
+          "name": "Avaliacao pela CFPV + Laboratorio Nacional (LANAGRO)",
+          "description": "Analise do dossie e testes laboratoriais independentes. LANAGRO verifica identidade, esterilidade, potencia.",
+          "timeline_months": "6-18"
+        },
+        {
+          "step": 5,
+          "name": "Registro do Produto",
+          "description": "Emissao do registro definitivo apos aprovacao. Validade de 5 anos, renovavel.",
+          "timeline_months": "3-6"
+        }
+      ],
+      "total_estimated_timeline": "3-5 anos",
+      "key_considerations": [
+        "Precedente: Leish-Tec (Hertape-Calier) foi registrada em 2014",
+        "MAPA nao possui protocolo especifico para mRNA veterinario",
+        "Seria necessario criar novo marco regulatorio ou adaptar existente",
+        "Parceria com Biomanguinhos facilitaria dialogo com MAPA e ANVISA",
+        "Possibilidade de registro experimental para uso em campanhas de saude publica"
+      ]
+    },
+    "recommendation": "Estrategia de financiamento em tres fases:\n\nFASE 1 (0-12 meses) -- Prova de conceito: ~R$ 500K-2M\n  Fonte primaria: MCTI / CNPq -- Chamada Universal + INCT (CNPq/MCTI)\n  Fonte secundaria: BNDES Saude Animal (FAP estadual)\n  Objetivo: dados pre-clinicos em camundongos BALB/c\n\nFASE 2 (12-30 meses) -- Pre-clinico avancado: ~R$ 5-10M\n  Fonte primaria: FINEP Inovacao (FINEP subvencao)\n  Fonte secundaria: Fiocruz / Biomanguinhos -- Parceria Tecnologica (Fiocruz PDT)\n  Objetivo: eficacia em modelo canino, GLP safety\n\nFASE 3 (30-60 meses) -- Registro e escala: ~R$ 20-50M\n  Fonte primaria: Fiocruz / Biomanguinhos -- Parceria Tecnologica (Fiocruz/Biomanguinhos)\n  Fonte secundaria: BNDES Saude Animal\n  Objetivo: registro MAPA, transferencia de tecnologia\n\nMercado total enderecavel: ~7,046,000 caes/ano (R$ 880,750,000/ano). O argumento One Health (vacinar caes para proteger humanos) e o diferencial estrategico para justificar investimento publico."
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "per_structure": {
+    "free_aso": {
+      "n_h0_features": 24,
+      "n_h1_features": 0,
+      "n_persistent_h1": 0,
+      "total_persistence_h0": 162.2396,
+      "total_persistence_h1": 0,
+      "topological_complexity": 162.2396
+    },
+    "free_sl_rna": {
+      "n_h0_features": 78,
+      "n_h1_features": 0,
+      "n_persistent_h1": 0,
+      "total_persistence_h0": 312.4329,
+      "total_persistence_h1": 0,
+      "topological_complexity": 312.4329
+    },
+    "duplex": {
+      "n_h0_features": 200,
+      "n_h1_features": 42,
+      "n_persistent_h1": 5,
+      "total_persistence_h0": 381.3314,
+      "total_persistence_h1": 2.3126,
+      "topological_complexity": 383.6439
+    }
+  },
+  "binding_impact": {
+    "aso_persistent_h1": 0,
+    "sl_rna_persistent_h1": 0,
+    "duplex_persistent_h1": 5,
+    "binding_creates_new_topology": true,
+    "topology_gain_ratio": 5.0,
+    "complexity_change_percent": -19.18,
+    "persistence_threshold_angstrom": 0.1,
+    "interpretation": "A formacao do duplex ASO:SL RNA cria topologia estavel adicional (favoravel para eficacia terapeutica)"
+  }
+}

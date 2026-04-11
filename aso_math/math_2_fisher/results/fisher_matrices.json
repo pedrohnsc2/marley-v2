@@ -1,0 +1,170 @@
+{
+  "k1": {
+    "sl_rna": {
+      "log_determinant": 5.895485,
+      "trace": 19.0685,
+      "max_eigenvalue": 7.1667,
+      "min_eigenvalue": 2.6875,
+      "most_informative_kmer": "G",
+      "most_informative_kmer_prob": 0.139535,
+      "least_informative_kmer": "U",
+      "least_informative_kmer_prob": 0.372093
+    },
+    "human": {
+      "log_determinant": 5.54838,
+      "trace": 16.0256,
+      "max_eigenvalue": 4.1667,
+      "min_eigenvalue": 3.8462,
+      "most_informative_kmer": "C",
+      "most_informative_kmer_prob": 0.24,
+      "least_informative_kmer": "A",
+      "least_informative_kmer_prob": 0.26
+    },
+    "canine": {
+      "log_determinant": 5.551598,
+      "trace": 16.0515,
+      "max_eigenvalue": 4.3478,
+      "min_eigenvalue": 3.7037,
+      "most_informative_kmer": "C",
+      "most_informative_kmer_prob": 0.23,
+      "least_informative_kmer": "A",
+      "least_informative_kmer_prob": 0.27
+    },
+    "random": {
+      "log_determinant": 5.965238,
+      "trace": 19.7395,
+      "max_eigenvalue": 7.0911,
+      "min_eigenvalue": 2.7858,
+      "most_informative_kmer": "C",
+      "most_informative_kmer_prob": 0.141022,
+      "least_informative_kmer": "A",
+      "least_informative_kmer_prob": 0.358966
+    }
+  },
+  "k2": {
+    "sl_rna": {
+      "log_determinant": 47.304867,
+      "trace": 376.8,
+      "max_eigenvalue": 54.0,
+      "min_eigenvalue": 6.0,
+      "most_informative_kmer": "CC",
+      "most_informative_kmer_prob": 0.018519,
+      "least_informative_kmer": "UA",
+      "least_informative_kmer_prob": 0.166667
+    },
+    "human": {
+      "log_determinant": 44.38704,
+      "trace": 256.8212,
+      "max_eigenvalue": 17.3611,
+      "min_eigenvalue": 14.7929,
+      "most_informative_kmer": "CC",
+      "most_informative_kmer_prob": 0.0576,
+      "least_informative_kmer": "AA",
+      "least_informative_kmer_prob": 0.0676
+    },
+    "canine": {
+      "log_determinant": 44.412784,
+      "trace": 257.6516,
+      "max_eigenvalue": 18.9036,
+      "min_eigenvalue": 13.7174,
+      "most_informative_kmer": "CC",
+      "most_informative_kmer_prob": 0.0529,
+      "least_informative_kmer": "AA",
+      "least_informative_kmer_prob": 0.0729
+    },
+    "random": {
+      "log_determinant": 47.718437,
+      "trace": 389.1738,
+      "max_eigenvalue": 50.4468,
+      "min_eigenvalue": 7.744,
+      "most_informative_kmer": "GG",
+      "most_informative_kmer_prob": 0.019823,
+      "least_informative_kmer": "UA",
+      "least_informative_kmer_prob": 0.129131
+    }
+  },
+  "k3": {
+    "sl_rna": {
+      "log_determinant": 273.814483,
+      "trace": 5041.5833,
+      "max_eigenvalue": 101.0,
+      "min_eigenvalue": 16.8333,
+      "most_informative_kmer": "AAA",
+      "most_informative_kmer_prob": 0.009901,
+      "least_informative_kmer": "UAU",
+      "least_informative_kmer_prob": 0.059406
+    },
+    "human": {
+      "log_determinant": 266.32224,
+      "trace": 4115.7239,
+      "max_eigenvalue": 72.338,
+      "min_eigenvalue": 56.8958,
+      "most_informative_kmer": "CCC",
+      "most_informative_kmer_prob": 0.013824,
+      "least_informative_kmer": "AAA",
+      "least_informative_kmer_prob": 0.017576
+    },
+    "canine": {
+      "log_determinant": 266.476705,
+      "trace": 4135.7025,
+      "max_eigenvalue": 82.1895,
+      "min_eigenvalue": 50.8053,
+      "most_informative_kmer": "CCC",
+      "most_informative_kmer_prob": 0.012167,
+      "least_informative_kmer": "AAA",
+      "least_informative_kmer_prob": 0.019683
+    },
+    "random": {
+      "log_determinant": 286.341156,
+      "trace": 7699.6112,
+      "max_eigenvalue": 376.8473,
+      "min_eigenvalue": 21.4804,
+      "most_informative_kmer": "GGG",
+      "most_informative_kmer_prob": 0.002654,
+      "least_informative_kmer": "AUA",
+      "least_informative_kmer_prob": 0.046554
+    }
+  },
+  "k4": {
+    "sl_rna": {
+      "log_determinant": 1429.276504,
+      "trace": 69812.3333,
+      "max_eigenvalue": 292.0,
+      "min_eigenvalue": 73.0,
+      "most_informative_kmer": "AAAA",
+      "most_informative_kmer_prob": 0.003425,
+      "least_informative_kmer": "UAUA",
+      "least_informative_kmer_prob": 0.013699
+    },
+    "human": {
+      "log_determinant": 1420.385282,
+      "trace": 65957.1135,
+      "max_eigenvalue": 301.4082,
+      "min_eigenvalue": 218.8299,
+      "most_informative_kmer": "CCCC",
+      "most_informative_kmer_prob": 0.003318,
+      "least_informative_kmer": "AAAA",
+      "least_informative_kmer_prob": 0.00457
+    },
+    "canine": {
+      "log_determinant": 1421.209091,
+      "trace": 66384.3514,
+      "max_eigenvalue": 357.3458,
+      "min_eigenvalue": 188.1676,
+      "most_informative_kmer": "CCCC",
+      "most_informative_kmer_prob": 0.002798,
+      "least_informative_kmer": "AAAA",
+      "least_informative_kmer_prob": 0.005314
+    },
+    "random": {
+      "log_determinant": 1527.032474,
+      "trace": 151997.6918,
+      "max_eigenvalue": 3188.1062,
+      "min_eigenvalue": 58.7214,
+      "most_informative_kmer": "GGGG",
+      "most_informative_kmer_prob": 0.000314,
+      "least_informative_kmer": "AUAA",
+      "least_informative_kmer_prob": 0.01703
+    }
+  }
+}

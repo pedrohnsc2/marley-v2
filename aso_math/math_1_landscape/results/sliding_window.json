@@ -1,0 +1,146 @@
+{
+  "window_length": 25,
+  "sl_length": 39,
+  "n_windows": 15,
+  "optimal_window": {
+    "start": 5,
+    "end": 30,
+    "dg_binding_kcal": -27.97,
+    "tm_celsius": 68.48,
+    "gc_content": 0.32,
+    "is_current_aso_position": true
+  },
+  "current_aso_window": {
+    "start": 5,
+    "end": 30,
+    "dg_binding_kcal": -27.97,
+    "tm_celsius": 68.48,
+    "gc_content": 0.32,
+    "is_current_aso_position": true
+  },
+  "current_covers_optimal": true,
+  "dg_deviation_from_optimal_kcal": 0.0,
+  "position_offset_from_optimal": 0,
+  "windows": [
+    {
+      "start": 0,
+      "end": 25,
+      "dg_binding_kcal": -26.81,
+      "tm_celsius": 66.49,
+      "gc_content": 0.28,
+      "is_current_aso_position": false
+    },
+    {
+      "start": 1,
+      "end": 26,
+      "dg_binding_kcal": -26.81,
+      "tm_celsius": 66.49,
+      "gc_content": 0.28,
+      "is_current_aso_position": false
+    },
+    {
+      "start": 2,
+      "end": 27,
+      "dg_binding_kcal": -26.67,
+      "tm_celsius": 66.25,
+      "gc_content": 0.32,
+      "is_current_aso_position": false
+    },
+    {
+      "start": 3,
+      "end": 28,
+      "dg_binding_kcal": -26.67,
+      "tm_celsius": 66.25,
+      "gc_content": 0.28,
+      "is_current_aso_position": false
+    },
+    {
+      "start": 4,
+      "end": 29,
+      "dg_binding_kcal": -27.53,
+      "tm_celsius": 67.72,
+      "gc_content": 0.32,
+      "is_current_aso_position": false
+    },
+    {
+      "start": 5,
+      "end": 30,
+      "dg_binding_kcal": -27.97,
+      "tm_celsius": 68.48,
+      "gc_content": 0.32,
+      "is_current_aso_position": true
+    },
+    {
+      "start": 6,
+      "end": 31,
+      "dg_binding_kcal": -27.11,
+      "tm_celsius": 67.02,
+      "gc_content": 0.32,
+      "is_current_aso_position": false
+    },
+    {
+      "start": 7,
+      "end": 32,
+      "dg_binding_kcal": -26.4,
+      "tm_celsius": 66.0,
+      "gc_content": 0.32,
+      "is_current_aso_position": false
+    },
+    {
+      "start": 8,
+      "end": 33,
+      "dg_binding_kcal": -25.46,
+      "tm_celsius": 64.48,
+      "gc_content": 0.28,
+      "is_current_aso_position": false
+    },
+    {
+      "start": 9,
+      "end": 34,
+      "dg_binding_kcal": -25.18,
+      "tm_celsius": 63.93,
+      "gc_content": 0.24,
+      "is_current_aso_position": false
+    },
+    {
+      "start": 10,
+      "end": 35,
+      "dg_binding_kcal": -25.18,
+      "tm_celsius": 63.93,
+      "gc_content": 0.24,
+      "is_current_aso_position": false
+    },
+    {
+      "start": 11,
+      "end": 36,
+      "dg_binding_kcal": -25.18,
+      "tm_celsius": 63.93,
+      "gc_content": 0.24,
+      "is_current_aso_position": false
+    },
+    {
+      "start": 12,
+      "end": 37,
+      "dg_binding_kcal": -25.18,
+      "tm_celsius": 63.93,
+      "gc_content": 0.24,
+      "is_current_aso_position": false
+    },
+    {
+      "start": 13,
+      "end": 38,
+      "dg_binding_kcal": -25.18,
+      "tm_celsius": 63.93,
+      "gc_content": 0.24,
+      "is_current_aso_position": false
+    },
+    {
+      "start": 14,
+      "end": 39,
+      "dg_binding_kcal": -26.05,
+      "tm_celsius": 65.41,
+      "gc_content": 0.28,
+      "is_current_aso_position": false
+    }
+  ]
+}

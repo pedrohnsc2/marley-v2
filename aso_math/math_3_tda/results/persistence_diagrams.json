@@ -1,0 +1,2094 @@
+{
+  "free_aso": {
+    "name": "free_aso",
+    "h0_pairs": [
+      {
+        "birth": 0.0,
+        "death": "inf",
+        "persistence": "inf",
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 7.054,
+        "persistence": 7.054,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 7.054,
+        "persistence": 7.054,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 7.054,
+        "persistence": 7.054,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 7.054,
+        "persistence": 7.054,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 7.054,
+        "persistence": 7.054,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 7.054,
+        "persistence": 7.054,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 7.054,
+        "persistence": 7.054,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 7.054,
+        "persistence": 7.054,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 7.054,
+        "persistence": 7.054,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 7.054,
+        "persistence": 7.054,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 7.054,
+        "persistence": 7.054,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 7.054,
+        "persistence": 7.054,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 7.054,
+        "persistence": 7.054,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 7.054,
+        "persistence": 7.054,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 7.054,
+        "persistence": 7.054,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 7.054,
+        "persistence": 7.054,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 7.054,
+        "persistence": 7.054,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 7.054,
+        "persistence": 7.054,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 7.0535,
+        "persistence": 7.0535,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 7.0535,
+        "persistence": 7.0535,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 7.0535,
+        "persistence": 7.0535,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 7.0535,
+        "persistence": 7.0535,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 7.0535,
+        "persistence": 7.0535,
+        "dimension": 0
+      }
+    ],
+    "h1_pairs": [],
+    "total_persistence_h0": 162.2396,
+    "total_persistence_h1": 0,
+    "n_persistent_h1_features": 0
+  },
+  "free_sl_rna": {
+    "name": "free_sl_rna",
+    "h0_pairs": [
+      {
+        "birth": 0.0,
+        "death": "inf",
+        "persistence": "inf",
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.8794,
+        "persistence": 4.8794,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.8684,
+        "persistence": 4.8684,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.8298,
+        "persistence": 4.8298,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.7938,
+        "persistence": 4.7938,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.7526,
+        "persistence": 4.7526,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.7487,
+        "persistence": 4.7487,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.7322,
+        "persistence": 4.7322,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.7293,
+        "persistence": 4.7293,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.6988,
+        "persistence": 4.6988,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.6895,
+        "persistence": 4.6895,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.6881,
+        "persistence": 4.6881,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.6721,
+        "persistence": 4.6721,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.6413,
+        "persistence": 4.6413,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.6341,
+        "persistence": 4.6341,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.6241,
+        "persistence": 4.6241,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.5886,
+        "persistence": 4.5886,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.5667,
+        "persistence": 4.5667,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.5632,
+        "persistence": 4.5632,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.5536,
+        "persistence": 4.5536,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.5448,
+        "persistence": 4.5448,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.5417,
+        "persistence": 4.5417,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.5404,
+        "persistence": 4.5404,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.5157,
+        "persistence": 4.5157,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.5133,
+        "persistence": 4.5133,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.5132,
+        "persistence": 4.5132,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.5111,
+        "persistence": 4.5111,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.4853,
+        "persistence": 4.4853,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.4774,
+        "persistence": 4.4774,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.4739,
+        "persistence": 4.4739,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.452,
+        "persistence": 4.452,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.446,
+        "persistence": 4.446,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.4378,
+        "persistence": 4.4378,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.4175,
+        "persistence": 4.4175,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.4139,
+        "persistence": 4.4139,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.3295,
+        "persistence": 4.3295,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.3255,
+        "persistence": 4.3255,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.3076,
+        "persistence": 4.3076,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.234,
+        "persistence": 4.234,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 3.7962,
+        "persistence": 3.7962,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 3.7615,
+        "persistence": 3.7615,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 3.7612,
+        "persistence": 3.7612,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 3.7593,
+        "persistence": 3.7593,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 3.7362,
+        "persistence": 3.7362,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 3.7321,
+        "persistence": 3.7321,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 3.7247,
+        "persistence": 3.7247,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 3.6962,
+        "persistence": 3.6962,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 3.6823,
+        "persistence": 3.6823,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 3.6635,
+        "persistence": 3.6635,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 3.6621,
+        "persistence": 3.6621,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 3.6598,
+        "persistence": 3.6598,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 3.6537,
+        "persistence": 3.6537,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 3.651,
+        "persistence": 3.651,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 3.64,
+        "persistence": 3.64,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 3.6337,
+        "persistence": 3.6337,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 3.629,
+        "persistence": 3.629,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 3.616,
+        "persistence": 3.616,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 3.5957,
+        "persistence": 3.5957,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 3.5631,
+        "persistence": 3.5631,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 3.5525,
+        "persistence": 3.5525,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 3.5476,
+        "persistence": 3.5476,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 3.5236,
+        "persistence": 3.5236,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 3.4953,
+        "persistence": 3.4953,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 3.4706,
+        "persistence": 3.4706,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 3.4693,
+        "persistence": 3.4693,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 3.4509,
+        "persistence": 3.4509,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 3.4348,
+        "persistence": 3.4348,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 3.4342,
+        "persistence": 3.4342,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 3.4319,
+        "persistence": 3.4319,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 3.4096,
+        "persistence": 3.4096,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 3.3931,
+        "persistence": 3.3931,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 3.3919,
+        "persistence": 3.3919,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 3.3873,
+        "persistence": 3.3873,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 3.3677,
+        "persistence": 3.3677,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 3.3671,
+        "persistence": 3.3671,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 3.3197,
+        "persistence": 3.3197,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 3.3192,
+        "persistence": 3.3192,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 3.3144,
+        "persistence": 3.3144,
+        "dimension": 0
+      }
+    ],
+    "h1_pairs": [],
+    "total_persistence_h0": 312.4329,
+    "total_persistence_h1": 0,
+    "n_persistent_h1_features": 0
+  },
+  "duplex": {
+    "name": "duplex",
+    "h0_pairs": [
+      {
+        "birth": 0.0,
+        "death": "inf",
+        "persistence": "inf",
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 11.6428,
+        "persistence": 11.6428,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 5.2099,
+        "persistence": 5.2099,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 5.2099,
+        "persistence": 5.2099,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 5.0325,
+        "persistence": 5.0325,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 5.0325,
+        "persistence": 5.0325,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.7757,
+        "persistence": 4.7757,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.7757,
+        "persistence": 4.7757,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.7757,
+        "persistence": 4.7757,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.4632,
+        "persistence": 4.4632,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.4632,
+        "persistence": 4.4632,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.4632,
+        "persistence": 4.4632,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.4632,
+        "persistence": 4.4632,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.4632,
+        "persistence": 4.4632,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.4632,
+        "persistence": 4.4632,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.4632,
+        "persistence": 4.4632,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.1296,
+        "persistence": 4.1296,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.1296,
+        "persistence": 4.1296,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.1296,
+        "persistence": 4.1296,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.1296,
+        "persistence": 4.1296,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.1296,
+        "persistence": 4.1296,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.1296,
+        "persistence": 4.1296,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.1296,
+        "persistence": 4.1296,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.1296,
+        "persistence": 4.1296,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.1296,
+        "persistence": 4.1296,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.1296,
+        "persistence": 4.1296,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.1296,
+        "persistence": 4.1296,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.1296,
+        "persistence": 4.1296,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.1296,
+        "persistence": 4.1296,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.1296,
+        "persistence": 4.1296,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.1296,
+        "persistence": 4.1296,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.1296,
+        "persistence": 4.1296,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.1296,
+        "persistence": 4.1296,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.1296,
+        "persistence": 4.1296,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.1296,
+        "persistence": 4.1296,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.1296,
+        "persistence": 4.1296,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.1296,
+        "persistence": 4.1296,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.1296,
+        "persistence": 4.1296,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.1296,
+        "persistence": 4.1296,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.1296,
+        "persistence": 4.1296,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.1296,
+        "persistence": 4.1296,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.1296,
+        "persistence": 4.1296,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.1296,
+        "persistence": 4.1296,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.1296,
+        "persistence": 4.1296,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.1296,
+        "persistence": 4.1296,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.1296,
+        "persistence": 4.1296,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.1296,
+        "persistence": 4.1296,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.1296,
+        "persistence": 4.1296,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.1296,
+        "persistence": 4.1296,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 4.1296,
+        "persistence": 4.1296,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 2.8194,
+        "persistence": 2.8194,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 2.3479,
+        "persistence": 2.3479,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 2.3479,
+        "persistence": 2.3479,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 2.3479,
+        "persistence": 2.3479,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 2.3479,
+        "persistence": 2.3479,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 2.1906,
+        "persistence": 2.1906,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 2.1906,
+        "persistence": 2.1906,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 2.1906,
+        "persistence": 2.1906,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 2.1906,
+        "persistence": 2.1906,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 2.1906,
+        "persistence": 2.1906,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 2.0614,
+        "persistence": 2.0614,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 2.0614,
+        "persistence": 2.0614,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 2.0614,
+        "persistence": 2.0614,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 2.0614,
+        "persistence": 2.0614,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 2.0614,
+        "persistence": 2.0614,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 2.0614,
+        "persistence": 2.0614,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 2.0614,
+        "persistence": 2.0614,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 2.0614,
+        "persistence": 2.0614,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 1.4342,
+        "persistence": 1.4342,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 1.4342,
+        "persistence": 1.4342,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 1.4342,
+        "persistence": 1.4342,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 1.4342,
+        "persistence": 1.4342,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 1.4342,
+        "persistence": 1.4342,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 1.4342,
+        "persistence": 1.4342,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 1.4342,
+        "persistence": 1.4342,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 1.4342,
+        "persistence": 1.4342,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 1.4342,
+        "persistence": 1.4342,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 1.4342,
+        "persistence": 1.4342,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 1.4342,
+        "persistence": 1.4342,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 1.4342,
+        "persistence": 1.4342,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 1.4342,
+        "persistence": 1.4342,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 1.4342,
+        "persistence": 1.4342,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 1.4342,
+        "persistence": 1.4342,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 1.4342,
+        "persistence": 1.4342,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 1.4342,
+        "persistence": 1.4342,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 1.4342,
+        "persistence": 1.4342,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 1.4342,
+        "persistence": 1.4342,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 1.4342,
+        "persistence": 1.4342,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 1.4342,
+        "persistence": 1.4342,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 1.4342,
+        "persistence": 1.4342,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 1.4342,
+        "persistence": 1.4342,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 1.4342,
+        "persistence": 1.4342,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 1.4342,
+        "persistence": 1.4342,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 1.4342,
+        "persistence": 1.4342,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 1.4342,
+        "persistence": 1.4342,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 1.4342,
+        "persistence": 1.4342,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 1.4342,
+        "persistence": 1.4342,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 1.4342,
+        "persistence": 1.4342,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 1.2155,
+        "persistence": 1.2155,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 1.2155,
+        "persistence": 1.2155,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 1.2155,
+        "persistence": 1.2155,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 1.2155,
+        "persistence": 1.2155,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 1.2155,
+        "persistence": 1.2155,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 1.2155,
+        "persistence": 1.2155,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 1.2155,
+        "persistence": 1.2155,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 1.2155,
+        "persistence": 1.2155,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.8369,
+        "persistence": 0.8369,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.8369,
+        "persistence": 0.8369,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.8369,
+        "persistence": 0.8369,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.8369,
+        "persistence": 0.8369,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.8369,
+        "persistence": 0.8369,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.8369,
+        "persistence": 0.8369,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.8369,
+        "persistence": 0.8369,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.8369,
+        "persistence": 0.8369,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.8369,
+        "persistence": 0.8369,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.8369,
+        "persistence": 0.8369,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.8369,
+        "persistence": 0.8369,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.8369,
+        "persistence": 0.8369,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.8369,
+        "persistence": 0.8369,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.8369,
+        "persistence": 0.8369,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.8369,
+        "persistence": 0.8369,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.8369,
+        "persistence": 0.8369,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.8369,
+        "persistence": 0.8369,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.8369,
+        "persistence": 0.8369,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.8369,
+        "persistence": 0.8369,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.8369,
+        "persistence": 0.8369,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.8369,
+        "persistence": 0.8369,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.8369,
+        "persistence": 0.8369,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.8369,
+        "persistence": 0.8369,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.8369,
+        "persistence": 0.8369,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.8369,
+        "persistence": 0.8369,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.8369,
+        "persistence": 0.8369,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.8369,
+        "persistence": 0.8369,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.8369,
+        "persistence": 0.8369,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.8369,
+        "persistence": 0.8369,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.8369,
+        "persistence": 0.8369,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.8369,
+        "persistence": 0.8369,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.8369,
+        "persistence": 0.8369,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.8369,
+        "persistence": 0.8369,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.7599,
+        "persistence": 0.7599,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.7599,
+        "persistence": 0.7599,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.7599,
+        "persistence": 0.7599,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.7599,
+        "persistence": 0.7599,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.7599,
+        "persistence": 0.7599,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.7599,
+        "persistence": 0.7599,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.7599,
+        "persistence": 0.7599,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.7599,
+        "persistence": 0.7599,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.7599,
+        "persistence": 0.7599,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.7599,
+        "persistence": 0.7599,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.7599,
+        "persistence": 0.7599,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.7599,
+        "persistence": 0.7599,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.7599,
+        "persistence": 0.7599,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.7599,
+        "persistence": 0.7599,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.7599,
+        "persistence": 0.7599,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.7599,
+        "persistence": 0.7599,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.7599,
+        "persistence": 0.7599,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.7599,
+        "persistence": 0.7599,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.7599,
+        "persistence": 0.7599,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.7599,
+        "persistence": 0.7599,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.7599,
+        "persistence": 0.7599,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.7599,
+        "persistence": 0.7599,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.7599,
+        "persistence": 0.7599,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.7599,
+        "persistence": 0.7599,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.7599,
+        "persistence": 0.7599,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.7599,
+        "persistence": 0.7599,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.7599,
+        "persistence": 0.7599,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.7599,
+        "persistence": 0.7599,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.7599,
+        "persistence": 0.7599,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.7599,
+        "persistence": 0.7599,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.7599,
+        "persistence": 0.7599,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.7599,
+        "persistence": 0.7599,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.6513,
+        "persistence": 0.6513,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.6513,
+        "persistence": 0.6513,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.6513,
+        "persistence": 0.6513,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.6513,
+        "persistence": 0.6513,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.6513,
+        "persistence": 0.6513,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.6513,
+        "persistence": 0.6513,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.6513,
+        "persistence": 0.6513,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.6513,
+        "persistence": 0.6513,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.6513,
+        "persistence": 0.6513,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.6513,
+        "persistence": 0.6513,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.6513,
+        "persistence": 0.6513,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.6513,
+        "persistence": 0.6513,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.6513,
+        "persistence": 0.6513,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.6513,
+        "persistence": 0.6513,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.6513,
+        "persistence": 0.6513,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.6513,
+        "persistence": 0.6513,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.6513,
+        "persistence": 0.6513,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.6513,
+        "persistence": 0.6513,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.6513,
+        "persistence": 0.6513,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.6513,
+        "persistence": 0.6513,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.6513,
+        "persistence": 0.6513,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.6513,
+        "persistence": 0.6513,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.6513,
+        "persistence": 0.6513,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.6513,
+        "persistence": 0.6513,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.6513,
+        "persistence": 0.6513,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.6513,
+        "persistence": 0.6513,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.6513,
+        "persistence": 0.6513,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.6513,
+        "persistence": 0.6513,
+        "dimension": 0
+      },
+      {
+        "birth": 0.0,
+        "death": 0.6513,
+        "persistence": 0.6513,
+        "dimension": 0
+      }
+    ],
+    "h1_pairs": [
+      {
+        "birth": 11.7201,
+        "death": 11.9354,
+        "persistence": 0.2153,
+        "dimension": 1
+      },
+      {
+        "birth": 11.6428,
+        "death": 11.8294,
+        "persistence": 0.1866,
+        "dimension": 1
+      },
+      {
+        "birth": 16.2662,
+        "death": 16.4353,
+        "persistence": 0.1691,
+        "dimension": 1
+      },
+      {
+        "birth": 16.2662,
+        "death": 16.4353,
+        "persistence": 0.1691,
+        "dimension": 1
+      },
+      {
+        "birth": 11.6748,
+        "death": 11.8294,
+        "persistence": 0.1547,
+        "dimension": 1
+      },
+      {
+        "birth": 16.1667,
+        "death": 16.2662,
+        "persistence": 0.0995,
+        "dimension": 1
+      },
+      {
+        "birth": 16.1667,
+        "death": 16.2662,
+        "persistence": 0.0995,
+        "dimension": 1
+      },
+      {
+        "birth": 16.2041,
+        "death": 16.2868,
+        "persistence": 0.0827,
+        "dimension": 1
+      },
+      {
+        "birth": 11.6428,
+        "death": 11.7201,
+        "persistence": 0.0773,
+        "dimension": 1
+      },
+      {
+        "birth": 11.9416,
+        "death": 11.9929,
+        "persistence": 0.0513,
+        "dimension": 1
+      },
+      {
+        "birth": 11.9416,
+        "death": 11.9929,
+        "persistence": 0.0513,
+        "dimension": 1
+      },
+      {
+        "birth": 11.9416,
+        "death": 11.9929,
+        "persistence": 0.0513,
+        "dimension": 1
+      },
+      {
+        "birth": 11.6748,
+        "death": 11.7157,
+        "persistence": 0.0409,
+        "dimension": 1
+      },
+      {
+        "birth": 11.6748,
+        "death": 11.7157,
+        "persistence": 0.0409,
+        "dimension": 1
+      },
+      {
+        "birth": 11.6748,
+        "death": 11.7157,
+        "persistence": 0.0409,
+        "dimension": 1
+      },
+      {
+        "birth": 16.1667,
+        "death": 16.2041,
+        "persistence": 0.0374,
+        "dimension": 1
+      },
+      {
+        "birth": 16.1667,
+        "death": 16.2041,
+        "persistence": 0.0374,
+        "dimension": 1
+      },
+      {
+        "birth": 16.1667,
+        "death": 16.2041,
+        "persistence": 0.0374,
+        "dimension": 1
+      },
+      {
+        "birth": 16.1667,
+        "death": 16.2041,
+        "persistence": 0.0374,
+        "dimension": 1
+      },
+      {
+        "birth": 16.1667,
+        "death": 16.2041,
+        "persistence": 0.0374,
+        "dimension": 1
+      },
+      {
+        "birth": 16.1667,
+        "death": 16.2041,
+        "persistence": 0.0374,
+        "dimension": 1
+      },
+      {
+        "birth": 16.1667,
+        "death": 16.2041,
+        "persistence": 0.0374,
+        "dimension": 1
+      },
+      {
+        "birth": 16.1667,
+        "death": 16.2041,
+        "persistence": 0.0374,
+        "dimension": 1
+      },
+      {
+        "birth": 16.1667,
+        "death": 16.2041,
+        "persistence": 0.0374,
+        "dimension": 1
+      },
+      {
+        "birth": 16.1667,
+        "death": 16.2041,
+        "persistence": 0.0374,
+        "dimension": 1
+      },
+      {
+        "birth": 16.1667,
+        "death": 16.2041,
+        "persistence": 0.0374,
+        "dimension": 1
+      },
+      {
+        "birth": 16.1667,
+        "death": 16.2041,
+        "persistence": 0.0374,
+        "dimension": 1
+      },
+      {
+        "birth": 16.1667,
+        "death": 16.2041,
+        "persistence": 0.0374,
+        "dimension": 1
+      },
+      {
+        "birth": 11.6428,
+        "death": 11.6748,
+        "persistence": 0.032,
+        "dimension": 1
+      },
+      {
+        "birth": 11.6428,
+        "death": 11.6748,
+        "persistence": 0.032,
+        "dimension": 1
+      },
+      {
+        "birth": 11.6428,
+        "death": 11.6748,
+        "persistence": 0.032,
+        "dimension": 1
+      },
+      {
+        "birth": 11.6428,
+        "death": 11.6748,
+        "persistence": 0.032,
+        "dimension": 1
+      },
+      {
+        "birth": 11.6428,
+        "death": 11.6748,
+        "persistence": 0.032,
+        "dimension": 1
+      },
+      {
+        "birth": 11.6428,
+        "death": 11.6748,
+        "persistence": 0.032,
+        "dimension": 1
+      },
+      {
+        "birth": 11.6428,
+        "death": 11.6748,
+        "persistence": 0.032,
+        "dimension": 1
+      },
+      {
+        "birth": 11.6428,
+        "death": 11.6748,
+        "persistence": 0.032,
+        "dimension": 1
+      },
+      {
+        "birth": 16.272,
+        "death": 16.2868,
+        "persistence": 0.0148,
+        "dimension": 1
+      },
+      {
+        "birth": 16.2662,
+        "death": 16.272,
+        "persistence": 0.0058,
+        "dimension": 1
+      },
+      {
+        "birth": 16.2662,
+        "death": 16.272,
+        "persistence": 0.0058,
+        "dimension": 1
+      },
+      {
+        "birth": 11.7157,
+        "death": 11.7201,
+        "persistence": 0.0044,
+        "dimension": 1
+      },
+      {
+        "birth": 11.7157,
+        "death": 11.7201,
+        "persistence": 0.0044,
+        "dimension": 1
+      },
+      {
+        "birth": 11.7157,
+        "death": 11.7201,
+        "persistence": 0.0044,
+        "dimension": 1
+      }
+    ],
+    "total_persistence_h0": 381.3314,
+    "total_persistence_h1": 2.3126,
+    "n_persistent_h1_features": 5
+  }
+}
