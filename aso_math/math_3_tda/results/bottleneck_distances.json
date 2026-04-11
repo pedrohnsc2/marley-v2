@@ -1,0 +1,17 @@
+{
+  "free_aso_vs_duplex": {
+    "bottleneck_h0_angstrom": 5.8214,
+    "bottleneck_h1_angstrom": 0.1077,
+    "description": "Distancia bottleneck entre free_aso e duplex"
+  },
+  "free_sl_rna_vs_duplex": {
+    "bottleneck_h0_angstrom": 5.8214,
+    "bottleneck_h1_angstrom": 0.1077,
+    "description": "Distancia bottleneck entre free_sl_rna e duplex"
+  },
+  "free_aso_vs_free_sl_rna": {
+    "bottleneck_h0_angstrom": 2.5379,
+    "bottleneck_h1_angstrom": 0.0,
+    "description": "Distancia bottleneck entre free_aso e free_sl_rna"
+  }
+}

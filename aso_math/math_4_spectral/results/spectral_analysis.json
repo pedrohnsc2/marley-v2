@@ -1,0 +1,132 @@
+{
+  "laplacian_eigenvalues": [
+    0.0,
+    0.838032,
+    1.083234,
+    1.136499,
+    1.39316,
+    1.452552,
+    2.18079,
+    2.33537,
+    2.68609,
+    3.095731,
+    3.368571,
+    3.709814,
+    4.361896,
+    4.51586,
+    5.548908,
+    6.573981,
+    9.919512
+  ],
+  "normalized_eigenvalues": [
+    0.0,
+    0.369699,
+    0.384893,
+    0.526699,
+    0.740797,
+    0.781699,
+    0.820933,
+    0.991557,
+    1.046242,
+    1.171535,
+    1.222484,
+    1.324164,
+    1.373806,
+    1.450719,
+    1.470145,
+    1.610467,
+    1.71416
+  ],
+  "algebraic_connectivity_lambda2": 0.838032,
+  "largest_eigenvalue_lambda_n": 9.919512,
+  "spectral_gap_ratio": 0.915517,
+  "n_connected_components": 1,
+  "is_connected": true,
+  "fiedler_partition": [
+    {
+      "node_id": "SmE",
+      "fiedler_value": -0.557693,
+      "cluster": "B"
+    },
+    {
+      "node_id": "SmF",
+      "fiedler_value": -0.456812,
+      "cluster": "B"
+    },
+    {
+      "node_id": "SmG",
+      "fiedler_value": -0.361694,
+      "cluster": "B"
+    },
+    {
+      "node_id": "SmD2",
+      "fiedler_value": -0.179504,
+      "cluster": "B"
+    },
+    {
+      "node_id": "U4",
+      "fiedler_value": -0.097972,
+      "cluster": "B"
+    },
+    {
+      "node_id": "U5",
+      "fiedler_value": 0.02655,
+      "cluster": "A"
+    },
+    {
+      "node_id": "SmB",
+      "fiedler_value": 0.048368,
+      "cluster": "A"
+    },
+    {
+      "node_id": "U6",
+      "fiedler_value": 0.055394,
+      "cluster": "A"
+    },
+    {
+      "node_id": "U2",
+      "fiedler_value": 0.088823,
+      "cluster": "A"
+    },
+    {
+      "node_id": "Prp8",
+      "fiedler_value": 0.1076,
+      "cluster": "A"
+    },
+    {
+      "node_id": "SmD1",
+      "fiedler_value": 0.118138,
+      "cluster": "A"
+    },
+    {
+      "node_id": "SL_RNA",
+      "fiedler_value": 0.125012,
+      "cluster": "A"
+    },
+    {
+      "node_id": "Snu114",
+      "fiedler_value": 0.126641,
+      "cluster": "A"
+    },
+    {
+      "node_id": "SmD3",
+      "fiedler_value": 0.187304,
+      "cluster": "A"
+    },
+    {
+      "node_id": "U1",
+      "fiedler_value": 0.206335,
+      "cluster": "A"
+    },
+    {
+      "node_id": "SLA1",
+      "fiedler_value": 0.278082,
+      "cluster": "A"
+    },
+    {
+      "node_id": "NHP2L1",
+      "fiedler_value": 0.285427,
+      "cluster": "A"
+    }
+  ]
+}

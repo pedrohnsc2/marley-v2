@@ -1,0 +1,497 @@
+{
+  "module": "module_d_lnp",
+  "version": "1.0.0",
+  "generated_at": "2026-04-11T00:23:59.673383+00:00",
+  "runtime_seconds": 0.0,
+  "status": "success",
+  "all_criteria_met": true,
+  "criteria": {
+    "encapsulation_ge_80pct": true,
+    "release_ge_90pct": true,
+    "size_50_200nm": true,
+    "uptake_ge_2x": true
+  },
+  "executive_summary": "LNP encapsulation is RECOMMENDED for MRL-ASO-001 delivery to macrophages. Key metrics: encapsulation efficiency = 99% (N/P 8), phagolysosomal release = 100%, particle diameter = 87 nm (phagocytable), mannose-targeted uptake = 3.5x vs untargeted. The pH-responsive release of DLin-MC3-DMA (pKa 6.44) delivers the ASO cargo directly to the phagolysosome where L. infantum amastigotes and their SL RNA reside. Lyophilization enables deployment in endemic regions of Brazil without cold chain infrastructure.",
+  "overall_conclusion": "LNP encapsulation provides significant advantages for MRL-ASO-001 delivery:\n\n1. **Encapsulation:** 99% efficiency at N/P 8, protecting the ASO during circulation.\n\n2. **pH-responsive release:** 100% of cargo released at phagolysosomal pH 4.5. Unlike mRNA/siRNA therapeutics that require endosomal escape, MRL-ASO-001 benefits from phagolysosomal release because the target (SL RNA) is in the SAME compartment.\n\n3. **Macrophage targeting:** Mannose-PEG-DSPE decoration provides 3.5x higher uptake by infected macrophages via CD206 receptor-mediated endocytosis.\n\n4. **Size:** 87 nm diameter is within the optimal range for phagocytic uptake (50-200 nm).\n\n5. **Storage:** Lyophilization with sucrose/trehalose enables room-temperature storage, critical for deployment in endemic areas of Northeast Brazil.\n\n6. **Cost-effectiveness:** Despite 3x higher cost per dose, the 3.5x uptake improvement and 99% encapsulation yield a cost-effectiveness ratio of 1.15, justifying the LNP formulation.\n\n**The LNP-formulated MRL-ASO-001 is predicted to be a viable delivery strategy for targeting L. infantum in canine macrophages.**",
+  "aso_specifications": {
+    "name": "MRL-ASO-001",
+    "sequence_length_nt": 25,
+    "gapmer_design": "5-15-5 (LNA-DNA-LNA)",
+    "backbone": "full phosphorothioate (PS)",
+    "ps_charges": 24
+  },
+  "lnp_composition": {
+    "composition": {
+      "ionizable_lipid": "DLin-MC3-DMA",
+      "helper_lipid": "DSPC",
+      "sterol": "Cholesterol",
+      "peg_lipid": "DMG-PEG2000",
+      "mol_fraction_ionizable": 0.5,
+      "mol_fraction_helper": 0.1,
+      "mol_fraction_sterol": 0.385,
+      "mol_fraction_peg": 0.015,
+      "weighted_average_mw": 589.32,
+      "charge_ph_7_4": 0.049407,
+      "charge_ph_4_5": 0.494324,
+      "pka_ionizable": 6.44
+    },
+    "components": {
+      "ionizable_lipid": {
+        "name": "DLin-MC3-DMA",
+        "mw_g_per_mol": 642.09,
+        "mol_fraction": 0.5,
+        "role": "pH-responsive encapsulation and release",
+        "pka": 6.44
+      },
+      "helper_lipid": {
+        "name": "DSPC",
+        "mw_g_per_mol": 790.15,
+        "mol_fraction": 0.1,
+        "role": "Bilayer structural integrity"
+      },
+      "sterol": {
+        "name": "Cholesterol",
+        "mw_g_per_mol": 386.65,
+        "mol_fraction": 0.385,
+        "role": "Membrane stability and fusogenicity"
+      },
+      "peg_lipid": {
+        "name": "DMG-PEG2000",
+        "mw_g_per_mol": 2693.0,
+        "mol_fraction": 0.015,
+        "role": "Stealth layer (prevents opsonization and RES clearance)"
+      }
+    }
+  },
+  "np_optimization": {
+    "aso_length_nt": 25,
+    "ps_charges": 24,
+    "scan_range": {
+      "min": 1.0,
+      "max": 20.0,
+      "step": 1.0
+    },
+    "scan_results": [
+      {
+        "np_ratio": 1.0,
+        "n_amines": 24.0,
+        "n_phosphates": 24,
+        "encapsulation_efficiency": 0.4231,
+        "particle_diameter_nm": 67.5,
+        "zeta_potential_mv": -23.28,
+        "suitable_for_phagocytosis": true,
+        "optimal": false
+      },
+      {
+        "np_ratio": 2.0,
+        "n_amines": 48.0,
+        "n_phosphates": 24,
+        "encapsulation_efficiency": 0.6671,
+        "particle_diameter_nm": 70.0,
+        "zeta_potential_mv": -17.6,
+        "suitable_for_phagocytosis": true,
+        "optimal": false
+      },
+      {
+        "np_ratio": 3.0,
+        "n_amines": 72.0,
+        "n_phosphates": 24,
+        "encapsulation_efficiency": 0.808,
+        "particle_diameter_nm": 72.5,
+        "zeta_potential_mv": -10.0,
+        "suitable_for_phagocytosis": true,
+        "optimal": false
+      },
+      {
+        "np_ratio": 4.0,
+        "n_amines": 96.0,
+        "n_phosphates": 24,
+        "encapsulation_efficiency": 0.8892,
+        "particle_diameter_nm": 75.0,
+        "zeta_potential_mv": -2.4,
+        "suitable_for_phagocytosis": true,
+        "optimal": true
+      },
+      {
+        "np_ratio": 5.0,
+        "n_amines": 120.0,
+        "n_phosphates": 24,
+        "encapsulation_efficiency": 0.9361,
+        "particle_diameter_nm": 77.5,
+        "zeta_potential_mv": 3.28,
+        "suitable_for_phagocytosis": true,
+        "optimal": true
+      },
+      {
+        "np_ratio": 6.0,
+        "n_amines": 144.0,
+        "n_phosphates": 24,
+        "encapsulation_efficiency": 0.9631,
+        "particle_diameter_nm": 80.0,
+        "zeta_potential_mv": 6.67,
+        "suitable_for_phagocytosis": true,
+        "optimal": true
+      },
+      {
+        "np_ratio": 7.0,
+        "n_amines": 168.0,
+        "n_phosphates": 24,
+        "encapsulation_efficiency": 0.9787,
+        "particle_diameter_nm": 82.5,
+        "zeta_potential_mv": 8.43,
+        "suitable_for_phagocytosis": true,
+        "optimal": true
+      },
+      {
+        "np_ratio": 8.0,
+        "n_amines": 192.0,
+        "n_phosphates": 24,
+        "encapsulation_efficiency": 0.9877,
+        "particle_diameter_nm": 85.0,
+        "zeta_potential_mv": 9.28,
+        "suitable_for_phagocytosis": true,
+        "optimal": true
+      },
+      {
+        "np_ratio": 9.0,
+        "n_amines": 216.0,
+        "n_phosphates": 24,
+        "encapsulation_efficiency": 0.99,
+        "particle_diameter_nm": 87.5,
+        "zeta_potential_mv": 9.67,
+        "suitable_for_phagocytosis": true,
+        "optimal": false
+      },
+      {
+        "np_ratio": 10.0,
+        "n_amines": 240.0,
+        "n_phosphates": 24,
+        "encapsulation_efficiency": 0.99,
+        "particle_diameter_nm": 90.0,
+        "zeta_potential_mv": 9.85,
+        "suitable_for_phagocytosis": true,
+        "optimal": false
+      },
+      {
+        "np_ratio": 11.0,
+        "n_amines": 264.0,
+        "n_phosphates": 24,
+        "encapsulation_efficiency": 0.99,
+        "particle_diameter_nm": 92.5,
+        "zeta_potential_mv": 9.93,
+        "suitable_for_phagocytosis": true,
+        "optimal": false
+      },
+      {
+        "np_ratio": 12.0,
+        "n_amines": 288.0,
+        "n_phosphates": 24,
+        "encapsulation_efficiency": 0.99,
+        "particle_diameter_nm": 95.0,
+        "zeta_potential_mv": 9.97,
+        "suitable_for_phagocytosis": true,
+        "optimal": false
+      },
+      {
+        "np_ratio": 13.0,
+        "n_amines": 312.0,
+        "n_phosphates": 24,
+        "encapsulation_efficiency": 0.99,
+        "particle_diameter_nm": 97.5,
+        "zeta_potential_mv": 9.99,
+        "suitable_for_phagocytosis": true,
+        "optimal": false
+      },
+      {
+        "np_ratio": 14.0,
+        "n_amines": 336.0,
+        "n_phosphates": 24,
+        "encapsulation_efficiency": 0.99,
+        "particle_diameter_nm": 100.0,
+        "zeta_potential_mv": 9.99,
+        "suitable_for_phagocytosis": true,
+        "optimal": false
+      },
+      {
+        "np_ratio": 15.0,
+        "n_amines": 360.0,
+        "n_phosphates": 24,
+        "encapsulation_efficiency": 0.99,
+        "particle_diameter_nm": 102.5,
+        "zeta_potential_mv": 10.0,
+        "suitable_for_phagocytosis": true,
+        "optimal": false
+      },
+      {
+        "np_ratio": 16.0,
+        "n_amines": 384.0,
+        "n_phosphates": 24,
+        "encapsulation_efficiency": 0.99,
+        "particle_diameter_nm": 105.0,
+        "zeta_potential_mv": 10.0,
+        "suitable_for_phagocytosis": true,
+        "optimal": false
+      },
+      {
+        "np_ratio": 17.0,
+        "n_amines": 408.0,
+        "n_phosphates": 24,
+        "encapsulation_efficiency": 0.99,
+        "particle_diameter_nm": 107.5,
+        "zeta_potential_mv": 10.0,
+        "suitable_for_phagocytosis": true,
+        "optimal": false
+      },
+      {
+        "np_ratio": 18.0,
+        "n_amines": 432.0,
+        "n_phosphates": 24,
+        "encapsulation_efficiency": 0.99,
+        "particle_diameter_nm": 110.0,
+        "zeta_potential_mv": 10.0,
+        "suitable_for_phagocytosis": true,
+        "optimal": false
+      },
+      {
+        "np_ratio": 19.0,
+        "n_amines": 456.0,
+        "n_phosphates": 24,
+        "encapsulation_efficiency": 0.99,
+        "particle_diameter_nm": 112.5,
+        "zeta_potential_mv": 10.0,
+        "suitable_for_phagocytosis": true,
+        "optimal": false
+      },
+      {
+        "np_ratio": 20.0,
+        "n_amines": 480.0,
+        "n_phosphates": 24,
+        "encapsulation_efficiency": 0.99,
+        "particle_diameter_nm": 115.0,
+        "zeta_potential_mv": 10.0,
+        "suitable_for_phagocytosis": true,
+        "optimal": false
+      }
+    ],
+    "optimal": {
+      "np_ratio": 8.0,
+      "n_amines": 192.0,
+      "n_phosphates": 24,
+      "encapsulation_efficiency": 0.9877,
+      "particle_diameter_nm": 85.0,
+      "zeta_potential_mv": 9.28,
+      "suitable_for_phagocytosis": true,
+      "optimal": true
+    },
+    "optimal_np_ratio": 8.0,
+    "optimal_encapsulation": 0.9877,
+    "optimal_diameter_nm": 85.0,
+    "ps_aso_note": "PS-ASOs require lower N/P (4-8) than mRNA (6-12) due to permanent negative charge on phosphorothioate backbone."
+  },
+  "ph_release": {
+    "pka_ionizable_lipid": 6.44,
+    "hill_slope": 4.0,
+    "compartment_releases": {
+      "blood_plasma": {
+        "compartment": "blood_plasma",
+        "ph": 7.4,
+        "fraction_protonated": 0.098813,
+        "fraction_released": 0.021041,
+        "transit_time_min": 0.0,
+        "release_status": "minimal"
+      },
+      "early_endosome": {
+        "compartment": "early_endosome",
+        "ph": 6.5,
+        "fraction_protonated": 0.465516,
+        "fraction_released": 0.440286,
+        "transit_time_min": 5.0,
+        "release_status": "partial"
+      },
+      "late_endosome": {
+        "compartment": "late_endosome",
+        "ph": 5.0,
+        "fraction_protonated": 0.964964,
+        "fraction_released": 0.996859,
+        "transit_time_min": 15.0,
+        "release_status": "complete"
+      },
+      "phagolysosome": {
+        "compartment": "phagolysosome",
+        "ph": 4.5,
+        "fraction_protonated": 0.988649,
+        "fraction_released": 0.999574,
+        "transit_time_min": 30.0,
+        "release_status": "complete"
+      }
+    },
+    "release_at_target_ph": 0.999574,
+    "target_compartment": "phagolysosome",
+    "advantage_for_macrophage_delivery": "LNP pH-responsive release is ADVANTAGEOUS for macrophage delivery: at pH 4.5 (phagolysosome), 100.0% of the ASO cargo is released. Since the target RNA (SL RNA) is located in the SAME compartment where L. infantum amastigotes reside, endosomal escape is NOT required — the LNP releases MRL-ASO-001 directly where it needs to act.",
+    "mechanism": "DLin-MC3-DMA is neutral at pH 7.4 (stealth) and protonated at pH <6.5. Protonation triggers interaction with endosomal phospholipids, forming inverted hexagonal (H_II) phase that disrupts the LNP and releases the ASO cargo."
+  },
+  "macrophage_targeting": {
+    "receptor_target": "CD206 (mannose receptor / MRC1)",
+    "biological_rationale": "L. infantum-infected macrophages upregulate CD206 expression. Mannose-decorated LNPs are recognized by CD206 and internalized via receptor-mediated endocytosis, directing the ASO payload to the phagolysosome where the parasite resides.",
+    "scan_results": [
+      {
+        "mannose_peg_fraction": 0.0,
+        "uptake_fold_increase": 2.0,
+        "receptor_target": "CD206 (mannose receptor / MRC1)",
+        "particle_diameter_nm": 85.0,
+        "suitable_for_phagocytosis": true
+      },
+      {
+        "mannose_peg_fraction": 0.25,
+        "uptake_fold_increase": 2.75,
+        "receptor_target": "CD206 (mannose receptor / MRC1)",
+        "particle_diameter_nm": 86.0,
+        "suitable_for_phagocytosis": true
+      },
+      {
+        "mannose_peg_fraction": 0.5,
+        "uptake_fold_increase": 3.5,
+        "receptor_target": "CD206 (mannose receptor / MRC1)",
+        "particle_diameter_nm": 87.0,
+        "suitable_for_phagocytosis": true
+      },
+      {
+        "mannose_peg_fraction": 0.75,
+        "uptake_fold_increase": 4.25,
+        "receptor_target": "CD206 (mannose receptor / MRC1)",
+        "particle_diameter_nm": 88.0,
+        "suitable_for_phagocytosis": true
+      },
+      {
+        "mannose_peg_fraction": 1.0,
+        "uptake_fold_increase": 5.0,
+        "receptor_target": "CD206 (mannose receptor / MRC1)",
+        "particle_diameter_nm": 89.0,
+        "suitable_for_phagocytosis": true
+      }
+    ],
+    "recommended": {
+      "mannose_peg_fraction": 0.5,
+      "uptake_fold_increase": 3.5,
+      "receptor_target": "CD206 (mannose receptor / MRC1)",
+      "particle_diameter_nm": 87.0,
+      "suitable_for_phagocytosis": true
+    },
+    "recommended_mannose_fraction": 0.5,
+    "expected_uptake_fold": 3.5,
+    "mannose_peg_lipid": {
+      "name": "Mannose-PEG2000-DSPE",
+      "mw_g_per_mol": 2855.0,
+      "replaces": "DMG-PEG2000"
+    }
+  },
+  "storage_stability": {
+    "profiles": [
+      {
+        "temperature_celsius": -20.0,
+        "temperature_kelvin": 253.15,
+        "k_aggregation_per_day": 0.00020298,
+        "half_life_days": 3414.9,
+        "fraction_intact_30_days": 0.9939,
+        "fraction_intact_90_days": 0.9819,
+        "fraction_intact_365_days": 0.9286,
+        "lyophilization_feasible": true
+      },
+      {
+        "temperature_celsius": 4.0,
+        "temperature_kelvin": 277.15,
+        "k_aggregation_per_day": 0.00239648,
+        "half_life_days": 289.2,
+        "fraction_intact_30_days": 0.9306,
+        "fraction_intact_90_days": 0.806,
+        "fraction_intact_365_days": 0.417,
+        "lyophilization_feasible": true
+      },
+      {
+        "temperature_celsius": 25.0,
+        "temperature_kelvin": 298.15,
+        "k_aggregation_per_day": 0.015,
+        "half_life_days": 46.2,
+        "fraction_intact_30_days": 0.6376,
+        "fraction_intact_90_days": 0.2592,
+        "fraction_intact_365_days": 0.0042,
+        "lyophilization_feasible": true
+      }
+    ],
+    "temperatures_tested": [
+      -20.0,
+      4.0,
+      25.0
+    ],
+    "shelf_life_25c_adequate": false,
+    "lyophilization": {
+      "feasible": true,
+      "cryoprotectants": [
+        "sucrose (10% w/v)",
+        "trehalose (10% w/v)"
+      ],
+      "reconstitution": "5 min in sterile water, vortex 30 sec",
+      "post_reconstitution_size_increase": "<20%",
+      "post_reconstitution_ee": ">80%",
+      "advantage_for_brazil": "Eliminates cold chain dependency for deployment in Northeast Brazil (Bahia, Ceara, Maranhao) where visceral leishmaniasis is endemic and cold chain infrastructure is limited."
+    }
+  },
+  "lnp_vs_naked": {
+    "comparison": {
+      "naked_aso": {
+        "encapsulation_efficiency": null,
+        "cellular_uptake_relative": 1.0,
+        "target_delivery": "passive (gymnosis or electroporation)",
+        "nuclease_protection": "PS backbone only",
+        "estimated_cost_per_dose_usd": 5.0,
+        "storage_requirement": "Lyophilized powder, room temperature",
+        "manufacturing_complexity": 2,
+        "manufacturing_description": "Solid-phase synthesis + HPLC purification",
+        "advantages": [
+          "Lower cost per dose",
+          "Simpler manufacturing",
+          "No cold chain needed (lyophilized)",
+          "PS backbone provides nuclease resistance"
+        ],
+        "disadvantages": [
+          "Low cellular uptake without delivery vehicle",
+          "No macrophage targeting",
+          "Requires high dose to compensate for poor uptake",
+          "Limited biodistribution control"
+        ]
+      },
+      "lnp_aso": {
+        "encapsulation_efficiency": 0.9877,
+        "cellular_uptake_relative": 3.5,
+        "target_delivery": "mannose receptor-mediated endocytosis",
+        "nuclease_protection": "LNP encapsulation + PS backbone",
+        "estimated_cost_per_dose_usd": 15.0,
+        "storage_requirement": "4 C (liquid) or lyophilized",
+        "manufacturing_complexity": 4,
+        "manufacturing_description": "ASO synthesis + microfluidic LNP formulation + characterization (DLS, EE assay, zeta potential)",
+        "advantages": [
+          "3.5x higher macrophage uptake (mannose-targeted)",
+          "99% encapsulation efficiency",
+          "100% release at phagolysosomal pH",
+          "Dual protection: LNP shell + PS backbone",
+          "Lower effective dose (higher delivery efficiency)",
+          "Active targeting reduces off-target effects"
+        ],
+        "disadvantages": [
+          "Higher cost per dose (3x vs naked)",
+          "More complex manufacturing (microfluidics)",
+          "Requires cold chain or lyophilization",
+          "Additional QC steps (size, PDI, EE, zeta)"
+        ]
+      }
+    },
+    "net_benefit": {
+      "uptake_improvement_fold": 3.5,
+      "encapsulation_efficiency": 0.9877,
+      "effective_dose_reduction_fold": 3.46,
+      "cost_ratio_lnp_vs_naked": 3.0,
+      "cost_effectiveness_ratio": 1.15,
+      "recommendation": "LNP formulation is RECOMMENDED for MRL-ASO-001 because: (1) 3.5x higher macrophage uptake via mannose-CD206, (2) 100% release at phagolysosomal pH 4.5, (3) effective dose reduction of 3.5x justifies the 3x cost increase. Cost-effectiveness ratio: 1.15."
+    }
+  }
+}

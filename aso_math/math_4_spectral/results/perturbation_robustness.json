@@ -1,0 +1,94 @@
+{
+  "n_iterations": 1000,
+  "perturbation_fraction": 0.2,
+  "seed": 42,
+  "node_rankings": [
+    {
+      "node_id": "SL_RNA",
+      "times_most_critical": 1000,
+      "fraction": 1.0
+    },
+    {
+      "node_id": "U1",
+      "times_most_critical": 0,
+      "fraction": 0.0
+    },
+    {
+      "node_id": "U2",
+      "times_most_critical": 0,
+      "fraction": 0.0
+    },
+    {
+      "node_id": "U4",
+      "times_most_critical": 0,
+      "fraction": 0.0
+    },
+    {
+      "node_id": "U5",
+      "times_most_critical": 0,
+      "fraction": 0.0
+    },
+    {
+      "node_id": "U6",
+      "times_most_critical": 0,
+      "fraction": 0.0
+    },
+    {
+      "node_id": "SmB",
+      "times_most_critical": 0,
+      "fraction": 0.0
+    },
+    {
+      "node_id": "SmD1",
+      "times_most_critical": 0,
+      "fraction": 0.0
+    },
+    {
+      "node_id": "SmD2",
+      "times_most_critical": 0,
+      "fraction": 0.0
+    },
+    {
+      "node_id": "SmD3",
+      "times_most_critical": 0,
+      "fraction": 0.0
+    },
+    {
+      "node_id": "SmE",
+      "times_most_critical": 0,
+      "fraction": 0.0
+    },
+    {
+      "node_id": "SmF",
+      "times_most_critical": 0,
+      "fraction": 0.0
+    },
+    {
+      "node_id": "SmG",
+      "times_most_critical": 0,
+      "fraction": 0.0
+    },
+    {
+      "node_id": "Prp8",
+      "times_most_critical": 0,
+      "fraction": 0.0
+    },
+    {
+      "node_id": "Snu114",
+      "times_most_critical": 0,
+      "fraction": 0.0
+    },
+    {
+      "node_id": "SLA1",
+      "times_most_critical": 0,
+      "fraction": 0.0
+    },
+    {
+      "node_id": "NHP2L1",
+      "times_most_critical": 0,
+      "fraction": 0.0
+    }
+  ],
+  "most_robust_critical_node": "SL_RNA",
+  "top_node_fraction": 1.0
+}

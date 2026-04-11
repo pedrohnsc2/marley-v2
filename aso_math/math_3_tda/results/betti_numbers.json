@@ -1,0 +1,113 @@
+{
+  "free_aso": [
+    {
+      "epsilon_angstrom": 2.0,
+      "beta_0": 24,
+      "beta_1": 0
+    },
+    {
+      "epsilon_angstrom": 4.0,
+      "beta_0": 24,
+      "beta_1": 0
+    },
+    {
+      "epsilon_angstrom": 6.0,
+      "beta_0": 24,
+      "beta_1": 0
+    },
+    {
+      "epsilon_angstrom": 8.0,
+      "beta_0": 1,
+      "beta_1": 0
+    },
+    {
+      "epsilon_angstrom": 10.0,
+      "beta_0": 1,
+      "beta_1": 0
+    },
+    {
+      "epsilon_angstrom": 15.0,
+      "beta_0": 1,
+      "beta_1": 0
+    },
+    {
+      "epsilon_angstrom": 20.0,
+      "beta_0": 1,
+      "beta_1": 0
+    }
+  ],
+  "free_sl_rna": [
+    {
+      "epsilon_angstrom": 2.0,
+      "beta_0": 78,
+      "beta_1": 0
+    },
+    {
+      "epsilon_angstrom": 4.0,
+      "beta_0": 39,
+      "beta_1": 0
+    },
+    {
+      "epsilon_angstrom": 6.0,
+      "beta_0": 1,
+      "beta_1": 0
+    },
+    {
+      "epsilon_angstrom": 8.0,
+      "beta_0": 1,
+      "beta_1": 0
+    },
+    {
+      "epsilon_angstrom": 10.0,
+      "beta_0": 1,
+      "beta_1": 0
+    },
+    {
+      "epsilon_angstrom": 15.0,
+      "beta_0": 1,
+      "beta_1": 0
+    },
+    {
+      "epsilon_angstrom": 20.0,
+      "beta_0": 1,
+      "beta_1": 0
+    }
+  ],
+  "duplex": [
+    {
+      "epsilon_angstrom": 2.0,
+      "beta_0": 68,
+      "beta_1": 0
+    },
+    {
+      "epsilon_angstrom": 4.0,
+      "beta_0": 50,
+      "beta_1": 0
+    },
+    {
+      "epsilon_angstrom": 6.0,
+      "beta_0": 2,
+      "beta_1": 0
+    },
+    {
+      "epsilon_angstrom": 8.0,
+      "beta_0": 2,
+      "beta_1": 0
+    },
+    {
+      "epsilon_angstrom": 10.0,
+      "beta_0": 2,
+      "beta_1": 0
+    },
+    {
+      "epsilon_angstrom": 15.0,
+      "beta_0": 1,
+      "beta_1": 0
+    },
+    {
+      "epsilon_angstrom": 20.0,
+      "beta_0": 1,
+      "beta_1": 0
+    }
+  ]
+}

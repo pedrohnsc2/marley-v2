@@ -1,0 +1,86 @@
+{
+  "k1": {
+    "k": 1,
+    "kl_divergences": {
+      "kl_sl_human_nats": 0.086365,
+      "kl_human_sl_nats": 0.091254,
+      "kl_sl_canine_nats": 0.071289,
+      "kl_canine_sl_nats": 0.075316,
+      "kl_sl_random_nats": 0.003463
+    },
+    "jensen_shannon_divergences": {
+      "jsd_sl_human_nats": 0.021969,
+      "jsd_sl_canine_nats": 0.018157,
+      "jsd_sl_random_nats": 0.000862,
+      "jsd_human_canine_nats": 0.0002
+    },
+    "interpretation": {
+      "sl_more_distant_from_human_than_random": true,
+      "sl_more_distant_from_canine_than_random": true,
+      "sl_more_distant_from_hosts_than_hosts_apart": true
+    }
+  },
+  "k2": {
+    "k": 2,
+    "kl_divergences": {
+      "kl_sl_human_nats": 0.176318,
+      "kl_human_sl_nats": 0.193949,
+      "kl_sl_canine_nats": 0.152638,
+      "kl_canine_sl_nats": 0.168617,
+      "kl_sl_random_nats": 0.084932
+    },
+    "jensen_shannon_divergences": {
+      "jsd_sl_human_nats": 0.044363,
+      "jsd_sl_canine_nats": 0.038616,
+      "jsd_sl_random_nats": 0.021502,
+      "jsd_human_canine_nats": 0.000401
+    },
+    "interpretation": {
+      "sl_more_distant_from_human_than_random": true,
+      "sl_more_distant_from_canine_than_random": true,
+      "sl_more_distant_from_hosts_than_hosts_apart": true
+    }
+  },
+  "k3": {
+    "k": 3,
+    "kl_divergences": {
+      "kl_sl_human_nats": 0.141789,
+      "kl_human_sl_nats": 0.127439,
+      "kl_sl_canine_nats": 0.124715,
+      "kl_canine_sl_nats": 0.114599,
+      "kl_sl_random_nats": 0.223129
+    },
+    "jensen_shannon_divergences": {
+      "jsd_sl_human_nats": 0.032757,
+      "jsd_sl_canine_nats": 0.029228,
+      "jsd_sl_random_nats": 0.054617,
+      "jsd_human_canine_nats": 0.000601
+    },
+    "interpretation": {
+      "sl_more_distant_from_human_than_random": false,
+      "sl_more_distant_from_canine_than_random": false,
+      "sl_more_distant_from_hosts_than_hosts_apart": true
+    }
+  },
+  "k4": {
+    "k": 4,
+    "kl_divergences": {
+      "kl_sl_human_nats": 0.051546,
+      "kl_human_sl_nats": 0.043184,
+      "kl_sl_canine_nats": 0.045949,
+      "kl_canine_sl_nats": 0.040071,
+      "kl_sl_random_nats": 0.363449
+    },
+    "jensen_shannon_divergences": {
+      "jsd_sl_human_nats": 0.011609,
+      "jsd_sl_canine_nats": 0.010591,
+      "jsd_sl_random_nats": 0.082853,
+      "jsd_human_canine_nats": 0.000801
+    },
+    "interpretation": {
+      "sl_more_distant_from_human_than_random": false,
+      "sl_more_distant_from_canine_than_random": false,
+      "sl_more_distant_from_hosts_than_hosts_apart": true
+    }
+  }
+}

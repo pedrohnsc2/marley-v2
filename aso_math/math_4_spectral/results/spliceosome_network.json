@@ -1,0 +1,423 @@
+{
+  "nodes": [
+    {
+      "id": "SL_RNA",
+      "name": "SL RNA",
+      "type": "sl_rna",
+      "description": "Spliced Leader RNA — doador universal do exon de 39 nt"
+    },
+    {
+      "id": "U1",
+      "name": "U1 snRNA",
+      "type": "snRNA",
+      "description": "Reconhece o sitio 5' splice site (cis-splicing)"
+    },
+    {
+      "id": "U2",
+      "name": "U2 snRNA",
+      "type": "snRNA",
+      "description": "Liga-se ao branch point — essencial para ambos cis e trans"
+    },
+    {
+      "id": "U4",
+      "name": "U4 snRNA",
+      "type": "snRNA",
+      "description": "Base-pairs com U6, inibe atividade catalitica ate ativacao"
+    },
+    {
+      "id": "U5",
+      "name": "U5 snRNA",
+      "type": "snRNA",
+      "description": "Posiciona exons para ligacao — loop 1 conservado"
+    },
+    {
+      "id": "U6",
+      "name": "U6 snRNA",
+      "type": "snRNA",
+      "description": "Catalisa a transesterificacao — ribozima do spliceosome"
+    },
+    {
+      "id": "SmB",
+      "name": "SmB",
+      "type": "sm_protein",
+      "description": "Componente do anel Sm heptamerico"
+    },
+    {
+      "id": "SmD1",
+      "name": "SmD1",
+      "type": "sm_protein",
+      "description": "Componente do anel Sm — interacao direta com snRNAs"
+    },
+    {
+      "id": "SmD2",
+      "name": "SmD2",
+      "type": "sm_protein",
+      "description": "Componente do anel Sm — interacao direta com snRNAs"
+    },
+    {
+      "id": "SmD3",
+      "name": "SmD3",
+      "type": "sm_protein",
+      "description": "Componente do anel Sm heptamerico"
+    },
+    {
+      "id": "SmE",
+      "name": "SmE",
+      "type": "sm_protein",
+      "description": "Componente do anel Sm heptamerico"
+    },
+    {
+      "id": "SmF",
+      "name": "SmF",
+      "type": "sm_protein",
+      "description": "Componente do anel Sm heptamerico"
+    },
+    {
+      "id": "SmG",
+      "name": "SmG",
+      "type": "sm_protein",
+      "description": "Componente do anel Sm heptamerico"
+    },
+    {
+      "id": "Prp8",
+      "name": "Prp8",
+      "type": "catalytic_protein",
+      "description": "Maior proteina do spliceosome — centro catalitico do U5 snRNP"
+    },
+    {
+      "id": "Snu114",
+      "name": "Snu114",
+      "type": "catalytic_protein",
+      "description": "GTPase do U5 snRNP — regula rearranjos conformacionais"
+    },
+    {
+      "id": "SLA1",
+      "name": "SLA1",
+      "type": "sl_associated",
+      "description": "SL RNA-associated protein 1 — biogenese do SL RNP"
+    },
+    {
+      "id": "NHP2L1",
+      "name": "NHP2L1",
+      "type": "sl_associated",
+      "description": "Proteina do SL RNP — estabiliza estrutura cap4 do SL RNA"
+    }
+  ],
+  "edges": [
+    {
+      "source": "SL_RNA",
+      "target": "U2",
+      "weight": 1.0,
+      "justification": "SL RNA e U2 cooperam no reconhecimento do branch point em trans-splicing"
+    },
+    {
+      "source": "SL_RNA",
+      "target": "U4",
+      "weight": 0.8,
+      "justification": "SL RNA depende do tri-snRNP U4/U6.U5 para catalisar trans-splicing"
+    },
+    {
+      "source": "SL_RNA",
+      "target": "U5",
+      "weight": 0.9,
+      "justification": "U5 loop 1 posiciona o exon do SL para ligacao ao pre-mRNA"
+    },
+    {
+      "source": "SL_RNA",
+      "target": "U6",
+      "weight": 1.0,
+      "justification": "U6 catalisa a transesterificacao; SL RNA fornece o exon doador"
+    },
+    {
+      "source": "SL_RNA",
+      "target": "U1",
+      "weight": 0.6,
+      "justification": "U1 auxilia no reconhecimento inicial do sitio de splice em trans"
+    },
+    {
+      "source": "SL_RNA",
+      "target": "SLA1",
+      "weight": 1.0,
+      "justification": "SLA1 e componente direto do SL RNP — necessario para biogenese"
+    },
+    {
+      "source": "SL_RNA",
+      "target": "NHP2L1",
+      "weight": 0.9,
+      "justification": "NHP2L1 estabiliza a estrutura cap4 unica do SL RNA"
+    },
+    {
+      "source": "SL_RNA",
+      "target": "SmB",
+      "weight": 0.8,
+      "justification": "SL RNA tem sitio de ligacao Sm — interage com anel heptamerico"
+    },
+    {
+      "source": "SL_RNA",
+      "target": "SmD1",
+      "weight": 0.8,
+      "justification": "SmD1 liga diretamente ao sitio Sm do SL RNA"
+    },
+    {
+      "source": "SL_RNA",
+      "target": "Prp8",
+      "weight": 0.7,
+      "justification": "Prp8 no centro catalitico interage com substrato SL RNA"
+    },
+    {
+      "source": "SL_RNA",
+      "target": "Snu114",
+      "weight": 0.5,
+      "justification": "Snu114 regula conformacao durante trans-splicing com SL RNA"
+    },
+    {
+      "source": "U4",
+      "target": "U6",
+      "weight": 1.0,
+      "justification": "Base-pairing extensivo U4/U6 — di-snRNP estavel"
+    },
+    {
+      "source": "U4",
+      "target": "U5",
+      "weight": 0.9,
+      "justification": "Tri-snRNP U4/U6.U5 — complexo pre-catalitico"
+    },
+    {
+      "source": "U5",
+      "target": "U6",
+      "weight": 0.9,
+      "justification": "Tri-snRNP U4/U6.U5 — U5 e U6 cooperam na catalise"
+    },
+    {
+      "source": "U2",
+      "target": "U6",
+      "weight": 0.8,
+      "justification": "U2/U6 helix I e II — essenciais para centro catalitico"
+    },
+    {
+      "source": "U1",
+      "target": "U2",
+      "weight": 0.6,
+      "justification": "U1 recruta U2 ao branch point na montagem do spliceosome"
+    },
+    {
+      "source": "SmB",
+      "target": "SmD3",
+      "weight": 0.8,
+      "justification": "Adjacentes no anel Sm heptamerico"
+    },
+    {
+      "source": "SmD3",
+      "target": "SmD1",
+      "weight": 0.8,
+      "justification": "Adjacentes no anel Sm heptamerico"
+    },
+    {
+      "source": "SmD1",
+      "target": "SmD2",
+      "weight": 0.8,
+      "justification": "Adjacentes no anel Sm heptamerico"
+    },
+    {
+      "source": "SmD2",
+      "target": "SmF",
+      "weight": 0.8,
+      "justification": "Adjacentes no anel Sm heptamerico"
+    },
+    {
+      "source": "SmF",
+      "target": "SmE",
+      "weight": 0.8,
+      "justification": "Adjacentes no anel Sm heptamerico"
+    },
+    {
+      "source": "SmE",
+      "target": "SmG",
+      "weight": 0.8,
+      "justification": "Adjacentes no anel Sm heptamerico"
+    },
+    {
+      "source": "SmG",
+      "target": "SmB",
+      "weight": 0.8,
+      "justification": "Fecha o anel Sm heptamerico"
+    },
+    {
+      "source": "SmD1",
+      "target": "U1",
+      "weight": 0.5,
+      "justification": "SmD1 contata sitio Sm do U1 snRNA"
+    },
+    {
+      "source": "SmD3",
+      "target": "U1",
+      "weight": 0.5,
+      "justification": "SmD3 contata sitio Sm do U1 snRNA"
+    },
+    {
+      "source": "SmB",
+      "target": "U2",
+      "weight": 0.5,
+      "justification": "SmB contata sitio Sm do U2 snRNA"
+    },
+    {
+      "source": "SmD2",
+      "target": "U2",
+      "weight": 0.5,
+      "justification": "SmD2 contata sitio Sm do U2 snRNA"
+    },
+    {
+      "source": "SmE",
+      "target": "U4",
+      "weight": 0.5,
+      "justification": "SmE contata sitio Sm do U4 snRNA"
+    },
+    {
+      "source": "SmG",
+      "target": "U4",
+      "weight": 0.5,
+      "justification": "SmG contata sitio Sm do U4 snRNA"
+    },
+    {
+      "source": "SmF",
+      "target": "U5",
+      "weight": 0.5,
+      "justification": "SmF contata sitio Sm do U5 snRNA"
+    },
+    {
+      "source": "SmD1",
+      "target": "U5",
+      "weight": 0.5,
+      "justification": "SmD1 contata sitio Sm do U5 snRNA"
+    },
+    {
+      "source": "Prp8",
+      "target": "U5",
+      "weight": 1.0,
+      "justification": "Prp8 e componente integral do U5 snRNP — maior proteina do spliceosome"
+    },
+    {
+      "source": "Prp8",
+      "target": "U6",
+      "weight": 0.7,
+      "justification": "Prp8 interage com U6 snRNA no centro catalitico"
+    },
+    {
+      "source": "Snu114",
+      "target": "U5",
+      "weight": 0.9,
+      "justification": "Snu114 e GTPase associada ao U5 snRNP"
+    },
+    {
+      "source": "Snu114",
+      "target": "Prp8",
+      "weight": 0.8,
+      "justification": "Snu114 e Prp8 cooperam no U5 snRNP"
+    },
+    {
+      "source": "SLA1",
+      "target": "SmD1",
+      "weight": 0.5,
+      "justification": "SLA1 coopera com Sm na montagem do SL RNP"
+    },
+    {
+      "source": "NHP2L1",
+      "target": "SmB",
+      "weight": 0.4,
+      "justification": "NHP2L1 interage indiretamente com anel Sm no SL RNP"
+    }
+  ],
+  "statistics": {
+    "n_nodes": 17,
+    "n_edges": 37,
+    "density": 0.2721,
+    "max_possible_edges": 136,
+    "node_degrees": [
+      {
+        "node_id": "SL_RNA",
+        "degree": 11,
+        "weighted_degree": 9.0
+      },
+      {
+        "node_id": "U5",
+        "degree": 7,
+        "weighted_degree": 5.6
+      },
+      {
+        "node_id": "U6",
+        "degree": 5,
+        "weighted_degree": 4.4
+      },
+      {
+        "node_id": "SmD1",
+        "degree": 6,
+        "weighted_degree": 3.9
+      },
+      {
+        "node_id": "U4",
+        "degree": 5,
+        "weighted_degree": 3.7
+      },
+      {
+        "node_id": "U2",
+        "degree": 5,
+        "weighted_degree": 3.4
+      },
+      {
+        "node_id": "SmB",
+        "degree": 5,
+        "weighted_degree": 3.3
+      },
+      {
+        "node_id": "Prp8",
+        "degree": 4,
+        "weighted_degree": 3.2
+      },
+      {
+        "node_id": "U1",
+        "degree": 4,
+        "weighted_degree": 2.2
+      },
+      {
+        "node_id": "Snu114",
+        "degree": 3,
+        "weighted_degree": 2.2
+      },
+      {
+        "node_id": "SmD2",
+        "degree": 3,
+        "weighted_degree": 2.1
+      },
+      {
+        "node_id": "SmD3",
+        "degree": 3,
+        "weighted_degree": 2.1
+      },
+      {
+        "node_id": "SmE",
+        "degree": 3,
+        "weighted_degree": 2.1
+      },
+      {
+        "node_id": "SmF",
+        "degree": 3,
+        "weighted_degree": 2.1
+      },
+      {
+        "node_id": "SmG",
+        "degree": 3,
+        "weighted_degree": 2.1
+      },
+      {
+        "node_id": "SLA1",
+        "degree": 2,
+        "weighted_degree": 1.5
+      },
+      {
+        "node_id": "NHP2L1",
+        "degree": 2,
+        "weighted_degree": 1.3
+      }
+    ]
+  }
+}

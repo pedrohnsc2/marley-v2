@@ -1,0 +1,44 @@
+{
+  "free_aso": {
+    "n_points": 24,
+    "source": "pdb",
+    "centroid": [
+      0.0,
+      1.2824,
+      42.5
+    ],
+    "extent_angstrom": [
+      20.0,
+      19.022,
+      78.2
+    ]
+  },
+  "free_sl_rna": {
+    "n_points": 78,
+    "source": "pdb",
+    "centroid": [
+      0.0168,
+      0.8237,
+      53.5933
+    ],
+    "extent_angstrom": [
+      20.764,
+      20.923,
+      107.459
+    ]
+  },
+  "duplex": {
+    "n_points": 250,
+    "source": "synthetic",
+    "centroid": [
+      -0.2701,
+      0.131,
+      41.34
+    ],
+    "extent_angstrom": [
+      20.0,
+      19.563,
+      82.72
+    ]
+  }
+}

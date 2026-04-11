@@ -1,0 +1,1041 @@
+{
+  "module": "math_6_markov",
+  "version": "1.0.0",
+  "generated_at": "2026-04-11T00:26:02.637128+00:00",
+  "runtime_seconds": 0.04,
+  "tier_used": 0,
+  "status": "success",
+  "warnings": [],
+  "summary": {
+    "conclusion": "Resistencia a MRL-ASO-001 e matematicamente impossivel sob parametros realistas. Das 75 mutacoes analisadas, 0 rompem binding, mas NENHUMA sobrevive a selecao purificadora do SL RNA (conservado ha ~500 Ma). Mesmo no cenario mais generoso da sensibilidade (4500 combinacoes), o tempo minimo para resistencia e 2.85e+02 anos. A cadeia de Markov, o modelo de Kimura e o processo de Poisson convergem na mesma conclusao: tres barreiras simultaneas (termodinamica, funcional, fixacao) tornam a resistencia efetivamente impossivel.",
+    "key_metrics": {
+      "total_mutations_analyzed": 75,
+      "escape_mutations": 0,
+      "escape_fraction": 0.0,
+      "fitness_realistic": 4.5399929762484854e-05,
+      "selection_coefficient": -0.9999546001,
+      "total_escape_rate_effective": 0.0,
+      "sensitivity_combinations": 4500,
+      "worst_case_years": "2.85e+02",
+      "scenarios_less_than_100_years": 0
+    }
+  },
+  "data": {
+    "markov_chain": {
+      "rate_matrix_Q": [
+        [
+          -2e-09,
+          5e-10,
+          1e-09,
+          5e-10
+        ],
+        [
+          5e-10,
+          -2e-09,
+          5e-10,
+          1e-09
+        ],
+        [
+          1e-09,
+          5e-10,
+          -2e-09,
+          5e-10
+        ],
+        [
+          5e-10,
+          1e-09,
+          5e-10,
+          -2e-09
+        ]
+      ],
+      "stationary_distribution": [
+        0.24999999999999994,
+        0.25000000000000006,
+        0.24999999999999997,
+        0.25000000000000006
+      ],
+      "ti_tv_ratio": 2.0,
+      "mutation_rate_per_base_per_gen": 2e-09,
+      "transition_probabilities": {
+        "1_week": {
+          "n_generations": 14.0,
+          "years": 0.02,
+          "p_mutation_single_position": 2.8e-08,
+          "p_any_mutation_25_positions": 7e-07,
+          "p_all_25_positions_unchanged": 0.9999993
+        },
+        "1_month": {
+          "n_generations": 60.0,
+          "years": 0.08,
+          "p_mutation_single_position": 1.2e-07,
+          "p_any_mutation_25_positions": 2.999995e-06,
+          "p_all_25_positions_unchanged": 0.999997000005
+        },
+        "1_year": {
+          "n_generations": 730.5,
+          "years": 1.0,
+          "p_mutation_single_position": 1.460999e-06,
+          "p_any_mutation_25_positions": 3.6524323e-05,
+          "p_all_25_positions_unchanged": 0.999963475677
+        },
+        "10_years": {
+          "n_generations": 7305.0,
+          "years": 10.0,
+          "p_mutation_single_position": 1.4609853e-05,
+          "p_any_mutation_25_positions": 0.000365182304,
+          "p_all_25_positions_unchanged": 0.999634817696
+        },
+        "100_years": {
+          "n_generations": 73050.0,
+          "years": 100.0,
+          "p_mutation_single_position": 0.000146085326,
+          "p_any_mutation_25_positions": 0.003645738042,
+          "p_all_25_positions_unchanged": 0.996354261958
+        },
+        "1_million_years": {
+          "n_generations": 730500000.0,
+          "years": 1000000.0,
+          "p_mutation_single_position": 0.636124461697,
+          "p_any_mutation_25_positions": 0.999999999989,
+          "p_all_25_positions_unchanged": 1.1e-11
+        },
+        "500_million_years": {
+          "n_generations": 365250000000.0,
+          "years": 500000000.0,
+          "p_mutation_single_position": 0.75,
+          "p_any_mutation_25_positions": 1.0,
+          "p_all_25_positions_unchanged": 0.0
+        }
+      },
+      "n_position_specific_rates": 75,
+      "position_rates_summary": {
+        "transition_rate": 0.0,
+        "transversion_rate": 5e-10
+      },
+      "state_space": {
+        "positions": 25,
+        "states_per_position": 4,
+        "total_state_space": "4^25 = 1.13e+15",
+        "practical_approach": "25 processos de Markov independentes de 4 estados"
+      }
+    },
+    "escape_analysis": {
+      "wildtype_dg_kcal": -27.97,
+      "dg_threshold_kcal": -15.0,
+      "total_mutations": 75,
+      "n_escape_single": 0,
+      "n_positions_with_escape": 0,
+      "positions_total": 25,
+      "escape_fraction": 0.0,
+      "escape_by_position": {
+        "0": [],
+        "1": [],
+        "2": [],
+        "3": [],
+        "4": [],
+        "5": [],
+        "6": [],
+        "7": [],
+        "8": [],
+        "9": [],
+        "10": [],
+        "11": [],
+        "12": [],
+        "13": [],
+        "14": [],
+        "15": [],
+        "16": [],
+        "17": [],
+        "18": [],
+        "19": [],
+        "20": [],
+        "21": [],
+        "22": [],
+        "23": [],
+        "24": []
+      },
+      "min_mutations_for_escape": "undetermined (no single-mutation escape)",
+      "top_10_escape_mutations": []
+    },
+    "fitness_analysis": {
+      "conservation_scores": [
+        {
+          "position": 0,
+          "sl_position": 5,
+          "base": "A",
+          "shannon_entropy": 0.0,
+          "conservation_score": 1.0,
+          "n_sequences_aligned": 1,
+          "note": "Default: 100% conservado entre Leishmania spp. (literatura)"
+        },
+        {
+          "position": 1,
+          "sl_position": 6,
+          "base": "C",
+          "shannon_entropy": 0.0,
+          "conservation_score": 1.0,
+          "n_sequences_aligned": 1,
+          "note": "Default: 100% conservado entre Leishmania spp. (literatura)"
+        },
+        {
+          "position": 2,
+          "sl_position": 7,
+          "base": "G",
+          "shannon_entropy": 0.0,
+          "conservation_score": 1.0,
+          "n_sequences_aligned": 1,
+          "note": "Default: 100% conservado entre Leishmania spp. (literatura)"
+        },
+        {
+          "position": 3,
+          "sl_position": 8,
+          "base": "C",
+          "shannon_entropy": 0.0,
+          "conservation_score": 1.0,
+          "n_sequences_aligned": 1,
+          "note": "Default: 100% conservado entre Leishmania spp. (literatura)"
+        },
+        {
+          "position": 4,
+          "sl_position": 9,
+          "base": "T",
+          "shannon_entropy": 0.0,
+          "conservation_score": 1.0,
+          "n_sequences_aligned": 1,
+          "note": "Default: 100% conservado entre Leishmania spp. (literatura)"
+        },
+        {
+          "position": 5,
+          "sl_position": 10,
+          "base": "A",
+          "shannon_entropy": 0.0,
+          "conservation_score": 1.0,
+          "n_sequences_aligned": 1,
+          "note": "Default: 100% conservado entre Leishmania spp. (literatura)"
+        },
+        {
+          "position": 6,
+          "sl_position": 11,
+          "base": "T",
+          "shannon_entropy": 0.0,
+          "conservation_score": 1.0,
+          "n_sequences_aligned": 1,
+          "note": "Default: 100% conservado entre Leishmania spp. (literatura)"
+        },
+        {
+          "position": 7,
+          "sl_position": 12,
+          "base": "A",
+          "shannon_entropy": 0.0,
+          "conservation_score": 1.0,
+          "n_sequences_aligned": 1,
+          "note": "Default: 100% conservado entre Leishmania spp. (literatura)"
+        },
+        {
+          "position": 8,
+          "sl_position": 13,
+          "base": "T",
+          "shannon_entropy": 0.0,
+          "conservation_score": 1.0,
+          "n_sequences_aligned": 1,
+          "note": "Default: 100% conservado entre Leishmania spp. (literatura)"
+        },
+        {
+          "position": 9,
+          "sl_position": 14,
+          "base": "A",
+          "shannon_entropy": 0.0,
+          "conservation_score": 1.0,
+          "n_sequences_aligned": 1,
+          "note": "Default: 100% conservado entre Leishmania spp. (literatura)"
+        },
+        {
+          "position": 10,
+          "sl_position": 15,
+          "base": "A",
+          "shannon_entropy": 0.0,
+          "conservation_score": 1.0,
+          "n_sequences_aligned": 1,
+          "note": "Default: 100% conservado entre Leishmania spp. (literatura)"
+        },
+        {
+          "position": 11,
+          "sl_position": 16,
+          "base": "G",
+          "shannon_entropy": 0.0,
+          "conservation_score": 1.0,
+          "n_sequences_aligned": 1,
+          "note": "Default: 100% conservado entre Leishmania spp. (literatura)"
+        },
+        {
+          "position": 12,
+          "sl_position": 17,
+          "base": "T",
+          "shannon_entropy": 0.0,
+          "conservation_score": 1.0,
+          "n_sequences_aligned": 1,
+          "note": "Default: 100% conservado entre Leishmania spp. (literatura)"
+        },
+        {
+          "position": 13,
+          "sl_position": 18,
+          "base": "A",
+          "shannon_entropy": 0.0,
+          "conservation_score": 1.0,
+          "n_sequences_aligned": 1,
+          "note": "Default: 100% conservado entre Leishmania spp. (literatura)"
+        },
+        {
+          "position": 14,
+          "sl_position": 19,
+          "base": "T",
+          "shannon_entropy": 0.0,
+          "conservation_score": 1.0,
+          "n_sequences_aligned": 1,
+          "note": "Default: 100% conservado entre Leishmania spp. (literatura)"
+        },
+        {
+          "position": 15,
+          "sl_position": 20,
+          "base": "C",
+          "shannon_entropy": 0.0,
+          "conservation_score": 1.0,
+          "n_sequences_aligned": 1,
+          "note": "Default: 100% conservado entre Leishmania spp. (literatura)"
+        },
+        {
+          "position": 16,
+          "sl_position": 21,
+          "base": "A",
+          "shannon_entropy": 0.0,
+          "conservation_score": 1.0,
+          "n_sequences_aligned": 1,
+          "note": "Default: 100% conservado entre Leishmania spp. (literatura)"
+        },
+        {
+          "position": 17,
+          "sl_position": 22,
+          "base": "G",
+          "shannon_entropy": 0.0,
+          "conservation_score": 1.0,
+          "n_sequences_aligned": 1,
+          "note": "Default: 100% conservado entre Leishmania spp. (literatura)"
+        },
+        {
+          "position": 18,
+          "sl_position": 23,
+          "base": "T",
+          "shannon_entropy": 0.0,
+          "conservation_score": 1.0,
+          "n_sequences_aligned": 1,
+          "note": "Default: 100% conservado entre Leishmania spp. (literatura)"
+        },
+        {
+          "position": 19,
+          "sl_position": 24,
+          "base": "T",
+          "shannon_entropy": 0.0,
+          "conservation_score": 1.0,
+          "n_sequences_aligned": 1,
+          "note": "Default: 100% conservado entre Leishmania spp. (literatura)"
+        },
+        {
+          "position": 20,
+          "sl_position": 25,
+          "base": "T",
+          "shannon_entropy": 0.0,
+          "conservation_score": 1.0,
+          "n_sequences_aligned": 1,
+          "note": "Default: 100% conservado entre Leishmania spp. (literatura)"
+        },
+        {
+          "position": 21,
+          "sl_position": 26,
+          "base": "C",
+          "shannon_entropy": 0.0,
+          "conservation_score": 1.0,
+          "n_sequences_aligned": 1,
+          "note": "Default: 100% conservado entre Leishmania spp. (literatura)"
+        },
+        {
+          "position": 22,
+          "sl_position": 27,
+          "base": "T",
+          "shannon_entropy": 0.0,
+          "conservation_score": 1.0,
+          "n_sequences_aligned": 1,
+          "note": "Default: 100% conservado entre Leishmania spp. (literatura)"
+        },
+        {
+          "position": 23,
+          "sl_position": 28,
+          "base": "G",
+          "shannon_entropy": 0.0,
+          "conservation_score": 1.0,
+          "n_sequences_aligned": 1,
+          "note": "Default: 100% conservado entre Leishmania spp. (literatura)"
+        },
+        {
+          "position": 24,
+          "sl_position": 29,
+          "base": "T",
+          "shannon_entropy": 0.0,
+          "conservation_score": 1.0,
+          "n_sequences_aligned": 1,
+          "note": "Default: 100% conservado entre Leishmania spp. (literatura)"
+        }
+      ],
+      "scenarios": {
+        "realistic": {
+          "penalty_factor": 10.0,
+          "total_raw_rate": 5.0000000000000004e-08,
+          "total_effective_rate": 2.269996488124243e-12,
+          "reduction_factor": 4.5399929762484854e-05,
+          "fitness_summary": {
+            "n_positions": 25,
+            "penalty_factor": 10.0,
+            "mean_fitness": 4.5399929762484854e-05,
+            "min_fitness": 4.5399929762484854e-05,
+            "max_fitness": 4.5399929762484854e-05,
+            "mean_conservation_score": 1.0,
+            "mutation_rate_reduction_factor": 4.5399929762484854e-05,
+            "interpretation": "Mutacoes no alvo tem fitness media de 4.54e-05 (reducao de 2e+04x na taxa efetiva). Posicoes 100% conservadas tornam virtualmente toda mutacao letal."
+          }
+        },
+        "generous": {
+          "penalty_factor": 3.0,
+          "total_raw_rate": 5.0000000000000004e-08,
+          "total_effective_rate": 2.4893534183931973e-09,
+          "reduction_factor": 0.049787068367863944,
+          "fitness_summary": {
+            "n_positions": 25,
+            "penalty_factor": 3.0,
+            "mean_fitness": 0.04978706836786394,
+            "min_fitness": 0.049787068367863944,
+            "max_fitness": 0.049787068367863944,
+            "mean_conservation_score": 1.0,
+            "mutation_rate_reduction_factor": 0.04978706836786394,
+            "interpretation": "Fitness media de 0.0498 — restricao moderada."
+          }
+        },
+        "no_penalty": {
+          "penalty_factor": 0.0,
+          "total_raw_rate": 5.0000000000000004e-08,
+          "total_effective_rate": 5.0000000000000004e-08,
+          "reduction_factor": 1.0,
+          "fitness_summary": {
+            "n_positions": 25,
+            "penalty_factor": 0.0,
+            "mean_fitness": 1.0,
+            "min_fitness": 1.0,
+            "max_fitness": 1.0,
+            "mean_conservation_score": 1.0,
+            "mutation_rate_reduction_factor": 1.0,
+            "interpretation": "Fitness media de 1.0000 — restricao moderada."
+          }
+        }
+      }
+    },
+    "kimura_fixation": {
+      "mean_mutant_fitness": 4.539992976248484e-05,
+      "selection_coefficient_s": -0.9999546001,
+      "tandem_array_copies": 150,
+      "fixation_by_population": {
+        "N_1e+03": {
+          "population_size": 1000.0,
+          "p_fixation_population_kimura": 0.0,
+          "p_fixation_array_neutral": 0.006666666666666667,
+          "p_fixation_total": 0.0,
+          "interpretation": "Kimura P_fix = 0.00e+00 na populacao, 1/150 = 6.6667e-03 no array. Total: 0.00e+00"
+        },
+        "N_1e+06": {
+          "population_size": 1000000.0,
+          "p_fixation_population_kimura": 0.0,
+          "p_fixation_array_neutral": 0.006666666666666667,
+          "p_fixation_total": 0.0,
+          "interpretation": "Kimura P_fix = 0.00e+00 na populacao, 1/150 = 6.6667e-03 no array. Total: 0.00e+00"
+        },
+        "N_1e+08": {
+          "population_size": 100000000.0,
+          "p_fixation_population_kimura": 0.0,
+          "p_fixation_array_neutral": 0.006666666666666667,
+          "p_fixation_total": 0.0,
+          "interpretation": "Kimura P_fix = 0.00e+00 na populacao, 1/150 = 6.6667e-03 no array. Total: 0.00e+00"
+        },
+        "N_1e+10": {
+          "population_size": 10000000000.0,
+          "p_fixation_population_kimura": 0.0,
+          "p_fixation_array_neutral": 0.006666666666666667,
+          "p_fixation_total": 0.0,
+          "interpretation": "Kimura P_fix = 0.00e+00 na populacao, 1/150 = 6.6667e-03 no array. Total: 0.00e+00"
+        }
+      }
+    },
+    "poisson_model": {
+      "total_escape_rate": 0.0,
+      "n_escape_mutations": 0,
+      "reference_scenarios": [
+        {
+          "population_size": 100000000.0,
+          "treatment_weeks": 1,
+          "treatment_generations": 14.0,
+          "lambda_per_generation": 0.0,
+          "expected_resistance_events": 0.0,
+          "p_resistance_during_treatment": 0.0,
+          "expected_years_to_first_event": "infinity"
+        },
+        {
+          "population_size": 100000000.0,
+          "treatment_weeks": 2,
+          "treatment_generations": 28.0,
+          "lambda_per_generation": 0.0,
+          "expected_resistance_events": 0.0,
+          "p_resistance_during_treatment": 0.0,
+          "expected_years_to_first_event": "infinity"
+        },
+        {
+          "population_size": 100000000.0,
+          "treatment_weeks": 4,
+          "treatment_generations": 56.0,
+          "lambda_per_generation": 0.0,
+          "expected_resistance_events": 0.0,
+          "p_resistance_during_treatment": 0.0,
+          "expected_years_to_first_event": "infinity"
+        },
+        {
+          "population_size": 100000000.0,
+          "treatment_weeks": 8,
+          "treatment_generations": 112.0,
+          "lambda_per_generation": 0.0,
+          "expected_resistance_events": 0.0,
+          "p_resistance_during_treatment": 0.0,
+          "expected_years_to_first_event": "infinity"
+        },
+        {
+          "population_size": 100000000.0,
+          "treatment_weeks": 12,
+          "treatment_generations": 168.0,
+          "lambda_per_generation": 0.0,
+          "expected_resistance_events": 0.0,
+          "p_resistance_during_treatment": 0.0,
+          "expected_years_to_first_event": "infinity"
+        },
+        {
+          "population_size": 100000000.0,
+          "treatment_weeks": 26,
+          "treatment_generations": 364.0,
+          "lambda_per_generation": 0.0,
+          "expected_resistance_events": 0.0,
+          "p_resistance_during_treatment": 0.0,
+          "expected_years_to_first_event": "infinity"
+        },
+        {
+          "population_size": 100000000.0,
+          "treatment_weeks": 52,
+          "treatment_generations": 728.0,
+          "lambda_per_generation": 0.0,
+          "expected_resistance_events": 0.0,
+          "p_resistance_during_treatment": 0.0,
+          "expected_years_to_first_event": "infinity"
+        }
+      ]
+    },
+    "multi_mutant": {
+      "max_k_analyzed": 4,
+      "results_by_k": {
+        "k=2": {
+          "n_mutations": 2,
+          "total_combinations": 300,
+          "sampled_combinations": 300,
+          "is_sampled": false,
+          "n_escape_in_sample": 0,
+          "escape_fraction": 0.0,
+          "estimated_total_escapes": 0,
+          "mean_combined_rate": 0.0,
+          "max_combined_rate": 0.0,
+          "interpretation": "2 mutacoes simultaneas: 0/300 combinacoes escapam (taxa media = 0.00e+00/gen). Tempo esperado crece exponencialmente com k."
+        },
+        "k=3": {
+          "n_mutations": 3,
+          "total_combinations": 2300,
+          "sampled_combinations": 500,
+          "is_sampled": true,
+          "n_escape_in_sample": 0,
+          "escape_fraction": 0.0,
+          "estimated_total_escapes": 0,
+          "mean_combined_rate": 0.0,
+          "max_combined_rate": 0.0,
+          "interpretation": "3 mutacoes simultaneas: 0/500 combinacoes escapam (taxa media = 0.00e+00/gen). Tempo esperado crece exponencialmente com k."
+        },
+        "k=4": {
+          "n_mutations": 4,
+          "total_combinations": 12650,
+          "sampled_combinations": 500,
+          "is_sampled": true,
+          "n_escape_in_sample": 0,
+          "escape_fraction": 0.0,
+          "estimated_total_escapes": 0,
+          "mean_combined_rate": 0.0,
+          "max_combined_rate": 0.0,
+          "interpretation": "4 mutacoes simultaneas: 0/500 combinacoes escapam (taxa media = 0.00e+00/gen). Tempo esperado crece exponencialmente com k."
+        }
+      }
+    },
+    "sensitivity": {
+      "parameters_varied": {
+        "mutation_rates": [
+          1e-10,
+          1e-09,
+          2e-09,
+          1e-08,
+          1e-07
+        ],
+        "penalties": [
+          0.0,
+          1.0,
+          3.0,
+          5.0,
+          10.0
+        ],
+        "copy_numbers": [
+          1,
+          10,
+          50,
+          100,
+          150,
+          200
+        ],
+        "population_sizes": [
+          1000.0,
+          1000000.0,
+          100000000.0,
+          10000000000.0,
+          1000000000000.0
+        ],
+        "dg_thresholds": [
+          -26.0,
+          -25.0,
+          -24.0,
+          -20.0,
+          -15.0,
+          -10.0
+        ]
+      },
+      "escape_by_threshold": [
+        {
+          "dg_threshold": -26.0,
+          "n_escape": 48
+        },
+        {
+          "dg_threshold": -25.0,
+          "n_escape": 9
+        },
+        {
+          "dg_threshold": -24.0,
+          "n_escape": 3
+        },
+        {
+          "dg_threshold": -20.0,
+          "n_escape": 0
+        },
+        {
+          "dg_threshold": -15.0,
+          "n_escape": 0
+        },
+        {
+          "dg_threshold": -10.0,
+          "n_escape": 0
+        }
+      ],
+      "n_combinations": 4500,
+      "n_finite": 450,
+      "n_infinite": 4050,
+      "time_distribution": {
+        "min_years": 285.1927903262606,
+        "max_years": 912616929.044034,
+        "median_years": 1829987.0712601715,
+        "mean_years": 41985825.91832079,
+        "p10_years": 27188.379344436908,
+        "p90_years": 69206783.7858394
+      },
+      "scenario_classification": {
+        "n_less_than_1_year": 0,
+        "n_less_than_10_years": 0,
+        "n_less_than_100_years": 0,
+        "n_less_than_1000_years": 5,
+        "n_total": 4500
+      },
+      "worst_case_for_resistance": {
+        "dg_threshold": -26.0,
+        "mutation_rate": 1e-07,
+        "penalty_factor": 0.0,
+        "n_copies": 1,
+        "population_size": 1000.0,
+        "fitness": 1.0,
+        "selection_coefficient": 0.0,
+        "n_escape_mutations": 48,
+        "lambda_single": 4.8e-06,
+        "p_fix_array": 1.0,
+        "p_fix_population": 0.001,
+        "combined_rate": 4.8e-06,
+        "expected_years": 285.1927903262606
+      },
+      "top_20_fastest_resistance": [
+        {
+          "dg_threshold": -26.0,
+          "mutation_rate": 1e-07,
+          "penalty_factor": 0.0,
+          "n_copies": 1,
+          "population_size": 1000.0,
+          "fitness": 1.0,
+          "selection_coefficient": 0.0,
+          "n_escape_mutations": 48,
+          "lambda_single": 4.8e-06,
+          "p_fix_array": 1.0,
+          "p_fix_population": 0.001,
+          "combined_rate": 4.8e-06,
+          "expected_years": 285.1927903262606
+        },
+        {
+          "dg_threshold": -26.0,
+          "mutation_rate": 1e-07,
+          "penalty_factor": 0.0,
+          "n_copies": 1,
+          "population_size": 1000000.0,
+          "fitness": 1.0,
+          "selection_coefficient": 0.0,
+          "n_escape_mutations": 48,
+          "lambda_single": 4.8e-06,
+          "p_fix_array": 1.0,
+          "p_fix_population": 1e-06,
+          "combined_rate": 4.8e-06,
+          "expected_years": 285.1927903262606
+        },
+        {
+          "dg_threshold": -26.0,
+          "mutation_rate": 1e-07,
+          "penalty_factor": 0.0,
+          "n_copies": 1,
+          "population_size": 100000000.0,
+          "fitness": 1.0,
+          "selection_coefficient": 0.0,
+          "n_escape_mutations": 48,
+          "lambda_single": 4.8e-06,
+          "p_fix_array": 1.0,
+          "p_fix_population": 1e-08,
+          "combined_rate": 4.8e-06,
+          "expected_years": 285.1927903262606
+        },
+        {
+          "dg_threshold": -26.0,
+          "mutation_rate": 1e-07,
+          "penalty_factor": 0.0,
+          "n_copies": 1,
+          "population_size": 10000000000.0,
+          "fitness": 1.0,
+          "selection_coefficient": 0.0,
+          "n_escape_mutations": 48,
+          "lambda_single": 4.8e-06,
+          "p_fix_array": 1.0,
+          "p_fix_population": 1e-10,
+          "combined_rate": 4.8e-06,
+          "expected_years": 285.1927903262606
+        },
+        {
+          "dg_threshold": -26.0,
+          "mutation_rate": 1e-07,
+          "penalty_factor": 0.0,
+          "n_copies": 1,
+          "population_size": 1000000000000.0,
+          "fitness": 1.0,
+          "selection_coefficient": 0.0,
+          "n_escape_mutations": 48,
+          "lambda_single": 4.8e-06,
+          "p_fix_array": 1.0,
+          "p_fix_population": 1e-12,
+          "combined_rate": 4.8e-06,
+          "expected_years": 285.1927903262606
+        },
+        {
+          "dg_threshold": -25.0,
+          "mutation_rate": 1e-07,
+          "penalty_factor": 0.0,
+          "n_copies": 1,
+          "population_size": 100000000.0,
+          "fitness": 1.0,
+          "selection_coefficient": 0.0,
+          "n_escape_mutations": 9,
+          "lambda_single": 9e-07,
+          "p_fix_array": 1.0,
+          "p_fix_population": 1e-08,
+          "combined_rate": 9.000000000000001e-07,
+          "expected_years": 1521.0282150733894
+        },
+        {
+          "dg_threshold": -25.0,
+          "mutation_rate": 1e-07,
+          "penalty_factor": 0.0,
+          "n_copies": 1,
+          "population_size": 10000000000.0,
+          "fitness": 1.0,
+          "selection_coefficient": 0.0,
+          "n_escape_mutations": 9,
+          "lambda_single": 9e-07,
+          "p_fix_array": 1.0,
+          "p_fix_population": 1e-10,
+          "combined_rate": 9.000000000000001e-07,
+          "expected_years": 1521.0282150733894
+        },
+        {
+          "dg_threshold": -25.0,
+          "mutation_rate": 1e-07,
+          "penalty_factor": 0.0,
+          "n_copies": 1,
+          "population_size": 1000.0,
+          "fitness": 1.0,
+          "selection_coefficient": 0.0,
+          "n_escape_mutations": 9,
+          "lambda_single": 9e-07,
+          "p_fix_array": 1.0,
+          "p_fix_population": 0.001,
+          "combined_rate": 9e-07,
+          "expected_years": 1521.02821507339
+        },
+        {
+          "dg_threshold": -25.0,
+          "mutation_rate": 1e-07,
+          "penalty_factor": 0.0,
+          "n_copies": 1,
+          "population_size": 1000000.0,
+          "fitness": 1.0,
+          "selection_coefficient": 0.0,
+          "n_escape_mutations": 9,
+          "lambda_single": 9e-07,
+          "p_fix_array": 1.0,
+          "p_fix_population": 1e-06,
+          "combined_rate": 8.999999999999999e-07,
+          "expected_years": 1521.02821507339
+        },
+        {
+          "dg_threshold": -25.0,
+          "mutation_rate": 1e-07,
+          "penalty_factor": 0.0,
+          "n_copies": 1,
+          "population_size": 1000000000000.0,
+          "fitness": 1.0,
+          "selection_coefficient": 0.0,
+          "n_escape_mutations": 9,
+          "lambda_single": 9e-07,
+          "p_fix_array": 1.0,
+          "p_fix_population": 1e-12,
+          "combined_rate": 9e-07,
+          "expected_years": 1521.02821507339
+        },
+        {
+          "dg_threshold": -26.0,
+          "mutation_rate": 1e-08,
+          "penalty_factor": 0.0,
+          "n_copies": 1,
+          "population_size": 1000.0,
+          "fitness": 1.0,
+          "selection_coefficient": 0.0,
+          "n_escape_mutations": 48,
+          "lambda_single": 4.800000000000001e-07,
+          "p_fix_array": 1.0,
+          "p_fix_population": 0.001,
+          "combined_rate": 4.800000000000001e-07,
+          "expected_years": 2851.927903262605
+        },
+        {
+          "dg_threshold": -26.0,
+          "mutation_rate": 1e-08,
+          "penalty_factor": 0.0,
+          "n_copies": 1,
+          "population_size": 1000000.0,
+          "fitness": 1.0,
+          "selection_coefficient": 0.0,
+          "n_escape_mutations": 48,
+          "lambda_single": 4.800000000000001e-07,
+          "p_fix_array": 1.0,
+          "p_fix_population": 1e-06,
+          "combined_rate": 4.800000000000001e-07,
+          "expected_years": 2851.927903262605
+        },
+        {
+          "dg_threshold": -26.0,
+          "mutation_rate": 1e-08,
+          "penalty_factor": 0.0,
+          "n_copies": 1,
+          "population_size": 100000000.0,
+          "fitness": 1.0,
+          "selection_coefficient": 0.0,
+          "n_escape_mutations": 48,
+          "lambda_single": 4.800000000000001e-07,
+          "p_fix_array": 1.0,
+          "p_fix_population": 1e-08,
+          "combined_rate": 4.800000000000001e-07,
+          "expected_years": 2851.927903262605
+        },
+        {
+          "dg_threshold": -26.0,
+          "mutation_rate": 1e-08,
+          "penalty_factor": 0.0,
+          "n_copies": 1,
+          "population_size": 10000000000.0,
+          "fitness": 1.0,
+          "selection_coefficient": 0.0,
+          "n_escape_mutations": 48,
+          "lambda_single": 4.800000000000001e-07,
+          "p_fix_array": 1.0,
+          "p_fix_population": 1e-10,
+          "combined_rate": 4.800000000000001e-07,
+          "expected_years": 2851.927903262605
+        },
+        {
+          "dg_threshold": -26.0,
+          "mutation_rate": 1e-08,
+          "penalty_factor": 0.0,
+          "n_copies": 1,
+          "population_size": 1000000000000.0,
+          "fitness": 1.0,
+          "selection_coefficient": 0.0,
+          "n_escape_mutations": 48,
+          "lambda_single": 4.800000000000001e-07,
+          "p_fix_array": 1.0,
+          "p_fix_population": 1e-12,
+          "combined_rate": 4.800000000000001e-07,
+          "expected_years": 2851.927903262605
+        },
+        {
+          "dg_threshold": -26.0,
+          "mutation_rate": 1e-07,
+          "penalty_factor": 0.0,
+          "n_copies": 10,
+          "population_size": 100000000.0,
+          "fitness": 1.0,
+          "selection_coefficient": 0.0,
+          "n_escape_mutations": 48,
+          "lambda_single": 4.8e-06,
+          "p_fix_array": 0.1,
+          "p_fix_population": 1e-08,
+          "combined_rate": 4.800000000000001e-07,
+          "expected_years": 2851.927903262605
+        },
+        {
+          "dg_threshold": -26.0,
+          "mutation_rate": 1e-07,
+          "penalty_factor": 0.0,
+          "n_copies": 10,
+          "population_size": 10000000000.0,
+          "fitness": 1.0,
+          "selection_coefficient": 0.0,
+          "n_escape_mutations": 48,
+          "lambda_single": 4.8e-06,
+          "p_fix_array": 0.1,
+          "p_fix_population": 1e-10,
+          "combined_rate": 4.800000000000001e-07,
+          "expected_years": 2851.927903262605
+        },
+        {
+          "dg_threshold": -26.0,
+          "mutation_rate": 1e-07,
+          "penalty_factor": 0.0,
+          "n_copies": 10,
+          "population_size": 1000.0,
+          "fitness": 1.0,
+          "selection_coefficient": 0.0,
+          "n_escape_mutations": 48,
+          "lambda_single": 4.8e-06,
+          "p_fix_array": 0.1,
+          "p_fix_population": 0.001,
+          "combined_rate": 4.8e-07,
+          "expected_years": 2851.927903262606
+        },
+        {
+          "dg_threshold": -26.0,
+          "mutation_rate": 1e-07,
+          "penalty_factor": 0.0,
+          "n_copies": 10,
+          "population_size": 1000000.0,
+          "fitness": 1.0,
+          "selection_coefficient": 0.0,
+          "n_escape_mutations": 48,
+          "lambda_single": 4.8e-06,
+          "p_fix_array": 0.1,
+          "p_fix_population": 1e-06,
+          "combined_rate": 4.8e-07,
+          "expected_years": 2851.927903262606
+        },
+        {
+          "dg_threshold": -26.0,
+          "mutation_rate": 1e-07,
+          "penalty_factor": 0.0,
+          "n_copies": 10,
+          "population_size": 1000000000000.0,
+          "fitness": 1.0,
+          "selection_coefficient": 0.0,
+          "n_escape_mutations": 48,
+          "lambda_single": 4.8e-06,
+          "p_fix_array": 0.1,
+          "p_fix_population": 1e-12,
+          "combined_rate": 4.8e-07,
+          "expected_years": 2851.927903262606
+        }
+      ]
+    },
+    "time_table": {
+      "reference_population": 100000000.0,
+      "table": [
+        {
+          "treatment_weeks": 1,
+          "treatment_months": 0.2,
+          "p_resistance": 0.0,
+          "expected_events": 0.0,
+          "expected_years": "infinity"
+        },
+        {
+          "treatment_weeks": 2,
+          "treatment_months": 0.5,
+          "p_resistance": 0.0,
+          "expected_events": 0.0,
+          "expected_years": "infinity"
+        },
+        {
+          "treatment_weeks": 4,
+          "treatment_months": 0.9,
+          "p_resistance": 0.0,
+          "expected_events": 0.0,
+          "expected_years": "infinity"
+        },
+        {
+          "treatment_weeks": 8,
+          "treatment_months": 1.8,
+          "p_resistance": 0.0,
+          "expected_events": 0.0,
+          "expected_years": "infinity"
+        },
+        {
+          "treatment_weeks": 12,
+          "treatment_months": 2.8,
+          "p_resistance": 0.0,
+          "expected_events": 0.0,
+          "expected_years": "infinity"
+        },
+        {
+          "treatment_weeks": 26,
+          "treatment_months": 6.0,
+          "p_resistance": 0.0,
+          "expected_events": 0.0,
+          "expected_years": "infinity"
+        },
+        {
+          "treatment_weeks": 52,
+          "treatment_months": 12.0,
+          "p_resistance": 0.0,
+          "expected_events": 0.0,
+          "expected_years": "infinity"
+        }
+      ]
+    }
+  }
+}

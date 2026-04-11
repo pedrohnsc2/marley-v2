@@ -1,0 +1,306 @@
+{
+  "metadata": {
+    "generated": "2026-04-11T00:26:02.824625+00:00",
+    "pipeline_version": "0.1.0",
+    "platform": "C_tarentolae_lexsy",
+    "orthogonality_status": "WARNING"
+  },
+  "orthogonality": {
+    "sequences": {
+      "aso_mrl_001": "ACAGAAACTGATACTTATATAGCGT",
+      "sl_rna_l_infantum": "AACTAACGCTATATAAGTATCAGTTTCTGTACTTATATG",
+      "sl_rna_l_tarentolae": "AACTAACGCTATATAAGTATCAGTTTCTGTACTTTATTG"
+    },
+    "target_region": {
+      "start": 5,
+      "end": 30,
+      "infantum": "ACGCTATATAAGTATCAGTTTCTGT",
+      "tarentolae": "ACGCTATATAAGTATCAGTTTCTGT"
+    },
+    "alignment": {
+      "length": 25,
+      "matches": 25,
+      "mismatches": 0,
+      "mismatch_positions": [],
+      "complementarity_infantum": 1.0,
+      "complementarity_tarentolae": 1.0
+    },
+    "thermodynamics": {
+      "l_infantum": {
+        "dH_kcal_mol": -119.9,
+        "dS_cal_mol_K": -338.8,
+        "Tm_celsius": 49.37,
+        "dG_37C_kcal_mol": -14.82
+      },
+      "l_tarentolae": {
+        "dH_kcal_mol": -119.9,
+        "dS_cal_mol_K": -338.8,
+        "Tm_celsius": 49.37,
+        "dG_37C_kcal_mol": -14.82
+      },
+      "selectivity": {
+        "delta_dG_kcal_mol": 0.0,
+        "Kd_ratio_tarentolae_over_infantum": 1.0,
+        "threshold_kcal_mol": 2.0
+      }
+    },
+    "verdict": {
+      "passes_threshold": false,
+      "summary": "WARNING -- Diferenca de DeltaG insuficiente (0.00 kcal/mol < 2.0 kcal/mol). O ASO MRL-ASO-001 pode afetar a viabilidade de L. tarentolae como vetor de expressao. REQUER AVALIACAO EXPERIMENTAL.",
+      "warnings": [
+        "CRITICO: DeltaDeltaG = 0.00 kcal/mol esta abaixo do limiar de 2.0 kcal/mol. Isso significa que o ASO pode ter afinidade significativa pelo SL RNA de L. tarentolae, potencialmente inibindo o trans-splicing do vetor de expressao.",
+        "ALERTA: Zero mismatches detectados -- o ASO tem complementaridade perfeita com ambos os SL RNAs. A seletividade depende inteiramente de fatores cineticos e de acessibilidade estrutural."
+      ],
+      "clinical_implications": "INCOMPATIVEL sem modificacoes. Opcoes: (1) Administrar vacina L. tarentolae ANTES do tratamento com ASO; (2) Usar intervalo longo (>1 semana) entre ASO e vacinacao; (3) Modificar o ASO com LNA/2'-OMe nas posicoes de mismatch para aumentar seletividade; (4) Considerar vetor de expressao alternativo (E. coli, Platform B)."
+    }
+  },
+  "construct": {
+    "protein_sequence": "MKFFVFALFAVALCSAEAMAKLSTDELLDAFKEMTLLELSDFVKKFEETFEVTAAAPVAVAAAGAAPAGAAVEAAEEQSEFDVILEAAGDKKIGVIKVVREIVSGLGLKEAKDLVDGAPKPLLEKVAKEAADEAKAKLEAAGATVTVKEAAAKRMMRSLTPFAAYYIYETFASMAAYSLMCVFYFKAAYYLAALVPALAAYLIIEDLSLVAAYFAFSVSARRAAYMILGTFVRLAAYMQNVTFVPKAAYRILESISNVAAYILYNKISGLAAYLLTANVCYKGSGSGSHHHHHHWSHPQFEK",
+    "length_aa": 302,
+    "molecular_weight_da": 32580.5,
+    "isoelectric_point": 6.21,
+    "instability_index": 30.58,
+    "is_stable": true,
+    "gravy": 0.4086,
+    "aromaticity": 0.1159,
+    "unique_epitope_count": 11,
+    "unique_epitopes": [
+      "RMMRSLTPF",
+      "YIYETFASM",
+      "SLMCVFYFK",
+      "YLAALVPAL",
+      "LIIEDLSLV",
+      "FAFSVSARR",
+      "MILGTFVRL",
+      "MQNVTFVPK",
+      "RILESISNV",
+      "ILYNKISGL",
+      "LLTANVCYK"
+    ],
+    "components": {
+      "signal_peptide_sap1": "MKFFVFALFAVALCSAEA",
+      "adjuvant_l7l12": "MAKLSTDELLDAFKEMTLLELSDFVKKFEETFEVTAAAPVAVAAAGAAPAGAAVEAAEEQSEFDVILEAAGDKKIGVIKVVREIVSGLGLKEAKDLVDGAPKPLLEKVAKEAADEAKAKLEAAGATVTVK",
+      "linker_adjuvant": "EAAAK",
+      "epitope_cassette": "RMMRSLTPFAAYYIYETFASMAAYSLMCVFYFKAAYYLAALVPALAAYLIIEDLSLVAAYFAFSVSARRAAYMILGTFVRLAAYMQNVTFVPKAAYRILESISNVAAYILYNKISGLAAYLLTANVCYK",
+      "linker_ctl": "AAY",
+      "tag_linker": "GSGSGS",
+      "his6_tag": "HHHHHH",
+      "strep_tag": "WSHPQFEK"
+    },
+    "dna_elements": {
+      "utr5_length_nt": 67,
+      "utr3_length_nt": 66,
+      "ssu_5_flank_length_nt": 60,
+      "ssu_3_flank_length_nt": 60
+    },
+    "vector": "pLEXSY-sat2",
+    "selection": "nourseothricin",
+    "rationale": {
+      "biosafety": "BSL-1 (nao patogenico para mamiferos; infecta lagartixas)",
+      "growth_conditions": "26C, meio BHI suplementado, sem CO2, tempo de duplicacao ~8h",
+      "ptm_capability": "N-glicosilacao, ancoras GPI, acetilacao N-terminal -- equivalentes a L. infantum patogenica",
+      "intrinsic_adjuvant": "Moleculas do parasita (LPG, GP63, GIPLs) estimulam TLR2/TLR4 do sistema imune inato, eliminando necessidade de adjuvante exogeno para a forma viva",
+      "literature_precedent": "HPV (Breitling 2002), HCV (Niimi 2018), SARS-CoV-2 (Pirdel 2021) -- proteinas vacinais expressas com sucesso em L. tarentolae",
+      "commercial_system": "LEXSY (Jena Bioscience): kit comercial maduro com vetores, cepas e protocolos otimizados para expressao constitutiva e induzivel",
+      "vector": "pLEXSY-sat2",
+      "selection": "nourseothricin (100 ug/mL)"
+    },
+    "modifications_from_mrna": [
+      {
+        "component": "signal_peptide",
+        "mrna_platform": "tPA (MDAMKRGLCCVLLLCGAVFVSAS)",
+        "tarentolae_platform": "SAP1 (MKFFVFALFAVALCSAEA)",
+        "reason": "tPA e sinal de secrecao mamifero, nao reconhecido pela maquinaria do RE de trypanosomatideos. SAP1 de L. mexicana e sinal nativo de Leishmania."
+      },
+      {
+        "component": "purification_tag",
+        "mrna_platform": "None (mRNA traduzido in vivo)",
+        "tarentolae_platform": "His6-GSGSGS-Strep (HHHHHHGSGSGSWSHPQFEK)",
+        "reason": "Proteina recombinante secretada precisa de purificacao. Tag dupla permite purificacao tandem com pureza >95%."
+      },
+      {
+        "component": "utrs",
+        "mrna_platform": "5'UTR humano + 3'UTR com poli(A)",
+        "tarentolae_platform": "Regioes intergenicas de L. tarentolae para trans-splicing",
+        "reason": "mRNAs de trypanosomatideos requerem trans-splicing do SL RNA no 5' e poliadenilacao no 3'. UTRs de mamiferos nao funcionam."
+      },
+      {
+        "component": "integration",
+        "mrna_platform": "None (mRNA transiente)",
+        "tarentolae_platform": "SSU rRNA locus (recombinacao homologa)",
+        "reason": "Integracao cromossomal no locus 18S rRNA garante expressao estavel e constitutiva sem necessidade de pressao seletiva continua (embora nourseotricina seja usada para selecao inicial)."
+      },
+      {
+        "component": "codon_usage",
+        "mrna_platform": "Canis lupus familiaris (otimizado para traducao in vivo)",
+        "tarentolae_platform": "L. tarentolae (GC-rich, trypanosomatid bias)",
+        "reason": "Trypanosomatideos tem forte vies de codons GC-rich (GC ~60%). Codons otimizados para mamiferos tem expressao reduzida."
+      },
+      {
+        "component": "vector",
+        "mrna_platform": "None (mRNA sintetico)",
+        "tarentolae_platform": "pLEXSY-sat2 (nourseothricin)",
+        "reason": "pLEXSY-sat2 contem as regioes flanqueadoras do SSU rRNA, o marcador de selecao sat2 (nourseotricina acetiltransferase), e o promotor constitutivo para expressao em L. tarentolae."
+      }
+    ],
+    "architecture": "[SAP1 signal (18 aa)] - [L7/L12 adjuvant (130 aa)] - [EAAAK] - [11 epitopes + AAY linkers (129 aa)] - [GSGSGS] - [His6] - [Strep-tag II]"
+  },
+  "codon_optimization": {
+    "dna_sequence": "ATGAAGTTCTTCGTGTTCGCCCTGTTCGCCGTGGCCCTGTGCAGCGCCGAGGCGATGGCCAAGCTGAGCACCGACGAGCTGCTGGACGCCTTCAAGGAGATGACCCTGCTGGAGCTGAGCGACTTCGTGAAGAAGTTCGAGGAGACCTTCGAGGTGACCGCCGCCGCCCCGGTGGCCGTGGCCGCCGCCGGCGCCGCCCCGGCCGGCGCCGCCGTGGAGGCCGCCGAGGAGCAGAGCGAGTTCGACGTGATCCTGGAGGCCGCCGGCGACAAGAAGATCGGCGTGATCAAGGTGGTGCGCGAGATCGTGAGCGGCCTGGGCCTGAAGGAGGCCAAGGACCTGGTGGACGGCGCCCCGAAGCCGCTGCTGGAGAAGGTGGCCAAGGAGGCCGCCGACGAGGCCAAGGCCAAGCTGGAGGCCGCCGGCGCCACCGTGACCGTGAAGGAGGCCGCCGCCAAGCGCATGATGCGCAGCCTGACCCCGTTCGCCGCCTACTACATCTACGAGACCTTCGCCAGCATGGCCGCCTACAGCCTGATGTGCGTGTTCTACTTCAAGGCCGCCTACTACCTGGCCGCCCTGGTGCCGGCCCTGGCCGCCTACCTGATCATCGAGGACCTGAGCCTGGTGGCCGCCTACTTCGCCTTCAGCGTGAGCGCCCGCCGCGCCGCCTACATGATCCTGGGCACCTTCGTGCGCCTGGCCGCCTACATGCAGAACGTGACCTTCGTGCCGAAGGCCGCCTACCGCATCCTGGAGAGCATCAGCAACGTGGCCGCCTACATCCTGTACAACAAGATCAGCGGCCTGGCCGCCTACCTGCTGACCGCCAACGTGTGCTACAAGGGCAGCGGCAGCGGCAGCCACCACCACCACCACCACTGGAGCCACCCGCAGTTCGAGAAG",
+    "length_nt": 906,
+    "gc_content": 0.6777,
+    "gc_in_range": false,
+    "gc_target": "55%-65%",
+    "cai": 0.9992,
+    "cai_above_threshold": true,
+    "cai_target": ">0.85",
+    "rare_codons": [],
+    "rare_codon_count": 0,
+    "restriction_sites_found": [],
+    "homopolymer_runs": [],
+    "has_polya_signal": false,
+    "has_polyt_signal": false,
+    "codon_frequency_profile": {
+      "AAC": 4,
+      "AAG": 22,
+      "ACC": 11,
+      "AGC": 18,
+      "ATC": 12,
+      "ATG": 9,
+      "CAC": 7,
+      "CAG": 3,
+      "CCG": 8,
+      "CGC": 7,
+      "CTG": 30,
+      "GAC": 9,
+      "GAG": 23,
+      "GCC": 62,
+      "GCG": 1,
+      "GGC": 13,
+      "GTG": 25,
+      "TAC": 16,
+      "TGC": 3,
+      "TGG": 1,
+      "TTC": 18
+    },
+    "warnings": [
+      "GC content = 67.8% fora da faixa alvo (55%-65%)"
+    ]
+  },
+  "cost": {
+    "live_vaccine": {
+      "growth_cost_per_l": 18.0,
+      "doses_per_l": 50000.0,
+      "cost_per_dose_usd": 0.00066,
+      "cost_per_animal_usd": 0.00198,
+      "industrial_cost_per_dose_usd": 7.9e-05,
+      "cold_chain": "2-8C (cultura viva) ou liofilizado (temp ambiente)",
+      "adjuvant": "intrinsic (parasite molecules)"
+    },
+    "protein_vaccine": {
+      "growth_cost_per_l": 18.0,
+      "purification_cost_per_run": 95.0,
+      "yield_purified_mg_per_l": 6.0,
+      "cost_per_mg_usd": 21.3333,
+      "cost_per_dose_protein_usd": 1.0667,
+      "cost_per_dose_total_usd": 3.0667,
+      "cost_per_animal_usd": 9.2,
+      "industrial_cost_per_dose_usd": 0.128,
+      "industrial_total_dose_usd": 2.128,
+      "cold_chain": "2-8C (proteina purificada)",
+      "adjuvant": "QuilA ($1.50/dose)"
+    },
+    "setup": {
+      "plexsy_kit_cost": 1500.0,
+      "plexsy_amortized_per_batch": 15.0,
+      "bsl_level": "BSL-1",
+      "growth_temperature": "26C"
+    },
+    "dosing": {
+      "dose_ug_protein": 50.0,
+      "dose_live_cfu": "1e+07",
+      "doses_per_animal": 3
+    },
+    "breakdown": {
+      "growth_medium": {
+        "bhi_per_l": 8.0,
+        "hemin_per_l": 2.0,
+        "penicillin_per_l": 1.5,
+        "nourseothricin_per_l": 3.0,
+        "consumables_per_l": 3.5,
+        "subtotal_per_l": 18.0
+      },
+      "plexsy_kit": {
+        "one_time_cost": 1500.0,
+        "estimated_batches": 100,
+        "amortized_per_batch": 15.0,
+        "note": "Kit pLEXSY-sat2 (Jena Bioscience) inclui vetor, cepa host, reagentes de transfeccao e nourseotricina para selecao. Custo unico que gera linhagem estavel para producao perpetua."
+      },
+      "purification_tandem": {
+        "ni_nta_per_use": 40.0,
+        "strep_tactin_per_use": 35.0,
+        "buffers": 10.0,
+        "consumables": 10.0,
+        "subtotal": 95.0,
+        "recovery_pct": 60.0
+      },
+      "live_vaccine": {
+        "cost_per_l": 33.0,
+        "cells_per_l": "5e+11",
+        "dose_cfu": "1e+07",
+        "doses_per_l": 50000.0,
+        "cost_per_dose": 0.00066,
+        "no_adjuvant_needed": true
+      },
+      "protein_vaccine": {
+        "yield_crude_mg_per_l": 10.0,
+        "yield_purified_mg_per_l": 6.0,
+        "dose_ug": 50.0,
+        "doses_per_l": 120.0,
+        "protein_cost_per_dose": 1.0667,
+        "adjuvant_per_dose": 1.5,
+        "formulation_per_dose": 0.5,
+        "total_cost_per_dose": 3.0667
+      },
+      "equipment": "Crescimento a 26C em frascos de cultura padrao (Erlenmeyer ou T-flask). Sem necessidade de incubadora de CO2 ou equipamento especializado. Agitacao orbital a 120 rpm e suficiente.",
+      "bsl_level": "BSL-1 (custo de infraestrutura minimo)"
+    },
+    "platform_comparison": {
+      "platform_a_mrna": {
+        "note": "mRNA sintetico: alto custo de sintese e cold chain (-20 a -80C)",
+        "estimated_per_dose_usd": "5.00-15.00",
+        "cold_chain": "-20C a -80C",
+        "adjuvant": "LNP (nanoparticula lipidica) incluida"
+      },
+      "platform_b_ecoli": {
+        "note": "Recombinante E. coli: bom custo, sem PTMs eucarioticos",
+        "estimated_per_dose_usd": "2.00-4.00",
+        "cold_chain": "2-8C",
+        "adjuvant": "QuilA ($1.50/dose)"
+      },
+      "platform_c_tarentolae_live": {
+        "note": "L. tarentolae viva: custo minimo, adjuvante intrinseco",
+        "cost_per_dose_usd": 0.00066,
+        "cold_chain": "2-8C (cultura viva) ou liofilizado (temp ambiente)",
+        "adjuvant": "Intrinseco (moleculas do parasita)"
+      },
+      "platform_c_tarentolae_protein": {
+        "note": "L. tarentolae secretada: PTMs corretas, custo intermediario",
+        "cost_per_dose_usd": 3.0667,
+        "cold_chain": "2-8C (proteina purificada)",
+        "adjuvant": "QuilA ($1.50/dose)"
+      }
+    }
+  },
+  "aso_compatibility": {
+    "answer": "COM RESTRICOES -- a diferenca de afinidade e pequena (DeltaDeltaG = 0.00 kcal/mol, abaixo do limiar de 2.0 kcal/mol). O ASO pode afetar a viabilidade de L. tarentolae.",
+    "protocol": "**Protocolo com precaucoes:**\n\n1. **NUNCA administrar simultaneamente.** O ASO pode matar L. tarentolae.\n\n2. **Opcao A -- Vacinar primeiro:** Administrar vacina L. tarentolae, aguardar resposta imune (2-4 semanas), depois iniciar ASO.\n\n3. **Opcao B -- Intervalo longo:** ASO primeiro, aguardar >1 semana de washout antes da vacinacao.\n\n4. **Opcao C -- Usar Platform B (E. coli):** Se a compatibilidade com ASO e prioritaria, a vacina recombinante em E. coli nao depende de SL RNA e e totalmente compativel.\n\n5. **Opcao D -- Modificar o ASO:** Introduzir modificacoes quimicas (LNA, 2'-OMe) nas posicoes de mismatch para aumentar seletividade por L. infantum.",
+    "risk_assessment": {
+      "thermodynamic_selectivity": "DeltaDeltaG = 0.00 kcal/mol (ABAIXO do limiar de 2.0)",
+      "mismatch_protection": "Apenas 0 mismatch(es) -- protecao insuficiente",
+      "temporal_separation": "Requer intervalo prolongado (>1 semana) entre ASO e vacina",
+      "overall_risk": "MODERADO a ALTO -- requer precaucoes ou plataforma alternativa"
+    },
+    "clinical_implications": "INCOMPATIVEL sem modificacoes. Opcoes: (1) Administrar vacina L. tarentolae ANTES do tratamento com ASO; (2) Usar intervalo longo (>1 semana) entre ASO e vacinacao; (3) Modificar o ASO com LNA/2'-OMe nas posicoes de mismatch para aumentar seletividade; (4) Considerar vetor de expressao alternativo (E. coli, Platform B)."
+  }
+}

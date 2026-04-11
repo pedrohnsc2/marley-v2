@@ -1,0 +1,51 @@
+{
+  "composite_alienness_score": 0.160717,
+  "components": {
+    "fisher_rao": {
+      "score": 0.142212,
+      "weight": 0.4,
+      "mean_distance_human_normalized": 0.147108,
+      "mean_distance_canine_normalized": 0.137315,
+      "raw_distances_human": [
+        0.42111,
+        0.60424,
+        0.516729,
+        0.306536
+      ],
+      "raw_distances_canine": [
+        0.382587,
+        0.56302,
+        0.487515,
+        0.292433
+      ]
+    },
+    "jensen_shannon": {
+      "score": 0.037382,
+      "weight": 0.4,
+      "mean_jsd_human_normalized": 0.039926,
+      "mean_jsd_canine_normalized": 0.034838,
+      "raw_jsd_human": [
+        0.021969,
+        0.044363,
+        0.032757,
+        0.011609
+      ],
+      "raw_jsd_canine": [
+        0.018157,
+        0.038616,
+        0.029228,
+        0.010591
+      ]
+    },
+    "entropy_coverage": {
+      "score": 0.4444,
+      "weight": 0.2,
+      "overlap_fraction": 0.4444
+    }
+  },
+  "interpretation": {
+    "maximum_possible_score": 1.0,
+    "score_as_percentage": 16.07,
+    "sl_rna_is_distant_from_hosts": true
+  }
+}

@@ -1,0 +1,314 @@
+{
+  "module": "module_c_conjugate",
+  "version": "1.0.0",
+  "generated_at": "2026-04-11T00:23:59.635322+00:00",
+  "runtime_seconds": 0.0,
+  "status": "success",
+  "executive_summary": "Module C evaluated five conjugation strategies for macrophage-targeted delivery of MRL-ASO-001. **Trimannose-ASO (trivalent cluster)** is the recommended strategy with a composite score of 0.715 and expected 9.7x uptake improvement over naked ASO. The mannose receptor (MRC1/CD206) pathway delivers cargo directly to lysosomes/phagolysosomes where L. infantum amastigotes reside, eliminating the need for endosomal escape. GalNAc conjugation was confirmed UNSUITABLE: ASGPR is hepatocyte-exclusive with zero expression on macrophages.",
+  "overall_conclusion": "MRL-ASO-001 should be conjugated with a **trimannose cluster** at the 3' end via a C6 aminohexyl linker for optimal macrophage delivery. This strategy exploits three converging biological advantages:\n\n1. **Receptor expression:** MRC1/CD206 is highly expressed on macrophages (8.5/10) with 85x selectivity over hepatocytes, ensuring preferential macrophage uptake.\n\n2. **Lysosomotropic delivery:** The mannose receptor pathway delivers cargo directly to the lysosome/phagolysosome compartment where L. infantum amastigotes reside. The ASO arrives at the same subcellular location as its SL RNA target.\n\n3. **Avidity effect:** Trivalent mannose improves Kd from ~5 uM (monovalent) to ~100 nM (50-fold), achieving efficient receptor engagement at therapeutic concentrations.\n\nThe GalNAc platform (industry gold standard for hepatocyte delivery) was evaluated and definitively excluded: ASGPR is not expressed on macrophages. Cholesterol conjugation offers moderate uptake but poor macrophage selectivity due to high hepatic LDLR expression.\n\n**Next step:** Conjugate synthesis and in vitro uptake validation in canine macrophage cell line (DH82).",
+  "aso_specifications": {
+    "name": "MRL-ASO-001",
+    "sequence_length_nt": 25,
+    "gapmer_design": "5-15-5 (LNA-DNA-LNA)",
+    "backbone": "full phosphorothioate (PS)",
+    "mw_naked_da": 8250.0,
+    "logp_naked": -3.5
+  },
+  "mannose_conjugation": {
+    "receptor": {
+      "name": "Mannose receptor C-type 1",
+      "gene_symbol": "MRC1 (CD206)",
+      "expression_macrophage": 8.5,
+      "expression_hepatocyte": 0.1,
+      "selectivity_mac_hep": 85.0,
+      "internalization_pathway": "Clathrin-mediated endocytosis -> early endosome -> lysosome",
+      "endpoint_compartment": "lysosome/phagolysosome"
+    },
+    "monovalent": {
+      "ligand": "D-mannose",
+      "linker": "C6 aminohexyl",
+      "attachment_site": "3' terminal",
+      "mw_total_da": 8544.3,
+      "logp_estimated": -3.472,
+      "kd_um": 5.0,
+      "membrane_ka": 1.0322,
+      "uptake_fold_vs_naked": 2.49,
+      "synthesis_complexity": 2,
+      "cost_per_mg_usd": 150.0
+    },
+    "trivalent": {
+      "ligand": "alpha-1,3/alpha-1,6-trimannose",
+      "linker": "C6 aminohexyl + branching scaffold",
+      "attachment_site": "3' terminal",
+      "mw_total_da": 8925.6,
+      "logp_estimated": -3.576,
+      "kd_um": 0.1,
+      "membrane_ka": 0.9165,
+      "uptake_fold_vs_naked": 9.68,
+      "synthesis_complexity": 4,
+      "cost_per_mg_usd": 450.0
+    },
+    "avidity_improvement_fold": 50.0,
+    "uptake_ratio_tri_vs_mono": 3.89,
+    "lysosomotropic_advantage": "The mannose receptor (MRC1) internalizes cargo via clathrin-mediated endocytosis, delivering directly to lysosomes. In Leishmania-infected macrophages, phagolysosomes are the compartment where amastigotes reside. This pathway places the ASO in direct proximity to the SL RNA target without requiring endosomal escape.",
+    "recommendation": "trimannose_cluster"
+  },
+  "cholesterol_conjugation": {
+    "receptor": {
+      "name": "Low-density lipoprotein receptor",
+      "gene_symbol": "LDLR",
+      "expression_macrophage": 3.2,
+      "expression_hepatocyte": 9.0,
+      "selectivity_mac_hep": 0.36,
+      "internalization_pathway": "Clathrin-mediated endocytosis -> endosome -> lysosome",
+      "endpoint_compartment": "lysosome"
+    },
+    "conjugate": {
+      "ligand": "Cholesterol",
+      "linker": "C6 aminohexyl",
+      "attachment_site": "3' terminal",
+      "mw_total_da": 8750.8,
+      "logp_estimated": -2.899,
+      "delta_logp_vs_naked": 0.601,
+      "membrane_ka": 1.9973,
+      "kd_um": 2.0,
+      "uptake_fold_vs_naked": 2.52,
+      "synthesis_complexity": 2,
+      "cost_per_mg_usd": 120.0
+    },
+    "hepatic_accumulation_warning": "Cholesterol conjugation primarily drives hepatic accumulation via LDLR, which is 2.8x more expressed on hepatocytes than macrophages. In vivo, cholesterol-ASO will associate with circulating LDL, directing ~60-80% of the dose to the liver. Macrophage delivery is achievable but not the primary distribution pathway.",
+    "macrophage_selectivity": "poor"
+  },
+  "galnac_assessment": {
+    "conclusion": "UNSUITABLE",
+    "receptor": {
+      "name": "Asialoglycoprotein receptor",
+      "gene_symbol": "ASGPR1/ASGPR2",
+      "expression_macrophage": 0.0,
+      "expression_hepatocyte": 9.5,
+      "selectivity_mac_hep": 0.0,
+      "tissue_specificity": "liver-exclusive"
+    },
+    "conjugate": {
+      "ligand": "N-acetylgalactosamine trimer",
+      "kd_asgpr_um": 0.003,
+      "kd_asgpr_nm": 3.0,
+      "uptake_fold_macrophage": 0.10577686487123379,
+      "synthesis_complexity": 5,
+      "cost_per_mg_usd": 800.0
+    },
+    "reasons_for_exclusion": [
+      "ASGPR (asialoglycoprotein receptor) is expressed EXCLUSIVELY on hepatocytes",
+      "Expression on macrophages is zero — no receptor-mediated uptake possible",
+      "GalNAc-ASO would be directed to the liver, not to infected macrophages",
+      "High synthesis cost ($800/mg) with zero therapeutic benefit for this indication",
+      "The extraordinary affinity (Kd = 3 nM) is wasted on a non-target cell type"
+    ],
+    "clinical_context": "GalNAc is the gold standard for hepatocyte delivery (Alnylam platform: givosiran, inclisiran, lumasiran, vutrisiran). However, this platform is fundamentally incompatible with macrophage-targeted ASO delivery. The ASGPR receptor is hepatocyte-specific by design — it clears desialylated glycoproteins from circulation, a function unique to the liver.",
+    "prevent_reinvestigation": "This negative result is documented to prevent future re-investigation. No modification of GalNAc valency, linker, or attachment site can overcome the fundamental absence of ASGPR on macrophages."
+  },
+  "comparison_matrix": {
+    "conjugate_scores": {
+      "mannose_mono": {
+        "conjugate_name": "Mannose-ASO (monovalent)",
+        "target_receptor": "MRC1 (CD206)",
+        "receptor_expression_macrophage": 8.5,
+        "kd_um": 5.0,
+        "uptake_fold_vs_naked": 2.49,
+        "mw_total_da": 8544.3,
+        "logp_estimated": -3.472,
+        "synthesis_complexity": 2,
+        "cost_per_mg_usd": 150.0,
+        "literature_precedent": "Kawakami S et al. (2008) J Control Release 131(3):153-158 — mannosylated liposomes for macrophage delivery in leishmaniasis",
+        "scores": {
+          "conjugate_name": "Mannose-ASO (monovalent)",
+          "receptor_score": 0.0753,
+          "expression_score": 0.85,
+          "selectivity_score": 0.9672,
+          "pathway_score": 1.0,
+          "synthesis_feasibility": 0.75,
+          "cost_score": 0.5333,
+          "recommendation_score": 0.6764,
+          "suitable_for_macrophage": true,
+          "rationale": "SUITABLE: MRC1 (CD206) is expressed on macrophages (8.5/10) with high selectivity vs hepatocytes. Moderate receptor affinity (Kd = 5.0 uM). Expected uptake: 2.5x over naked ASO. Internalization via Clathrin-mediated endocytosis -> early endosome -> lysosome."
+        }
+      },
+      "trimannose_cluster": {
+        "conjugate_name": "Trimannose-ASO (trivalent cluster)",
+        "target_receptor": "MRC1 (CD206)",
+        "receptor_expression_macrophage": 8.5,
+        "kd_um": 0.1,
+        "uptake_fold_vs_naked": 9.68,
+        "mw_total_da": 8925.6,
+        "logp_estimated": -3.576,
+        "synthesis_complexity": 4,
+        "cost_per_mg_usd": 450.0,
+        "literature_precedent": "Taylor ME et al. (1992) J Biol Chem 267(3):1719-1726 — multivalent mannose dramatically improves MRC1 binding; Irache JM et al. (2008) J Control Release 128(1):15-25 — mannosylated nanoparticles for macrophage targeting",
+        "scores": {
+          "conjugate_name": "Trimannose-ASO (trivalent cluster)",
+          "receptor_score": 0.5,
+          "expression_score": 0.85,
+          "selectivity_score": 0.9672,
+          "pathway_score": 1.0,
+          "synthesis_feasibility": 0.25,
+          "cost_score": 0.1778,
+          "recommendation_score": 0.7148,
+          "suitable_for_macrophage": true,
+          "rationale": "SUITABLE: MRC1 (CD206) is expressed on macrophages (8.5/10) with high selectivity vs hepatocytes. Strong receptor affinity (Kd = 0.100 uM). Expected uptake: 9.7x over naked ASO. Internalization via Clathrin-mediated endocytosis -> early endosome -> lysosome."
+        }
+      },
+      "cholesterol": {
+        "conjugate_name": "Cholesterol-ASO",
+        "target_receptor": "LDLR",
+        "receptor_expression_macrophage": 3.2,
+        "kd_um": 2.0,
+        "uptake_fold_vs_naked": 2.52,
+        "mw_total_da": 8750.8,
+        "logp_estimated": -2.899,
+        "synthesis_complexity": 2,
+        "cost_per_mg_usd": 120.0,
+        "literature_precedent": "Wolfrum C et al. (2007) Nat Biotechnol 25(10):1149-1157 — cholesterol-conjugated siRNA silences gene in vivo; Soutschek J et al. (2004) Nature 432(7014):173-178 — cholesterol-siRNA systemic delivery",
+        "scores": {
+          "conjugate_name": "Cholesterol-ASO",
+          "receptor_score": 0.1747,
+          "expression_score": 0.32,
+          "selectivity_score": 0.0661,
+          "pathway_score": 1.0,
+          "synthesis_feasibility": 0.75,
+          "cost_score": 0.6667,
+          "recommendation_score": 0.3952,
+          "suitable_for_macrophage": false,
+          "rationale": "UNSUITABLE: LDLR has poor macrophage selectivity (macrophage/hepatocyte ratio = 0.36)."
+        }
+      },
+      "palmitate": {
+        "conjugate_name": "Palmitate-ASO",
+        "target_receptor": "SR-A (CD204)",
+        "receptor_expression_macrophage": 7.0,
+        "kd_um": 5.0,
+        "uptake_fold_vs_naked": 2.34,
+        "mw_total_da": 8524.4,
+        "logp_estimated": -3.181,
+        "synthesis_complexity": 1,
+        "cost_per_mg_usd": 80.0,
+        "literature_precedent": "Toulme JJ et al. (1994) Biochimie 76(3-4):153-154 — palmitate conjugation for macrophage-targeted antisense; Bijsterbosch MK et al. (2000) Nucleic Acids Res 28(14):2717-2725 — lipid-conjugated ODN macrophage uptake",
+        "scores": {
+          "conjugate_name": "Palmitate-ASO",
+          "receptor_score": 0.0753,
+          "expression_score": 0.7,
+          "selectivity_score": 0.588,
+          "pathway_score": 1.0,
+          "synthesis_feasibility": 1.0,
+          "cost_score": 1.0,
+          "recommendation_score": 0.6114,
+          "suitable_for_macrophage": true,
+          "rationale": "SUITABLE: MSR1 (CD204) is expressed on macrophages (7.0/10) with moderate selectivity vs hepatocytes. Moderate receptor affinity (Kd = 5.0 uM). Expected uptake: 2.3x over naked ASO. Internalization via Non-clathrin endocytosis -> endosome -> lysosome."
+        }
+      },
+      "galnac": {
+        "conjugate_name": "GalNAc-ASO (trivalent)",
+        "target_receptor": "ASGPR",
+        "receptor_expression_macrophage": 0.0,
+        "kd_um": 0.003,
+        "uptake_fold_vs_naked": 0.10577686487123379,
+        "mw_total_da": 9141.9,
+        "logp_estimated": -3.451,
+        "synthesis_complexity": 5,
+        "cost_per_mg_usd": 800.0,
+        "literature_precedent": "Nair JK et al. (2014) JACS 136(49):16958-16961 — GalNAc-siRNA platform (Alnylam); Prakash TP et al. (2014) Nucleic Acids Res 42(13):8796-8807 — GalNAc-ASO hepatocyte delivery. NOTE: ASGPR is liver-specific, NOT expressed on macrophages",
+        "scores": {
+          "conjugate_name": "GalNAc-ASO (trivalent)",
+          "receptor_score": 0.8807,
+          "expression_score": 0.0,
+          "selectivity_score": 0.0022,
+          "pathway_score": 0.0,
+          "synthesis_feasibility": 0.0,
+          "cost_score": 0.1,
+          "recommendation_score": 0.2256,
+          "suitable_for_macrophage": false,
+          "rationale": "UNSUITABLE: ASGPR1/ASGPR2 is not expressed on macrophages (expression = 0.0/10). This receptor is hepatocyte lysosome (liver-specific)-specific."
+        }
+      },
+      "naked": {
+        "conjugate_name": "Naked ASO (PS backbone)",
+        "target_receptor": "Non-specific / SR-A",
+        "receptor_expression_macrophage": 7.0,
+        "kd_um": NaN,
+        "uptake_fold_vs_naked": 1.0,
+        "mw_total_da": 8250.0,
+        "logp_estimated": -3.5,
+        "synthesis_complexity": 0,
+        "cost_per_mg_usd": 50.0,
+        "literature_precedent": "Crooke ST et al. (2017) Nat Rev Drug Discov — PS-ASO baseline",
+        "scores": {
+          "conjugate_name": "Naked ASO (PS backbone)",
+          "receptor_score": 0.2,
+          "expression_score": 0.5,
+          "selectivity_score": 0.3,
+          "pathway_score": 0.5,
+          "synthesis_feasibility": 1.0,
+          "cost_score": 1.0,
+          "recommendation_score": 0.42,
+          "suitable_for_macrophage": true,
+          "rationale": "BASELINE: Naked PS-ASO enters macrophages via non-specific endocytosis and scavenger receptor interactions. Uptake is real but inefficient (1.0x reference). The polyanionic PS backbone provides some inherent macrophage tropism via Class A scavenger receptors."
+        }
+      }
+    },
+    "ranking": [
+      {
+        "rank": 1,
+        "name": "trimannose_cluster",
+        "score": 0.7148
+      },
+      {
+        "rank": 2,
+        "name": "mannose_mono",
+        "score": 0.6764
+      },
+      {
+        "rank": 3,
+        "name": "palmitate",
+        "score": 0.6114
+      },
+      {
+        "rank": 4,
+        "name": "cholesterol",
+        "score": 0.3952
+      },
+      {
+        "rank": 5,
+        "name": "galnac",
+        "score": 0.2256
+      }
+    ]
+  },
+  "optimal_design": {
+    "primary_recommendation": {
+      "conjugate": "Trimannose-ASO (trivalent cluster)",
+      "structure": "MRL-ASO-001 (25-nt LNA-DNA-LNA gapmer, full PS) conjugated at 3' end via C6 aminohexyl linker to trimannose moiety",
+      "target_receptor": "MRC1 (CD206)",
+      "expected_uptake_fold": 9.68,
+      "recommendation_score": 0.7148,
+      "synthesis_complexity": 4,
+      "estimated_cost_per_mg_usd": 450.0
+    },
+    "alternative": {
+      "conjugate": "Mannose-ASO (monovalent)",
+      "target_receptor": "MRC1 (CD206)",
+      "expected_uptake_fold": 2.49,
+      "recommendation_score": 0.6764,
+      "rationale": "If Trimannose-ASO (trivalent cluster) synthesis proves too complex or costly, Mannose-ASO (monovalent) offers a simpler alternative with 2.5x uptake."
+    },
+    "dual_conjugation_option": {
+      "feasible": true,
+      "primary_ligand": "Trimannose cluster (3' end)",
+      "secondary_ligand": "Cy5 fluorescent tag (5' end)",
+      "purpose": "Dual conjugation enables simultaneous macrophage targeting (trimannose at 3') and real-time tracking of ASO uptake and intracellular distribution (Cy5 at 5'). The Cy5 tag does not interfere with RNase H activity because the 5' LNA flank provides steric protection.",
+      "mw_cy5_da": 792.0,
+      "mw_total_dual_da": 9717.6,
+      "precedent": "Castanotto D et al. (2015) Nucleic Acids Res 43(20):9587-9599 — dual-labeled ASOs for intracellular tracking",
+      "caveat": "Dual conjugation increases MW substantially and may reduce cellular uptake. Should be used for mechanism-of-action studies, not as the therapeutic candidate."
+    },
+    "final_rationale": "Trimannose cluster conjugation is recommended as the primary delivery strategy for MRL-ASO-001 based on three converging advantages: (1) MRC1/CD206 is highly expressed on macrophages (8.5/10) with 85x selectivity over hepatocytes; (2) the mannose receptor internalization pathway delivers cargo directly to lysosomes/phagolysosomes, eliminating the need for endosomal escape; (3) multivalent mannose binding achieves nanomolar affinity (Kd ~100 nM) through the avidity effect, a 50-fold improvement over monovalent mannose. This strategy exploits the unique biology of Leishmania-infected macrophages: the same phagocytic receptors that the parasite exploits for entry can be co-opted for therapeutic ASO delivery."
+  }
+}
