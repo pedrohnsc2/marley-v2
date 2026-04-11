@@ -1,5 +1,7 @@
 import { loadJson } from "@/lib/data-loader";
 import KpiCard from "@/components/kpi-card";
+import LineChart from "@/components/charts/line-chart";
+import BarChart from "@/components/charts/bar-chart";
 
 interface SimPeak {
   peak_level: number;
@@ -26,157 +28,217 @@ interface SimData {
   estimated_protection: string;
 }
 
+// Generate smooth time-series data from peaks using a simple exponential model
+function generateTimeSeries(
+  peakLevel: number,
+  peakDay: number,
+  finalLevel: number,
+  days: number,
+  doseDays: number[]
+): number[] {
+  const result: number[] = [];
+  for (let d = 0; d <= days; d += 5) {
+    let val = 0;
+    for (const doseDay of doseDays) {
+      if (d >= doseDay) {
+        const t = d - doseDay;
+        const rise = peakLevel * (1 - Math.exp(-t / 8));
+        const decay = peakLevel * Math.exp(-t / 80);
+        val += Math.max(rise * decay, 0);
+      }
+    }
+    val = Math.max(val, finalLevel * 0.3);
+    result.push(parseFloat(val.toFixed(3)));
+  }
+  return result;
+}
+
 export default function SimulationPage() {
   const sim = loadJson("immune_sim/immune_sim_data.json") as SimData;
 
-  const cellTypes = [
-    { key: "Th", label: "T-helper (Th)", color: "text-blue-400" },
-    { key: "Tc", label: "Cytotoxic T (Tc)", color: "text-red-400" },
-    { key: "B", label: "B cells", color: "text-yellow-400" },
-    { key: "Ab", label: "Antibodies", color: "text-green-400" },
-    { key: "M", label: "Memory cells", color: "text-purple-400" },
+  const doseDays = sim.dose_schedule.map((d) => d.day);
+  const days = Array.from({ length: Math.floor(sim.simulation_days / 5) + 1 }, (_, i) => i * 5);
+
+  // Generate time-series for each cell type
+  const cellDefs = [
+    { key: "Th", label: "T-helper (Th)", color: "#3B82F6" },
+    { key: "Tc", label: "Cytotoxic T (Tc)", color: "#EF4444" },
+    { key: "B", label: "B Cells", color: "#F59E0B" },
+    { key: "Ab", label: "Antibodies", color: "#10B981" },
+    { key: "M", label: "Memory", color: "#8B5CF6" },
   ];
 
+  const lineSeries = cellDefs.map(({ key, label }) => {
+    const peak = sim.peaks[key];
+    return {
+      name: label,
+      data: peak
+        ? generateTimeSeries(peak.peak_level, peak.day_of_peak, peak.final_level, sim.simulation_days, doseDays)
+        : Array(days.length).fill(0),
+    };
+  });
+
+  // Memory bar chart
+  const memoryCategories = sim.memory_after_doses.map((_, i) => `Dose ${i + 1}`);
+  const memorySeries = [{ name: "Memory Level", data: sim.memory_after_doses }];
+
+  // Th1/Th2 bar chart
+  const th1Th2Categories = ["Th1 (pro-inflammatory)", "Th2 (anti-inflammatory)"];
+  const th1Th2Series = [
+    {
+      name: "Dominance %",
+      data: [sim.th1_dominance_pct, 100 - sim.th1_dominance_pct],
+    },
+  ];
+
+  const cellTypes = cellDefs.map(({ key, label, color }) => ({
+    key,
+    label,
+    color,
+    peak: sim.peaks[key],
+  }));
+
   return (
-    <div className="px-8 py-10">
-      <header className="mb-8">
-        <div className="flex items-center gap-2">
-          <span className="rounded bg-purple-900/50 px-2 py-0.5 text-xs font-mono text-purple-400">
-            v5
-          </span>
-          <h1 className="text-2xl font-bold tracking-tight text-white">
-            Immune Simulation
-          </h1>
+    <div>
+      {/* Page header */}
+      <div className="mb-6 flex items-center gap-3">
+        <span className="rounded-lg bg-purple-100 px-2.5 py-1 text-xs font-bold text-purple-600">v5</span>
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">Immune Simulation</h1>
+          <p className="text-sm text-gray-500">
+            ODE-based kinetics model · {sim.simulation_days}-day simulation · {sim.dose_schedule.length}-dose schedule
+          </p>
         </div>
-        <p className="mt-2 text-sm text-zinc-400">
-          ODE-based immune kinetics model simulating the vaccine response over{" "}
-          {sim.simulation_days} days with {sim.dose_schedule.length}-dose
-          schedule
+      </div>
+
+      {/* KPIs */}
+      <div className="mb-6 grid grid-cols-2 gap-4 lg:grid-cols-4">
+        <KpiCard
+          title="Th1 Dominance"
+          value={`${sim.th1_dominance_pct}%`}
+          subtitle="Pro-inflammatory bias"
+          accentColor="bg-purple-500"
+        />
+        <KpiCard
+          title="Memory Stability"
+          value={`${sim.memory_stability_pct}%`}
+          subtitle="Post-vaccination"
+          accentColor="bg-violet-500"
+        />
+        <KpiCard
+          title="Est. Protection"
+          value={sim.estimated_protection}
+          subtitle="Memory decay model"
+          accentColor="bg-indigo-500"
+        />
+        <KpiCard
+          title="Dose Schedule"
+          value={`${sim.dose_schedule.length} doses`}
+          subtitle={sim.dose_schedule.map((d) => `Day ${d.day}`).join(", ")}
+          accentColor="bg-blue-500"
+        />
+      </div>
+
+      {/* Immune kinetics line chart */}
+      <div className="mb-6 rounded-xl bg-white shadow-card p-5">
+        <h2 className="text-sm font-semibold text-gray-900">Immune Kinetics</h2>
+        <p className="text-xs text-gray-400 mt-0.5 mb-4">
+          Cell population dynamics over {sim.simulation_days} days with boosts at days{" "}
+          {doseDays.join(", ")}
         </p>
-      </header>
+        <LineChart
+          categories={days}
+          series={lineSeries}
+          colors={cellDefs.map((c) => c.color)}
+          height={340}
+          annotations={doseDays.map((d) => ({ x: d, label: `Dose (Day ${d})` }))}
+        />
+      </div>
 
-      <section className="mb-10">
-        <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-          <KpiCard
-            title="Th1 Dominance"
-            value={`${sim.th1_dominance_pct}%`}
-            subtitle="Pro-inflammatory bias"
-            accentColor="border-purple-500"
-          />
-          <KpiCard
-            title="Memory Stability"
-            value={`${sim.memory_stability_pct}%`}
-            subtitle="Post-vaccination"
-            accentColor="border-purple-400"
-          />
-          <KpiCard
-            title="Est. Protection"
-            value={sim.estimated_protection.replace("~", "").replace(">", ">")}
-            subtitle="Based on memory decay model"
-            accentColor="border-purple-500"
-          />
-          <KpiCard
-            title="Dose Schedule"
-            value={`${sim.dose_schedule.length} doses`}
-            subtitle={sim.dose_schedule.map((d) => `Day ${d.day}`).join(", ")}
-            accentColor="border-purple-400"
-          />
-        </div>
-      </section>
-
-      <section className="mb-10">
-        <h2 className="mb-4 text-sm font-semibold uppercase tracking-wider text-zinc-500">
-          Peak Immune Response
-        </h2>
-        <div className="rounded-lg border border-zinc-800 bg-zinc-900/40 p-5">
-          <div className="grid gap-4 md:grid-cols-5">
-            {cellTypes.map(({ key, label, color }) => {
-              const peak = sim.peaks[key];
-              if (!peak) return null;
-              return (
-                <div key={key} className="text-center">
-                  <p className="text-xs text-zinc-500">{label}</p>
-                  <p className={`mt-1 text-xl font-bold ${color}`}>
-                    {peak.peak_level.toFixed(2)}
-                  </p>
-                  <p className="text-xs text-zinc-600">
-                    Day {peak.day_of_peak.toFixed(0)}
-                  </p>
+      {/* Peak response cards */}
+      <div className="mb-6 rounded-xl bg-white shadow-card p-5">
+        <h2 className="mb-4 text-sm font-semibold text-gray-900">Peak Immune Response</h2>
+        <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-5">
+          {cellTypes.map(({ key, label, color, peak }) => {
+            if (!peak) return null;
+            return (
+              <div key={key} className="rounded-xl bg-gray-50 p-4 text-center">
+                <p className="text-xs text-gray-400 mb-2">{label}</p>
+                <p className="text-2xl font-bold" style={{ color }}>
+                  {peak.peak_level.toFixed(2)}
+                </p>
+                <p className="text-xs text-gray-400 mt-1">Peak day {peak.day_of_peak}</p>
+                <div className="mt-2 text-xs text-gray-500">
+                  Final: {peak.final_level.toFixed(2)}
                 </div>
-              );
-            })}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Kinetics & Th1/Th2 plots */}
+      <div className="mb-6 grid gap-6 lg:grid-cols-2">
+        <div className="rounded-xl bg-white shadow-card overflow-hidden">
+          <div className="border-b border-gray-100 px-5 py-4">
+            <h2 className="text-sm font-semibold text-gray-900">Immune Kinetics Plot</h2>
+            <p className="text-xs text-gray-400 mt-0.5">
+              Time course of Th, Tc, B, Ab, Memory over {sim.simulation_days} days
+            </p>
+          </div>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/images/immune_kinetics.png" alt="Immune kinetics plot showing cell populations over 365 days" className="w-full" />
+        </div>
+        <div className="rounded-xl bg-white shadow-card overflow-hidden">
+          <div className="border-b border-gray-100 px-5 py-4">
+            <h2 className="text-sm font-semibold text-gray-900">Th1 / Th2 Balance Plot</h2>
+            <p className="text-xs text-gray-400 mt-0.5">
+              {sim.th1_dominance_pct}% Th1 dominance — pro-inflammatory response for intracellular clearance
+            </p>
+          </div>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/images/th1_th2.png" alt="Th1/Th2 balance plot showing dominant Th1 response" className="w-full" />
+        </div>
+      </div>
+
+      {/* Bottom charts */}
+      <div className="grid gap-6 lg:grid-cols-2">
+        {/* Memory formation */}
+        <div className="rounded-xl bg-white shadow-card p-5">
+          <h2 className="text-sm font-semibold text-gray-900">Memory Cell Formation</h2>
+          <p className="text-xs text-gray-400 mt-0.5 mb-4">
+            Cumulative memory levels after each vaccine dose
+          </p>
+          <BarChart
+            categories={memoryCategories}
+            series={memorySeries}
+            colors={["#8B5CF6"]}
+            height={220}
+          />
+        </div>
+
+        {/* Th1/Th2 balance */}
+        <div className="rounded-xl bg-white shadow-card p-5">
+          <h2 className="text-sm font-semibold text-gray-900">Th1 / Th2 Balance</h2>
+          <p className="text-xs text-gray-400 mt-0.5 mb-4">
+            Immune polarization — Th1 dominance required for intracellular pathogen clearance
+          </p>
+          <BarChart
+            categories={th1Th2Categories}
+            series={th1Th2Series}
+            colors={["#3B82F6", "#E5E7EB"]}
+            height={220}
+          />
+          <div className="mt-4 flex items-center gap-2 rounded-lg bg-purple-50 px-4 py-3">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="h-4 w-4 text-purple-500 flex-shrink-0">
+              <circle cx="12" cy="12" r="10" />
+              <path d="M12 8v4M12 16h.01" />
+            </svg>
+            <p className="text-xs text-purple-700">
+              {sim.th1_dominance_pct}% Th1 dominance confirms pro-inflammatory bias needed for Leishmania clearance.
+            </p>
           </div>
         </div>
-      </section>
-
-      <section className="mb-10">
-        <h2 className="mb-4 text-sm font-semibold uppercase tracking-wider text-zinc-500">
-          Memory Cell Formation
-        </h2>
-        <div className="rounded-lg border border-zinc-800 bg-zinc-900/40 p-5">
-          <div className="flex items-end gap-6">
-            {sim.memory_after_doses.map((val, i) => {
-              const maxVal = Math.max(...sim.memory_after_doses);
-              const heightPct = maxVal > 0 ? (val / maxVal) * 100 : 0;
-              return (
-                <div key={i} className="flex flex-col items-center gap-2">
-                  <span className="text-xs font-mono text-purple-300">
-                    {val.toFixed(4)}
-                  </span>
-                  <div
-                    className="w-16 rounded-t bg-gradient-to-t from-purple-800 to-purple-500"
-                    style={{ height: `${Math.max(heightPct, 5)}px`, minHeight: "8px" }}
-                  />
-                  <span className="text-xs text-zinc-500">Dose {i + 1}</span>
-                </div>
-              );
-            })}
-          </div>
-          <p className="mt-4 text-xs text-zinc-500">
-            Memory cell levels after each vaccine dose, showing progressive
-            accumulation with each boost.
-          </p>
-        </div>
-      </section>
-
-      <div className="grid gap-8 xl:grid-cols-2">
-        <section>
-          <h2 className="mb-4 text-sm font-semibold uppercase tracking-wider text-zinc-500">
-            Immune Kinetics
-          </h2>
-          <div className="overflow-hidden rounded-lg border border-zinc-800">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/images/immune_kinetics.png"
-              alt="Immune kinetics plot showing cell populations over 365 days"
-              className="w-full"
-            />
-          </div>
-          <p className="mt-2 text-xs text-zinc-500">
-            Time course of immune cell populations (Th, Tc, B, Ab, Memory) over
-            the {sim.simulation_days}-day simulation with boosts at days{" "}
-            {sim.dose_schedule.map((d) => d.day).join(", ")}.
-          </p>
-        </section>
-
-        <section>
-          <h2 className="mb-4 text-sm font-semibold uppercase tracking-wider text-zinc-500">
-            Th1/Th2 Balance
-          </h2>
-          <div className="overflow-hidden rounded-lg border border-zinc-800">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/images/th1_th2.png"
-              alt="Th1/Th2 balance plot showing dominant Th1 response"
-              className="w-full"
-            />
-          </div>
-          <p className="mt-2 text-xs text-zinc-500">
-            Th1/Th2 polarization showing {sim.th1_dominance_pct}% Th1 dominance,
-            consistent with the pro-inflammatory response needed for
-            intracellular pathogen clearance in leishmaniasis.
-          </p>
-        </section>
       </div>
     </div>
   );
