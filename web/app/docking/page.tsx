@@ -1,227 +1,201 @@
 import { loadCsv } from "@/lib/data-loader";
 import KpiCard from "@/components/kpi-card";
+import BarChart from "@/components/charts/bar-chart";
 
 export default function DockingPage() {
   const allScores = loadCsv("docking_scores.csv");
   const top10 = allScores.slice(0, 10);
 
-  const bestAffinity = allScores.length > 0
-    ? Math.min(...allScores.map((s) => parseFloat(s.binding_affinity ?? "0")))
-    : 0;
+  const bestAffinity =
+    allScores.length > 0
+      ? Math.min(...allScores.map((s) => parseFloat(s.binding_affinity ?? "0")))
+      : 0;
 
   const uniqueTargets = new Set(allScores.map((s) => s.target_gene_name)).size;
   const uniqueCompounds = new Set(allScores.map((s) => s.compound_id)).size;
 
-  // Selectivity data (MRL-003 vs human GR)
-  const selectivity = [
+  // Chart data: top 10 binding affinities (negative = better, show as positive for visual clarity)
+  const chartCategories = top10.map((r) => r.compound_name ?? r.compound_id ?? "");
+  const chartSeries = [
     {
-      compound: "MRL-003",
-      tryr: -7.32,
-      humanGr: -8.68,
-      delta: -1.35,
-      selective: false,
-    },
-    {
-      compound: "Pemetrexed",
-      tryr: -6.92,
-      humanGr: -9.28,
-      delta: -2.36,
-      selective: false,
-    },
-    {
-      compound: "Menadione",
-      tryr: -4.99,
-      humanGr: -6.5,
-      delta: -1.51,
-      selective: false,
+      name: "Binding Affinity",
+      data: top10.map((r) => Math.abs(parseFloat(r.binding_affinity ?? "0"))),
     },
   ];
 
+  const selectivity = [
+    { compound: "MRL-003", tryr: -7.32, humanGr: -8.68, delta: -1.35, selective: false },
+    { compound: "Pemetrexed", tryr: -6.92, humanGr: -9.28, delta: -2.36, selective: false },
+    { compound: "Menadione", tryr: -4.99, humanGr: -6.5, delta: -1.51, selective: false },
+  ];
+
   return (
-    <div className="px-8 py-10">
-      <header className="mb-8">
-        <div className="flex items-center gap-2">
-          <span className="rounded bg-green-900/50 px-2 py-0.5 text-xs font-mono text-green-400">
-            v4
-          </span>
-          <h1 className="text-2xl font-bold tracking-tight text-white">
-            Molecular Docking
-          </h1>
+    <div>
+      {/* Page header */}
+      <div className="mb-6 flex items-center gap-3">
+        <span className="rounded-lg bg-emerald-100 px-2.5 py-1 text-xs font-bold text-emerald-600">v4</span>
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">Molecular Docking</h1>
+          <p className="text-sm text-gray-500">
+            AutoDock Vina virtual screening of repurposed and custom compounds
+          </p>
         </div>
-        <p className="mt-2 text-sm text-zinc-400">
-          AutoDock Vina virtual screening of repurposed and custom compounds
-          against parasite drug targets
-        </p>
-      </header>
+      </div>
 
-      <section className="mb-10">
-        <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-          <KpiCard
-            title="Total Dockings"
-            value={allScores.length}
-            subtitle="Target-compound pairs"
-            accentColor="border-green-500"
-          />
-          <KpiCard
-            title="Unique Targets"
-            value={uniqueTargets}
-            subtitle="Receptor structures"
-            accentColor="border-green-400"
-          />
-          <KpiCard
-            title="Compounds"
-            value={uniqueCompounds}
-            subtitle="Tested molecules"
-            accentColor="border-green-500"
-          />
-          <KpiCard
-            title="Best Affinity"
-            value={`${bestAffinity.toFixed(2)} kcal/mol`}
-            subtitle={top10[0]?.compound_name ?? ""}
-            accentColor="border-green-400"
+      {/* KPIs */}
+      <div className="mb-6 grid grid-cols-2 gap-4 lg:grid-cols-4">
+        <KpiCard
+          title="Total Dockings"
+          value={allScores.length}
+          subtitle="Target-compound pairs"
+          accentColor="bg-emerald-500"
+        />
+        <KpiCard
+          title="Unique Targets"
+          value={uniqueTargets}
+          subtitle="Receptor structures"
+          accentColor="bg-teal-500"
+        />
+        <KpiCard
+          title="Compounds"
+          value={uniqueCompounds}
+          subtitle="Tested molecules"
+          accentColor="bg-green-500"
+        />
+        <KpiCard
+          title="Best Affinity"
+          value={`${bestAffinity.toFixed(2)} kcal/mol`}
+          subtitle={top10[0]?.compound_name ?? ""}
+          accentColor="bg-lime-500"
+        />
+      </div>
+
+      {/* Table + Chart */}
+      <div className="mb-6 grid gap-6 xl:grid-cols-5">
+        {/* Top hits table */}
+        <div className="xl:col-span-3 rounded-xl bg-white shadow-card overflow-hidden">
+          <div className="border-b border-gray-100 px-5 py-4">
+            <h2 className="text-sm font-semibold text-gray-900">Top 10 Docking Hits</h2>
+            <p className="text-xs text-gray-400 mt-0.5">Ranked by binding affinity (kcal/mol)</p>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-sm" data-testid="docking-table">
+              <thead className="border-b border-gray-100 bg-gray-50 text-xs uppercase tracking-wider text-gray-400">
+                <tr>
+                  <th className="px-4 py-3">#</th>
+                  <th className="px-4 py-3">Target</th>
+                  <th className="px-4 py-3">Compound</th>
+                  <th className="px-4 py-3 text-right">Affinity</th>
+                  <th className="px-4 py-3 text-right">RMSD LB</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-50">
+                {top10.map((row, i) => (
+                  <tr
+                    key={`${row.target_gene_id}-${row.compound_id}-${i}`}
+                    className="transition-colors hover:bg-gray-50"
+                  >
+                    <td className="px-4 py-2.5 font-mono text-xs text-gray-300">{i + 1}</td>
+                    <td className="px-4 py-2.5 font-semibold text-gray-900">{row.target_gene_name}</td>
+                    <td className="px-4 py-2.5">
+                      <span className="rounded-md bg-emerald-50 px-2 py-0.5 font-mono text-xs text-emerald-700">
+                        {row.compound_name}
+                      </span>
+                    </td>
+                    <td className="px-4 py-2.5 text-right font-mono text-sm font-bold text-emerald-600">
+                      {parseFloat(row.binding_affinity ?? "0").toFixed(2)}
+                    </td>
+                    <td className="px-4 py-2.5 text-right font-mono text-xs text-gray-400">
+                      {parseFloat(row.rmsd_lb ?? "0").toFixed(1)}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        {/* Affinity chart */}
+        <div className="xl:col-span-2 rounded-xl bg-white shadow-card p-5">
+          <h2 className="text-sm font-semibold text-gray-900">Binding Affinities</h2>
+          <p className="text-xs text-gray-400 mt-0.5 mb-4">|kcal/mol| — top 10 compounds</p>
+          <BarChart
+            categories={chartCategories}
+            series={chartSeries}
+            colors={["#10B981"]}
+            height={280}
+            horizontal={true}
           />
         </div>
-      </section>
+      </div>
 
-      <section className="mb-10">
-        <h2 className="mb-4 text-sm font-semibold uppercase tracking-wider text-zinc-500">
-          Top 10 Docking Hits
-        </h2>
-        <div className="overflow-x-auto rounded-lg border border-zinc-800">
-          <table
-            className="w-full text-left text-sm"
-            data-testid="docking-table"
-          >
-            <thead className="border-b border-zinc-800 bg-zinc-900/60 text-xs uppercase tracking-wider text-zinc-400">
+      {/* Selectivity table */}
+      <div className="rounded-xl bg-white shadow-card overflow-hidden">
+        <div className="border-b border-gray-100 px-5 py-4">
+          <h2 className="text-sm font-semibold text-gray-900">Selectivity Analysis</h2>
+          <p className="text-xs text-gray-400 mt-0.5">
+            L. infantum TryR vs human glutathione reductase (GR). Selective threshold: 1.5 kcal/mol difference.
+          </p>
+        </div>
+        <div className="overflow-x-auto">
+          <table className="w-full text-left text-sm">
+            <thead className="border-b border-gray-100 bg-gray-50 text-xs uppercase tracking-wider text-gray-400">
               <tr>
-                <th className="px-4 py-3">Rank</th>
-                <th className="px-4 py-3">Target</th>
-                <th className="px-4 py-3">Compound</th>
-                <th className="px-4 py-3 text-right">Affinity (kcal/mol)</th>
-                <th className="px-4 py-3 text-right">RMSD LB</th>
-                <th className="px-4 py-3 text-right">RMSD UB</th>
+                <th className="px-5 py-3">Compound</th>
+                <th className="px-5 py-3 text-right">TryR (kcal/mol)</th>
+                <th className="px-5 py-3 text-right">Human GR (kcal/mol)</th>
+                <th className="px-5 py-3 text-right">Delta</th>
+                <th className="px-5 py-3 text-center">Selective</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-zinc-800">
-              {top10.map((row, i) => (
-                <tr
-                  key={`${row.target_gene_id}-${row.compound_id}-${i}`}
-                  className="transition-colors hover:bg-zinc-900/40"
-                >
-                  <td className="px-4 py-2 font-mono text-xs text-zinc-600">
-                    {i + 1}
-                  </td>
-                  <td className="px-4 py-2 font-semibold text-white">
-                    {row.target_gene_name}
-                  </td>
-                  <td className="px-4 py-2 font-mono text-xs text-green-300">
-                    {row.compound_name}
-                  </td>
-                  <td className="px-4 py-2 text-right font-mono text-sm text-zinc-200">
-                    {parseFloat(row.binding_affinity ?? "0").toFixed(3)}
-                  </td>
-                  <td className="px-4 py-2 text-right font-mono text-xs text-zinc-500">
-                    {parseFloat(row.rmsd_lb ?? "0").toFixed(1)}
-                  </td>
-                  <td className="px-4 py-2 text-right font-mono text-xs text-zinc-500">
-                    {parseFloat(row.rmsd_ub ?? "0").toFixed(1)}
+            <tbody className="divide-y divide-gray-50">
+              {selectivity.map((s) => (
+                <tr key={s.compound} className="hover:bg-gray-50 transition-colors">
+                  <td className="px-5 py-3 font-semibold text-gray-900">{s.compound}</td>
+                  <td className="px-5 py-3 text-right font-mono text-sm text-emerald-600">{s.tryr}</td>
+                  <td className="px-5 py-3 text-right font-mono text-sm text-gray-500">{s.humanGr}</td>
+                  <td className="px-5 py-3 text-right font-mono text-sm text-amber-600">{s.delta}</td>
+                  <td className="px-5 py-3 text-center">
+                    <span
+                      className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold ${
+                        s.selective
+                          ? "bg-emerald-50 text-emerald-700"
+                          : "bg-red-50 text-red-600"
+                      }`}
+                    >
+                      {s.selective ? "Yes" : "No"}
+                    </span>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-      </section>
-
-      <div className="grid gap-8 xl:grid-cols-2">
-        <section>
-          <h2 className="mb-4 text-sm font-semibold uppercase tracking-wider text-zinc-500">
-            Selectivity Analysis: Parasite TryR vs Human GR
-          </h2>
-          <div className="rounded-lg border border-zinc-800 bg-zinc-900/40 p-5">
-            <p className="mb-4 text-xs text-zinc-400">
-              Comparison of binding affinities against L. infantum TryR versus
-              human glutathione reductase (GR). A selective compound should bind
-              more tightly to the parasite target (threshold: 1.5 kcal/mol
-              difference).
-            </p>
-            <div className="overflow-x-auto">
-              <table className="w-full text-left text-sm">
-                <thead className="border-b border-zinc-800 text-xs uppercase text-zinc-500">
-                  <tr>
-                    <th className="pb-2 pr-4">Compound</th>
-                    <th className="pb-2 pr-4 text-right">TryR</th>
-                    <th className="pb-2 pr-4 text-right">Human GR</th>
-                    <th className="pb-2 pr-4 text-right">Delta</th>
-                    <th className="pb-2 text-center">Selective</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-zinc-800/50">
-                  {selectivity.map((s) => (
-                    <tr key={s.compound}>
-                      <td className="py-2 pr-4 font-medium text-white">
-                        {s.compound}
-                      </td>
-                      <td className="py-2 pr-4 text-right font-mono text-xs text-green-300">
-                        {s.tryr}
-                      </td>
-                      <td className="py-2 pr-4 text-right font-mono text-xs text-zinc-400">
-                        {s.humanGr}
-                      </td>
-                      <td className="py-2 pr-4 text-right font-mono text-xs text-yellow-400">
-                        {s.delta}
-                      </td>
-                      <td className="py-2 text-center">
-                        {s.selective ? (
-                          <span className="text-xs text-green-400">Yes</span>
-                        ) : (
-                          <span className="text-xs text-red-400">No</span>
-                        )}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-            <p className="mt-4 text-xs text-zinc-600">
-              Note: None of the tested compounds showed parasite selectivity.
-              This highlights the need for further structural optimization.
-            </p>
-          </div>
-        </section>
-
-        <section>
-          <h2 className="mb-4 text-sm font-semibold uppercase tracking-wider text-zinc-500">
-            Docking Pose: GMPS + Methotrexate
-          </h2>
-          <div className="overflow-hidden rounded-lg border border-zinc-800">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/images/docking_3d.png"
-              alt="Docking pose of methotrexate in the GMPS active site"
-              className="w-full"
-            />
-          </div>
-          <p className="mt-2 text-xs text-zinc-500">
-            Best docking pose of the top hit in the GMPS binding pocket.
-            Rendered with PyMOL.
+        <div className="px-5 py-3 bg-amber-50 border-t border-amber-100">
+          <p className="text-xs text-amber-700">
+            None of the tested compounds showed parasite selectivity. Further structural optimization is needed.
           </p>
+        </div>
+      </div>
 
-          <h2 className="mb-4 mt-8 text-sm font-semibold uppercase tracking-wider text-zinc-500">
-            TryR + MRL-003 Docking
-          </h2>
-          <div className="overflow-hidden rounded-lg border border-zinc-800">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/images/tryr_mrl003.png"
-              alt="MRL-003 docked into trypanothione reductase active site"
-              className="w-full"
-            />
+      {/* Docking pose images */}
+      <div className="mt-6 grid gap-6 lg:grid-cols-2">
+        <div className="rounded-xl bg-white shadow-card overflow-hidden">
+          <div className="border-b border-gray-100 px-5 py-4">
+            <h2 className="text-sm font-semibold text-gray-900">GMPS + Methotrexate Pose</h2>
+            <p className="text-xs text-gray-400 mt-0.5">Best docking pose in the GMPS binding pocket · Rendered with PyMOL</p>
           </div>
-          <p className="mt-2 text-xs text-zinc-500">
-            MRL-003 custom molecule (-7.74 kcal/mol) in the TryR binding site.
-          </p>
-        </section>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/images/docking_3d.png" alt="Docking pose of methotrexate in the GMPS active site" className="w-full" />
+        </div>
+        <div className="rounded-xl bg-white shadow-card overflow-hidden">
+          <div className="border-b border-gray-100 px-5 py-4">
+            <h2 className="text-sm font-semibold text-gray-900">TryR + MRL-003 Docking</h2>
+            <p className="text-xs text-gray-400 mt-0.5">Custom molecule MRL-003 (-7.74 kcal/mol) in the TryR binding site</p>
+          </div>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/images/tryr_mrl003.png" alt="MRL-003 docked into trypanothione reductase active site" className="w-full" />
+        </div>
       </div>
     </div>
   );
