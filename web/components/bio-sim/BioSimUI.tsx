@@ -6,7 +6,9 @@ interface BioSimUIProps {
   sceneIndex: number;
   sceneCount: number;
   autoplay: boolean;
+  narrationEnabled: boolean;
   onToggleAutoplay: () => void;
+  onToggleNarration: () => void;
   onNext: () => void;
   onPrev: () => void;
   onGoTo: (index: number) => void;
@@ -16,7 +18,9 @@ export default function BioSimUI({
   sceneIndex,
   sceneCount,
   autoplay,
+  narrationEnabled,
   onToggleAutoplay,
+  onToggleNarration,
   onNext,
   onPrev,
   onGoTo,
