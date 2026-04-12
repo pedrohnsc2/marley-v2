@@ -110,6 +110,19 @@ function statusBadge(status: string) {
   );
 }
 
+function translateNote(note: string): string {
+  return note
+    .replace("MRL-ASO-001 NAO e o melhor ASO de 25 nt", "MRL-ASO-001 is not the optimal 25-nt ASO by pure dG ranking")
+    .replace("verificar manualmente", "requires manual verification")
+    .replace("Complementaridade maxima off-target", "Maximum off-target complementarity")
+    .replace("Insuficiente para ativacao de RNase H", "Insufficient for RNase H activation")
+    .replace("Regiao-alvo e INVARIANTE", "Target region is INVARIANT")
+    .replace("Qualquer mutacao nesta regiao e presumivelmente letal", "Any mutation in this region is presumably lethal")
+    .replace("MRL-ASO-001 esta na frente de Pareto", "MRL-ASO-001 is on the Pareto front")
+    .replace("Zero mutacoes de escape viaveis", "Zero viable escape mutations")
+    .replace("Resistencia e matematicamente impossivel", "Resistance is computationally predicted to be impossible");
+}
+
 function truncate(text: string, max: number): string {
   if (text.length <= max) return text;
   return text.slice(0, max) + "...";
@@ -188,8 +201,8 @@ export default function AsoPage() {
         />
         <KpiCard
           title="Resistance"
-          value="Infinite"
-          subtitle="Zero viable escape mutations"
+          value="0"
+          subtitle="All binding-disrupting mutations are lethal"
           accentColor="bg-rose-500"
         />
       </div>
@@ -288,7 +301,7 @@ export default function AsoPage() {
                     <ScoreBar score={m.score} />
                   </td>
                   <td className="max-w-sm px-4 py-2.5 text-xs text-gray-500">
-                    {m.notes.length > 0 ? truncate(m.notes[0], 120) : "\u2014"}
+                    {m.notes.length > 0 ? truncate(translateNote(m.notes[0]), 120) : "\u2014"}
                   </td>
                 </tr>
               ))}

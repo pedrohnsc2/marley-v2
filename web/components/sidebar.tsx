@@ -18,7 +18,7 @@ interface NavGroup {
 
 const navGroups: NavGroup[] = [
   {
-    label: "Discovery",
+    label: "Pipeline",
     items: [
       {
         href: "/",
@@ -33,21 +33,21 @@ const navGroups: NavGroup[] = [
         ),
       },
       {
+        href: "/drug",
+        label: "Drug Targets",
+        icon: (
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="h-5 w-5 flex-shrink-0">
+            <circle cx="12" cy="12" r="9" /><path d="M12 3v18M3 12h18" />
+          </svg>
+        ),
+      },
+      {
         href: "/vaccine",
         label: "Vaccine",
         icon: (
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="h-5 w-5 flex-shrink-0">
             <path d="M9 3h6v4H9z" /><path d="M12 7v14" />
             <path d="M8 11h8" /><path d="M10 15h4" />
-          </svg>
-        ),
-      },
-      {
-        href: "/drug",
-        label: "Drug Targets",
-        icon: (
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="h-5 w-5 flex-shrink-0">
-            <circle cx="12" cy="12" r="9" /><path d="M12 3v18M3 12h18" />
           </svg>
         ),
       },
@@ -60,28 +60,6 @@ const navGroups: NavGroup[] = [
             <circle cx="5" cy="6" r="2" /><circle cx="19" cy="6" r="2" />
             <circle cx="5" cy="18" r="2" /><circle cx="19" cy="18" r="2" />
             <path d="M7 7l3 3M14 14l3 3M17 7l-3 3M10 14l-3 3" />
-          </svg>
-        ),
-      },
-      {
-        href: "/simulation",
-        label: "Simulation",
-        icon: (
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="h-5 w-5 flex-shrink-0">
-            <polyline points="3,17 8,12 13,15 21,7" />
-            <path d="M21 7v5M21 7h-5" />
-          </svg>
-        ),
-      },
-      {
-        href: "/platforms",
-        label: "Platforms",
-        icon: (
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="h-5 w-5 flex-shrink-0">
-            <path d="M4 6h16M4 12h16M4 18h16" />
-            <circle cx="8" cy="6" r="1.5" fill="currentColor" />
-            <circle cx="12" cy="12" r="1.5" fill="currentColor" />
-            <circle cx="16" cy="18" r="1.5" fill="currentColor" />
           </svg>
         ),
       },
@@ -102,6 +80,33 @@ const navGroups: NavGroup[] = [
         ),
       },
       {
+        href: "/platforms",
+        label: "Platforms",
+        icon: (
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="h-5 w-5 flex-shrink-0">
+            <path d="M4 6h16M4 12h16M4 18h16" />
+            <circle cx="8" cy="6" r="1.5" fill="currentColor" />
+            <circle cx="12" cy="12" r="1.5" fill="currentColor" />
+            <circle cx="16" cy="18" r="1.5" fill="currentColor" />
+          </svg>
+        ),
+      },
+      {
+        href: "/rna",
+        label: "Target Validation",
+        icon: (
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="h-5 w-5 flex-shrink-0">
+            <path d="M3 12c3-6 6 6 9 0s6 6 9 0" />
+            <path d="M3 17c3-6 6 6 9 0s6 6 9 0" />
+          </svg>
+        ),
+      },
+    ],
+  },
+  {
+    label: "Visualization",
+    items: [
+      {
         href: "/bio-sim",
         label: "Bio-Sim 3D",
         icon: (
@@ -111,48 +116,21 @@ const navGroups: NavGroup[] = [
           </svg>
         ),
       },
-      {
-        href: "/rna",
-        label: "RNA Entropy",
-        icon: (
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="h-5 w-5 flex-shrink-0">
-            <path d="M3 12c3-6 6 6 9 0s6 6 9 0" />
-            <path d="M3 17c3-6 6 6 9 0s6 6 9 0" />
-          </svg>
-        ),
-      },
-      {
-        href: "/quantum",
-        label: "Quantum",
-        icon: (
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="h-5 w-5 flex-shrink-0">
-            <circle cx="12" cy="12" r="3" />
-            <ellipse cx="12" cy="12" rx="10" ry="4" />
-            <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(60 12 12)" />
-            <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(120 12 12)" />
-          </svg>
-        ),
-      },
-    ],
-  },
-  {
-    label: "AI / ML",
-    items: [
-      {
-        href: "/ai",
-        label: "AI Engine",
-        icon: (
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="h-5 w-5 flex-shrink-0">
-            <path d="M12 2a4 4 0 0 1 4 4v2a4 4 0 0 1-8 0V6a4 4 0 0 1 4-4z" />
-            <path d="M8 14h8l2 8H6l2-8z" />
-          </svg>
-        ),
-      },
     ],
   },
 ];
 
 const bottomItems = [
+  {
+    href: "/methods",
+    label: "Methods",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="h-5 w-5 flex-shrink-0">
+        <path d="M4 4h16v16H4z" />
+        <path d="M8 8h8M8 12h6M8 16h4" />
+      </svg>
+    ),
+  },
   {
     href: "/settings",
     label: "Settings",

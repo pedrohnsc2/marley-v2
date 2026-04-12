@@ -232,9 +232,9 @@ export default function PlatformsPage() {
           accentColor="bg-emerald-500"
         />
         <KpiCard
-          title="Best Funding Score"
-          value={cm.strategic.funding_score.platform_a.toFixed(1)}
-          subtitle="Platform A (mRNA-LNP)"
+          title="ASO Compatible"
+          value="2 of 3"
+          subtitle="mRNA-LNP and E. coli"
           accentColor="bg-emerald-500"
         />
       </div>
@@ -308,94 +308,66 @@ export default function PlatformsPage() {
         />
       </div>
 
-      {/* ASO Compatibility + Strategic Funding — two-column grid */}
-      <div className="mb-6 grid gap-6 lg:grid-cols-2">
-        {/* ASO Compatibility card */}
-        <div className="rounded-xl bg-white shadow-card overflow-hidden">
-          <div className="border-b border-gray-100 px-5 py-4">
-            <h2 className="text-sm font-semibold text-gray-900">ASO Compatibility</h2>
-            <p className="text-xs text-gray-400 mt-0.5">
-              Compatibility with MRL-ASO-001 antisense oligonucleotide therapy
-            </p>
-          </div>
-          <div className="p-5 grid gap-4">
-            {(["platform_a", "platform_b", "platform_c"] as const).map((key) => {
-              const isCompatible = cm.compatibility.aso_compatible[key];
-              const note = cm.compatibility.aso_note[key];
-              return (
-                <div
-                  key={key}
-                  className={`rounded-lg border p-4 ${
-                    isCompatible
-                      ? "border-emerald-200 bg-emerald-50"
-                      : "border-red-200 bg-red-50"
-                  }`}
-                  data-testid={`aso-compat-${key}`}
-                >
-                  <div className="flex items-center gap-3 mb-2">
-                    {isCompatible ? (
-                      <span className="flex h-7 w-7 items-center justify-center rounded-full bg-emerald-100 text-emerald-600">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} className="h-4 w-4">
-                          <polyline points="20 6 9 17 4 12" />
-                        </svg>
-                      </span>
-                    ) : (
-                      <span className="flex h-7 w-7 items-center justify-center rounded-full bg-red-100 text-red-600">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} className="h-4 w-4">
-                          <line x1="18" y1="6" x2="6" y2="18" />
-                          <line x1="6" y1="6" x2="18" y2="18" />
-                        </svg>
-                      </span>
-                    )}
-                    <div>
-                      <p className="text-sm font-semibold text-gray-900">{PLATFORM_LABELS[key]}</p>
-                      <p className={`text-xs font-semibold ${isCompatible ? "text-emerald-700" : "text-red-600"}`}>
-                        {isCompatible ? "Compatible" : "Incompatible"}
-                      </p>
-                    </div>
-                  </div>
-                  <p className="text-xs text-gray-600 leading-relaxed">{note}</p>
-                </div>
-              );
-            })}
-          </div>
+      {/* ASO Compatibility card */}
+      <div className="mb-6 rounded-xl bg-white shadow-card overflow-hidden">
+        <div className="border-b border-gray-100 px-5 py-4">
+          <h2 className="text-sm font-semibold text-gray-900">ASO Compatibility</h2>
+          <p className="text-xs text-gray-400 mt-0.5">
+            Compatibility with MRL-ASO-001 antisense oligonucleotide therapy
+          </p>
         </div>
-
-        {/* Strategic Funding card */}
-        <div className="rounded-xl bg-white shadow-card overflow-hidden">
-          <div className="border-b border-gray-100 px-5 py-4">
-            <h2 className="text-sm font-semibold text-gray-900">Strategic Funding Scores</h2>
-            <p className="text-xs text-gray-400 mt-0.5">
-              Funding feasibility scores (0-10) with strategic rationale
-            </p>
-          </div>
-          <div className="p-5 grid gap-4">
-            {(["platform_a", "platform_b", "platform_c"] as const).map((key) => {
-              const score = cm.strategic.funding_score[key];
-              const note = cm.strategic.funding_note[key];
-              const colorKey = key === "platform_a" ? "a" : key === "platform_b" ? "b" : "c";
-              const barWidth = (score / 10) * 100;
-              return (
-                <div key={key} className="rounded-lg bg-gray-50 p-4" data-testid={`funding-${key}`}>
-                  <div className="flex items-center justify-between mb-2">
+        <div className="p-5 grid gap-4">
+          {(["platform_a", "platform_b", "platform_c"] as const).map((key) => {
+            const isCompatible = cm.compatibility.aso_compatible[key];
+            const note = cm.compatibility.aso_note[key];
+            return (
+              <div
+                key={key}
+                className={`rounded-lg border p-4 ${
+                  isCompatible
+                    ? "border-emerald-200 bg-emerald-50"
+                    : "border-red-200 bg-red-50"
+                }`}
+                data-testid={`aso-compat-${key}`}
+              >
+                <div className="flex items-center gap-3 mb-2">
+                  {isCompatible ? (
+                    <span className="flex h-7 w-7 items-center justify-center rounded-full bg-emerald-100 text-emerald-600">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} className="h-4 w-4">
+                        <polyline points="20 6 9 17 4 12" />
+                      </svg>
+                    </span>
+                  ) : (
+                    <span className="flex h-7 w-7 items-center justify-center rounded-full bg-red-100 text-red-600">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} className="h-4 w-4">
+                        <line x1="18" y1="6" x2="6" y2="18" />
+                        <line x1="6" y1="6" x2="18" y2="18" />
+                      </svg>
+                    </span>
+                  )}
+                  <div>
                     <p className="text-sm font-semibold text-gray-900">{PLATFORM_LABELS[key]}</p>
-                    <span className="text-lg font-bold text-gray-900">{score.toFixed(1)}</span>
+                    <p className={`text-xs font-semibold ${isCompatible ? "text-emerald-700" : "text-red-600"}`}>
+                      {isCompatible ? "Compatible" : "Incompatible"}
+                    </p>
                   </div>
-                  <div className="h-2 w-full rounded-full bg-gray-200 mb-2">
-                    <div
-                      className="h-2 rounded-full transition-all"
-                      style={{
-                        width: `${barWidth}%`,
-                        backgroundColor: PLATFORM_COLORS[colorKey],
-                      }}
-                    />
-                  </div>
-                  <p className="text-xs text-gray-500 leading-relaxed">{note}</p>
                 </div>
-              );
-            })}
-          </div>
+                <p className="text-xs text-gray-600 leading-relaxed">{note}</p>
+              </div>
+            );
+          })}
         </div>
+      </div>
+
+      {/* References card */}
+      <div className="rounded-xl bg-white shadow-card p-5">
+        <h2 className="text-sm font-semibold text-gray-900">References</h2>
+        <ul className="mt-2 space-y-1 text-xs text-gray-500">
+          <li>L. tarentolae expression: Breitling et al., Protein Expression and Purification, 2002</li>
+          <li>mRNA-LNP technology: Moderna/BioNTech manufacturing protocols</li>
+          <li>E. coli recombinant: Leish-Tec (Hertape Calier) as regulatory precedent</li>
+          <li>CTVacinas (UFMG) platform comparison framework</li>
+        </ul>
       </div>
     </div>
   );

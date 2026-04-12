@@ -37,7 +37,7 @@ export default function DockingPage() {
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Molecular Docking</h1>
           <p className="text-sm text-gray-500">
-            AutoDock Vina virtual screening of repurposed and custom compounds
+            AutoDock Vina virtual screening — {uniqueCompounds} compounds across {uniqueTargets} targets
           </p>
         </div>
       </div>
@@ -86,7 +86,6 @@ export default function DockingPage() {
                   <th className="px-4 py-3">Target</th>
                   <th className="px-4 py-3">Compound</th>
                   <th className="px-4 py-3 text-right">Affinity</th>
-                  <th className="px-4 py-3 text-right">RMSD LB</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-50">
@@ -104,9 +103,6 @@ export default function DockingPage() {
                     </td>
                     <td className="px-4 py-2.5 text-right font-mono text-sm font-bold text-emerald-600">
                       {parseFloat(row.binding_affinity ?? "0").toFixed(2)}
-                    </td>
-                    <td className="px-4 py-2.5 text-right font-mono text-xs text-gray-400">
-                      {parseFloat(row.rmsd_lb ?? "0").toFixed(1)}
                     </td>
                   </tr>
                 ))}

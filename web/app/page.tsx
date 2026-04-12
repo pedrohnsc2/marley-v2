@@ -1,6 +1,5 @@
 import Link from "next/link";
 import KpiCard from "@/components/kpi-card";
-import DonutChart from "@/components/charts/donut-chart";
 
 /* ------------------------------------------------------------------ */
 /*  KPI data                                                           */
@@ -10,7 +9,7 @@ const kpisRow1 = [
   {
     title: "Proteins Analyzed",
     value: "8,527",
-    subtitle: "L. infantum proteome",
+    subtitle: "L. infantum proteome → 52 targets",
     accentColor: "bg-cyan-500",
   },
   {
@@ -26,31 +25,31 @@ const kpisRow1 = [
     accentColor: "bg-orange-500",
   },
   {
-    title: "AI Modules",
+    title: "Epitopes",
     value: 11,
-    subtitle: "6 operational",
-    accentColor: "bg-sky-500",
+    subtitle: "11 unique MHC-I binders",
+    accentColor: "bg-blue-500",
   },
 ];
 
 const kpisRow2 = [
   {
-    title: "Epitopes",
-    value: 11,
-    subtitle: "MHC-I high-affinity",
-    accentColor: "bg-blue-500",
+    title: "Docking Hits",
+    value: 10,
+    subtitle: "Unique compounds tested",
+    accentColor: "bg-emerald-500",
+  },
+  {
+    title: "ASO Target",
+    value: "SL RNA",
+    subtitle: "Unique to kinetoplastids",
+    accentColor: "bg-teal-500",
   },
   {
     title: "Best Docking",
     value: "-8.07 kcal/mol",
     subtitle: "CHEMBL92 on GMPS",
     accentColor: "bg-emerald-500",
-  },
-  {
-    title: "Quantum Optimum",
-    value: "-30.42 kcal/mol",
-    subtitle: "QAOA all-Sp config",
-    accentColor: "bg-indigo-500",
   },
   {
     title: "Platforms",
@@ -93,15 +92,7 @@ const discoveryModules: PipelineItem[] = [
     title: "Molecular Docking",
     href: "/docking",
     description:
-      "77 compounds screened, best hit CHEMBL92 at -8.07 kcal/mol",
-    track: "Discovery",
-    badgeColor: "bg-cyan-100 text-cyan-700",
-  },
-  {
-    title: "Immune Simulation",
-    href: "/simulation",
-    description:
-      "Th1 dominance 82.4%, memory protection >693 days",
+      "10 compounds screened across 5 targets, best hit CHEMBL92 at -8.07 kcal/mol",
     track: "Discovery",
     badgeColor: "bg-cyan-100 text-cyan-700",
   },
@@ -112,54 +103,27 @@ const therapeuticsModules: PipelineItem[] = [
     title: "ASO Therapy",
     href: "/aso",
     description:
-      "MRL-ASO-001 validated 90/100, resistance mathematically impossible",
+      "MRL-ASO-001 validated 90/100, 0 viable escape mutations predicted",
     track: "Therapeutics",
     badgeColor: "bg-rose-100 text-rose-700",
   },
   {
-    title: "RNA Entropy",
+    title: "Target Validation",
     href: "/rna",
     description:
-      "Information theory analysis of 500 transcripts, SL RNA target confirmed",
+      "SL RNA target validation — conservation, selectivity, and entropy analysis across 500 transcripts",
     track: "Therapeutics",
     badgeColor: "bg-rose-100 text-rose-700",
-  },
-  {
-    title: "Quantum Computing",
-    href: "/quantum",
-    description:
-      "QAOA+VQE optimization, -30.42 kcal/mol optimal stereochemistry",
-    track: "Therapeutics",
-    badgeColor: "bg-rose-100 text-rose-700",
-  },
-];
-
-const intelligenceModules: PipelineItem[] = [
-  {
-    title: "AI/ML Engine",
-    href: "/ai",
-    description:
-      "11 modules, 5 autonomous agents, 27 insights, consensus 0.60",
-    track: "Intelligence",
-    badgeColor: "bg-sky-100 text-sky-700",
   },
   {
     title: "Vaccine Platforms",
     href: "/platforms",
     description:
       "3 production systems compared across 6 dimensions",
-    track: "Intelligence",
-    badgeColor: "bg-sky-100 text-sky-700",
+    track: "Therapeutics",
+    badgeColor: "bg-rose-100 text-rose-700",
   },
 ];
-
-/* ------------------------------------------------------------------ */
-/*  Chart data                                                         */
-/* ------------------------------------------------------------------ */
-
-const donutSeries = [4, 3, 2];
-const donutLabels = ["Discovery", "Therapeutics", "Intelligence"];
-const donutColors = ["#06B6D4", "#F43F5E", "#0EA5E9"];
 
 /* ------------------------------------------------------------------ */
 /*  Pipeline card component                                            */
@@ -235,24 +199,6 @@ export default function Home() {
         ))}
       </div>
 
-      {/* Track overview chart */}
-      <div className="mb-6 rounded-xl bg-white shadow-card overflow-hidden">
-        <div className="p-5">
-          <h2 className="mb-1 text-sm font-semibold text-gray-900">
-            Track Overview
-          </h2>
-          <p className="mb-4 text-xs text-gray-400">
-            Modules per research track
-          </p>
-          <DonutChart
-            series={donutSeries}
-            labels={donutLabels}
-            colors={donutColors}
-            height={260}
-          />
-        </div>
-      </div>
-
       {/* Pipeline Modules */}
       <div className="mb-6">
         <h2 className="mb-4 text-sm font-semibold uppercase tracking-wider text-gray-400">
@@ -269,22 +215,12 @@ export default function Home() {
           ))}
         </div>
 
-        {/* Therapeutics Pipeline */}
+        {/* Therapeutics */}
         <p className="mb-2 px-1 text-xs font-semibold uppercase tracking-wider text-gray-400">
-          Therapeutics Pipeline
+          Therapeutics
         </p>
         <div className="mb-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {therapeuticsModules.map((item) => (
-            <PipelineCard key={item.href} item={item} />
-          ))}
-        </div>
-
-        {/* Intelligence Pipeline */}
-        <p className="mb-2 px-1 text-xs font-semibold uppercase tracking-wider text-gray-400">
-          Intelligence Pipeline
-        </p>
-        <div className="mb-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-          {intelligenceModules.map((item) => (
             <PipelineCard key={item.href} item={item} />
           ))}
         </div>

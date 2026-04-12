@@ -116,6 +116,14 @@ export default function BioSimUI({
             {meta.name}
           </h2>
           <p style={{ marginTop: 2, fontSize: 12, color: "#9ca3af" }}>{meta.timeTag}</p>
+          <p style={{
+            fontSize: 9,
+            color: "rgba(255,255,255,0.3)",
+            marginTop: 4,
+            letterSpacing: "0.03em",
+          }}>
+            Computational visualization — not molecular dynamics
+          </p>
           </div>
         </div>
 

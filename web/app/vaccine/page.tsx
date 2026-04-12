@@ -40,19 +40,12 @@ function extractGeneName(rawName: string): string {
 export default function VaccinePage() {
   const construct = loadJson("construct/construct_card.json") as ConstructCard;
 
-  const marleyScore = 0.3235;
-  const leishTecScore = 0.234;
+  // Deduplicate epitopes by peptide sequence
+  const uniqueEpitopes = [...new Map(construct.epitopes.map(e => [e.peptide, e])).values()];
 
-  // Antigenicity bar chart
-  const antigenicityCategories = ["Marley Vaccine", "Leish-Tec (ref.)"];
-  const antigenicitySeries = [
-    { name: "VaxiJen Score", data: [marleyScore, leishTecScore] },
-    { name: "Threshold", data: [construct.vaxijen_threshold, construct.vaxijen_threshold] },
-  ];
-
-  // IC50 distribution chart
-  const ic50Categories = construct.epitopes.map((e) => e.peptide);
-  const ic50Series = [{ name: "IC50 (nM)", data: construct.epitopes.map((e) => e.ic50) }];
+  // IC50 distribution chart (unique epitopes only)
+  const ic50Categories = uniqueEpitopes.map((e) => e.peptide);
+  const ic50Series = [{ name: "IC50 (nM)", data: uniqueEpitopes.map((e) => e.ic50) }];
 
   const isStable = construct.instability_index < 40;
 
@@ -73,8 +66,8 @@ export default function VaccinePage() {
       <div className="mb-6 grid grid-cols-2 gap-4 lg:grid-cols-4">
         <KpiCard
           title="Epitopes"
-          value={construct.epitope_count}
-          subtitle="MHC-I high-affinity binders"
+          value={uniqueEpitopes.length}
+          subtitle={`unique MHC-I binders (from ${construct.epitope_count} allele-specific pairs)`}
           accentColor="bg-blue-500"
         />
         <KpiCard
@@ -99,19 +92,14 @@ export default function VaccinePage() {
 
       {/* Charts row */}
       <div className="mb-6 grid gap-6 lg:grid-cols-2">
-        {/* Antigenicity */}
+        {/* Antigenicity Assessment */}
         <div className="rounded-xl bg-white shadow-card p-5">
-          <h2 className="text-sm font-semibold text-gray-900">VaxiJen Antigenicity</h2>
-          <p className="text-xs text-gray-400 mt-0.5 mb-4">
-            Predicted antigenicity score vs Leish-Tec reference vaccine. Threshold:{" "}
-            {construct.vaxijen_threshold}
-          </p>
-          <BarChart
-            categories={antigenicityCategories}
-            series={antigenicitySeries}
-            colors={["#3B82F6", "#E5E7EB"]}
-            height={220}
-          />
+          <h2 className="text-sm font-semibold text-gray-900">Antigenicity Assessment</h2>
+          <p className="text-xs text-gray-400 mt-0.5 mb-3">VaxiJen 2.0 (Doytchinova & Flower, 2007)</p>
+          <div className="rounded-lg bg-amber-50 p-4">
+            <p className="text-sm text-amber-800 font-medium">VaxiJen score not computed for this construct</p>
+            <p className="text-xs text-amber-600 mt-1">The VaxiJen server has size limitations for constructs &gt;100 amino acids. Individual epitopes were selected based on predicted immunogenicity via NetMHCpan 4.1. Full-construct antigenicity requires experimental validation (ELISA/ELISPOT).</p>
+          </div>
         </div>
 
         {/* IC50 distribution */}
@@ -134,7 +122,7 @@ export default function VaccinePage() {
         <div className="border-b border-gray-100 px-5 py-4">
           <h2 className="text-sm font-semibold text-gray-900">Epitope Table</h2>
           <p className="text-xs text-gray-400 mt-0.5">
-            {construct.epitope_count} selected MHC-I binders linked by GPGPG/AAY linkers
+            {uniqueEpitopes.length} unique MHC-I binders linked by GPGPG/AAY linkers
           </p>
         </div>
         <div className="overflow-x-auto">
@@ -150,7 +138,7 @@ export default function VaccinePage() {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-50">
-              {construct.epitopes.map((ep, i) => (
+              {uniqueEpitopes.map((ep, i) => (
                 <tr
                   key={`${ep.peptide}-${ep.gene_id}-${i}`}
                   className="transition-colors hover:bg-gray-50"
@@ -183,7 +171,7 @@ export default function VaccinePage() {
         <div className="border-b border-gray-100 px-5 py-4">
           <h2 className="text-sm font-semibold text-gray-900">3D Structure Prediction (ESMFold)</h2>
           <p className="text-xs text-gray-400 mt-0.5">
-            ESMFold-predicted structure of the {construct.protein_length_aa}-residue construct with {construct.epitope_count} epitopes
+            ESMFold-predicted structure of the {construct.protein_length_aa}-residue construct with {uniqueEpitopes.length} unique epitopes
           </p>
         </div>
         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -195,7 +183,7 @@ export default function VaccinePage() {
       </div>
 
       {/* Construct details card */}
-      <div className="rounded-xl bg-white shadow-card p-5">
+      <div className="mb-6 rounded-xl bg-white shadow-card p-5">
         <h2 className="mb-4 text-sm font-semibold text-gray-900">Construct Properties</h2>
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
           {[
@@ -209,6 +197,26 @@ export default function VaccinePage() {
             <div key={prop.label} className="rounded-lg bg-gray-50 p-3">
               <p className="text-xs text-gray-400">{prop.label}</p>
               <p className="mt-1 text-sm font-semibold text-gray-900">{prop.value}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Methods card */}
+      <div className="rounded-xl bg-white shadow-card p-5">
+        <h2 className="text-sm font-semibold text-gray-900">Methods</h2>
+        <div className="mt-3 grid grid-cols-2 gap-4 sm:grid-cols-3">
+          {[
+            { label: "Epitope Prediction", value: "NetMHCpan 4.1" },
+            { label: "Alleles", value: "DLA-88*03401, *50101, *50801" },
+            { label: "IC50 Threshold", value: "< 500 nM" },
+            { label: "Adjuvant", value: "L7/L12 ribosomal" },
+            { label: "Structure", value: "ESMFold v1" },
+            { label: "Codon Optimization", value: "L. infantum codon table" },
+          ].map((m) => (
+            <div key={m.label} className="rounded-lg bg-gray-50 p-3">
+              <p className="text-xs text-gray-400">{m.label}</p>
+              <p className="mt-1 text-sm font-semibold text-gray-900">{m.value}</p>
             </div>
           ))}
         </div>

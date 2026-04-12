@@ -131,10 +131,11 @@ export default function DrugPage() {
           {/* MRL-003 highlight card */}
           <div className="rounded-xl bg-gradient-to-br from-orange-500 to-amber-500 p-5 text-white shadow-card">
             <div className="mb-3 flex items-center gap-2">
-              <span className="rounded-md bg-white/20 px-2 py-0.5 text-xs font-semibold">Top Hit</span>
+              <span className="rounded-md bg-white/20 px-2 py-0.5 text-xs font-semibold">Lead Candidate</span>
             </div>
             <p className="text-base font-bold">MRL-003</p>
             <p className="mt-1 text-xs text-orange-100">Custom molecule — amide tail variant</p>
+            <p className="mt-1 text-xs text-orange-200">Requires selectivity optimization — binds human GR with higher affinity than TryR</p>
             <div className="mt-4 flex items-baseline gap-2">
               <span className="text-3xl font-bold">-7.74</span>
               <span className="text-sm text-orange-200">kcal/mol</span>
@@ -154,6 +155,16 @@ export default function DrugPage() {
             </div>
           </div>
         </div>
+      </div>
+
+      {/* Data Sources */}
+      <div className="mt-6 rounded-xl bg-white shadow-card p-5">
+        <h2 className="text-sm font-semibold text-gray-900">Data Sources</h2>
+        <p className="mt-2 text-xs text-gray-500 leading-relaxed">
+          Targets identified from L. infantum JPCM5 proteome (TriTrypDB). Human orthologs from UniProt.
+          Identity Score = % sequence identity to nearest human ortholog via BLASTp (lower = more parasite-specific = safer target).
+          Druggability scoring based on target essentiality, structural druggability, and pathway context.
+        </p>
       </div>
     </div>
   );

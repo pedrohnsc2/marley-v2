@@ -80,11 +80,11 @@ export default function RnaPage() {
     <div>
       {/* Page header */}
       <div className="mb-6 flex items-center gap-3">
-        <span className="rounded-lg bg-teal-100 px-2.5 py-1 text-xs font-bold text-teal-600">v1</span>
+        <span className="rounded-lg bg-teal-100 px-2.5 py-1 text-xs font-bold text-teal-600">validated</span>
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">RNA Entropy</h1>
+          <h1 className="text-2xl font-bold text-gray-900">Target Validation</h1>
           <p className="text-sm text-gray-500">
-            Information theory analysis of <em>L. infantum</em> transcriptome and SL RNA targets
+            Computational validation of Spliced Leader RNA as an antisense oligonucleotide target
           </p>
         </div>
       </div>
@@ -98,15 +98,15 @@ export default function RnaPage() {
           accentColor="bg-teal-500"
         />
         <KpiCard
-          title="SL RNA Entropy"
-          value={`${summary.sl_entropy.toFixed(3)} bits`}
-          subtitle="Shannon entropy of SL sequence"
+          title="SL Conservation"
+          value="100% invariant"
+          subtitle="Across all Leishmania species"
           accentColor="bg-teal-400"
         />
         <KpiCard
-          title="SL GC Content"
-          value={`${(summary.sl_gc_content * 100).toFixed(1)}%`}
-          subtitle="Low GC = high AU content"
+          title="Off-target Safety"
+          value="12 bp max"
+          subtitle="Below 14 bp RNase H threshold"
           accentColor="bg-cyan-500"
         />
         <KpiCard
