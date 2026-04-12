@@ -1,149 +1,294 @@
 import Link from "next/link";
 import KpiCard from "@/components/kpi-card";
+import DonutChart from "@/components/charts/donut-chart";
 
-const kpis = [
+/* ------------------------------------------------------------------ */
+/*  KPI data                                                           */
+/* ------------------------------------------------------------------ */
+
+const kpisRow1 = [
   {
     title: "Proteins Analyzed",
     value: "8,527",
     subtitle: "L. infantum proteome",
-    accent: "border-cyan-500",
+    accentColor: "bg-cyan-500",
   },
   {
-    title: "Epitopes Selected",
-    value: 11,
-    subtitle: "MHC-I high-affinity binders",
-    accent: "border-cyan-400",
+    title: "ASO Validation",
+    value: "90/100",
+    subtitle: "MRL-ASO-001 certificate",
+    accentColor: "bg-rose-500",
   },
   {
     title: "Drug Targets",
     value: 52,
     subtitle: "Prioritized by druggability",
-    accent: "border-orange-500",
+    accentColor: "bg-orange-500",
   },
   {
-    title: "Compounds Docked",
-    value: 77,
-    subtitle: "Repurposed + custom molecules",
-    accent: "border-green-500",
-  },
-  {
-    title: "Custom Molecules",
-    value: 20,
-    subtitle: "MRL-series designed in silico",
-    accent: "border-orange-400",
-  },
-  {
-    title: "Best Affinity",
-    value: "-7.74 kcal/mol",
-    subtitle: "MRL-003 on TryR",
-    accent: "border-green-400",
+    title: "AI Modules",
+    value: 11,
+    subtitle: "6 operational",
+    accentColor: "bg-sky-500",
   },
 ];
 
-const pipelineSteps = [
+const kpisRow2 = [
   {
-    id: "v1",
-    title: "Proteome Screening",
-    description:
-      "Filtered 8,527 proteins through signal peptide detection, conservation analysis, and immunogenicity scoring to identify top vaccine candidates.",
-    color: "bg-cyan-900/30 border-cyan-800",
-    href: "/vaccine",
+    title: "Epitopes",
+    value: 11,
+    subtitle: "MHC-I high-affinity",
+    accentColor: "bg-blue-500",
   },
   {
-    id: "v2",
-    title: "Vaccine Construct",
-    description:
-      "Designed multi-epitope mRNA vaccine with 15 epitopes, L7/L12 adjuvant, tPA signal peptide, and codon-optimized sequence validated via ESMFold 3D prediction.",
-    color: "bg-cyan-900/30 border-cyan-800",
-    href: "/vaccine",
+    title: "Best Docking",
+    value: "-8.07 kcal/mol",
+    subtitle: "CHEMBL92 on GMPS",
+    accentColor: "bg-emerald-500",
   },
   {
-    id: "v3",
-    title: "Drug Target Discovery",
-    description:
-      "Identified 52 druggable parasite-specific targets across trypanothione, sterol, folate, and purine salvage pathways with low human homology.",
-    color: "bg-orange-900/30 border-orange-800",
-    href: "/drug",
+    title: "Quantum Optimum",
+    value: "-30.42 kcal/mol",
+    subtitle: "QAOA all-Sp config",
+    accentColor: "bg-indigo-500",
   },
   {
-    id: "v4",
-    title: "Molecular Docking",
-    description:
-      "Screened 77 compounds via AutoDock Vina against GMPS and TryR. Top hit: CHEMBL92 at -8.07 kcal/mol. Designed 20 custom MRL-series molecules.",
-    color: "bg-green-900/30 border-green-800",
-    href: "/docking",
-  },
-  {
-    id: "v5",
-    title: "Immune Simulation",
-    description:
-      "ODE-based immune kinetics model predicting Th1 dominance (82.4%), robust memory cell formation, and estimated protection beyond 693 days.",
-    color: "bg-purple-900/30 border-purple-800",
-    href: "/simulation",
+    title: "Platforms",
+    value: 3,
+    subtitle: "mRNA, E. coli, L. tarentolae",
+    accentColor: "bg-teal-500",
   },
 ];
+
+/* ------------------------------------------------------------------ */
+/*  Pipeline modules by track                                          */
+/* ------------------------------------------------------------------ */
+
+interface PipelineItem {
+  title: string;
+  href: string;
+  description: string;
+  track: string;
+  badgeColor: string;
+}
+
+const discoveryModules: PipelineItem[] = [
+  {
+    title: "Vaccine Construct",
+    href: "/vaccine",
+    description:
+      "Multi-epitope mRNA vaccine with 11 epitopes, VaxiJen 0.3235",
+    track: "Discovery",
+    badgeColor: "bg-cyan-100 text-cyan-700",
+  },
+  {
+    title: "Drug Targets",
+    href: "/drug",
+    description:
+      "52 druggable parasite-specific targets across 4 pathways",
+    track: "Discovery",
+    badgeColor: "bg-cyan-100 text-cyan-700",
+  },
+  {
+    title: "Molecular Docking",
+    href: "/docking",
+    description:
+      "77 compounds screened, best hit CHEMBL92 at -8.07 kcal/mol",
+    track: "Discovery",
+    badgeColor: "bg-cyan-100 text-cyan-700",
+  },
+  {
+    title: "Immune Simulation",
+    href: "/simulation",
+    description:
+      "Th1 dominance 82.4%, memory protection >693 days",
+    track: "Discovery",
+    badgeColor: "bg-cyan-100 text-cyan-700",
+  },
+];
+
+const therapeuticsModules: PipelineItem[] = [
+  {
+    title: "ASO Therapy",
+    href: "/aso",
+    description:
+      "MRL-ASO-001 validated 90/100, resistance mathematically impossible",
+    track: "Therapeutics",
+    badgeColor: "bg-rose-100 text-rose-700",
+  },
+  {
+    title: "RNA Entropy",
+    href: "/rna",
+    description:
+      "Information theory analysis of 500 transcripts, SL RNA target confirmed",
+    track: "Therapeutics",
+    badgeColor: "bg-rose-100 text-rose-700",
+  },
+  {
+    title: "Quantum Computing",
+    href: "/quantum",
+    description:
+      "QAOA+VQE optimization, -30.42 kcal/mol optimal stereochemistry",
+    track: "Therapeutics",
+    badgeColor: "bg-rose-100 text-rose-700",
+  },
+];
+
+const intelligenceModules: PipelineItem[] = [
+  {
+    title: "AI/ML Engine",
+    href: "/ai",
+    description:
+      "11 modules, 5 autonomous agents, 27 insights, consensus 0.60",
+    track: "Intelligence",
+    badgeColor: "bg-sky-100 text-sky-700",
+  },
+  {
+    title: "Vaccine Platforms",
+    href: "/platforms",
+    description:
+      "3 production systems compared across 6 dimensions",
+    track: "Intelligence",
+    badgeColor: "bg-sky-100 text-sky-700",
+  },
+];
+
+/* ------------------------------------------------------------------ */
+/*  Chart data                                                         */
+/* ------------------------------------------------------------------ */
+
+const donutSeries = [4, 3, 2];
+const donutLabels = ["Discovery", "Therapeutics", "Intelligence"];
+const donutColors = ["#06B6D4", "#F43F5E", "#0EA5E9"];
+
+/* ------------------------------------------------------------------ */
+/*  Pipeline card component                                            */
+/* ------------------------------------------------------------------ */
+
+function PipelineCard({ item }: { item: PipelineItem }) {
+  return (
+    <Link
+      href={item.href}
+      className="rounded-xl bg-white shadow-card p-5 transition-all hover:shadow-md"
+      data-testid={`pipeline-${item.href.slice(1)}`}
+    >
+      <div className="mb-2 flex items-center gap-2">
+        <span
+          className={`rounded-lg ${item.badgeColor} px-2 py-0.5 text-xs font-bold`}
+        >
+          {item.track}
+        </span>
+        <h3 className="text-sm font-semibold text-gray-900">{item.title}</h3>
+      </div>
+      <p className="text-xs leading-relaxed text-gray-500">
+        {item.description}
+      </p>
+    </Link>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Page                                                               */
+/* ------------------------------------------------------------------ */
 
 export default function Home() {
   return (
-    <div className="px-8 py-10">
-      <header className="mb-10">
-        <h1 className="text-3xl font-bold tracking-tight text-white">
-          Marley Dashboard
-        </h1>
-        <p className="mt-2 max-w-2xl text-sm text-zinc-400">
-          Reverse vaccinology and drug discovery pipeline for canine visceral
-          leishmaniasis. Five computational modules spanning proteome analysis
-          through immune simulation.
+    <div>
+      {/* Page header */}
+      <div className="mb-6">
+        <h1 className="text-2xl font-bold text-gray-900">Marley Dashboard</h1>
+        <p className="mt-1 text-sm text-gray-500">
+          Reverse vaccinology and drug discovery for canine visceral
+          leishmaniasis.
         </p>
-      </header>
+      </div>
 
-      <section className="mb-12">
-        <h2 className="mb-4 text-sm font-semibold uppercase tracking-wider text-zinc-500">
-          Key Metrics
-        </h2>
-        <div
-          className="grid grid-cols-2 gap-4 lg:grid-cols-3 xl:grid-cols-6"
-          data-testid="kpi-grid"
-        >
-          {kpis.map((kpi) => (
-            <KpiCard
-              key={kpi.title}
-              title={kpi.title}
-              value={kpi.value}
-              subtitle={kpi.subtitle}
-              accentColor={kpi.accent}
-            />
-          ))}
+      {/* KPI Grid - Row 1 */}
+      <div
+        className="mb-6 grid grid-cols-2 gap-4 lg:grid-cols-4"
+        data-testid="kpi-grid"
+      >
+        {kpisRow1.map((kpi) => (
+          <KpiCard
+            key={kpi.title}
+            title={kpi.title}
+            value={kpi.value}
+            subtitle={kpi.subtitle}
+            accentColor={kpi.accentColor}
+          />
+        ))}
+      </div>
+
+      {/* KPI Grid - Row 2 */}
+      <div
+        className="mb-6 grid grid-cols-2 gap-4 lg:grid-cols-4"
+        data-testid="kpi-grid-2"
+      >
+        {kpisRow2.map((kpi) => (
+          <KpiCard
+            key={kpi.title}
+            title={kpi.title}
+            value={kpi.value}
+            subtitle={kpi.subtitle}
+            accentColor={kpi.accentColor}
+          />
+        ))}
+      </div>
+
+      {/* Track overview chart */}
+      <div className="mb-6 rounded-xl bg-white shadow-card overflow-hidden">
+        <div className="p-5">
+          <h2 className="mb-1 text-sm font-semibold text-gray-900">
+            Track Overview
+          </h2>
+          <p className="mb-4 text-xs text-gray-400">
+            Modules per research track
+          </p>
+          <DonutChart
+            series={donutSeries}
+            labels={donutLabels}
+            colors={donutColors}
+            height={260}
+          />
         </div>
-      </section>
+      </div>
 
-      <section>
-        <h2 className="mb-4 text-sm font-semibold uppercase tracking-wider text-zinc-500">
+      {/* Pipeline Modules */}
+      <div className="mb-6">
+        <h2 className="mb-4 text-sm font-semibold uppercase tracking-wider text-gray-400">
           Pipeline Modules
         </h2>
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-          {pipelineSteps.map((step) => (
-            <Link
-              key={step.id}
-              href={step.href}
-              className={`rounded-lg border ${step.color} p-5 transition-colors hover:brightness-125`}
-              data-testid={`pipeline-${step.id}`}
-            >
-              <div className="mb-2 flex items-center gap-2">
-                <span className="rounded bg-zinc-800 px-2 py-0.5 text-xs font-mono text-zinc-500">
-                  {step.id}
-                </span>
-                <h3 className="text-sm font-semibold text-white">
-                  {step.title}
-                </h3>
-              </div>
-              <p className="text-xs leading-relaxed text-zinc-400">
-                {step.description}
-              </p>
-            </Link>
+
+        {/* Discovery Pipeline */}
+        <p className="mb-2 px-1 text-xs font-semibold uppercase tracking-wider text-gray-400">
+          Discovery Pipeline
+        </p>
+        <div className="mb-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+          {discoveryModules.map((item) => (
+            <PipelineCard key={item.href} item={item} />
           ))}
         </div>
-      </section>
+
+        {/* Therapeutics Pipeline */}
+        <p className="mb-2 px-1 text-xs font-semibold uppercase tracking-wider text-gray-400">
+          Therapeutics Pipeline
+        </p>
+        <div className="mb-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+          {therapeuticsModules.map((item) => (
+            <PipelineCard key={item.href} item={item} />
+          ))}
+        </div>
+
+        {/* Intelligence Pipeline */}
+        <p className="mb-2 px-1 text-xs font-semibold uppercase tracking-wider text-gray-400">
+          Intelligence Pipeline
+        </p>
+        <div className="mb-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+          {intelligenceModules.map((item) => (
+            <PipelineCard key={item.href} item={item} />
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
