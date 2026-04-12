@@ -1,21 +1,195 @@
 {
   "module": "01_rag",
   "version": "0.1.0",
-  "generated_at": "2026-04-11T04:08:08.212966+00:00",
-  "runtime_seconds": 0.0,
-  "device": "",
-  "status": "stub",
+  "generated_at": "2026-04-12T16:49:42.061524+00:00",
+  "runtime_seconds": 10.78,
+  "device": "cpu",
+  "status": "complete",
   "warnings": [],
   "summary": {
-    "conclusion": "Modulo RAG em construcao. Indexara literatura de leishmaniose para consulta semantica.",
+    "conclusion": "RAG indexou 89 documentos em 1280 chunks. 384-dim embeddings via all-MiniLM-L6-v2. Top query recall demonstrado para 5 queries de validacao.",
     "key_metrics": {
-      "corpus_size": 0,
-      "index_size": 0,
-      "embedding_dim": 1024
+      "corpus_size": 89,
+      "n_chunks": 1280,
+      "index_size": 1280,
+      "embedding_dim": 384,
+      "model": "all-MiniLM-L6-v2",
+      "n_validation_queries": 5,
+      "mean_top1_score": 0.614
     }
   },
-  "artifacts": [],
-  "metrics": {},
+  "artifacts": [
+    "FAISS IndexFlatIP (in-memory, not persisted)",
+    "Embeddings: 1280x384 float32 matrix"
+  ],
+  "metrics": {
+    "mean_top1_score": 0.614,
+    "min_top1_score": 0.5478,
+    "max_top1_score": 0.7187,
+    "corpus_documents": 89,
+    "corpus_chunks": 1280,
+    "corpus_chars": 559294
+  },
   "dependencies": [],
-  "data": {}
+  "data": {
+    "validation_results": [
+      {
+        "query": "What is the binding energy of MRL-ASO-001?",
+        "top_k_results": [
+          {
+            "rank": 1,
+            "score": 0.6507,
+            "chunk_preview": "um.** 44 of 75 single-point mutants and 1769 of 2700 double mutants have better binding free energy. The best single mutant (A13G) improves dG by 1.65 kcal/mol.\n\n3. **All results are computational.** ",
+            "source_file": "results/integration/ASO_INTEGRATION_REPORT.md",
+            "chunk_index": 35
+          },
+          {
+            "rank": 2,
+            "score": 0.6314,
+            "chunk_preview": " laptop), the agent found variants with **28.5% higher reward** than the original MRL-ASO-001. The best variant has a binding energy of -36.83 kcal/mol.\n\nBut the AI Scientist module (more on that belo",
+            "source_file": "docs/MEDIUM_ARTICLE.md",
+            "chunk_index": 26
+          },
+          {
+            "rank": 3,
+            "score": 0.6098,
+            "chunk_preview": "idates\n- Top-ranked design: 21-nt with LNA 2+2 (score: 0.7545, 30.5% better)\n\n**Honest assessment:** MRL-ASO-001 ranks poorly in the multi-objective optimization because its 25-nt length and 4+4 LNA c",
+            "source_file": "results/integration/ASO_INTEGRATION_REPORT.md",
+            "chunk_index": 7
+          }
+        ],
+        "top1_score": 0.6507
+      },
+      {
+        "query": "Which vaccine platform has the lowest cost?",
+        "top_k_results": [
+          {
+            "rank": 1,
+            "score": 0.7187,
+            "chunk_preview": "ecombinant protein (pET-28a) | $2.28 | -91.6% |\n| **L. tarentolae** | Live attenuated BSL-1 vector | $0.00008 | -100% |\n\nThe E. coli platform is the fastest path to market (24-36 months) and competes ",
+            "source_file": "docs/MEDIUM_ARTICLE.md",
+            "chunk_index": 22
+          },
+          {
+            "rank": 2,
+            "score": 0.6199,
+            "chunk_preview": " Clearance probability: 100%. Mean time to clear parasites: 14 hours. EC50: 0.1 micromolar.\n\n---\n\n## Three Vaccine Platforms: From $81 to $0.00008 Per Dose\n\nIn parallel with the ASO work, I designed t",
+            "source_file": "docs/MEDIUM_ARTICLE.md",
+            "chunk_index": 21
+          },
+          {
+            "rank": 3,
+            "score": 0.5836,
+            "chunk_preview": "vaccine construct |\n| Molecular weight | 35,954.35 Da (36 kDa) | Within optimal range for LNP encapsulation |\n| Theoretical pI | 7.93 | Near-neutral — favorable for LNP formulation at pH 7.4 |\n| Negat",
+            "source_file": "docs/marley_complete_report.md",
+            "chunk_index": 10
+          }
+        ],
+        "top1_score": 0.7187
+      },
+      {
+        "query": "How many drug targets were identified?",
+        "top_k_results": [
+          {
+            "rank": 1,
+            "score": 0.5697,
+            "chunk_preview": "# Marley v2 — Drug Target Discovery Report\n\nGenerated: 2026-04-05\n\n## Summary\n- Total targets analyzed: 52\n- Priority validated targets: 7\n- Computational targets (score > 0.60): 43\n- Pathways covered",
+            "source_file": "results/drug_targets_report.md",
+            "chunk_index": 0
+          },
+          {
+            "rank": 2,
+            "score": 0.5554,
+            "chunk_preview": "taset_counts.epitope: 11\ndata.dataset_counts.source_protein: 5\ndata.dataset_counts.drug_target: 3\ndata.dataset_counts.adjuvant: 1\ndata.dataset_counts.control: 5\ndata.similar_pairs[0].a: epitope_09_GP6",
+            "source_file": "marley_ai/results/03_leish_esm.json",
+            "chunk_index": 4
+          },
+          {
+            "rank": 3,
+            "score": 0.509,
+            "chunk_preview": " Yes | 0.69 |\n| 8 | TryR | CHEMBL194 | CHEMBL194 | -5.6 | 0 | 0.80 | Yes | 0.68 |\n| 9 | TryR | CHEMBL1542 | CHEMBL1542 | -5.6 | 0 | 0.80 | Yes | 0.68 |\n| 10 | TryR | CHEMBL185 | CHEMBL185 | -5.5 | 0 |",
+            "source_file": "results/docking_report.md",
+            "chunk_index": 2
+          }
+        ],
+        "top1_score": 0.5697
+      },
+      {
+        "query": "What is the QAOA optimal configuration?",
+        "top_k_results": [
+          {
+            "rank": 1,
+            "score": 0.5832,
+            "chunk_preview": "nal_best.sp_count: 25\nfinal_best.rp_count: 0\nfinal_best.rp_triples: 0\nfinal_best.method: hybrid_qaoa_greedy\nfinal_best.qaoa_positions: 10\nfinal_best.greedy_positions: 15\nfinal_method: hybrid_qaoa_gree",
+            "source_file": "mrl_quantum/results/qaoa/qaoa_ps_optimization.json",
+            "chunk_index": 12
+          },
+          {
+            "rank": 2,
+            "score": 0.5671,
+            "chunk_preview": "[Source: mrl_quantum/results/qaoa/qaoa_ps_optimization.json]\nmodule: mrl_quantum.qaoa\nversion: 0.1.0\ngenerated_at: 2026-04-12T00:13:20.795344+00:00\nruntime_seconds: 214.24\nseed: 42\nbackend_requested: ",
+            "source_file": "mrl_quantum/results/qaoa/qaoa_ps_optimization.json",
+            "chunk_index": 0
+          },
+          {
+            "rank": 3,
+            "score": 0.5616,
+            "chunk_preview": "ation: SpSpSpSpSpSpSpSpSpSp\ndetailed_comparison.qaoa.sp_count: 10\ndetailed_comparison.qaoa.n_positions: 10\ndetailed_comparison.qaoa.n_layers: 1\ndetailed_comparison.qaoa.optimizer: COBYLA\ndetailed_comp",
+            "source_file": "mrl_quantum/results/qaoa/qaoa_vs_classical_comparison.json",
+            "chunk_index": 3
+          }
+        ],
+        "top1_score": 0.5832
+      },
+      {
+        "query": "What is the resistance barrier for the ASO therapy?",
+        "top_k_results": [
+          {
+            "rank": 1,
+            "score": 0.5478,
+            "chunk_preview": "sign is justified by prioritizing thermodynamic stability for the harsh phagolysosomal environment.\n\n### 2.6 Resistance Barrier (Module 05)\n\n- Total mutations analyzed: **75**\n- Escape mutations (bind",
+            "source_file": "results/integration/ASO_INTEGRATION_REPORT.md",
+            "chunk_index": 8
+          },
+          {
+            "rank": 2,
+            "score": 0.5422,
+            "chunk_preview": ". Result: **zero escape mutations** out of 75 analyzed positions. The worst-case time to resistance: **285 years**. The positions where the ASO binds are so critical that any mutation there kills the ",
+            "source_file": "docs/MEDIUM_ARTICLE.md",
+            "chunk_index": 17
+          },
+          {
+            "rank": 3,
+            "score": 0.5362,
+            "chunk_preview": "SR-A)\n- Phagolysosomal concentration at 1 uM dose: **200246 nM** (threshold: 100 nM)\n- Macrophage advantage factor: **18.7x** over non-phagocytic cells\n- Endosomal escape required: **No**\n\n**Key findi",
+            "source_file": "results/integration/ASO_INTEGRATION_REPORT.md",
+            "chunk_index": 11
+          }
+        ],
+        "top1_score": 0.5478
+      }
+    ],
+    "corpus_stats": {
+      "n_json": 58,
+      "n_md": 31,
+      "n_documents": 89,
+      "total_chars": 559294
+    },
+    "corpus_dirs": [
+      "results",
+      "aso_math/results",
+      "aso_delivery/results",
+      "marley_ai/results",
+      "vaccine_platforms/reports/results",
+      "docs",
+      "mrl_quantum/results"
+    ],
+    "parameters": {
+      "chunk_size": 500,
+      "chunk_overlap": 50,
+      "embedding_model": "all-MiniLM-L6-v2",
+      "embedding_dim": 384,
+      "top_k": 3
+    }
+  }
 }

@@ -1,21 +1,154 @@
 {
   "module": "02_leish_kg",
   "version": "0.1.0",
-  "generated_at": "2026-04-11T02:38:49.909712+00:00",
-  "runtime_seconds": 0.0,
-  "device": "",
-  "status": "stub",
+  "generated_at": "2026-04-12T16:47:10.877781+00:00",
+  "runtime_seconds": 0.01,
+  "device": "cpu",
+  "status": "complete",
   "warnings": [],
   "summary": {
-    "conclusion": "Knowledge Graph em construcao. Integrara proteoma, vias metabolicas e literatura.",
+    "conclusion": "Knowledge Graph construido com 59 nodes e 78 edges. 6 tipos de nodes, 3 tipos de relacoes. Hub gene: Leishmania infantum.",
     "key_metrics": {
-      "n_nodes": 0,
-      "n_edges": 0,
-      "n_relation_types": 0
+      "n_nodes": 59,
+      "n_edges": 78,
+      "n_relation_types": 3,
+      "n_node_types": 6,
+      "n_genes": 31,
+      "n_pathways": 5,
+      "n_compounds": 10,
+      "n_epitopes": 11,
+      "density": 0.022794,
+      "n_connected_components": 1
     }
   },
   "artifacts": [],
   "metrics": {},
-  "dependencies": [],
-  "data": {}
+  "dependencies": [
+    "results/drug_targets_top20.csv",
+    "results/construct/construct_card.json",
+    "results/docking_scores.csv",
+    "results/aso/aso_candidates.csv"
+  ],
+  "data": {
+    "node_type_counts": {
+      "Gene": 31,
+      "Epitope": 11,
+      "Compound": 10,
+      "Pathway": 5,
+      "Organism": 1,
+      "ASO": 1
+    },
+    "edge_type_counts": {
+      "PART_OF": 51,
+      "TARGETS": 16,
+      "DERIVED_FROM": 11
+    },
+    "top_hubs": [
+      {
+        "node_id": "organism:5671",
+        "label": "Leishmania infantum",
+        "node_type": "Organism",
+        "degree": 31
+      },
+      {
+        "node_id": "gene:DOCK_GMPS",
+        "label": "GMPS",
+        "node_type": "Gene",
+        "degree": 10
+      },
+      {
+        "node_id": "pathway:purine_salvage",
+        "label": "Purine Salvage",
+        "node_type": "Pathway",
+        "degree": 6
+      },
+      {
+        "node_id": "pathway:pentose_phosphate",
+        "label": "Pentose Phosphate",
+        "node_type": "Pathway",
+        "degree": 6
+      },
+      {
+        "node_id": "drug:CHEMBL1542",
+        "label": "CHEMBL1542",
+        "node_type": "Compound",
+        "degree": 5
+      },
+      {
+        "node_id": "pathway:trypanothione",
+        "label": "Trypanothione",
+        "node_type": "Pathway",
+        "degree": 4
+      },
+      {
+        "node_id": "gene:DOCK_TryR",
+        "label": "TryR",
+        "node_type": "Gene",
+        "degree": 4
+      },
+      {
+        "node_id": "gene:LINF_240013900",
+        "label": "emp24/gp25L/p24 family/GOLD - putative",
+        "node_type": "Gene",
+        "degree": 4
+      },
+      {
+        "node_id": "gene:LINF_230010300",
+        "label": "hypothetical protein - conserved",
+        "node_type": "Gene",
+        "degree": 4
+      },
+      {
+        "node_id": "gene:LINF_160022200",
+        "label": "prohibitin",
+        "node_type": "Gene",
+        "degree": 4
+      }
+    ],
+    "betweenness_top5": [
+      {
+        "node_id": "organism:5671",
+        "label": "Leishmania infantum",
+        "node_type": "Organism",
+        "betweenness_centrality": 0.914297
+      },
+      {
+        "node_id": "gene:DOCK_GMPS",
+        "label": "GMPS",
+        "node_type": "Gene",
+        "betweenness_centrality": 0.248518
+      },
+      {
+        "node_id": "gene:LINF_240013900",
+        "label": "emp24/gp25L/p24 family/GOLD - putative",
+        "node_type": "Gene",
+        "betweenness_centrality": 0.101633
+      },
+      {
+        "node_id": "gene:LINF_230010300",
+        "label": "hypothetical protein - conserved",
+        "node_type": "Gene",
+        "betweenness_centrality": 0.101633
+      },
+      {
+        "node_id": "gene:LINF_160022200",
+        "label": "prohibitin",
+        "node_type": "Gene",
+        "betweenness_centrality": 0.101633
+      }
+    ],
+    "pathway_distribution": {
+      "Purine Salvage": 6,
+      "Pentose Phosphate": 6,
+      "Trypanothione": 4,
+      "Sterol Biosynthesis": 2,
+      "Glycolysis": 2
+    },
+    "degree_distribution": {
+      "min": 1,
+      "max": 31,
+      "mean": 2.64,
+      "median": 2.0
+    }
+  }
 }

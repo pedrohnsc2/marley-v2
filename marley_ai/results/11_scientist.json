@@ -1,91 +1,52 @@
 {
   "module": "11_scientist",
   "version": "0.1.0",
-  "generated_at": "2026-04-11T04:15:18.295363+00:00",
-  "runtime_seconds": 7.99,
+  "generated_at": "2026-04-12T16:52:02.252357+00:00",
+  "runtime_seconds": 7.25,
   "device": "cpu",
   "status": "complete",
   "warnings": [],
   "summary": {
-    "conclusion": "AI Scientist executou 5 agentes sobre 6 modulos operacionais. Gerou 5 hipoteses e 5 propostas experimentais. Consenso entre agentes: 0.60. Destaque: ASO MRL-ASO-001 validado computacionalmente (disrupcao SL RNA + acessibilidade RNase H + dG concordante).",
+    "conclusion": "AI Scientist executou 5 agentes sobre 9 modulos operacionais. Gerou 5 hipoteses e 5 propostas experimentais. Consenso entre agentes: 0.60. Destaque: ASO MRL-ASO-001 validado computacionalmente (disrupcao SL RNA + acessibilidade RNase H + dG concordante).",
     "key_metrics": {
-      "n_modules_operational": 6,
+      "n_modules_operational": 9,
       "n_modules_total": 10,
       "n_agents": 5,
-      "n_total_insights": 27,
+      "n_total_insights": 23,
       "n_validations": 3,
       "n_warnings": 2,
-      "n_gaps": 4,
+      "n_gaps": 2,
       "n_hypotheses": 5,
       "n_experiments_proposed": 5,
-      "consensus_score": 0.6026,
+      "consensus_score": 0.5963,
       "top_hypothesis_confidence": 0.85
     }
   },
   "artifacts": [],
   "metrics": {},
   "dependencies": [
+    "01_rag",
+    "02_leish_kg",
     "03_leish_esm",
     "04_rna_fm",
     "05_rosettafold",
     "06_evodiff",
     "08_rl_ppo",
-    "09_sae"
+    "09_sae",
+    "10_digital_twin"
   ],
   "data": {
     "iterations": [
       {
         "iteration": 1,
-        "timestamp": "2026-04-11T04:15:18.298242+00:00",
+        "timestamp": "2026-04-12T16:52:02.255175+00:00",
         "agent_outputs": [
           {
             "agent_name": "LiteratureAgent",
-            "timestamp": "2026-04-11T04:15:18.298249+00:00",
+            "timestamp": "2026-04-12T16:52:02.255184+00:00",
             "status": "complete",
-            "n_insights": 5,
+            "n_insights": 2,
             "insights": [
-              {
-                "agent": "LiteratureAgent",
-                "category": "gap",
-                "title": "RAG corpus vazio — literatura nao indexada",
-                "description": "O modulo RAG ainda e um stub (corpus_size=0). Sem indexacao de literatura, hipoteses nao podem ser fundamentadas em evidencia publicada. Prioridade: indexar papers de trans-splicing em kinetoplastida, ASO contra Leishmania, e vacinas com epitopos preditos.",
-                "confidence": 0.95,
-                "evidence": [
-                  "01_rag.status='stub'",
-                  "corpus_size=0"
-                ],
-                "source_modules": [
-                  "01_rag"
-                ]
-              },
-              {
-                "agent": "LiteratureAgent",
-                "category": "recommendation",
-                "title": "Papers prioritarios para indexacao no RAG",
-                "description": "Baseado nos resultados computacionais existentes, priorizar: (1) Liang et al. 2015 — LNA gapmers contra kinetoplastida; (2) Dias et al. 2018 — SL RNA como alvo terapeutico; (3) Coler et al. 2015 — vacinas multiepitopo para Leishmania; (4) Rafati et al. 2006 — GP63 como antigenio vacinal.",
-                "confidence": 0.8,
-                "evidence": [
-                  "ASO alvo SL RNA confirmado por mod 04 e 05",
-                  "Epitopos de GP63, prohibitin, p24 confirmados por mod 03"
-                ],
-                "source_modules": [
-                  "01_rag"
-                ]
-              },
-              {
-                "agent": "LiteratureAgent",
-                "category": "gap",
-                "title": "Knowledge Graph vazio — sem rede de relacoes",
-                "description": "O modulo KG esta em construcao (n_nodes=0). Sem grafo de conhecimento, nao e possivel raciocinar sobre relacoes proteina-proteina, vias metabolicas, ou mecanismos de virulencia. Prioridade: popular com dados do TriTrypDB, UniProt e KEGG para L. infantum.",
-                "confidence": 0.95,
-                "evidence": [
-                  "02_leish_kg.status='stub'",
-                  "n_nodes=0"
-                ],
-                "source_modules": [
-                  "02_leish_kg"
-                ]
-              },
               {
                 "agent": "LiteratureAgent",
                 "category": "gap",
@@ -117,12 +78,12 @@
                 ]
               }
             ],
-            "summary": "Identificados 5 gaps/recomendacoes. RAG e KG sao stubs — descobertas dependem de dados computacionais dos modulos 03-09.",
+            "summary": "Identificados 2 gaps/recomendacoes. RAG e KG sao stubs — descobertas dependem de dados computacionais dos modulos 03-09.",
             "warnings": []
           },
           {
             "agent_name": "DesignAgent",
-            "timestamp": "2026-04-11T04:15:18.298259+00:00",
+            "timestamp": "2026-04-12T16:52:02.255193+00:00",
             "status": "complete",
             "n_insights": 5,
             "insights": [
@@ -207,7 +168,7 @@
           },
           {
             "agent_name": "ValidationAgent",
-            "timestamp": "2026-04-11T04:15:18.298289+00:00",
+            "timestamp": "2026-04-12T16:52:02.255222+00:00",
             "status": "complete",
             "n_insights": 6,
             "insights": [
@@ -305,9 +266,9 @@
           },
           {
             "agent_name": "KnowledgeAgent",
-            "timestamp": "2026-04-11T04:15:18.298305+00:00",
+            "timestamp": "2026-04-12T16:52:02.255240+00:00",
             "status": "complete",
-            "n_insights": 6,
+            "n_insights": 5,
             "insights": [
               {
                 "agent": "KnowledgeAgent",
@@ -380,42 +341,26 @@
                   "03_leish_esm",
                   "09_sae"
                 ]
-              },
-              {
-                "agent": "KnowledgeAgent",
-                "category": "recommendation",
-                "title": "KG vazio — triplas sugeridas a partir de dados computacionais",
-                "description": "Baseado nos resultados dos modulos 03/09, sugerir triplas para popular o KG: (1) GP63 -[surface_protein]-> immune_evasion; (2) prohibitin -[chaperone]-> mitochondria; (3) SL_RNA -[target]-> ASO_MRL_001; (4) LINF_230010300 -[hypothetical]-> virulence_factor; (5) p24_GOLD -[vesicular_transport]-> secretory_pathway.",
-                "confidence": 0.8,
-                "evidence": [
-                  "Dados de ESM-2 e SAE confirmam as proteinas acima",
-                  "Gene IDs: LINF_100010400, LINF_160022200, LINF_230010300, LINF_240013900"
-                ],
-                "source_modules": [
-                  "02_leish_kg",
-                  "03_leish_esm",
-                  "09_sae"
-                ]
               }
             ],
-            "summary": "Encontrados 6 conexoes/padroes. Destaque: dominancia hidrofobica nos epitopos e consistencia SAE/ESM.",
+            "summary": "Encontrados 5 conexoes/padroes. Destaque: dominancia hidrofobica nos epitopos e consistencia SAE/ESM.",
             "warnings": []
           },
           {
             "agent_name": "ReportAgent",
-            "timestamp": "2026-04-11T04:15:18.298339+00:00",
+            "timestamp": "2026-04-12T16:52:02.255275+00:00",
             "status": "complete",
             "n_insights": 5,
             "insights": [
               {
                 "agent": "ReportAgent",
                 "category": "status",
-                "title": "Pipeline: 6/10 modulos operacionais",
-                "description": "6 modulos produzem dados reais, 4 sao stubs. Modulos operacionais: 03_leish_esm, 04_rna_fm, 05_rosettafold, 06_evodiff, 08_rl_ppo, 09_sae. Stubs: 01_rag, 02_leish_kg, 07_contrastive, 10_digital_twin.",
+                "title": "Pipeline: 9/10 modulos operacionais",
+                "description": "9 modulos produzem dados reais, 1 sao stubs. Modulos operacionais: 01_rag, 02_leish_kg, 03_leish_esm, 04_rna_fm, 05_rosettafold, 06_evodiff, 08_rl_ppo, 09_sae, 10_digital_twin. Stubs: 07_contrastive.",
                 "confidence": 1.0,
                 "evidence": [
-                  "n_operational=6",
-                  "n_stubs=4"
+                  "n_operational=9",
+                  "n_stubs=1"
                 ],
                 "source_modules": [
                   "01_rag",
@@ -470,11 +415,11 @@
                 "agent": "ReportAgent",
                 "category": "consensus",
                 "title": "Consenso: 3 validacoes, 2 avisos",
-                "description": "De 22 insights totais: 3 validacoes positivas, 2 avisos, 3 propostas de design. Confianca media: 0.82. Nivel de consenso: alto.",
-                "confidence": 0.8204545454545454,
+                "description": "De 18 insights totais: 3 validacoes positivas, 2 avisos, 3 propostas de design. Confianca media: 0.81. Nivel de consenso: alto.",
+                "confidence": 0.8083333333333333,
                 "evidence": [
-                  "n_total_insights=22",
-                  "mean_confidence=0.820",
+                  "n_total_insights=18",
+                  "mean_confidence=0.808",
                   "n_categories=10"
                 ],
                 "source_modules": []
@@ -482,18 +427,18 @@
               {
                 "agent": "ReportAgent",
                 "category": "next_steps",
-                "title": "8 proximos passos prioritarios",
-                "description": "Plano de acao ordenado por prioridade:\n  1. [GAP] RAG corpus vazio — literatura nao indexada\n  2. [GAP] Knowledge Graph vazio — sem rede de relacoes\n  3. [GAP] Gap: mecanismo de uptake do ASO por amastigotas intracelulares\n  4. [WARN] Tm predita desvia 5.2 C do experimental\n  5. [WARN] Melhor variante RL tem GC elevado — risco de off-target\n  6. [TEST] EvoDiff gerou 7 ASOs com dG melhor que baseline\n  7. [TEST] 10 novos epitopos gerados por difusao\n  8. [TEST] RL otimizou ASO com 28.5% melhoria no reward",
+                "title": "7 proximos passos prioritarios",
+                "description": "Plano de acao ordenado por prioridade:\n  1. [GAP] Gap: mecanismo de uptake do ASO por amastigotas intracelulares\n  2. [GAP] Gap: validacao experimental dos epitopos preditos\n  3. [WARN] Tm predita desvia 5.2 C do experimental\n  4. [WARN] Melhor variante RL tem GC elevado — risco de off-target\n  5. [TEST] EvoDiff gerou 7 ASOs com dG melhor que baseline\n  6. [TEST] 10 novos epitopos gerados por difusao\n  7. [TEST] RL otimizou ASO com 28.5% melhoria no reward",
                 "confidence": 0.85,
                 "evidence": [
-                  "n_gaps=4",
+                  "n_gaps=2",
                   "n_warnings=2",
                   "n_proposals=3"
                 ],
                 "source_modules": []
               }
             ],
-            "summary": "Relatorio consolidado: 6/10 modulos operacionais. 22 insights de 4 agentes sintetizados. Pipeline validado para ASO anti-SL RNA e vacina multiepitopo.",
+            "summary": "Relatorio consolidado: 9/10 modulos operacionais. 18 insights de 4 agentes sintetizados. Pipeline validado para ASO anti-SL RNA e vacina multiepitopo.",
             "warnings": []
           }
         ],
@@ -671,8 +616,8 @@
             "priority": 4
           }
         ],
-        "consensus_score": 0.6026,
-        "summary": "Iteracao 1: 5 agentes executados, 5 hipoteses geradas, 5 experimentos propostos. Consenso: 0.60.\n\n=== SINTESE CLAUDE ===\n# Scientific Synthesis: MRL-ASO-001 Computational Drug Discovery Analysis\n\n## Key Findings Summary\n\nMRL-ASO-001 represents a promising antisense therapeutic targeting *Leishmania infantum* spliced leader (SL) RNA via RNase H-mediated cleavage. Computational analysis across six operational modules confirms the baseline ASO candidate (dG = -27.38 kcal/mol) disrupts all 13 bp of the SL RNA target with high affinity, supported by 94.9% cross-species conservation. A reinforcement learning-optimized variant achieves substantially improved binding (dG = -36.83 kcal/mol, +28.5% reward improvement), though at elevated off-target risk (GC content = 0.60 vs. safe threshold 0.55). A secondary design principle emerges: intermediary GC content (0.40–0.50) offers optimal balance, exemplified by the EvoDiff-generated candidate (GC = 0.40, design score = 0.89, dG < -30 kcal/mol).\n\n## Strongest Hypothesis & Evidence\n\n**H001 (confidence = 0.85)** stands as the primary validated hypothesis: ASO-mediated trans-splicing inhibition via RNase H. Supporting evidence includes: (1) complete structural disruption of the native SL RNA secondary structure across the 13 bp binding site; (2) thermodynamic validation (dG = -27.38 kcal/mol indicates strong binding); (3) mechanistic confirmation from RNA accessibility analysis showing the minor groove accessible to RNase H (ValidationAgent confidence = 0.95); and (4) cross-species SL RNA conservation (94.9%), suggesting broad parasite vulnerability.\n\n## Critical Next Experiment\n\n**EXP001** (in vitro trans-splicing RT-qPCR validation) is prioritized. This wet-lab experiment directly tests H001's mechanistic prediction—trans-splicing block in *L. infantum* promastigotas—and quantifies dose-response kinetics, providing essential go/no-go data before expensive animal studies.\n\n## Contradictions & Risks"
+        "consensus_score": 0.5963,
+        "summary": "Iteracao 1: 5 agentes executados, 5 hipoteses geradas, 5 experimentos propostos. Consenso: 0.60.\n\n=== SINTESE CLAUDE ===\n# Scientific Synthesis: MRL-ASO-001 Computational Drug Discovery\n\n## Key Findings Across Modules\n\nComputational analysis of MRL-ASO-001 strongly supports a **RNase H-mediated trans-splicing inhibition mechanism** (H001, confidence=0.85). The baseline ASO achieves high binding affinity (ΔG=−27.38 kcal/mol) with complete disruption of 13/13 critical base pairs in the highly conserved L. infantum spliced leader RNA (94.9% cross-species identity). ValidationAgent confirms RNase H accessibility in the minor groove (conf=0.95) and validates binding energy predictions (conf=0.90). This directly targets an essential parasitic process, with robust mechanistic support.\n\nHowever, **design optimization reveals a critical trade-off**: the reinforcement learning variant (ΔG=−36.83 kcal/mol, +8.86 kcal/mol improvement) achieves 28.5% reward enhancement but increases GC content to 0.60, raising off-target risks. H005 (confidence=0.65) proposes an optimal intermediate zone (GC 0.40–0.50, ΔG −30 to −33 kcal/mol), exemplified by EvoDiff's ACAGAAACGGCTACTTTTGTAGCTT (GC=0.40, score=0.8974), balancing specificity and affinity.\n\n## Strongest Hypothesis & Evidence\n\n**H001 is the most credible**, supported by:\n- Structural predictions (binding geometry, RNase H recruitment validated)\n- Conservation data (94.9% SL RNA homology across Leishmania)\n- Mechanism confirmation (minor groove accessibility at 0.95 confidence)\n- Thermodynamic rigor (ΔG=−27.38 kcal/mol indicates stable gapmer-target complex)\n\nThe validated mechanism maps directly to parasitic cell death via trans-splicing collapse.\n\n## Most Critical Next Experiment\n\n**EXP001 (RT-qPCR trans-splicing validation in L. infantum promasti"
       }
     ],
     "hypotheses_summary": [
@@ -766,12 +711,12 @@
     ],
     "module_status": {
       "01_rag": {
-        "operational": false,
-        "status": "stub"
+        "operational": true,
+        "status": "complete"
       },
       "02_leish_kg": {
-        "operational": false,
-        "status": "stub"
+        "operational": true,
+        "status": "complete"
       },
       "03_leish_esm": {
         "operational": true,
@@ -802,8 +747,8 @@
         "status": "success"
       },
       "10_digital_twin": {
-        "operational": false,
-        "status": "stub"
+        "operational": true,
+        "status": "complete"
       }
     }
   }
