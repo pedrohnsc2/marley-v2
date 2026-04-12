@@ -102,6 +102,16 @@ const navGroups: NavGroup[] = [
         ),
       },
       {
+        href: "/bio-sim",
+        label: "Bio-Sim 3D",
+        icon: (
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="h-5 w-5 flex-shrink-0">
+            <circle cx="12" cy="12" r="9" />
+            <polygon points="10,8 16,12 10,16" fill="currentColor" />
+          </svg>
+        ),
+      },
+      {
         href: "/rna",
         label: "RNA Entropy",
         icon: (

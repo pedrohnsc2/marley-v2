@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { loadModuleJson } from "@/lib/data-loader";
 import KpiCard from "@/components/kpi-card";
 import BarChart from "@/components/charts/bar-chart";
@@ -192,6 +193,29 @@ export default function AsoPage() {
           accentColor="bg-rose-500"
         />
       </div>
+
+      {/* ---- Bio-Sim launch card ---- */}
+      <Link
+        href="/bio-sim"
+        className="mb-6 flex items-center gap-5 rounded-xl bg-gradient-to-r from-rose-500/10 to-fuchsia-500/10 p-5 transition-all hover:from-rose-500/20 hover:to-fuchsia-500/20"
+        style={{ border: "1px solid var(--app-border)" }}
+      >
+        <div className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-xl bg-rose-500/20">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#e11d48" strokeWidth={1.8} className="h-7 w-7">
+            <circle cx="12" cy="12" r="9" />
+            <polygon points="10,8 16,12 10,16" fill="#e11d48" />
+          </svg>
+        </div>
+        <div className="flex-1">
+          <h3 className="text-sm font-bold text-gray-900">MRL-ASO-001 Bio-Sim: Mechanism of Action</h3>
+          <p className="mt-0.5 text-xs text-gray-500">
+            Interactive 3D journey from subcutaneous injection to parasite clearance — 8 scenes, 24 validated metrics
+          </p>
+        </div>
+        <span className="hidden rounded-full bg-rose-500 px-3 py-1.5 text-xs font-bold text-white sm:block">
+          Launch
+        </span>
+      </Link>
 
       {/* ---- Molecule card ---- */}
       <div className="mb-6 rounded-xl bg-white shadow-card overflow-hidden">
