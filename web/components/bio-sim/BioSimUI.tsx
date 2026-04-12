@@ -1,14 +1,19 @@
 "use client";
 
 import { STAGE_METAS } from "./core/constants";
+import { NARRATION_SCRIPTS } from "./narration/narration-scripts";
+import NarrationOverlay from "./narration/NarrationOverlay";
 
 interface BioSimUIProps {
   sceneIndex: number;
   sceneCount: number;
   autoplay: boolean;
   narrationEnabled: boolean;
+  isMuted: boolean;
+  sceneProgress: number;
   onToggleAutoplay: () => void;
   onToggleNarration: () => void;
+  onToggleMute: () => void;
   onNext: () => void;
   onPrev: () => void;
   onGoTo: (index: number) => void;
@@ -19,14 +24,19 @@ export default function BioSimUI({
   sceneCount,
   autoplay,
   narrationEnabled,
+  isMuted,
+  sceneProgress,
   onToggleAutoplay,
   onToggleNarration,
+  onToggleMute,
   onNext,
   onPrev,
   onGoTo,
 }: BioSimUIProps) {
   const meta = STAGE_METAS[sceneIndex];
   if (!meta) return null;
+
+  const segments = NARRATION_SCRIPTS[sceneIndex] ?? [];
 
   return (
     <div
@@ -38,60 +48,99 @@ export default function BioSimUI({
       <div className="flex items-start justify-between p-4 md:p-6">
         {/* Top-left: stage info */}
         <div
-          className="rounded-lg bg-black/40 px-4 py-3 backdrop-blur-sm"
+          style={{
+            borderRadius: 8,
+            backgroundColor: "rgba(0,0,0,0.4)",
+            backdropFilter: "blur(8px)",
+            padding: "12px 16px",
+          }}
           data-testid="bio-sim-stage-info"
         >
-          <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400">
+          <p style={{ fontSize: 10, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", color: "#9ca3af" }}>
             Stage {sceneIndex + 1}/{sceneCount}
           </p>
           <h2
-            className="mt-1 text-lg font-bold leading-tight md:text-xl"
-            style={{ color: meta.color, transition: "color 0.6s ease" }}
+            style={{ marginTop: 4, fontSize: 20, fontWeight: 700, lineHeight: 1.2, color: meta.color, transition: "color 0.6s ease" }}
           >
             {meta.name}
           </h2>
-          <p className="mt-0.5 text-xs text-gray-400">{meta.timeTag}</p>
+          <p style={{ marginTop: 2, fontSize: 12, color: "#9ca3af" }}>{meta.timeTag}</p>
         </div>
 
         {/* Top-right: metrics panel */}
         <div
-          className="flex flex-col gap-2 rounded-lg bg-black/40 px-4 py-3 backdrop-blur-sm"
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: 8,
+            borderRadius: 8,
+            backgroundColor: "rgba(0,0,0,0.4)",
+            backdropFilter: "blur(8px)",
+            padding: "12px 16px",
+          }}
           data-testid="bio-sim-metrics"
         >
           {meta.metrics.map((m) => (
             <div
               key={m.label}
-              className="border-l-2 pl-3"
               style={{
-                borderColor: meta.color,
+                borderLeft: `2px solid ${meta.color}`,
+                paddingLeft: 12,
                 transition: "border-color 0.6s ease",
               }}
             >
-              <p className="text-[10px] uppercase tracking-wider text-gray-400">
+              <p style={{ fontSize: 10, textTransform: "uppercase", letterSpacing: "0.05em", color: "#9ca3af" }}>
                 {m.label}
               </p>
-              <p className="text-sm font-bold text-white">{m.value}</p>
+              <p style={{ fontSize: 14, fontWeight: 700, color: "#ffffff" }}>{m.value}</p>
             </div>
           ))}
         </div>
       </div>
 
       {/* ---- Bottom section ---- */}
-      <div className="flex flex-col items-center gap-3 px-4 pb-4 md:px-6 md:pb-6">
-        {/* Description */}
-        <p
-          className="max-w-[600px] rounded-lg bg-black/40 px-4 py-2 text-center text-xs leading-relaxed text-gray-300 backdrop-blur-sm"
-          data-testid="bio-sim-description"
-        >
-          {meta.description}
-        </p>
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 12, padding: "0 16px 16px" }}>
+        {/* Narration overlay (replaces static description) */}
+        {narrationEnabled && segments.length > 0 ? (
+          <NarrationOverlay
+            segments={segments}
+            progress={sceneProgress}
+            color={meta.color}
+          />
+        ) : (
+          <p
+            style={{
+              maxWidth: 600,
+              borderRadius: 10,
+              backgroundColor: "rgba(0,0,0,0.5)",
+              backdropFilter: "blur(8px)",
+              padding: "8px 16px",
+              textAlign: "center",
+              fontSize: 12,
+              lineHeight: 1.6,
+              color: "#d1d5db",
+            }}
+            data-testid="bio-sim-description"
+          >
+            {meta.description}
+          </p>
+        )}
 
         {/* Navigation bar */}
         <div
-          className="pointer-events-auto flex items-center gap-2 rounded-full bg-black/50 px-3 py-2 backdrop-blur-sm"
+          className="pointer-events-auto"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 8,
+            borderRadius: 999,
+            backgroundColor: "rgba(0,0,0,0.5)",
+            backdropFilter: "blur(8px)",
+            padding: "8px 12px",
+          }}
           data-testid="bio-sim-nav"
         >
-          {/* Prev button */}
+          {/* Prev */}
           <button
             onClick={onPrev}
             disabled={sceneIndex === 0}
@@ -106,7 +155,7 @@ export default function BioSimUI({
               fontSize: 10,
               fontWeight: 700,
               letterSpacing: "0.05em",
-              textTransform: "uppercase" as const,
+              textTransform: "uppercase",
               cursor: "pointer",
               opacity: sceneIndex === 0 ? 0.3 : 1,
             }}
@@ -133,7 +182,7 @@ export default function BioSimUI({
                     fontSize: 10,
                     fontWeight: 700,
                     letterSpacing: "0.05em",
-                    textTransform: "uppercase" as const,
+                    textTransform: "uppercase",
                     cursor: "pointer",
                     backgroundColor: isActive ? meta.color : "transparent",
                     color: isActive ? "#000" : "rgba(255,255,255,0.5)",
@@ -149,7 +198,7 @@ export default function BioSimUI({
             })}
           </div>
 
-          {/* Next button */}
+          {/* Next */}
           <button
             onClick={onNext}
             disabled={sceneIndex === sceneCount - 1}
@@ -164,7 +213,7 @@ export default function BioSimUI({
               fontSize: 10,
               fontWeight: 700,
               letterSpacing: "0.05em",
-              textTransform: "uppercase" as const,
+              textTransform: "uppercase",
               cursor: "pointer",
               opacity: sceneIndex === sceneCount - 1 ? 0.3 : 1,
             }}
@@ -175,9 +224,9 @@ export default function BioSimUI({
           </button>
 
           {/* Divider */}
-          <div style={{ width: 1, height: 20, backgroundColor: "rgba(255,255,255,0.2)", margin: "0 6px" }} />
+          <div style={{ width: 1, height: 20, backgroundColor: "rgba(255,255,255,0.2)", margin: "0 4px" }} />
 
-          {/* Autoplay toggle */}
+          {/* Play/Pause */}
           <button
             onClick={onToggleAutoplay}
             style={{
@@ -191,7 +240,7 @@ export default function BioSimUI({
               fontSize: 10,
               fontWeight: 700,
               letterSpacing: "0.05em",
-              textTransform: "uppercase" as const,
+              textTransform: "uppercase",
               cursor: "pointer",
             }}
             aria-label={autoplay ? "Pause autoplay" : "Start autoplay"}
@@ -199,16 +248,66 @@ export default function BioSimUI({
           >
             {autoplay ? "PAUSE" : "PLAY"}
           </button>
+
+          {/* Divider */}
+          <div style={{ width: 1, height: 20, backgroundColor: "rgba(255,255,255,0.2)", margin: "0 4px" }} />
+
+          {/* Mute/Unmute */}
+          <button
+            onClick={onToggleMute}
+            style={{
+              height: 32,
+              paddingLeft: 10,
+              paddingRight: 10,
+              borderRadius: 16,
+              border: "1px solid rgba(255,255,255,0.3)",
+              color: isMuted ? "rgba(255,255,255,0.4)" : "#ffffff",
+              backgroundColor: "transparent",
+              fontSize: 10,
+              fontWeight: 700,
+              letterSpacing: "0.05em",
+              textTransform: "uppercase",
+              cursor: "pointer",
+            }}
+            aria-label={isMuted ? "Unmute narration" : "Mute narration"}
+            data-testid="bio-sim-mute"
+          >
+            {isMuted ? "UNMUTE" : "MUTE"}
+          </button>
+
+          {/* Narration toggle */}
+          <button
+            onClick={onToggleNarration}
+            style={{
+              height: 32,
+              paddingLeft: 10,
+              paddingRight: 10,
+              borderRadius: 16,
+              border: "1px solid rgba(255,255,255,0.3)",
+              color: narrationEnabled ? "#ffffff" : "rgba(255,255,255,0.4)",
+              backgroundColor: "transparent",
+              fontSize: 10,
+              fontWeight: 700,
+              letterSpacing: "0.05em",
+              textTransform: "uppercase",
+              cursor: "pointer",
+            }}
+            aria-label={narrationEnabled ? "Disable narration text" : "Enable narration text"}
+            data-testid="bio-sim-narration-toggle"
+          >
+            {narrationEnabled ? "TEXT ON" : "TEXT OFF"}
+          </button>
         </div>
       </div>
 
       {/* ---- Progress bar ---- */}
-      <div className="absolute bottom-0 left-0 h-[2px] w-full bg-white/5">
+      <div style={{ position: "absolute", bottom: 0, left: 0, width: "100%", height: 2, backgroundColor: "rgba(255,255,255,0.05)" }}>
         <div
-          className="h-full transition-all duration-[600ms] ease-out"
           style={{
+            height: "100%",
             width: `${((sceneIndex + 1) / sceneCount) * 100}%`,
             backgroundColor: meta.color,
+            transition: "width 0.6s ease, background-color 0.6s ease",
           }}
           data-testid="bio-sim-progress"
         />

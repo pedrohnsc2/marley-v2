@@ -20,6 +20,12 @@ export interface SceneConfig {
 
 export type SceneBuilder = () => SceneConfig;
 
+export interface NarrationSegment {
+  text: string;
+  startPct: number;
+  durationPct: number;
+}
+
 export interface BioSimData {
   molecule: {
     name: string;
