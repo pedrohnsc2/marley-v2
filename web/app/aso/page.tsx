@@ -1,4 +1,4 @@
-import { loadModuleJson } from "@/lib/data-loader";
+import { loadModuleJson, safeLoadModuleJson } from "@/lib/data-loader";
 import KpiCard from "@/components/kpi-card";
 import BarChart from "@/components/charts/bar-chart";
 
@@ -6,30 +6,33 @@ import BarChart from "@/components/charts/bar-chart";
 /*  Types                                                              */
 /* ------------------------------------------------------------------ */
 
-interface Molecule {
-  name: string;
-  sequence: string;
-  length: number;
-  target: string;
-  target_sequence: string;
-  target_region: string;
-  known_dg_kcal: number;
-  known_tm_celsius: number;
+interface DimensionDetails {
+  wt_dg_kcal?: number;
+  wt_tm_celsius?: number;
+  [key: string]: unknown;
 }
 
-interface ModuleAssessment {
-  module: string;
-  verdict: string;
+interface DimensionAssessment {
+  dimension: string;
   score: number;
+  max_score: number;
+  verdict: string;
   notes: string[];
+  details: DimensionDetails;
 }
 
-interface MathCertificate {
-  molecule: Molecule;
-  verdict: string;
-  confidence: string;
-  overall_score: number;
-  module_assessments: ModuleAssessment[];
+interface MathCertificateV2 {
+  molecule: {
+    name: string;
+    type: string;
+    length: number;
+    target: string;
+    target_region: string;
+  };
+  composite_score: number;
+  max_score: number;
+  overall_verdict: string;
+  dimension_assessments: DimensionAssessment[];
 }
 
 interface DeliveryModuleResult {
@@ -136,17 +139,21 @@ function ScoreBar({ score }: { score: number }) {
 /* ------------------------------------------------------------------ */
 
 export default function AsoPage() {
-  const cert = loadModuleJson("aso_math", "math_certificate.json") as MathCertificate;
+  const cert = safeLoadModuleJson("aso_math_reports", "math_certificate_v2.json") as MathCertificateV2 | null;
   const delivery = loadModuleJson("aso_delivery", "delivery_report.json") as DeliveryReport;
 
-  const { molecule, module_assessments } = cert;
+  if (!cert) return <div className="p-6 text-red-500">math_certificate_v2.json não encontrado.</div>;
+
+  const { molecule, dimension_assessments } = cert;
+  const thermDetails = dimension_assessments[0]?.details ?? {};
+  const dg = thermDetails.wt_dg_kcal ?? 0;
+  const tm = thermDetails.wt_tm_celsius ?? 0;
+  const overallScore = Math.round((cert.composite_score / cert.max_score) * 100);
 
   /* Bar chart data */
-  const chartCategories = module_assessments.map(
-    (m) => MODULE_NAMES[m.module] ?? m.module,
-  );
+  const chartCategories = dimension_assessments.map((m) => m.dimension.replace(/^\d+\.\s*/, "").split(" ").slice(0, 2).join(" "));
   const chartSeries = [
-    { name: "Score", data: module_assessments.map((m) => m.score) },
+    { name: "Score", data: dimension_assessments.map((m) => Math.round((m.score / m.max_score) * 100)) },
   ];
 
   return (
@@ -169,14 +176,14 @@ export default function AsoPage() {
       <div className="mb-6 grid grid-cols-2 gap-4 lg:grid-cols-4">
         <KpiCard
           title="Math Score"
-          value={`${cert.overall_score}/100`}
-          subtitle={cert.verdict.replace(/_/g, " ")}
+          value={`${cert.composite_score}/${cert.max_score}`}
+          subtitle={cert.overall_verdict}
           accentColor="bg-rose-500"
         />
         <KpiCard
           title="Binding Energy"
-          value={`${molecule.known_dg_kcal} kcal/mol`}
-          subtitle={`Tm ${molecule.known_tm_celsius} C`}
+          value={`${dg} kcal/mol`}
+          subtitle={`Tm ${tm} °C`}
           accentColor="bg-pink-500"
         />
         <KpiCard
@@ -198,31 +205,18 @@ export default function AsoPage() {
         <div className="border-b border-gray-100 px-5 py-4">
           <h2 className="text-sm font-semibold text-gray-900">Molecule: {molecule.name}</h2>
           <p className="mt-0.5 text-xs text-gray-400">
-            {molecule.length}-mer antisense oligonucleotide with LNA gapmer design
+            {molecule.type}
           </p>
         </div>
         <div className="px-5 py-5">
-          {/* Sequence display */}
-          <div className="mb-5 rounded-lg bg-rose-50 px-4 py-3">
-            <p className="mb-1 text-xs font-semibold uppercase tracking-wider text-rose-400">
-              5&apos; &rarr; 3&apos; Sequence
-            </p>
-            <p
-              className="font-mono text-lg font-bold tracking-widest text-rose-700"
-              data-testid="aso-sequence"
-            >
-              {molecule.sequence}
-            </p>
-          </div>
-
           {/* Properties grid */}
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
             {[
               { label: "Target", value: molecule.target },
               { label: "Target Region", value: molecule.target_region },
               { label: "Length", value: `${molecule.length} nt` },
-              { label: "dG", value: `${molecule.known_dg_kcal} kcal/mol` },
-              { label: "Tm", value: `${molecule.known_tm_celsius} C` },
+              { label: "dG", value: `${dg} kcal/mol` },
+              { label: "Tm", value: `${tm} °C` },
             ].map((prop) => (
               <div key={prop.label} className="rounded-lg bg-gray-50 p-3">
                 <p className="text-xs text-gray-400">{prop.label}</p>
@@ -238,7 +232,7 @@ export default function AsoPage() {
         <div className="border-b border-gray-100 px-5 py-4">
           <h2 className="text-sm font-semibold text-gray-900">Validation Modules</h2>
           <p className="mt-0.5 text-xs text-gray-400">
-            5 mathematical validation modules &mdash; overall score {cert.overall_score}/100
+            {dimension_assessments.length} mathematical validation modules &mdash; composite score {cert.composite_score}/{cert.max_score}
           </p>
         </div>
         <div className="overflow-x-auto">
@@ -253,15 +247,15 @@ export default function AsoPage() {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-50">
-              {module_assessments.map((m, i) => (
-                <tr key={m.module} className="transition-colors hover:bg-gray-50">
+              {dimension_assessments.map((m, i) => (
+                <tr key={m.dimension} className="transition-colors hover:bg-gray-50">
                   <td className="px-4 py-2.5 font-mono text-xs text-gray-300">{i + 1}</td>
                   <td className="px-4 py-2.5 text-sm font-medium text-gray-800">
-                    {MODULE_NAMES[m.module] ?? m.module}
+                    {m.dimension.replace(/^\d+\.\s*/, "")}
                   </td>
                   <td className="px-4 py-2.5">{verdictBadge(m.verdict)}</td>
                   <td className="px-4 py-2.5">
-                    <ScoreBar score={m.score} />
+                    <ScoreBar score={Math.round((m.score / m.max_score) * 100)} />
                   </td>
                   <td className="max-w-sm px-4 py-2.5 text-xs text-gray-500">
                     {m.notes.length > 0 ? truncate(m.notes[0], 120) : "\u2014"}

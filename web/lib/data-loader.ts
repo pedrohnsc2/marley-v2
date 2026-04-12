@@ -6,6 +6,7 @@ const RESULTS_DIR = path.join(process.cwd(), "..", "results");
 const MODULE_DIRS: Record<string, string> = {
   results: RESULTS_DIR,
   aso_math: path.join(process.cwd(), "..", "aso_math", "results"),
+  aso_math_reports: path.join(process.cwd(), "..", "aso_math", "reports", "results"),
   aso_delivery: path.join(process.cwd(), "..", "aso_delivery", "results"),
   marley_ai: path.join(process.cwd(), "..", "marley_ai", "results"),
   qaoa: path.join(process.cwd(), "..", "mrl_quantum", "results", "qaoa"),
