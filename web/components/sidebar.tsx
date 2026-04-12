@@ -3,6 +3,9 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+import Lottie from "lottie-react";
+import dogNoseAnimation from "@/public/dog-nose.json";
+
 interface SidebarProps {
   collapsed: boolean;
   onToggle: () => void;
@@ -129,21 +132,20 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
         style={{ borderBottom: "1px solid var(--app-sidebar-border)" }}
       >
         <div
-          className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl text-sm font-bold shadow-sm"
-          style={{
-            backgroundColor: "var(--app-primary)",
-            color: "var(--app-primary-tx)",
-          }}
+          className="flex h-9 w-9 flex-shrink-0 items-center justify-center"
+          style={{ filter: "var(--app-logo-filter)" }}
         >
-          M
+          <Lottie
+            animationData={dogNoseAnimation}
+            loop
+            autoplay
+            style={{ width: 36, height: 36 }}
+          />
         </div>
         {!collapsed && (
-          <div className="ml-3 overflow-hidden">
-            <p className="text-sm font-bold leading-tight" style={{ color: "var(--app-text)" }}>
+          <div className="ml-3 flex items-center overflow-hidden">
+            <p className="text-sm font-bold" style={{ color: "var(--app-sidebar-text-strong, var(--app-text))" }}>
               Marley
-            </p>
-            <p className="text-xs truncate" style={{ color: "var(--app-text-3)" }}>
-              CVL Pipeline
             </p>
           </div>
         )}

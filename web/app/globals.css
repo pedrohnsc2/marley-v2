@@ -34,6 +34,8 @@
   --app-badge-warn-bg:     #FEF3C7;
   --app-badge-warn-tx:     #92400E;
   --app-section-label:     #6B7280;
+  --app-logo-filter:       none;
+  --app-sidebar-text-strong: #111827;
 }
 
 /* ─── THEME 2 DARK — LimeDock Dark ─── */
@@ -68,6 +70,9 @@
   --app-badge-warn-bg:     #2D1E00;
   --app-badge-warn-tx:     #F59E0B;
   --app-section-label:     #6B7280;
+  /* converte preto → #B4F740 (lime) */
+  --app-logo-filter:       brightness(0) saturate(100%) invert(84%) sepia(40%) saturate(700%) hue-rotate(40deg) brightness(108%) contrast(101%);
+  --app-sidebar-text-strong: #F3F4F6;
 }
 
 /* ─── THEME 2 LIGHT — LimeDock Light ─── */
@@ -102,6 +107,8 @@
   --app-badge-warn-bg:     #FEF3C7;
   --app-badge-warn-tx:     #92400E;
   --app-section-label:     #6B7280;
+  --app-logo-filter:       none;
+  --app-sidebar-text-strong: #080D16;
 }
 
 /* ─── GLOBAL BASE ─── */
