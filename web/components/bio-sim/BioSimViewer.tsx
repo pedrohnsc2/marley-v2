@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState, useEffect, useCallback } from "react";
+import { useRouter } from "next/navigation";
 import * as THREE from "three";
 
 import type { SceneConfig } from "./core/types";
@@ -17,13 +18,13 @@ import { sceneBuilders } from "./scenes";
 import { NARRATION_SCRIPTS } from "./narration/narration-scripts";
 import { useNarrationAudio } from "./narration/useNarrationAudio";
 import BioSimUI from "./BioSimUI";
-import NarrationOverlay from "./narration/NarrationOverlay";
 
 const SCENE_COUNT = 8;
 const AUTOPLAY_INTERVAL_MS = 12_000;
 const CAMERA_LERP_ALPHA = 0.04;
 
 export default function BioSimViewer() {
+  const router = useRouter();
   const containerRef = useRef<HTMLDivElement>(null);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
   const sceneRef = useRef<THREE.Scene | null>(null);
@@ -43,6 +44,15 @@ export default function BioSimViewer() {
   const [narrationEnabled, setNarrationEnabled] = useState(true);
 
   const narrationAudio = useNarrationAudio(sceneIndex);
+
+  // ---- ESC key to exit ----
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") router.push("/aso");
+    };
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [router]);
 
   // ---- Build and transition to a scene by index ----
   const transitionTo = useCallback((index: number) => {

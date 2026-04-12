@@ -1,5 +1,9 @@
 "use client";
 
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import Lottie from "lottie-react";
+import dogNoseAnimation from "@/public/dog-nose.json";
 import { STAGE_METAS } from "./core/constants";
 import { NARRATION_SCRIPTS } from "./narration/narration-scripts";
 import NarrationOverlay from "./narration/NarrationOverlay";
@@ -33,6 +37,14 @@ export default function BioSimUI({
   onPrev,
   onGoTo,
 }: BioSimUIProps) {
+  const [showEscHint, setShowEscHint] = useState(true);
+
+  // Auto-fade ESC hint after 5 seconds
+  useEffect(() => {
+    const timer = setTimeout(() => setShowEscHint(false), 5000);
+    return () => clearTimeout(timer);
+  }, []);
+
   const meta = STAGE_METAS[sceneIndex];
   if (!meta) return null;
 
@@ -46,16 +58,55 @@ export default function BioSimUI({
     >
       {/* ---- Top row ---- */}
       <div className="flex items-start justify-between p-4 md:p-6">
-        {/* Top-left: stage info */}
-        <div
-          style={{
-            borderRadius: 8,
-            backgroundColor: "rgba(0,0,0,0.4)",
-            backdropFilter: "blur(8px)",
-            padding: "12px 16px",
-          }}
-          data-testid="bio-sim-stage-info"
-        >
+        {/* Top-left: logo + stage info */}
+        <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+          {/* Marley logo — back to /aso */}
+          <Link
+            href="/aso"
+            className="pointer-events-auto"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 8,
+              width: "fit-content",
+              padding: "6px 12px 6px 6px",
+              borderRadius: 10,
+              backgroundColor: "rgba(0,0,0,0.4)",
+              backdropFilter: "blur(8px)",
+              border: "1px solid rgba(255,255,255,0.08)",
+              opacity: 0.7,
+              transition: "opacity 0.2s ease, border-color 0.2s ease",
+              textDecoration: "none",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.opacity = "1";
+              e.currentTarget.style.borderColor = "rgba(255,255,255,0.2)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.opacity = "0.7";
+              e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)";
+            }}
+            aria-label="Back to ASO Therapy"
+            data-testid="bio-sim-back"
+          >
+            <div style={{ width: 24, height: 24 }}>
+              <Lottie animationData={dogNoseAnimation} loop autoplay style={{ width: 24, height: 24 }} />
+            </div>
+            <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.05em", textTransform: "uppercase", color: "rgba(255,255,255,0.6)" }}>
+              Marley
+            </span>
+          </Link>
+
+          {/* Stage info */}
+          <div
+            style={{
+              borderRadius: 8,
+              backgroundColor: "rgba(0,0,0,0.4)",
+              backdropFilter: "blur(8px)",
+              padding: "12px 16px",
+            }}
+            data-testid="bio-sim-stage-info"
+          >
           <p style={{ fontSize: 10, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", color: "#9ca3af" }}>
             Stage {sceneIndex + 1}/{sceneCount}
           </p>
@@ -65,6 +116,7 @@ export default function BioSimUI({
             {meta.name}
           </h2>
           <p style={{ marginTop: 2, fontSize: 12, color: "#9ca3af" }}>{meta.timeTag}</p>
+          </div>
         </div>
 
         {/* Top-right: metrics panel */}
@@ -299,6 +351,25 @@ export default function BioSimUI({
           </button>
         </div>
       </div>
+
+      {/* ---- ESC hint ---- */}
+      <span
+        style={{
+          position: "absolute",
+          bottom: 20,
+          right: 20,
+          fontSize: 10,
+          fontWeight: 600,
+          letterSpacing: "0.08em",
+          textTransform: "uppercase",
+          color: "rgba(255,255,255,0.25)",
+          opacity: showEscHint ? 1 : 0,
+          transition: "opacity 2s ease",
+          pointerEvents: "none",
+        }}
+      >
+        ESC to exit
+      </span>
 
       {/* ---- Progress bar ---- */}
       <div style={{ position: "absolute", bottom: 0, left: 0, width: "100%", height: 2, backgroundColor: "rgba(255,255,255,0.05)" }}>
