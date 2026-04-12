@@ -9,6 +9,11 @@ const breadcrumbMap: Record<string, string> = {
   "/drug": "Drug Targets",
   "/docking": "Molecular Docking",
   "/simulation": "Immune Simulation",
+  "/platforms": "Vaccine Platforms",
+  "/aso": "ASO Therapy",
+  "/rna": "RNA Entropy",
+  "/quantum": "Quantum Computing",
+  "/ai": "AI / ML Engine",
   "/settings": "Settings",
 };
 

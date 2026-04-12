@@ -8,59 +8,134 @@ interface SidebarProps {
   onToggle: () => void;
 }
 
-const navItems = [
+interface NavGroup {
+  label: string;
+  items: { href: string; label: string; icon: React.ReactNode }[];
+}
+
+const navGroups: NavGroup[] = [
   {
-    href: "/",
-    label: "Dashboard",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="h-5 w-5 flex-shrink-0">
-        <rect x="3" y="3" width="7" height="7" rx="1" />
-        <rect x="14" y="3" width="7" height="7" rx="1" />
-        <rect x="3" y="14" width="7" height="7" rx="1" />
-        <rect x="14" y="14" width="7" height="7" rx="1" />
-      </svg>
-    ),
+    label: "Discovery",
+    items: [
+      {
+        href: "/",
+        label: "Dashboard",
+        icon: (
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="h-5 w-5 flex-shrink-0">
+            <rect x="3" y="3" width="7" height="7" rx="1" />
+            <rect x="14" y="3" width="7" height="7" rx="1" />
+            <rect x="3" y="14" width="7" height="7" rx="1" />
+            <rect x="14" y="14" width="7" height="7" rx="1" />
+          </svg>
+        ),
+      },
+      {
+        href: "/vaccine",
+        label: "Vaccine",
+        icon: (
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="h-5 w-5 flex-shrink-0">
+            <path d="M9 3h6v4H9z" /><path d="M12 7v14" />
+            <path d="M8 11h8" /><path d="M10 15h4" />
+          </svg>
+        ),
+      },
+      {
+        href: "/drug",
+        label: "Drug Targets",
+        icon: (
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="h-5 w-5 flex-shrink-0">
+            <circle cx="12" cy="12" r="9" /><path d="M12 3v18M3 12h18" />
+          </svg>
+        ),
+      },
+      {
+        href: "/docking",
+        label: "Docking",
+        icon: (
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="h-5 w-5 flex-shrink-0">
+            <circle cx="12" cy="12" r="3" />
+            <circle cx="5" cy="6" r="2" /><circle cx="19" cy="6" r="2" />
+            <circle cx="5" cy="18" r="2" /><circle cx="19" cy="18" r="2" />
+            <path d="M7 7l3 3M14 14l3 3M17 7l-3 3M10 14l-3 3" />
+          </svg>
+        ),
+      },
+      {
+        href: "/simulation",
+        label: "Simulation",
+        icon: (
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="h-5 w-5 flex-shrink-0">
+            <polyline points="3,17 8,12 13,15 21,7" />
+            <path d="M21 7v5M21 7h-5" />
+          </svg>
+        ),
+      },
+      {
+        href: "/platforms",
+        label: "Platforms",
+        icon: (
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="h-5 w-5 flex-shrink-0">
+            <path d="M4 6h16M4 12h16M4 18h16" />
+            <circle cx="8" cy="6" r="1.5" fill="currentColor" />
+            <circle cx="12" cy="12" r="1.5" fill="currentColor" />
+            <circle cx="16" cy="18" r="1.5" fill="currentColor" />
+          </svg>
+        ),
+      },
+    ],
   },
   {
-    href: "/vaccine",
-    label: "Vaccine",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="h-5 w-5 flex-shrink-0">
-        <path d="M9 3h6v4H9z" /><path d="M12 7v14" />
-        <path d="M8 11h8" /><path d="M10 15h4" />
-      </svg>
-    ),
+    label: "Therapeutics",
+    items: [
+      {
+        href: "/aso",
+        label: "ASO Therapy",
+        icon: (
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="h-5 w-5 flex-shrink-0">
+            <path d="M4 4l16 16M4 20L20 4" />
+            <circle cx="4" cy="4" r="2" /><circle cx="20" cy="20" r="2" />
+            <circle cx="4" cy="20" r="2" /><circle cx="20" cy="4" r="2" />
+          </svg>
+        ),
+      },
+      {
+        href: "/rna",
+        label: "RNA Entropy",
+        icon: (
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="h-5 w-5 flex-shrink-0">
+            <path d="M3 12c3-6 6 6 9 0s6 6 9 0" />
+            <path d="M3 17c3-6 6 6 9 0s6 6 9 0" />
+          </svg>
+        ),
+      },
+      {
+        href: "/quantum",
+        label: "Quantum",
+        icon: (
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="h-5 w-5 flex-shrink-0">
+            <circle cx="12" cy="12" r="3" />
+            <ellipse cx="12" cy="12" rx="10" ry="4" />
+            <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(60 12 12)" />
+            <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(120 12 12)" />
+          </svg>
+        ),
+      },
+    ],
   },
   {
-    href: "/drug",
-    label: "Drug Targets",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="h-5 w-5 flex-shrink-0">
-        <circle cx="12" cy="12" r="9" /><path d="M12 3v18M3 12h18" />
-      </svg>
-    ),
-  },
-  {
-    href: "/docking",
-    label: "Docking",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="h-5 w-5 flex-shrink-0">
-        <circle cx="12" cy="12" r="3" />
-        <circle cx="5" cy="6" r="2" /><circle cx="19" cy="6" r="2" />
-        <circle cx="5" cy="18" r="2" /><circle cx="19" cy="18" r="2" />
-        <path d="M7 7l3 3M14 14l3 3M17 7l-3 3M10 14l-3 3" />
-      </svg>
-    ),
-  },
-  {
-    href: "/simulation",
-    label: "Simulation",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="h-5 w-5 flex-shrink-0">
-        <polyline points="3,17 8,12 13,15 21,7" />
-        <path d="M21 7v5M21 7h-5" />
-      </svg>
-    ),
+    label: "AI / ML",
+    items: [
+      {
+        href: "/ai",
+        label: "AI Engine",
+        icon: (
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="h-5 w-5 flex-shrink-0">
+            <path d="M12 2a4 4 0 0 1 4 4v2a4 4 0 0 1-8 0V6a4 4 0 0 1 4-4z" />
+            <path d="M8 14h8l2 8H6l2-8z" />
+          </svg>
+        ),
+      },
+    ],
   },
 ];
 
@@ -80,7 +155,7 @@ const bottomItems = [
 export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
   const pathname = usePathname();
 
-  const NavLink = ({ item }: { item: typeof navItems[0] }) => {
+  const NavLink = ({ item }: { item: NavGroup["items"][0] }) => {
     const isActive =
       item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
     return (
@@ -167,21 +242,28 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
 
       {/* Main nav */}
       <nav className="flex-1 overflow-y-auto px-3 py-4">
-        {!collapsed && (
-          <p
-            className="mb-2 px-3 text-xs font-semibold uppercase tracking-wider"
-            style={{ color: "var(--app-section-label)" }}
-          >
-            Pipeline
-          </p>
-        )}
-        <ul className="space-y-1">
-          {navItems.map((item) => (
-            <li key={item.href}>
-              <NavLink item={item} />
-            </li>
-          ))}
-        </ul>
+        {navGroups.map((group, gi) => (
+          <div key={group.label} className={gi > 0 ? "mt-5" : ""}>
+            {!collapsed && (
+              <p
+                className="mb-2 px-3 text-xs font-semibold uppercase tracking-wider"
+                style={{ color: "var(--app-section-label)" }}
+              >
+                {group.label}
+              </p>
+            )}
+            {collapsed && gi > 0 && (
+              <div className="mx-2 mb-2 border-t" style={{ borderColor: "var(--app-sidebar-border)" }} />
+            )}
+            <ul className="space-y-1">
+              {group.items.map((item) => (
+                <li key={item.href}>
+                  <NavLink item={item} />
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
       </nav>
 
       {/* Bottom items (Settings) */}
