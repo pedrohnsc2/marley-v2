@@ -2,13 +2,263 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #0a0a0a;
-  --foreground: #ededed;
+/* ─── THEME 1 — Tailhub Light ─── */
+[data-theme="theme1"] {
+  --app-bg:                #F3F4F6;
+  --app-surface:           #FFFFFF;
+  --app-surface-2:         #F9FAFB;
+  --app-sidebar-bg:        #FFFFFF;
+  --app-sidebar-border:    #E5E7EB;
+  --app-sidebar-text:      #6B7280;
+  --app-sidebar-active-bg: #3B82F6;
+  --app-sidebar-active-tx: #FFFFFF;
+  --app-sidebar-hover-bg:  #F3F4F6;
+  --app-header-bg:         #FFFFFF;
+  --app-header-border:     #E5E7EB;
+  --app-text:              #111827;
+  --app-text-2:            #6B7280;
+  --app-text-3:            #9CA3AF;
+  --app-border:            #E5E7EB;
+  --app-primary:           #3B82F6;
+  --app-primary-tx:        #FFFFFF;
+  --app-primary-light:     #EFF6FF;
+  --app-card-shadow:       0 1px 3px 0 rgb(0 0 0 / 0.07), 0 1px 2px -1px rgb(0 0 0 / 0.07);
+  --app-card-radius:       12px;
+  --app-table-head-bg:     #F9FAFB;
+  --app-row-hover:         #F9FAFB;
+  --app-input-bg:          #F9FAFB;
+  --app-input-border:      #E5E7EB;
+  --app-accent-bar:        #3B82F6;
+  --app-badge-success-bg:  #DCFCE7;
+  --app-badge-success-tx:  #15803D;
+  --app-badge-warn-bg:     #FEF3C7;
+  --app-badge-warn-tx:     #92400E;
+  --app-section-label:     #6B7280;
+  --app-logo-filter:       none;
+  --app-sidebar-text-strong: #111827;
 }
 
+/* ─── THEME 2 DARK — LimeDock Dark ─── */
+[data-theme="theme2-dark"] {
+  --app-bg:                #080D16;
+  --app-surface:           #0D1526;
+  --app-surface-2:         #111D33;
+  --app-sidebar-bg:        #080D16;
+  --app-sidebar-border:    #1C2840;
+  --app-sidebar-text:      #9CA3AF;
+  --app-sidebar-active-bg: #B4F740;
+  --app-sidebar-active-tx: #080D16;
+  --app-sidebar-hover-bg:  #1C2840;
+  --app-header-bg:         #080D16;
+  --app-header-border:     #1C2840;
+  --app-text:              #F3F4F6;
+  --app-text-2:            #9CA3AF;
+  --app-text-3:            #6B7280;
+  --app-border:            #1C2840;
+  --app-primary:           #B4F740;
+  --app-primary-tx:        #080D16;
+  --app-primary-light:     #1A2900;
+  --app-card-shadow:       none;
+  --app-card-radius:       12px;
+  --app-table-head-bg:     #0D1526;
+  --app-row-hover:         #111D33;
+  --app-input-bg:          #0D1526;
+  --app-input-border:      #1C2840;
+  --app-accent-bar:        #B4F740;
+  --app-badge-success-bg:  #1A2900;
+  --app-badge-success-tx:  #B4F740;
+  --app-badge-warn-bg:     #2D1E00;
+  --app-badge-warn-tx:     #F59E0B;
+  --app-section-label:     #6B7280;
+  /* converte preto → #B4F740 (lime) */
+  --app-logo-filter:       brightness(0) saturate(100%) invert(84%) sepia(40%) saturate(700%) hue-rotate(40deg) brightness(108%) contrast(101%);
+  --app-sidebar-text-strong: #F3F4F6;
+}
+
+/* ─── THEME 2 LIGHT — LimeDock Light ─── */
+[data-theme="theme2-light"] {
+  --app-bg:                #F3F4F6;
+  --app-surface:           #FFFFFF;
+  --app-surface-2:         #F9FAFB;
+  --app-sidebar-bg:        #FFFFFF;
+  --app-sidebar-border:    #E5E7EB;
+  --app-sidebar-text:      #6B7280;
+  --app-sidebar-active-bg: #B4F740;
+  --app-sidebar-active-tx: #080D16;
+  --app-sidebar-hover-bg:  #F9FAFB;
+  --app-header-bg:         #FFFFFF;
+  --app-header-border:     #E5E7EB;
+  --app-text:              #080D16;
+  --app-text-2:            #6B7280;
+  --app-text-3:            #9CA3AF;
+  --app-border:            #E5E7EB;
+  --app-primary:           #B4F740;
+  --app-primary-tx:        #080D16;
+  --app-primary-light:     #F0FBD8;
+  --app-card-shadow:       0 1px 3px 0 rgb(0 0 0 / 0.07), 0 1px 2px -1px rgb(0 0 0 / 0.07);
+  --app-card-radius:       12px;
+  --app-table-head-bg:     #F9FAFB;
+  --app-row-hover:         #F9FAFB;
+  --app-input-bg:          #F9FAFB;
+  --app-input-border:      #E5E7EB;
+  --app-accent-bar:        #B4F740;
+  --app-badge-success-bg:  #F0FBD8;
+  --app-badge-success-tx:  #3D6800;
+  --app-badge-warn-bg:     #FEF3C7;
+  --app-badge-warn-tx:     #92400E;
+  --app-section-label:     #6B7280;
+  --app-logo-filter:       none;
+  --app-sidebar-text-strong: #080D16;
+}
+
+/* ─── GLOBAL BASE ─── */
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background-color: var(--app-bg);
+  color: var(--app-text);
   font-family: system-ui, -apple-system, sans-serif;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* ─── SEMANTIC UTILITY CLASSES ─── */
+.app-surface       { background-color: var(--app-surface); }
+.app-surface-2     { background-color: var(--app-surface-2); }
+.app-border        { border-color: var(--app-border) !important; }
+.app-text          { color: var(--app-text); }
+.app-text-2        { color: var(--app-text-2); }
+.app-text-3        { color: var(--app-text-3); }
+.app-divider       { border-color: var(--app-border); }
+
+/* Card */
+.app-card {
+  background-color: var(--app-surface);
+  border: 1px solid var(--app-border);
+  border-radius: var(--app-card-radius);
+  box-shadow: var(--app-card-shadow);
+}
+
+/* Table */
+.app-table-head { background-color: var(--app-table-head-bg); }
+.app-table-head th {
+  color: var(--app-text-2);
+  border-bottom: 1px solid var(--app-border);
+}
+.app-table-body tr { border-bottom: 1px solid var(--app-border); color: var(--app-text); }
+.app-table-body tr:hover { background-color: var(--app-row-hover); }
+.app-table-body td { color: var(--app-text); }
+
+/* Input */
+.app-input {
+  background-color: var(--app-input-bg);
+  border: 1px solid var(--app-input-border);
+  color: var(--app-text);
+}
+.app-input::placeholder { color: var(--app-text-3); }
+.app-input:focus { border-color: var(--app-primary); }
+
+/* Primary button */
+.app-btn-primary {
+  background-color: var(--app-primary);
+  color: var(--app-primary-tx);
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-weight: 500;
+  font-size: 14px;
+  transition: opacity 0.15s;
+}
+.app-btn-primary:hover { opacity: 0.88; }
+
+/* Badge */
+.app-badge-success { background-color: var(--app-badge-success-bg); color: var(--app-badge-success-tx); }
+.app-badge-warn    { background-color: var(--app-badge-warn-bg);    color: var(--app-badge-warn-tx); }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--app-border); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--app-text-3); }
+
+/* Theme transitions */
+* { transition: background-color 0.2s ease, border-color 0.2s ease, color 0.15s ease; }
+*[class*="transition"] { transition: none; }
+
+/* ─── GLOBAL PAGE OVERRIDES (cascade to all pages without editing them) ─── */
+
+/* Table headers */
+thead tr {
+  background-color: var(--app-table-head-bg) !important;
+  border-bottom-color: var(--app-border) !important;
+}
+thead th {
+  color: var(--app-text-2) !important;
+}
+
+/* Table rows */
+tbody tr {
+  border-bottom-color: var(--app-border) !important;
+}
+tbody tr:hover {
+  background-color: var(--app-row-hover) !important;
+}
+tbody td {
+  color: var(--app-text);
+}
+
+/* Table dividers */
+.divide-y > * {
+  border-color: var(--app-border) !important;
+}
+
+/* Rounded card sections (pages use bg-white and rounded-xl) */
+.rounded-xl,
+.rounded-lg {
+  background-color: inherit;
+}
+
+/* Force white cards to use surface variable */
+[class*="bg-white"] {
+  background-color: var(--app-surface) !important;
+}
+
+/* Gray backgrounds */
+[class*="bg-gray-50"] {
+  background-color: var(--app-surface-2) !important;
+}
+[class*="bg-gray-100"] {
+  background-color: var(--app-surface-2) !important;
+}
+
+/* Text overrides */
+[class*="text-gray-900"],
+[class*="text-gray-800"] {
+  color: var(--app-text) !important;
+}
+[class*="text-gray-500"],
+[class*="text-gray-600"],
+[class*="text-gray-400"] {
+  color: var(--app-text-2) !important;
+}
+[class*="text-gray-300"],
+[class*="text-gray-200"] {
+  color: var(--app-text-3) !important;
+}
+
+/* Border overrides */
+[class*="border-gray-100"],
+[class*="border-gray-200"] {
+  border-color: var(--app-border) !important;
+}
+
+/* Input overrides */
+input[type="text"] {
+  background-color: var(--app-input-bg) !important;
+  border-color: var(--app-input-border) !important;
+  color: var(--app-text) !important;
+}
+
+/* Page headings */
+h1, h2, h3 {
+  color: var(--app-text);
+}
+p {
+  color: inherit;
 }

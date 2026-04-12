@@ -9,10 +9,16 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@lottiefiles/react-lottie-player": "^3.6.0",
     "@supabase/supabase-js": "^2.45.0",
+    "@types/three": "^0.183.1",
+    "apexcharts": "^5.10.5",
+    "lottie-react": "^2.4.1",
     "next": "^14.2.0",
     "react": "^18.3.0",
-    "react-dom": "^18.3.0"
+    "react-apexcharts": "^2.1.0",
+    "react-dom": "^18.3.0",
+    "three": "^0.183.2"
   },
   "devDependencies": {
     "@types/node": "^20.14.0",
