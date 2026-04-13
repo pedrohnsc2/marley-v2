@@ -1,6 +1,9 @@
-import { loadJson } from "@/lib/data-loader";
+import dynamic from "next/dynamic";
+import { loadJson, safeLoadPdb } from "@/lib/data-loader";
 import KpiCard from "@/components/kpi-card";
 import BarChart from "@/components/charts/bar-chart";
+
+const MolViewer = dynamic(() => import("@/components/mol-viewer/MolViewer"), { ssr: false });
 
 interface ConstructEpitope {
   peptide: string;
@@ -39,6 +42,7 @@ function extractGeneName(rawName: string): string {
 
 export default function VaccinePage() {
   const construct = loadJson("construct/construct_card.json") as ConstructCard;
+  const vaccinePdb = safeLoadPdb("data/structures/marley_vaccine_construct.pdb");
 
   // Deduplicate epitopes by peptide sequence
   const uniqueEpitopes = [...new Map(construct.epitopes.map(e => [e.peptide, e])).values()];
@@ -174,12 +178,16 @@ export default function VaccinePage() {
             ESMFold-predicted structure of the {construct.protein_length_aa}-residue construct with {uniqueEpitopes.length} unique epitopes
           </p>
         </div>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/images/vaccine_3d.png"
-          alt="Predicted 3D structure of the multi-epitope vaccine construct via ESMFold"
-          className="w-full max-w-2xl"
-        />
+        {vaccinePdb ? (
+          <MolViewer pdbData={vaccinePdb} preset="protein-plddt" height={450} />
+        ) : (
+          /* eslint-disable-next-line @next/next/no-img-element */
+          <img
+            src="/images/vaccine_3d.png"
+            alt="Predicted 3D structure of the multi-epitope vaccine construct via ESMFold"
+            className="w-full max-w-2xl"
+          />
+        )}
       </div>
 
       {/* Construct details card */}

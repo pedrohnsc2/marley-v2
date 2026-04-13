@@ -76,6 +76,21 @@ export function loadMarkdown(filename: string): string {
   return fs.readFileSync(filePath, "utf-8");
 }
 
+const PROJECT_ROOT = path.join(process.cwd(), "..");
+
+export function loadPdb(relativePath: string): string {
+  const filePath = path.join(PROJECT_ROOT, relativePath);
+  return fs.readFileSync(filePath, "utf-8");
+}
+
+export function safeLoadPdb(relativePath: string): string | null {
+  try {
+    return loadPdb(relativePath);
+  } catch {
+    return null;
+  }
+}
+
 export function safeLoadJson(filename: string): unknown | null {
   try {
     return loadJson(filename);

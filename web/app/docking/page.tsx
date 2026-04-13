@@ -1,9 +1,18 @@
-import { loadCsv } from "@/lib/data-loader";
+import dynamic from "next/dynamic";
+import { loadCsv, safeLoadPdb } from "@/lib/data-loader";
 import KpiCard from "@/components/kpi-card";
 import BarChart from "@/components/charts/bar-chart";
 
+const MolViewer = dynamic(() => import("@/components/mol-viewer/MolViewer"), { ssr: false });
+
 export default function DockingPage() {
   const allScores = loadCsv("docking_scores.csv");
+
+  // Load 3D structure data for interactive viewers
+  const gmpsPdb = safeLoadPdb("data/structures/GMPS_A4IBM8.pdb");
+  const gmpsLigand = safeLoadPdb("data/docking/GMPS/CHEMBL36_out.pdbqt");
+  const tryrPdb = safeLoadPdb("data/structures/TryR_Q4Q457.pdb");
+  const mrl003Ligand = safeLoadPdb("data/docking/TryR/MRL-003_amide_tail_out.pdbqt");
   const top10 = allScores.slice(0, 10);
 
   const bestAffinity =
@@ -181,16 +190,34 @@ export default function DockingPage() {
             <h2 className="text-sm font-semibold text-gray-900">GMPS + Methotrexate Pose</h2>
             <p className="text-xs text-gray-400 mt-0.5">Best docking pose in the GMPS binding pocket · Rendered with PyMOL</p>
           </div>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/images/docking_3d.png" alt="Docking pose of methotrexate in the GMPS active site" className="w-full" />
+          {gmpsPdb ? (
+            <MolViewer
+              pdbData={gmpsPdb}
+              pdbqtData={gmpsLigand ?? undefined}
+              preset="docking"
+              height={400}
+            />
+          ) : (
+            /* eslint-disable-next-line @next/next/no-img-element */
+            <img src="/images/docking_3d.png" alt="Docking pose of methotrexate in the GMPS active site" className="w-full" />
+          )}
         </div>
         <div className="rounded-xl bg-white shadow-card overflow-hidden">
           <div className="border-b border-gray-100 px-5 py-4">
             <h2 className="text-sm font-semibold text-gray-900">TryR + MRL-003 Docking</h2>
             <p className="text-xs text-gray-400 mt-0.5">Custom molecule MRL-003 (-7.74 kcal/mol) in the TryR binding site</p>
           </div>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/images/tryr_mrl003.png" alt="MRL-003 docked into trypanothione reductase active site" className="w-full" />
+          {tryrPdb ? (
+            <MolViewer
+              pdbData={tryrPdb}
+              pdbqtData={mrl003Ligand ?? undefined}
+              preset="docking"
+              height={400}
+            />
+          ) : (
+            /* eslint-disable-next-line @next/next/no-img-element */
+            <img src="/images/tryr_mrl003.png" alt="MRL-003 docked into trypanothione reductase active site" className="w-full" />
+          )}
         </div>
       </div>
     </div>

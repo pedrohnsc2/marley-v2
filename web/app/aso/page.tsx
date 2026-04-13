@@ -1,7 +1,10 @@
 import Link from "next/link";
-import { loadModuleJson } from "@/lib/data-loader";
+import dynamic from "next/dynamic";
+import { loadModuleJson, safeLoadPdb } from "@/lib/data-loader";
 import KpiCard from "@/components/kpi-card";
 import BarChart from "@/components/charts/bar-chart";
+
+const MolViewer = dynamic(() => import("@/components/mol-viewer/MolViewer"), { ssr: false });
 
 /* ------------------------------------------------------------------ */
 /*  Types                                                              */
@@ -152,6 +155,7 @@ function ScoreBar({ score }: { score: number }) {
 export default function AsoPage() {
   const cert = loadModuleJson("aso_math", "math_certificate.json") as MathCertificate;
   const delivery = loadModuleJson("aso_delivery", "delivery_report.json") as DeliveryReport;
+  const duplexPdb = safeLoadPdb("marley_ai/05_rosettafold/structures/aso_sl_duplex_model.pdb");
 
   const { molecule, module_assessments } = cert;
 
@@ -229,6 +233,23 @@ export default function AsoPage() {
           Launch
         </span>
       </Link>
+
+      {/* ---- ASO:SL RNA 3D Structure ---- */}
+      {duplexPdb && (
+        <div className="mb-6 rounded-xl bg-white shadow-card overflow-hidden">
+          <div className="border-b border-gray-100 px-5 py-4">
+            <h2 className="text-sm font-semibold text-gray-900">ASO:SL RNA Duplex Structure</h2>
+            <p className="mt-0.5 text-xs text-gray-400">
+              RoseTTAFold-predicted A-form hybrid duplex — Chain A (SL RNA, teal) · Chain B (MRL-ASO-001, rose)
+            </p>
+          </div>
+          <MolViewer
+            pdbData={duplexPdb}
+            preset="nucleic-acid"
+            height={400}
+          />
+        </div>
+      )}
 
       {/* ---- Molecule card ---- */}
       <div className="mb-6 rounded-xl bg-white shadow-card overflow-hidden">
