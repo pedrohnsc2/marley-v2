@@ -11,7 +11,7 @@ authors = [
 keywords = ["antisense", "oligonucleotide", "ASO", "leishmaniasis", "neglected-tropical-diseases", "spliced-leader-RNA"]
 
 dependencies = [
-    "biopython>=1.83",
+    "biopython>=1.87",
     "requests>=2.31",
     "pandas>=2.2",
 ]
