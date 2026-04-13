@@ -1,0 +1,400 @@
+{
+  "common": {
+    "search": "Buscar...",
+    "researcher": "Pesquisador",
+    "admin": "Admin",
+    "version": "L. infantum · v2.0",
+    "marley": "Marley",
+    "cvlPipeline": "Pipeline LVC"
+  },
+  "nav": {
+    "pipeline": "Pipeline",
+    "therapeutics": "Terapêuticos",
+    "visualization": "Visualização",
+    "dashboard": "Painel",
+    "drugTargets": "Alvos Terapêuticos",
+    "vaccine": "Vacina",
+    "docking": "Acoplamento Molecular",
+    "asoTherapy": "Terapia ASO",
+    "platforms": "Plataformas",
+    "targetValidation": "Validação do Alvo",
+    "bioSim": "Bio-Sim 3D",
+    "methods": "Métodos",
+    "settings": "Configurações"
+  },
+  "breadcrumb": {
+    "home": "Painel",
+    "vaccine": "Construto Vacinal",
+    "drug": "Alvos Terapêuticos",
+    "docking": "Acoplamento Molecular",
+    "platforms": "Plataformas Vacinais",
+    "aso": "Terapia ASO",
+    "rna": "Validação do Alvo",
+    "bioSim": "Bio-Sim 3D",
+    "methods": "Métodos e Dados",
+    "settings": "Configurações"
+  },
+  "molViewer": {
+    "cartoon": "Cartoon",
+    "stick": "Bastão",
+    "surface": "Superfície",
+    "spin": "Girar",
+    "reset": "Resetar"
+  },
+  "bioSimUI": {
+    "prev": "ANT",
+    "next": "PROX",
+    "play": "INICIAR",
+    "pause": "PAUSAR",
+    "mute": "MUDO",
+    "unmute": "SOM",
+    "textOn": "TEXTO ON",
+    "textOff": "TEXTO OFF",
+    "escToExit": "ESC para sair",
+    "stage": "Etapa {current}/{total}",
+    "disclaimer": "Visualização computacional — não é dinâmica molecular"
+  },
+  "dashboard": {
+    "title": "Painel Marley",
+    "subtitle": "Vacinologia reversa e descoberta de fármacos para leishmaniose visceral canina.",
+    "sectionPipelineModules": "Módulos do Pipeline",
+    "sectionDiscovery": "Pipeline de Descoberta",
+    "sectionTherapeutics": "Terapêuticos",
+    "kpi": {
+      "proteinsAnalyzed": { "title": "Proteínas Analisadas", "subtitle": "Proteoma de L. infantum \u2192 {count} alvos" },
+      "asoValidation": { "title": "Validação ASO", "subtitle": "Certificado MRL-ASO-001" },
+      "drugTargets": { "title": "Alvos Terapêuticos", "subtitle": "Priorizados por druggability" },
+      "epitopes": { "title": "Epítopos", "subtitle": "{count} ligantes MHC-I únicos" },
+      "dockingHits": { "title": "Hits de Docking", "subtitle": "Compostos únicos testados" },
+      "asoTarget": { "title": "Alvo ASO", "subtitle": "Único de kinetoplastídeos" },
+      "bestDocking": { "title": "Melhor Docking", "subtitle": "CHEMBL92 em GMPS" },
+      "platforms": { "title": "Plataformas", "subtitle": "mRNA, E. coli, L. tarentolae" }
+    },
+    "pipeline": {
+      "vaccineConstruct": { "title": "Construto Vacinal", "description": "Vacina mRNA multi-epítopo com 11 epítopos, VaxiJen 0.3235", "track": "Descoberta" },
+      "drugTargets": { "title": "Alvos Terapêuticos", "description": "52 alvos druggable específicos do parasita em 4 vias", "track": "Descoberta" },
+      "molecularDocking": { "title": "Acoplamento Molecular", "description": "10 compostos triados em 5 alvos, melhor hit CHEMBL92 a -8.07 kcal/mol", "track": "Descoberta" },
+      "asoTherapy": { "title": "Terapia ASO", "description": "MRL-ASO-001 validado 90/100, 0 mutações de escape viáveis previstas", "track": "Terapêuticos" },
+      "targetValidation": { "title": "Validação do Alvo", "description": "Validação do alvo SL RNA — conservação, seletividade e análise de entropia em 500 transcritos", "track": "Terapêuticos" },
+      "vaccinePlatforms": { "title": "Plataformas Vacinais", "description": "3 sistemas de produção comparados em 6 dimensões", "track": "Terapêuticos" }
+    }
+  },
+  "vaccine": {
+    "title": "Construto Vacinal",
+    "subtitle": "Design de vacina mRNA multi-epítopo para leishmaniose visceral canina",
+    "badge": "v1-v2",
+    "kpi": {
+      "epitopes": { "title": "Epítopos", "subtitle": "ligantes MHC-I únicos (de {total} pares alelo-específicos)" },
+      "proteinLength": { "title": "Comprimento da Proteína", "subtitle": "{length} nt mRNA" },
+      "molWeight": { "title": "Peso Molecular", "subtitle": "pI {pi} \u00b7 GC {gc}%" },
+      "instabilityIndex": { "title": "Índice de Instabilidade", "subtitleStable": "Estável (< 40)", "subtitleUnstable": "Instável (\u2265 40)" }
+    },
+    "antigenicity": {
+      "title": "Avaliação de Antigenicidade",
+      "source": "VaxiJen 2.0 (Doytchinova & Flower, 2007)",
+      "notComputed": "Score VaxiJen não calculado para este construto",
+      "disclaimer": "O servidor VaxiJen possui limitações de tamanho para construtos >100 aminoácidos. Epítopos individuais foram selecionados com base na imunogenicidade predita via NetMHCpan 4.1. A antigenicidade do construto completo requer validação experimental (ELISA/ELISPOT)."
+    },
+    "ic50Chart": {
+      "title": "Distribuição IC50 dos Epítopos",
+      "subtitle": "Afinidade de ligação por epítopo (nM) — menor é melhor",
+      "seriesName": "IC50 (nM)"
+    },
+    "epitopeTable": {
+      "title": "Tabela de Epítopos",
+      "subtitle": "{count} ligantes MHC-I únicos conectados por linkers GPGPG/AAY",
+      "sequence": "Sequência",
+      "sourceGene": "Gene de Origem",
+      "allele": "Alelo",
+      "ic50": "IC50 (nM)",
+      "rank": "Rank %"
+    },
+    "structure3d": {
+      "title": "Predição de Estrutura 3D (ESMFold)",
+      "subtitle": "Estrutura predita por ESMFold do construto de {length} resíduos com {count} epítopos únicos",
+      "altText": "Estrutura 3D predita do construto vacinal multi-epítopo via ESMFold"
+    },
+    "constructProperties": {
+      "title": "Propriedades do Construto",
+      "signalPeptide": "Peptídeo Sinal",
+      "adjuvant": "Adjuvante",
+      "gcContent": "Conteúdo GC",
+      "gravy": "GRAVY",
+      "aromaticity": "Aromaticidade",
+      "restrictionSites": "Sítios de Restrição Removidos"
+    },
+    "methods": {
+      "title": "Métodos",
+      "epitopePrediction": "Predição de Epítopos",
+      "alleles": "Alelos",
+      "ic50Threshold": "Limiar IC50",
+      "adjuvant": "Adjuvante",
+      "structure": "Estrutura",
+      "codonOptimization": "Otimização de Códons",
+      "epitopePredictionValue": "NetMHCpan 4.1",
+      "allelesValue": "DLA-88*03401, *50101, *50801",
+      "ic50ThresholdValue": "< 500 nM",
+      "adjuvantValue": "L7/L12 ribosomal",
+      "structureValue": "ESMFold v1",
+      "codonOptimizationValue": "Tabela de códons de L. infantum"
+    }
+  },
+  "drug": {
+    "title": "Alvos Terapêuticos",
+    "subtitle": "Alvos druggable específicos do parasita identificados por genômica comparativa",
+    "badge": "v3",
+    "kpi": {
+      "totalTargets": { "title": "Total de Alvos", "subtitle": "Melhor classificação" },
+      "priorityTargets": { "title": "Alvos Prioritários", "subtitle": "Maior druggability" },
+      "pathways": { "title": "Vias Metabólicas", "subtitle": "Vias metabólicas distintas" },
+      "bestScore": { "title": "Melhor Score" }
+    },
+    "table": {
+      "title": "Principais Alvos Terapêuticos",
+      "subtitle": "Classificados por score de druggability",
+      "gene": "Gene",
+      "pathway": "Via Metabólica",
+      "identity": "Identidade",
+      "druggability": "Druggability",
+      "priority": "Prioridade",
+      "priorityLabel": "Prioritário",
+      "standardLabel": "Padrão"
+    },
+    "pathwayChart": {
+      "title": "Distribuição por Via Metabólica",
+      "subtitle": "Alvos por via metabólica",
+      "seriesName": "Alvos"
+    },
+    "leadCandidate": {
+      "badge": "Candidato Principal",
+      "name": "MRL-003",
+      "description": "Molécula customizada — variante cauda amida",
+      "warning": "Requer otimização de seletividade — liga ao GR humano com maior afinidade que TryR",
+      "target": "Tripanotiona Redutase (TryR)",
+      "molWeight": "Peso Molecular",
+      "logP": "logP"
+    },
+    "dataSources": {
+      "title": "Fontes de Dados",
+      "text": "Alvos identificados do proteoma de L. infantum JPCM5 (TriTrypDB). Ortólogos humanos do UniProt. Score de Identidade = % de identidade de sequência com o ortólogo humano mais próximo via BLASTp (menor = mais específico do parasita = alvo mais seguro). Score de druggability baseado na essencialidade do alvo, druggability estrutural e contexto da via metabólica."
+    }
+  },
+  "docking": {
+    "title": "Acoplamento Molecular",
+    "subtitle": "Triagem virtual AutoDock Vina — {compounds} compostos em {targets} alvos",
+    "badge": "v4",
+    "kpi": {
+      "totalDockings": { "title": "Total de Dockings", "subtitle": "Pares alvo-composto" },
+      "uniqueTargets": { "title": "Alvos Únicos", "subtitle": "Estruturas receptoras" },
+      "compounds": { "title": "Compostos", "subtitle": "Moléculas testadas" },
+      "bestAffinity": { "title": "Melhor Afinidade" }
+    },
+    "table": {
+      "title": "Top 10 Hits de Docking",
+      "subtitle": "Classificados por energia de ligação (kcal/mol)",
+      "target": "Alvo",
+      "compound": "Composto",
+      "affinity": "Afinidade"
+    },
+    "affinityChart": {
+      "title": "Energias de Ligação",
+      "subtitle": "|kcal/mol| — top 10 compostos",
+      "seriesName": "Energia de Ligação"
+    },
+    "selectivity": {
+      "title": "Análise de Seletividade",
+      "subtitle": "TryR de L. infantum vs glutationa redutase humana (GR). Limiar seletivo: diferença de 1.5 kcal/mol.",
+      "compound": "Composto",
+      "tryr": "TryR (kcal/mol)",
+      "humanGr": "GR Humano (kcal/mol)",
+      "delta": "Delta",
+      "selective": "Seletivo",
+      "yes": "Sim",
+      "no": "Não",
+      "warning": "Nenhum dos compostos testados apresentou seletividade parasitária. Otimização estrutural adicional é necessária."
+    },
+    "poses": {
+      "gmps": {
+        "title": "GMPS + Metotrexato",
+        "subtitle": "Melhor pose de docking no sítio ativo de GMPS \u00b7 Renderizado com PyMOL",
+        "altText": "Pose de docking do metotrexato no sítio ativo de GMPS"
+      },
+      "tryr": {
+        "title": "TryR + MRL-003 Docking",
+        "subtitle": "Molécula customizada MRL-003 (-7.74 kcal/mol) no sítio ativo de TryR",
+        "altText": "MRL-003 acoplado no sítio ativo da tripanotiona redutase"
+      }
+    }
+  },
+  "aso": {
+    "title": "Terapia ASO",
+    "subtitle": "Oligonucleotídeo antisense direcionado ao RNA Líder Processado de <i>L.\u00a0infantum</i>",
+    "badge": "v1.0",
+    "kpi": {
+      "mathScore": { "title": "Score Matemático" },
+      "bindingEnergy": { "title": "Energia de Ligação", "subtitle": "Tm {tm} C" },
+      "delivery": { "title": "Entrega", "subtitle": "Todos os módulos aprovados" },
+      "resistance": { "title": "Resistência", "value": "0", "subtitle": "Todas as mutações que rompem a ligação são letais" }
+    },
+    "moduleNames": {
+      "01_thermodynamic_landscape": "Paisagem Termodinâmica",
+      "02_selectivity_proof": "Prova de Seletividade",
+      "03_evolutionary_conservation": "Conservação Evolutiva",
+      "04_exhaustive_optimization": "Otimização Exaustiva",
+      "05_resistance_model": "Barreira de Resistência"
+    },
+    "deliveryNames": {
+      "A": "Estabilidade",
+      "B": "Membrana",
+      "C": "Conjugação",
+      "D": "Encapsulamento LNP",
+      "E": "Perfil ADMET",
+      "F": "Resposta Imune"
+    },
+    "bioSim": {
+      "title": "MRL-ASO-001 Bio-Sim: Mecanismo de Ação",
+      "subtitle": "Jornada 3D interativa da injeção subcutânea à eliminação do parasita — 8 cenas, 24 métricas validadas",
+      "launch": "Iniciar"
+    },
+    "duplexStructure": {
+      "title": "Estrutura do Duplex ASO:SL RNA",
+      "subtitle": "Duplex híbrido forma-A predito por RoseTTAFold — Cadeia A (SL RNA, teal) \u00b7 Cadeia B (MRL-ASO-001, rosa)"
+    },
+    "molecule": {
+      "title": "Molécula: {name}",
+      "subtitle": "Oligonucleotídeo antisense de {length}-mer com design gapmer LNA",
+      "sequenceLabel": "Sequência 5\u2019 \u2192 3\u2019",
+      "target": "Alvo",
+      "targetRegion": "Região Alvo",
+      "length": "Comprimento",
+      "dG": "dG",
+      "tm": "Tm"
+    },
+    "validationTable": {
+      "title": "Módulos de Validação",
+      "subtitle": "5 módulos de validação matemática — score geral {score}/100",
+      "module": "Módulo",
+      "verdict": "Veredito",
+      "score": "Score",
+      "note": "Nota"
+    },
+    "deliveryTable": {
+      "title": "Pipeline de Entrega",
+      "subtitle": "{passed}/{total} módulos aprovados — tempo de execução {runtime}s",
+      "module": "Módulo",
+      "name": "Nome",
+      "status": "Status",
+      "summary": "Resumo"
+    },
+    "moduleScoresChart": {
+      "title": "Scores dos Módulos",
+      "subtitle": "Score de validação matemática por módulo (0\u2013100)",
+      "seriesName": "Score"
+    }
+  },
+  "rna": {
+    "title": "Validação do Alvo",
+    "subtitle": "Validação computacional do RNA Líder Processado como alvo de oligonucleotídeo antisense",
+    "badge": "validado",
+    "kpi": {
+      "totalTranscripts": { "title": "Total de Transcritos", "subtitle": "Transcriptoma de L. infantum" },
+      "slConservation": { "title": "Conservação SL", "value": "100% invariante", "subtitle": "Em todas as espécies de Leishmania" },
+      "offTargetSafety": { "title": "Segurança Off-target", "value": "12 bp máx.", "subtitle": "Abaixo do limiar de 14 bp para RNase H" },
+      "humanAbsent": { "title": "Ausente em Humanos", "subtitleAbsent": "Não encontrado no transcriptoma humano", "yes": "\u2713 Sim", "no": "\u2717 Não" }
+    },
+    "slCard": {
+      "badgeSL": "SL RNA",
+      "badgeTarget": "Alvo MRL-ASO-001",
+      "title": "Sequência do RNA Líder Processado",
+      "description": "Sequência conservada de 39 nt, ausente no transcriptoma humano — alvo primário para terapia com oligonucleotídeo antisense",
+      "entropy": "Entropia",
+      "gcContent": "Conteúdo GC",
+      "length": "Comprimento"
+    },
+    "entropyChart": {
+      "title": "Perfil de Entropia de Shannon",
+      "subtitle": "Top 15 genes por entropia de Shannon (bits) — maior entropia indica mais complexidade de sequência",
+      "seriesName": "Entropia de Shannon"
+    },
+    "comparisonChart": {
+      "title": "Entropia Parasita vs Humana",
+      "subtitle": "Comparação de entropia de Shannon entre L. infantum e ortólogos humanos — delta revela alvos divergentes",
+      "seriesParasite": "Parasita",
+      "seriesHuman": "Humano"
+    },
+    "targetsTable": {
+      "title": "Principais Alvos de RNA",
+      "subtitle": "{count} alvos classificados por delta de entropia (divergência parasita - humano)",
+      "geneId": "Gene ID",
+      "geneName": "Nome do Gene",
+      "shannonEntropy": "Entropia de Shannon",
+      "humanEntropy": "Entropia Humana",
+      "delta": "Delta",
+      "priority": "Prioridade",
+      "priorityLabel": "Prioritário",
+      "standardLabel": "Padrão"
+    },
+    "codonChart": {
+      "title": "Comparação de Uso de Códons",
+      "subtitle": "Top 20 códons com maior diferença de RSCU (Uso Relativo de Códons Sinônimos) entre L. infantum e humano — revela viés de códons para design ASO",
+      "seriesLinf": "RSCU L. infantum",
+      "seriesHuman": "RSCU Humano"
+    }
+  },
+  "platforms": {
+    "title": "Plataformas Vacinais",
+    "subtitle": "Comparação multiplataforma de 3 sistemas de produção para a vacina multi-epítopo Marley",
+    "kpi": {
+      "platformsCompared": { "title": "Plataformas Comparadas", "subtitle": "mRNA-LNP, E. coli, L. tarentolae" },
+      "bestCostDose": { "title": "Melhor Custo / Dose", "subtitle": "Plataforma C (viva, industrial)" },
+      "mostStable": { "title": "Mais Estável", "subtitle": "Plataforma C (L. tarentolae)" },
+      "asoCompatible": { "title": "Compatível com ASO", "value": "2 de 3", "subtitle": "mRNA-LNP e E. coli" }
+    },
+    "radarChart": {
+      "title": "Comparação Multi-Eixo de Plataformas",
+      "subtitle": "Scores normalizados (0-1) em 6 eixos estratégicos para cada plataforma de produção"
+    },
+    "comparisonTable": {
+      "title": "Comparação Detalhada de Plataformas",
+      "subtitle": "Propriedades do construto, parâmetros de produção e logística em todas as 3 plataformas",
+      "property": "Propriedade",
+      "platformA": "Plataforma A (mRNA-LNP)",
+      "platformB": "Plataforma B (E. coli)",
+      "platformC": "Plataforma C (L. tarentolae)",
+      "proteinLength": "Comprimento da Proteína (aa)",
+      "molecularWeight": "Peso Molecular (kDa)",
+      "instabilityIndex": "Índice de Instabilidade",
+      "epitopes": "Epítopos",
+      "antigenicityProxy": "Proxy de Antigenicidade",
+      "expressionSystem": "Sistema de Expressão",
+      "purification": "Purificação",
+      "adjuvant": "Adjuvante",
+      "coldChain": "Cadeia de Frio",
+      "infrastructure": "Infraestrutura"
+    },
+    "costChart": {
+      "title": "Comparação de Custo por Dose",
+      "subtitle": "Custo por dose em escala laboratorial vs industrial (USD) por plataforma de produção",
+      "labScale": "Escala Laboratorial (USD)",
+      "industrialScale": "Escala Industrial (USD)"
+    },
+    "asoCompatibility": {
+      "title": "Compatibilidade ASO",
+      "subtitle": "Compatibilidade com a terapia de oligonucleotídeo antisense MRL-ASO-001",
+      "compatible": "Compatível",
+      "incompatible": "Incompatível"
+    },
+    "platformLabels": {
+      "platform_a": "mRNA-LNP",
+      "platform_b": "E. coli",
+      "platform_c": "L. tarentolae"
+    },
+    "references": {
+      "title": "Referências",
+      "tarentolae": "Expressão em L. tarentolae: Breitling et al., Protein Expression and Purification, 2002",
+      "mrnaLnp": "Tecnologia mRNA-LNP: protocolos de manufatura Moderna/BioNTech",
+      "ecoli": "E. coli recombinante: Leish-Tec (Hertape Calier) como precedente regulatório",
+      "ctvacinas": "CTVacinas (UFMG) framework de comparação de plataformas"
+    }
+  }
+}
