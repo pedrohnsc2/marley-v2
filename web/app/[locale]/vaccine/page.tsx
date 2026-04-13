@@ -1,8 +1,9 @@
 import dynamic from "next/dynamic";
 import { getTranslations } from "next-intl/server";
-import { loadJson, safeLoadPdb } from "@/lib/data-loader";
+import { loadJson, safeLoadPdb, safeLoadRunJson, safeLoadRunPdb, getRunCompletedDate } from "@/lib/data-loader";
 import KpiCard from "@/components/kpi-card";
 import BarChart from "@/components/charts/bar-chart";
+import RunBanner from "@/components/runs/run-banner";
 
 const MolViewer = dynamic(() => import("@/components/mol-viewer/MolViewer"), { ssr: false });
 
@@ -41,10 +42,25 @@ function extractGeneName(rawName: string): string {
   return rawName.length > 40 ? rawName.slice(0, 40) + "..." : rawName;
 }
 
-export default async function VaccinePage() {
+export default async function VaccinePage({
+  searchParams,
+}: {
+  searchParams: Promise<{ run?: string }>;
+}) {
+  const { run: runId } = await searchParams;
   const t = await getTranslations("vaccine");
-  const construct = loadJson("construct/construct_card.json") as ConstructCard;
-  const vaccinePdb = safeLoadPdb("data/structures/marley_vaccine_construct.pdb");
+
+  const construct = (
+    runId
+      ? safeLoadRunJson(runId, "construct/construct_card.json") ?? loadJson("construct/construct_card.json")
+      : loadJson("construct/construct_card.json")
+  ) as ConstructCard;
+
+  const vaccinePdb = runId
+    ? safeLoadRunPdb(runId, "data/structures/marley_vaccine_construct.pdb") ?? safeLoadPdb("data/structures/marley_vaccine_construct.pdb")
+    : safeLoadPdb("data/structures/marley_vaccine_construct.pdb");
+
+  const runCompletedAt = runId ? getRunCompletedDate(runId) : null;
 
   // Deduplicate epitopes by peptide sequence
   const uniqueEpitopes = [...new Map(construct.epitopes.map(e => [e.peptide, e])).values()];
@@ -57,6 +73,8 @@ export default async function VaccinePage() {
 
   return (
     <div>
+      <RunBanner runId={runId ?? null} pipeline="vaccine" completedAt={runCompletedAt} />
+
       {/* Page header */}
       <div className="mb-6 flex items-center gap-3">
         <span className="rounded-lg bg-blue-100 px-2.5 py-1 text-xs font-bold text-blue-600">{t("badge")}</span>

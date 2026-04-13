@@ -44,6 +44,16 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
           ),
         },
         {
+          href: "/runs",
+          label: t("runs"),
+          icon: (
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="h-5 w-5 flex-shrink-0">
+              <path d="M4 6h16M4 12h16M4 18h16" />
+              <path d="M8 6l4 3-4 3" fill="currentColor" stroke="none" />
+            </svg>
+          ),
+        },
+        {
           href: "/drug",
           label: t("drugTargets"),
           icon: (

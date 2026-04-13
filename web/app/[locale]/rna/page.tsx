@@ -1,6 +1,8 @@
-import { loadModuleJson, loadCsv, safeLoadCsv } from "@/lib/data-loader";
+import { getTranslations } from "next-intl/server";
+import { loadModuleJson, loadCsv, safeLoadCsv, safeLoadRunModuleJson, safeLoadRunCsv, getRunCompletedDate } from "@/lib/data-loader";
 import KpiCard from "@/components/kpi-card";
 import BarChart from "@/components/charts/bar-chart";
+import RunBanner from "@/components/runs/run-banner";
 
 interface SlRnaSummary {
   total_transcripts: number;
@@ -13,11 +15,30 @@ interface SlRnaSummary {
   search_window_nt: number;
 }
 
-export default function RnaPage() {
-  const summary = loadModuleJson("results", "rna/sl_rna_summary.json") as SlRnaSummary;
-  const entropyProfile = loadCsv("rna/shannon_entropy_profile.csv");
-  const topTargets = loadCsv("rna/top_rna_targets.csv");
-  const codonUsage = safeLoadCsv("rna/codon_usage_comparison.csv");
+export default async function RnaPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ run?: string }>;
+}) {
+  const { run: runId } = await searchParams;
+  const t = await getTranslations("rna");
+
+  const summary = (
+    runId
+      ? safeLoadRunModuleJson(runId, "results", "rna/sl_rna_summary.json") ?? loadModuleJson("results", "rna/sl_rna_summary.json")
+      : loadModuleJson("results", "rna/sl_rna_summary.json")
+  ) as SlRnaSummary;
+
+  const runEntropy = runId ? safeLoadRunCsv(runId, "rna/shannon_entropy_profile.csv") : [];
+  const entropyProfile = runEntropy.length > 0 ? runEntropy : loadCsv("rna/shannon_entropy_profile.csv");
+
+  const runTopTargets = runId ? safeLoadRunCsv(runId, "rna/top_rna_targets.csv") : [];
+  const topTargets = runTopTargets.length > 0 ? runTopTargets : loadCsv("rna/top_rna_targets.csv");
+
+  const runCodonUsage = runId ? safeLoadRunCsv(runId, "rna/codon_usage_comparison.csv") : [];
+  const codonUsage = runCodonUsage.length > 0 ? runCodonUsage : safeLoadCsv("rna/codon_usage_comparison.csv");
+
+  const runCompletedAt = runId ? getRunCompletedDate(runId) : null;
 
   // Sort entropy profile by shannon_entropy descending, take top 15
   const topEntropy = [...entropyProfile]
@@ -27,7 +48,7 @@ export default function RnaPage() {
   // Shannon entropy bar chart data
   const entropyCategories = topEntropy.map((r) => r.gene_name ?? r.gene_id ?? "");
   const entropySeries = [
-    { name: "Shannon Entropy", data: topEntropy.map((r) => parseFloat(r.shannon_entropy ?? "0")) },
+    { name: t("entropyChart.seriesName"), data: topEntropy.map((r) => parseFloat(r.shannon_entropy ?? "0")) },
   ];
 
   // Entropy comparison chart: parasite vs human for top 10
@@ -37,8 +58,8 @@ export default function RnaPage() {
 
   const comparisonCategories = topComparison.map((r) => r.gene_name ?? r.gene_id ?? "");
   const comparisonSeries = [
-    { name: "Parasite", data: topComparison.map((r) => parseFloat(r.shannon_entropy ?? "0")) },
-    { name: "Human", data: topComparison.map((r) => parseFloat(r.human_entropy ?? "0")) },
+    { name: t("comparisonChart.seriesParasite"), data: topComparison.map((r) => parseFloat(r.shannon_entropy ?? "0")) },
+    { name: t("comparisonChart.seriesHuman"), data: topComparison.map((r) => parseFloat(r.human_entropy ?? "0")) },
   ];
 
   // Sort top targets by entropy_delta descending
@@ -63,8 +84,8 @@ export default function RnaPage() {
 
   const codonCategories = codonChart.map((c) => `${c.codon} (${c.amino_acid})`);
   const codonSeries = [
-    { name: "L. infantum RSCU", data: codonChart.map((c) => c.linf_rscu) },
-    { name: "Human RSCU", data: codonChart.map((c) => c.human_rscu) },
+    { name: t("codonChart.seriesLinf"), data: codonChart.map((c) => c.linf_rscu) },
+    { name: t("codonChart.seriesHuman"), data: codonChart.map((c) => c.human_rscu) },
   ];
 
   const deltaBadge = (val: string | undefined) => {
@@ -78,13 +99,15 @@ export default function RnaPage() {
 
   return (
     <div>
+      <RunBanner runId={runId ?? null} pipeline="rna" completedAt={runCompletedAt} />
+
       {/* Page header */}
       <div className="mb-6 flex items-center gap-3">
-        <span className="rounded-lg bg-teal-100 px-2.5 py-1 text-xs font-bold text-teal-600">validated</span>
+        <span className="rounded-lg bg-teal-100 px-2.5 py-1 text-xs font-bold text-teal-600">{t("badge")}</span>
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Target Validation</h1>
+          <h1 className="text-2xl font-bold text-gray-900">{t("title")}</h1>
           <p className="text-sm text-gray-500">
-            Computational validation of Spliced Leader RNA as an antisense oligonucleotide target
+            {t("subtitle")}
           </p>
         </div>
       </div>
@@ -92,27 +115,27 @@ export default function RnaPage() {
       {/* KPIs */}
       <div className="mb-6 grid grid-cols-2 gap-4 lg:grid-cols-4">
         <KpiCard
-          title="Total Transcripts"
+          title={t("kpi.totalTranscripts.title")}
           value={summary.total_transcripts}
-          subtitle="L. infantum transcriptome"
+          subtitle={t("kpi.totalTranscripts.subtitle")}
           accentColor="bg-teal-500"
         />
         <KpiCard
-          title="SL Conservation"
-          value="100% invariant"
-          subtitle="Across all Leishmania species"
+          title={t("kpi.slConservation.title")}
+          value={t("kpi.slConservation.value")}
+          subtitle={t("kpi.slConservation.subtitle")}
           accentColor="bg-teal-400"
         />
         <KpiCard
-          title="Off-target Safety"
-          value="12 bp max"
-          subtitle="Below 14 bp RNase H threshold"
+          title={t("kpi.offTargetSafety.title")}
+          value={t("kpi.offTargetSafety.value")}
+          subtitle={t("kpi.offTargetSafety.subtitle")}
           accentColor="bg-cyan-500"
         />
         <KpiCard
-          title="Human Absent"
-          value={summary.absent_in_human ? "\u2713 Yes" : "\u2717 No"}
-          subtitle="Not found in human transcriptome"
+          title={t("kpi.humanAbsent.title")}
+          value={summary.absent_in_human ? t("kpi.humanAbsent.yes") : t("kpi.humanAbsent.no")}
+          subtitle={t("kpi.humanAbsent.subtitleAbsent")}
           accentColor={summary.absent_in_human ? "bg-emerald-500" : "bg-red-500"}
         />
       </div>
@@ -120,12 +143,12 @@ export default function RnaPage() {
       {/* SL RNA highlight card */}
       <div className="mb-6 rounded-xl bg-gradient-to-br from-teal-500 to-cyan-500 p-5 text-white shadow-card">
         <div className="mb-3 flex items-center gap-2">
-          <span className="rounded-md bg-white/20 px-2 py-0.5 text-xs font-semibold">SL RNA</span>
-          <span className="rounded-md bg-white/20 px-2 py-0.5 text-xs font-semibold">MRL-ASO-001 Target</span>
+          <span className="rounded-md bg-white/20 px-2 py-0.5 text-xs font-semibold">{t("slCard.badgeSL")}</span>
+          <span className="rounded-md bg-white/20 px-2 py-0.5 text-xs font-semibold">{t("slCard.badgeTarget")}</span>
         </div>
-        <p className="text-base font-bold">Spliced Leader RNA Sequence</p>
+        <p className="text-base font-bold">{t("slCard.title")}</p>
         <p className="mt-1 text-xs text-teal-100">
-          39-nt conserved sequence, absent in human transcriptome — primary target for antisense oligonucleotide therapy
+          {t("slCard.description")}
         </p>
         <div className="mt-4 rounded-lg bg-white/10 px-4 py-3">
           <p
@@ -137,15 +160,15 @@ export default function RnaPage() {
         </div>
         <div className="mt-4 grid grid-cols-3 gap-4 border-t border-white/20 pt-4 text-xs">
           <div>
-            <p className="text-teal-200">Entropy</p>
+            <p className="text-teal-200">{t("slCard.entropy")}</p>
             <p className="font-semibold">{summary.sl_entropy.toFixed(4)} bits</p>
           </div>
           <div>
-            <p className="text-teal-200">GC Content</p>
+            <p className="text-teal-200">{t("slCard.gcContent")}</p>
             <p className="font-semibold">{(summary.sl_gc_content * 100).toFixed(1)}%</p>
           </div>
           <div>
-            <p className="text-teal-200">Length</p>
+            <p className="text-teal-200">{t("slCard.length")}</p>
             <p className="font-semibold">{summary.sl_sequence.length} nt</p>
           </div>
         </div>
@@ -155,9 +178,9 @@ export default function RnaPage() {
       <div className="mb-6 grid gap-6 lg:grid-cols-2">
         {/* Shannon entropy chart */}
         <div className="rounded-xl bg-white shadow-card p-5">
-          <h2 className="text-sm font-semibold text-gray-900">Shannon Entropy Profile</h2>
+          <h2 className="text-sm font-semibold text-gray-900">{t("entropyChart.title")}</h2>
           <p className="text-xs text-gray-400 mt-0.5 mb-4">
-            Top 15 genes by Shannon entropy (bits) — higher entropy indicates more sequence complexity
+            {t("entropyChart.subtitle")}
           </p>
           <BarChart
             categories={entropyCategories}
@@ -169,10 +192,9 @@ export default function RnaPage() {
 
         {/* Entropy comparison chart */}
         <div className="rounded-xl bg-white shadow-card p-5">
-          <h2 className="text-sm font-semibold text-gray-900">Parasite vs Human Entropy</h2>
+          <h2 className="text-sm font-semibold text-gray-900">{t("comparisonChart.title")}</h2>
           <p className="text-xs text-gray-400 mt-0.5 mb-4">
-            Comparing Shannon entropy between <em>L. infantum</em> and human orthologs — delta reveals
-            divergent targets
+            {t("comparisonChart.subtitle")}
           </p>
           <BarChart
             categories={comparisonCategories}
@@ -186,9 +208,9 @@ export default function RnaPage() {
       {/* Top targets table */}
       <div className="mb-6 rounded-xl bg-white shadow-card overflow-hidden">
         <div className="border-b border-gray-100 px-5 py-4">
-          <h2 className="text-sm font-semibold text-gray-900">Top RNA Targets</h2>
+          <h2 className="text-sm font-semibold text-gray-900">{t("targetsTable.title")}</h2>
           <p className="text-xs text-gray-400 mt-0.5">
-            {sortedTargets.length} ranked targets sorted by entropy delta (parasite - human divergence)
+            {t("targetsTable.subtitle", { count: sortedTargets.length })}
           </p>
         </div>
         <div className="overflow-x-auto">
@@ -196,40 +218,40 @@ export default function RnaPage() {
             <thead className="border-b border-gray-100 bg-gray-50 text-xs uppercase tracking-wider text-gray-400">
               <tr>
                 <th className="px-4 py-3">#</th>
-                <th className="px-4 py-3">Gene ID</th>
-                <th className="px-4 py-3">Gene Name</th>
-                <th className="px-4 py-3 text-right">Shannon Entropy</th>
-                <th className="px-4 py-3 text-right">Human Entropy</th>
-                <th className="px-4 py-3 text-right">Delta</th>
-                <th className="px-4 py-3 text-center">Priority</th>
+                <th className="px-4 py-3">{t("targetsTable.geneId")}</th>
+                <th className="px-4 py-3">{t("targetsTable.geneName")}</th>
+                <th className="px-4 py-3 text-right">{t("targetsTable.shannonEntropy")}</th>
+                <th className="px-4 py-3 text-right">{t("targetsTable.humanEntropy")}</th>
+                <th className="px-4 py-3 text-right">{t("targetsTable.delta")}</th>
+                <th className="px-4 py-3 text-center">{t("targetsTable.priority")}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-50">
-              {sortedTargets.map((t, i) => (
-                <tr key={`${t.gene_id}-${i}`} className="transition-colors hover:bg-gray-50">
+              {sortedTargets.map((tgt, i) => (
+                <tr key={`${tgt.gene_id}-${i}`} className="transition-colors hover:bg-gray-50">
                   <td className="px-4 py-2.5 font-mono text-xs text-gray-300">{i + 1}</td>
-                  <td className="px-4 py-2.5 font-mono text-xs text-gray-600">{t.gene_id}</td>
-                  <td className="px-4 py-2.5 font-semibold text-gray-900">{t.gene_name}</td>
+                  <td className="px-4 py-2.5 font-mono text-xs text-gray-600">{tgt.gene_id}</td>
+                  <td className="px-4 py-2.5 font-semibold text-gray-900">{tgt.gene_name}</td>
                   <td className="px-4 py-2.5 text-right font-mono text-xs text-teal-600">
-                    {parseFloat(t.shannon_entropy ?? "0").toFixed(4)}
+                    {parseFloat(tgt.shannon_entropy ?? "0").toFixed(4)}
                   </td>
                   <td className="px-4 py-2.5 text-right font-mono text-xs text-gray-600">
-                    {parseFloat(t.human_entropy ?? "0").toFixed(4)}
+                    {parseFloat(tgt.human_entropy ?? "0").toFixed(4)}
                   </td>
                   <td className="px-4 py-2.5 text-right">
-                    <span className={deltaBadge(t.entropy_delta)}>
-                      {parseFloat(t.entropy_delta ?? "0") > 0 ? "+" : ""}
-                      {parseFloat(t.entropy_delta ?? "0").toFixed(4)}
+                    <span className={deltaBadge(tgt.entropy_delta)}>
+                      {parseFloat(tgt.entropy_delta ?? "0") > 0 ? "+" : ""}
+                      {parseFloat(tgt.entropy_delta ?? "0").toFixed(4)}
                     </span>
                   </td>
                   <td className="px-4 py-2.5 text-center">
-                    {t.is_priority === "True" ? (
+                    {tgt.is_priority === "True" ? (
                       <span className="inline-flex items-center rounded-full bg-teal-50 px-2 py-0.5 text-xs font-semibold text-teal-700">
-                        Priority
+                        {t("targetsTable.priorityLabel")}
                       </span>
                     ) : (
                       <span className="inline-flex items-center rounded-full bg-gray-100 px-2 py-0.5 text-xs text-gray-400">
-                        Standard
+                        {t("targetsTable.standardLabel")}
                       </span>
                     )}
                   </td>
@@ -243,10 +265,9 @@ export default function RnaPage() {
       {/* Codon usage section — only rendered if data exists */}
       {codonChart.length > 0 && (
         <div className="mb-6 rounded-xl bg-white shadow-card p-5">
-          <h2 className="text-sm font-semibold text-gray-900">Codon Usage Comparison</h2>
+          <h2 className="text-sm font-semibold text-gray-900">{t("codonChart.title")}</h2>
           <p className="text-xs text-gray-400 mt-0.5 mb-4">
-            Top 20 codons with largest RSCU (Relative Synonymous Codon Usage) difference between{" "}
-            <em>L. infantum</em> and human — reveals codon bias for ASO design
+            {t("codonChart.subtitle")}
           </p>
           <BarChart
             categories={codonCategories}

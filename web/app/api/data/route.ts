@@ -1,8 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
+import { rateLimit } from "@/lib/rate-limit";
 
 const RESULTS_DIR = path.join(process.cwd(), "..", "results");
+
+/** Allowed file extensions that can be served via this endpoint. */
+const ALLOWED_EXTENSIONS = new Set([".csv", ".json", ".md", ".txt"]);
 
 function parseCsv(content: string): Record<string, string>[] {
   const lines = content.trim().split("\n");
@@ -19,6 +23,9 @@ function parseCsv(content: string): Record<string, string>[] {
 }
 
 export async function GET(request: NextRequest) {
+  const limited = rateLimit(request);
+  if (limited) return limited;
+
   const { searchParams } = new URL(request.url);
   const file = searchParams.get("file");
 
@@ -34,6 +41,15 @@ export async function GET(request: NextRequest) {
   if (normalized.includes("..") || path.isAbsolute(normalized)) {
     return NextResponse.json(
       { error: "Invalid file path" },
+      { status: 400 },
+    );
+  }
+
+  // Security: restrict to allowed file extensions only
+  const ext = path.extname(normalized).toLowerCase();
+  if (!ALLOWED_EXTENSIONS.has(ext)) {
+    return NextResponse.json(
+      { error: "File type not allowed" },
       { status: 400 },
     );
   }
@@ -57,7 +73,6 @@ export async function GET(request: NextRequest) {
 
   try {
     const content = fs.readFileSync(filePath, "utf-8");
-    const ext = path.extname(filePath).toLowerCase();
 
     if (ext === ".csv") {
       return NextResponse.json(parseCsv(content));
@@ -71,10 +86,9 @@ export async function GET(request: NextRequest) {
     return new NextResponse(content, {
       headers: { "Content-Type": "text/plain; charset=utf-8" },
     });
-  } catch (err) {
-    const message = err instanceof Error ? err.message : "Unknown error";
+  } catch {
     return NextResponse.json(
-      { error: `Failed to read file: ${message}` },
+      { error: "Internal server error" },
       { status: 500 },
     );
   }

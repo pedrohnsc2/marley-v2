@@ -1,8 +1,10 @@
 import Link from "next/link";
 import dynamic from "next/dynamic";
-import { loadModuleJson, safeLoadPdb } from "@/lib/data-loader";
+import { getTranslations } from "next-intl/server";
+import { loadModuleJson, safeLoadPdb, safeLoadRunModuleJson, safeLoadRunPdb, getRunCompletedDate } from "@/lib/data-loader";
 import KpiCard from "@/components/kpi-card";
 import BarChart from "@/components/charts/bar-chart";
+import RunBanner from "@/components/runs/run-banner";
 
 const MolViewer = dynamic(() => import("@/components/mol-viewer/MolViewer"), { ssr: false });
 
@@ -49,27 +51,6 @@ interface DeliveryReport {
   all_passed: boolean;
   module_results: DeliveryModuleResult[];
 }
-
-/* ------------------------------------------------------------------ */
-/*  Mappings                                                           */
-/* ------------------------------------------------------------------ */
-
-const MODULE_NAMES: Record<string, string> = {
-  "01_thermodynamic_landscape": "Thermodynamic Landscape",
-  "02_selectivity_proof": "Selectivity Proof",
-  "03_evolutionary_conservation": "Evolutionary Conservation",
-  "04_exhaustive_optimization": "Exhaustive Optimization",
-  "05_resistance_model": "Resistance Barrier",
-};
-
-const DELIVERY_NAMES: Record<string, string> = {
-  A: "Stability",
-  B: "Membrane",
-  C: "Conjugation",
-  D: "LNP Encapsulation",
-  E: "ADMET Profile",
-  F: "Immune Response",
-};
 
 /* ------------------------------------------------------------------ */
 /*  Helpers                                                            */
@@ -152,33 +133,74 @@ function ScoreBar({ score }: { score: number }) {
 /*  Page                                                               */
 /* ------------------------------------------------------------------ */
 
-export default function AsoPage() {
-  const cert = loadModuleJson("aso_math", "math_certificate.json") as MathCertificate;
-  const delivery = loadModuleJson("aso_delivery", "delivery_report.json") as DeliveryReport;
-  const duplexPdb = safeLoadPdb("marley_ai/05_rosettafold/structures/aso_sl_duplex_model.pdb");
+export default async function AsoPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ run?: string }>;
+}) {
+  const { run: runId } = await searchParams;
+  const t = await getTranslations("aso");
+
+  const cert = (
+    runId
+      ? safeLoadRunModuleJson(runId, "aso_math", "math_certificate.json") ?? loadModuleJson("aso_math", "math_certificate.json")
+      : loadModuleJson("aso_math", "math_certificate.json")
+  ) as MathCertificate;
+
+  const delivery = (
+    runId
+      ? safeLoadRunModuleJson(runId, "aso_delivery", "delivery_report.json") ?? loadModuleJson("aso_delivery", "delivery_report.json")
+      : loadModuleJson("aso_delivery", "delivery_report.json")
+  ) as DeliveryReport;
+
+  const duplexPdb = runId
+    ? safeLoadRunPdb(runId, "marley_ai/05_rosettafold/structures/aso_sl_duplex_model.pdb") ?? safeLoadPdb("marley_ai/05_rosettafold/structures/aso_sl_duplex_model.pdb")
+    : safeLoadPdb("marley_ai/05_rosettafold/structures/aso_sl_duplex_model.pdb");
+
+  const runCompletedAt = runId ? getRunCompletedDate(runId) : null;
 
   const { molecule, module_assessments } = cert;
+
+  /* Module name mapping from translations */
+  const MODULE_NAMES: Record<string, string> = {
+    "01_thermodynamic_landscape": t("moduleNames.01_thermodynamic_landscape"),
+    "02_selectivity_proof": t("moduleNames.02_selectivity_proof"),
+    "03_evolutionary_conservation": t("moduleNames.03_evolutionary_conservation"),
+    "04_exhaustive_optimization": t("moduleNames.04_exhaustive_optimization"),
+    "05_resistance_model": t("moduleNames.05_resistance_model"),
+  };
+
+  /* Delivery name mapping from translations */
+  const DELIVERY_NAMES: Record<string, string> = {
+    A: t("deliveryNames.A"),
+    B: t("deliveryNames.B"),
+    C: t("deliveryNames.C"),
+    D: t("deliveryNames.D"),
+    E: t("deliveryNames.E"),
+    F: t("deliveryNames.F"),
+  };
 
   /* Bar chart data */
   const chartCategories = module_assessments.map(
     (m) => MODULE_NAMES[m.module] ?? m.module,
   );
   const chartSeries = [
-    { name: "Score", data: module_assessments.map((m) => m.score) },
+    { name: t("moduleScoresChart.seriesName"), data: module_assessments.map((m) => m.score) },
   ];
 
   return (
     <div>
+      <RunBanner runId={runId ?? null} pipeline="aso" completedAt={runCompletedAt} />
+
       {/* ---- Page header ---- */}
       <div className="mb-6 flex items-center gap-3">
         <span className="rounded-lg bg-rose-100 px-2.5 py-1 text-xs font-bold text-rose-600">
-          v1.0
+          {t("badge")}
         </span>
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">ASO Therapy</h1>
+          <h1 className="text-2xl font-bold text-gray-900">{t("title")}</h1>
           <p className="text-sm text-gray-500">
-            Antisense oligonucleotide targeting Spliced Leader RNA of{" "}
-            <span className="italic">L.&nbsp;infantum</span>
+            {t.raw("subtitle")}
           </p>
         </div>
       </div>
@@ -186,27 +208,27 @@ export default function AsoPage() {
       {/* ---- KPI row ---- */}
       <div className="mb-6 grid grid-cols-2 gap-4 lg:grid-cols-4">
         <KpiCard
-          title="Math Score"
+          title={t("kpi.mathScore.title")}
           value={`${cert.overall_score}/100`}
           subtitle={cert.verdict.replace(/_/g, " ")}
           accentColor="bg-rose-500"
         />
         <KpiCard
-          title="Binding Energy"
+          title={t("kpi.bindingEnergy.title")}
           value={`${molecule.known_dg_kcal} kcal/mol`}
-          subtitle={`Tm ${molecule.known_tm_celsius} C`}
+          subtitle={t("kpi.bindingEnergy.subtitle", { tm: molecule.known_tm_celsius })}
           accentColor="bg-pink-500"
         />
         <KpiCard
-          title="Delivery"
+          title={t("kpi.delivery.title")}
           value={`${delivery.modules_succeeded}/${delivery.modules_executed}`}
-          subtitle="All modules passed"
+          subtitle={t("kpi.delivery.subtitle")}
           accentColor="bg-fuchsia-500"
         />
         <KpiCard
-          title="Resistance"
-          value="0"
-          subtitle="All binding-disrupting mutations are lethal"
+          title={t("kpi.resistance.title")}
+          value={t("kpi.resistance.value")}
+          subtitle={t("kpi.resistance.subtitle")}
           accentColor="bg-rose-500"
         />
       </div>
@@ -224,13 +246,13 @@ export default function AsoPage() {
           </svg>
         </div>
         <div className="flex-1">
-          <h3 className="text-sm font-bold text-gray-900">MRL-ASO-001 Bio-Sim: Mechanism of Action</h3>
+          <h3 className="text-sm font-bold text-gray-900">{t("bioSim.title")}</h3>
           <p className="mt-0.5 text-xs text-gray-500">
-            Interactive 3D journey from subcutaneous injection to parasite clearance — 8 scenes, 24 validated metrics
+            {t("bioSim.subtitle")}
           </p>
         </div>
         <span className="hidden rounded-full bg-rose-500 px-3 py-1.5 text-xs font-bold text-white sm:block">
-          Launch
+          {t("bioSim.launch")}
         </span>
       </Link>
 
@@ -238,9 +260,9 @@ export default function AsoPage() {
       {duplexPdb && (
         <div className="mb-6 rounded-xl bg-white shadow-card overflow-hidden">
           <div className="border-b border-gray-100 px-5 py-4">
-            <h2 className="text-sm font-semibold text-gray-900">ASO:SL RNA Duplex Structure</h2>
+            <h2 className="text-sm font-semibold text-gray-900">{t("duplexStructure.title")}</h2>
             <p className="mt-0.5 text-xs text-gray-400">
-              RoseTTAFold-predicted A-form hybrid duplex — Chain A (SL RNA, teal) · Chain B (MRL-ASO-001, rose)
+              {t("duplexStructure.subtitle")}
             </p>
           </div>
           <MolViewer
@@ -254,16 +276,16 @@ export default function AsoPage() {
       {/* ---- Molecule card ---- */}
       <div className="mb-6 rounded-xl bg-white shadow-card overflow-hidden">
         <div className="border-b border-gray-100 px-5 py-4">
-          <h2 className="text-sm font-semibold text-gray-900">Molecule: {molecule.name}</h2>
+          <h2 className="text-sm font-semibold text-gray-900">{t("molecule.title", { name: molecule.name })}</h2>
           <p className="mt-0.5 text-xs text-gray-400">
-            {molecule.length}-mer antisense oligonucleotide with LNA gapmer design
+            {t("molecule.subtitle", { length: molecule.length })}
           </p>
         </div>
         <div className="px-5 py-5">
           {/* Sequence display */}
           <div className="mb-5 rounded-lg bg-rose-50 px-4 py-3">
             <p className="mb-1 text-xs font-semibold uppercase tracking-wider text-rose-400">
-              5&apos; &rarr; 3&apos; Sequence
+              {t("molecule.sequenceLabel")}
             </p>
             <p
               className="font-mono text-lg font-bold tracking-widest text-rose-700"
@@ -276,11 +298,11 @@ export default function AsoPage() {
           {/* Properties grid */}
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
             {[
-              { label: "Target", value: molecule.target },
-              { label: "Target Region", value: molecule.target_region },
-              { label: "Length", value: `${molecule.length} nt` },
-              { label: "dG", value: `${molecule.known_dg_kcal} kcal/mol` },
-              { label: "Tm", value: `${molecule.known_tm_celsius} C` },
+              { label: t("molecule.target"), value: molecule.target },
+              { label: t("molecule.targetRegion"), value: molecule.target_region },
+              { label: t("molecule.length"), value: `${molecule.length} nt` },
+              { label: t("molecule.dG"), value: `${molecule.known_dg_kcal} kcal/mol` },
+              { label: t("molecule.tm"), value: `${molecule.known_tm_celsius} C` },
             ].map((prop) => (
               <div key={prop.label} className="rounded-lg bg-gray-50 p-3">
                 <p className="text-xs text-gray-400">{prop.label}</p>
@@ -294,9 +316,9 @@ export default function AsoPage() {
       {/* ---- Validation modules table ---- */}
       <div className="mb-6 rounded-xl bg-white shadow-card overflow-hidden">
         <div className="border-b border-gray-100 px-5 py-4">
-          <h2 className="text-sm font-semibold text-gray-900">Validation Modules</h2>
+          <h2 className="text-sm font-semibold text-gray-900">{t("validationTable.title")}</h2>
           <p className="mt-0.5 text-xs text-gray-400">
-            5 mathematical validation modules &mdash; overall score {cert.overall_score}/100
+            {t("validationTable.subtitle", { score: cert.overall_score })}
           </p>
         </div>
         <div className="overflow-x-auto">
@@ -304,10 +326,10 @@ export default function AsoPage() {
             <thead className="border-b border-gray-100 bg-gray-50 text-xs uppercase tracking-wider text-gray-400">
               <tr>
                 <th className="px-4 py-3">#</th>
-                <th className="px-4 py-3">Module</th>
-                <th className="px-4 py-3">Verdict</th>
-                <th className="px-4 py-3">Score</th>
-                <th className="px-4 py-3">Note</th>
+                <th className="px-4 py-3">{t("validationTable.module")}</th>
+                <th className="px-4 py-3">{t("validationTable.verdict")}</th>
+                <th className="px-4 py-3">{t("validationTable.score")}</th>
+                <th className="px-4 py-3">{t("validationTable.note")}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-50">
@@ -334,20 +356,23 @@ export default function AsoPage() {
       {/* ---- Delivery pipeline table ---- */}
       <div className="mb-6 rounded-xl bg-white shadow-card overflow-hidden">
         <div className="border-b border-gray-100 px-5 py-4">
-          <h2 className="text-sm font-semibold text-gray-900">Delivery Pipeline</h2>
+          <h2 className="text-sm font-semibold text-gray-900">{t("deliveryTable.title")}</h2>
           <p className="mt-0.5 text-xs text-gray-400">
-            {delivery.modules_succeeded}/{delivery.modules_executed} modules passed &mdash;
-            runtime {delivery.total_runtime_seconds.toFixed(1)}s
+            {t("deliveryTable.subtitle", {
+              passed: delivery.modules_succeeded,
+              total: delivery.modules_executed,
+              runtime: delivery.total_runtime_seconds.toFixed(1),
+            })}
           </p>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm" data-testid="delivery-table">
             <thead className="border-b border-gray-100 bg-gray-50 text-xs uppercase tracking-wider text-gray-400">
               <tr>
-                <th className="px-4 py-3">Module</th>
-                <th className="px-4 py-3">Name</th>
-                <th className="px-4 py-3">Status</th>
-                <th className="px-4 py-3">Summary</th>
+                <th className="px-4 py-3">{t("deliveryTable.module")}</th>
+                <th className="px-4 py-3">{t("deliveryTable.name")}</th>
+                <th className="px-4 py-3">{t("deliveryTable.status")}</th>
+                <th className="px-4 py-3">{t("deliveryTable.summary")}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-50">
@@ -374,9 +399,9 @@ export default function AsoPage() {
 
       {/* ---- Bar chart ---- */}
       <div className="rounded-xl bg-white shadow-card p-5">
-        <h2 className="text-sm font-semibold text-gray-900">Module Scores</h2>
+        <h2 className="text-sm font-semibold text-gray-900">{t("moduleScoresChart.title")}</h2>
         <p className="mt-0.5 mb-4 text-xs text-gray-400">
-          Mathematical validation score per module (0&ndash;100)
+          {t("moduleScoresChart.subtitle")}
         </p>
         <BarChart
           categories={chartCategories}

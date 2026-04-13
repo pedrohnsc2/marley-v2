@@ -1,0 +1,13 @@
+{
+  "organism_slug": "trypanosoma_cruzi",
+  "species_name": "Trypanosoma cruzi",
+  "taxonomic_group": "kinetoplastida",
+  "disease_name": "doenca de Chagas",
+  "sl_sequence": "AACTAACGCTATTATTGATACAGTTTCTGTACTATATTG",
+  "mutation_rate": 2.0e-9,
+  "generation_time_hours": 24.0,
+  "sl_copy_number": 200,
+  "dg_functional_threshold": -15.0,
+  "length_scan_min": 18,
+  "length_scan_max": 27
+}

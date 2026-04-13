@@ -20,7 +20,8 @@
     "targetValidation": "Validação do Alvo",
     "bioSim": "Bio-Sim 3D",
     "methods": "Métodos",
-    "settings": "Configurações"
+    "settings": "Configurações",
+    "runs": "Execuções do Pipeline"
   },
   "breadcrumb": {
     "home": "Painel",
@@ -32,7 +33,8 @@
     "rna": "Validação do Alvo",
     "bioSim": "Bio-Sim 3D",
     "methods": "Métodos e Dados",
-    "settings": "Configurações"
+    "settings": "Configurações",
+    "runs": "Execuções do Pipeline"
   },
   "molViewer": {
     "cartoon": "Cartoon",
@@ -395,6 +397,94 @@
       "mrnaLnp": "Tecnologia mRNA-LNP: protocolos de manufatura Moderna/BioNTech",
       "ecoli": "E. coli recombinante: Leish-Tec (Hertape Calier) como precedente regulatório",
       "ctvacinas": "CTVacinas (UFMG) framework de comparação de plataformas"
+    }
+  },
+  "runs": {
+    "title": "Execuções do Pipeline",
+    "subtitle": "Todas as execuções de pipeline e seus resultados",
+    "kpi": {
+      "totalRuns": "Total de Execuções",
+      "completed": "Concluídas",
+      "completedSub": "Finalizadas com sucesso",
+      "failed": "Falhas",
+      "failedSub": "Finalizadas com erros",
+      "pipelinesUsed": "Pipelines Utilizados",
+      "pipelinesUsedSub": "Tipos distintos de pipeline"
+    },
+    "table": {
+      "title": "Histórico de Execuções",
+      "subtitle": "{count} execuções encontradas",
+      "runId": "ID da Execução",
+      "pipeline": "Pipeline",
+      "status": "Status",
+      "duration": "Duração",
+      "date": "Data",
+      "tags": "Tags"
+    },
+    "status": {
+      "completed": "Concluído",
+      "failed": "Falha",
+      "running": "Em execução",
+      "created": "Criado",
+      "cancelled": "Cancelado"
+    },
+    "pipelines": {
+      "all": "Todos",
+      "vaccine": "Vacina",
+      "drug": "Fármacos",
+      "docking": "Acoplamento",
+      "rna": "RNA",
+      "aso_math": "ASO Math"
+    },
+    "filter": {
+      "all": "Todos os Pipelines",
+      "label": "Filtrar por pipeline"
+    },
+    "empty": {
+      "title": "Nenhuma execução ainda",
+      "subtitle": "Use o CLI para iniciar sua primeira execução de pipeline."
+    },
+    "newRun": {
+      "title": "Configurar Nova Execução",
+      "subtitle": "Selecione um pipeline, escolha um preset e personalize os parâmetros. Depois copie o comando CLI para executar.",
+      "parameters": "Parâmetros",
+      "cliCommand": "Comando CLI",
+      "copyCommand": "Copiar",
+      "copied": "Copiado!",
+      "cliNote": "A execução do pipeline é feita via CLI. Copie o comando e execute no seu terminal.",
+      "jsonPreview": "Prévia dos Parâmetros (JSON)",
+      "runButton": "Executar Pipeline",
+      "running": "Iniciando...",
+      "runError": "Falha ao iniciar pipeline",
+      "orCli": "Ou execute manualmente via CLI:"
+    },
+    "detail": {
+      "title": "Detalhes da Execução",
+      "live": "Ao Vivo",
+      "stages": "Etapas do Pipeline",
+      "stageStatus": {
+        "pending": "Pendente",
+        "running": "Executando",
+        "success": "Concluída",
+        "failed": "Falhou",
+        "skipped": "Ignorada"
+      },
+      "overallProgress": "{completed} de {total} etapas",
+      "completed": "Pipeline concluído com sucesso",
+      "failed": "Pipeline falhou",
+      "viewResults": "Ver Resultados",
+      "backToRuns": "Voltar às Execuções",
+      "parameters": "Parâmetros",
+      "stalled": "Esta execução pode ter travado. Verifique o arquivo de log.",
+      "errorDetails": "Detalhes do Erro"
+    },
+    "compare": {
+      "title": "Comparar Execuções",
+      "selectPrompt": "Selecione duas execuções para comparar seus parâmetros e resultados.",
+      "compareButton": "Comparar",
+      "notFound": "Execução não encontrada",
+      "parameters": "Diferenças de Parâmetros",
+      "stages": "Comparação de Etapas"
     }
   }
 }

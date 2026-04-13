@@ -1,19 +1,38 @@
 import dynamic from "next/dynamic";
-import { loadCsv, safeLoadPdb } from "@/lib/data-loader";
+import { getTranslations } from "next-intl/server";
+import { loadCsv, safeLoadPdb, safeLoadRunCsv, safeLoadRunPdb, getRunCompletedDate } from "@/lib/data-loader";
 import KpiCard from "@/components/kpi-card";
 import BarChart from "@/components/charts/bar-chart";
+import RunBanner from "@/components/runs/run-banner";
 
 const MolViewer = dynamic(() => import("@/components/mol-viewer/MolViewer"), { ssr: false });
 
-export default function DockingPage() {
-  const allScores = loadCsv("docking_scores.csv");
+export default async function DockingPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ run?: string }>;
+}) {
+  const { run: runId } = await searchParams;
+  const t = await getTranslations("docking");
+
+  const runScores = runId ? safeLoadRunCsv(runId, "docking_scores.csv") : [];
+  const allScores = runScores.length > 0 ? runScores : loadCsv("docking_scores.csv");
 
   // Load 3D structure data for interactive viewers
-  const gmpsPdb = safeLoadPdb("data/structures/GMPS_A4IBM8.pdb");
-  const gmpsLigand = safeLoadPdb("data/docking/GMPS/CHEMBL36_out.pdbqt");
-  const tryrPdb = safeLoadPdb("data/structures/TryR_Q4Q457.pdb");
-  const mrl003Ligand = safeLoadPdb("data/docking/TryR/MRL-003_amide_tail_out.pdbqt");
+  const gmpsPdb = runId
+    ? safeLoadRunPdb(runId, "data/structures/GMPS_A4IBM8.pdb") ?? safeLoadPdb("data/structures/GMPS_A4IBM8.pdb")
+    : safeLoadPdb("data/structures/GMPS_A4IBM8.pdb");
+  const gmpsLigand = runId
+    ? safeLoadRunPdb(runId, "data/docking/GMPS/CHEMBL36_out.pdbqt") ?? safeLoadPdb("data/docking/GMPS/CHEMBL36_out.pdbqt")
+    : safeLoadPdb("data/docking/GMPS/CHEMBL36_out.pdbqt");
+  const tryrPdb = runId
+    ? safeLoadRunPdb(runId, "data/structures/TryR_Q4Q457.pdb") ?? safeLoadPdb("data/structures/TryR_Q4Q457.pdb")
+    : safeLoadPdb("data/structures/TryR_Q4Q457.pdb");
+  const mrl003Ligand = runId
+    ? safeLoadRunPdb(runId, "data/docking/TryR/MRL-003_amide_tail_out.pdbqt") ?? safeLoadPdb("data/docking/TryR/MRL-003_amide_tail_out.pdbqt")
+    : safeLoadPdb("data/docking/TryR/MRL-003_amide_tail_out.pdbqt");
   const top10 = allScores.slice(0, 10);
+  const runCompletedAt = runId ? getRunCompletedDate(runId) : null;
 
   const bestAffinity =
     allScores.length > 0
@@ -27,7 +46,7 @@ export default function DockingPage() {
   const chartCategories = top10.map((r) => r.compound_name ?? r.compound_id ?? "");
   const chartSeries = [
     {
-      name: "Binding Affinity",
+      name: t("affinityChart.seriesName"),
       data: top10.map((r) => Math.abs(parseFloat(r.binding_affinity ?? "0"))),
     },
   ];
@@ -40,13 +59,15 @@ export default function DockingPage() {
 
   return (
     <div>
+      <RunBanner runId={runId ?? null} pipeline="docking" completedAt={runCompletedAt} />
+
       {/* Page header */}
       <div className="mb-6 flex items-center gap-3">
-        <span className="rounded-lg bg-emerald-100 px-2.5 py-1 text-xs font-bold text-emerald-600">v4</span>
+        <span className="rounded-lg bg-emerald-100 px-2.5 py-1 text-xs font-bold text-emerald-600">{t("badge")}</span>
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Molecular Docking</h1>
+          <h1 className="text-2xl font-bold text-gray-900">{t("title")}</h1>
           <p className="text-sm text-gray-500">
-            AutoDock Vina virtual screening — {uniqueCompounds} compounds across {uniqueTargets} targets
+            {t("subtitle", { compounds: uniqueCompounds, targets: uniqueTargets })}
           </p>
         </div>
       </div>
@@ -54,25 +75,25 @@ export default function DockingPage() {
       {/* KPIs */}
       <div className="mb-6 grid grid-cols-2 gap-4 lg:grid-cols-4">
         <KpiCard
-          title="Total Dockings"
+          title={t("kpi.totalDockings.title")}
           value={allScores.length}
-          subtitle="Target-compound pairs"
+          subtitle={t("kpi.totalDockings.subtitle")}
           accentColor="bg-emerald-500"
         />
         <KpiCard
-          title="Unique Targets"
+          title={t("kpi.uniqueTargets.title")}
           value={uniqueTargets}
-          subtitle="Receptor structures"
+          subtitle={t("kpi.uniqueTargets.subtitle")}
           accentColor="bg-teal-500"
         />
         <KpiCard
-          title="Compounds"
+          title={t("kpi.compounds.title")}
           value={uniqueCompounds}
-          subtitle="Tested molecules"
+          subtitle={t("kpi.compounds.subtitle")}
           accentColor="bg-green-500"
         />
         <KpiCard
-          title="Best Affinity"
+          title={t("kpi.bestAffinity.title")}
           value={`${bestAffinity.toFixed(2)} kcal/mol`}
           subtitle={top10[0]?.compound_name ?? ""}
           accentColor="bg-lime-500"
@@ -84,17 +105,17 @@ export default function DockingPage() {
         {/* Top hits table */}
         <div className="xl:col-span-3 rounded-xl bg-white shadow-card overflow-hidden">
           <div className="border-b border-gray-100 px-5 py-4">
-            <h2 className="text-sm font-semibold text-gray-900">Top 10 Docking Hits</h2>
-            <p className="text-xs text-gray-400 mt-0.5">Ranked by binding affinity (kcal/mol)</p>
+            <h2 className="text-sm font-semibold text-gray-900">{t("table.title")}</h2>
+            <p className="text-xs text-gray-400 mt-0.5">{t("table.subtitle")}</p>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full text-left text-sm" data-testid="docking-table">
               <thead className="border-b border-gray-100 bg-gray-50 text-xs uppercase tracking-wider text-gray-400">
                 <tr>
                   <th className="px-4 py-3">#</th>
-                  <th className="px-4 py-3">Target</th>
-                  <th className="px-4 py-3">Compound</th>
-                  <th className="px-4 py-3 text-right">Affinity</th>
+                  <th className="px-4 py-3">{t("table.target")}</th>
+                  <th className="px-4 py-3">{t("table.compound")}</th>
+                  <th className="px-4 py-3 text-right">{t("table.affinity")}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-50">
@@ -122,8 +143,8 @@ export default function DockingPage() {
 
         {/* Affinity chart */}
         <div className="xl:col-span-2 rounded-xl bg-white shadow-card p-5">
-          <h2 className="text-sm font-semibold text-gray-900">Binding Affinities</h2>
-          <p className="text-xs text-gray-400 mt-0.5 mb-4">|kcal/mol| — top 10 compounds</p>
+          <h2 className="text-sm font-semibold text-gray-900">{t("affinityChart.title")}</h2>
+          <p className="text-xs text-gray-400 mt-0.5 mb-4">{t("affinityChart.subtitle")}</p>
           <BarChart
             categories={chartCategories}
             series={chartSeries}
@@ -137,20 +158,20 @@ export default function DockingPage() {
       {/* Selectivity table */}
       <div className="rounded-xl bg-white shadow-card overflow-hidden">
         <div className="border-b border-gray-100 px-5 py-4">
-          <h2 className="text-sm font-semibold text-gray-900">Selectivity Analysis</h2>
+          <h2 className="text-sm font-semibold text-gray-900">{t("selectivity.title")}</h2>
           <p className="text-xs text-gray-400 mt-0.5">
-            L. infantum TryR vs human glutathione reductase (GR). Selective threshold: 1.5 kcal/mol difference.
+            {t("selectivity.subtitle")}
           </p>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm">
             <thead className="border-b border-gray-100 bg-gray-50 text-xs uppercase tracking-wider text-gray-400">
               <tr>
-                <th className="px-5 py-3">Compound</th>
-                <th className="px-5 py-3 text-right">TryR (kcal/mol)</th>
-                <th className="px-5 py-3 text-right">Human GR (kcal/mol)</th>
-                <th className="px-5 py-3 text-right">Delta</th>
-                <th className="px-5 py-3 text-center">Selective</th>
+                <th className="px-5 py-3">{t("selectivity.compound")}</th>
+                <th className="px-5 py-3 text-right">{t("selectivity.tryr")}</th>
+                <th className="px-5 py-3 text-right">{t("selectivity.humanGr")}</th>
+                <th className="px-5 py-3 text-right">{t("selectivity.delta")}</th>
+                <th className="px-5 py-3 text-center">{t("selectivity.selective")}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-50">
@@ -168,7 +189,7 @@ export default function DockingPage() {
                           : "bg-red-50 text-red-600"
                       }`}
                     >
-                      {s.selective ? "Yes" : "No"}
+                      {s.selective ? t("selectivity.yes") : t("selectivity.no")}
                     </span>
                   </td>
                 </tr>
@@ -178,7 +199,7 @@ export default function DockingPage() {
         </div>
         <div className="px-5 py-3 bg-amber-50 border-t border-amber-100">
           <p className="text-xs text-amber-700">
-            None of the tested compounds showed parasite selectivity. Further structural optimization is needed.
+            {t("selectivity.warning")}
           </p>
         </div>
       </div>
@@ -187,8 +208,8 @@ export default function DockingPage() {
       <div className="mt-6 grid gap-6 lg:grid-cols-2">
         <div className="rounded-xl bg-white shadow-card overflow-hidden">
           <div className="border-b border-gray-100 px-5 py-4">
-            <h2 className="text-sm font-semibold text-gray-900">GMPS + Methotrexate Pose</h2>
-            <p className="text-xs text-gray-400 mt-0.5">Best docking pose in the GMPS binding pocket · Rendered with PyMOL</p>
+            <h2 className="text-sm font-semibold text-gray-900">{t("poses.gmps.title")}</h2>
+            <p className="text-xs text-gray-400 mt-0.5">{t("poses.gmps.subtitle")}</p>
           </div>
           {gmpsPdb ? (
             <MolViewer
@@ -199,13 +220,13 @@ export default function DockingPage() {
             />
           ) : (
             /* eslint-disable-next-line @next/next/no-img-element */
-            <img src="/images/docking_3d.png" alt="Docking pose of methotrexate in the GMPS active site" className="w-full" />
+            <img src="/images/docking_3d.png" alt={t("poses.gmps.altText")} className="w-full" />
           )}
         </div>
         <div className="rounded-xl bg-white shadow-card overflow-hidden">
           <div className="border-b border-gray-100 px-5 py-4">
-            <h2 className="text-sm font-semibold text-gray-900">TryR + MRL-003 Docking</h2>
-            <p className="text-xs text-gray-400 mt-0.5">Custom molecule MRL-003 (-7.74 kcal/mol) in the TryR binding site</p>
+            <h2 className="text-sm font-semibold text-gray-900">{t("poses.tryr.title")}</h2>
+            <p className="text-xs text-gray-400 mt-0.5">{t("poses.tryr.subtitle")}</p>
           </div>
           {tryrPdb ? (
             <MolViewer
@@ -216,7 +237,7 @@ export default function DockingPage() {
             />
           ) : (
             /* eslint-disable-next-line @next/next/no-img-element */
-            <img src="/images/tryr_mrl003.png" alt="MRL-003 docked into trypanothione reductase active site" className="w-full" />
+            <img src="/images/tryr_mrl003.png" alt={t("poses.tryr.altText")} className="w-full" />
           )}
         </div>
       </div>

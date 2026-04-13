@@ -1,0 +1,20 @@
+{
+  "organism_slug": "leishmania_infantum",
+  "species_name": "Leishmania infantum",
+  "taxonomic_group": "kinetoplastida",
+  "disease_name": "leishmaniose visceral",
+  "sl_sequence": "AACTAACGCTATATAAGTATCAGTTTCTGTACTTATATG",
+  "aso_sequence": "ACAGAAACTGATACTTATATAGCGT",
+  "aso_name": "MRL-ASO-001",
+  "aso_target_start": 5,
+  "aso_target_end": 30,
+  "mutation_rate": 2.0e-9,
+  "generation_time_hours": 12.0,
+  "sl_copy_number": 150,
+  "dg_functional_threshold": -15.0,
+  "length_scan_min": 18,
+  "length_scan_max": 27,
+  "known_tm": 68.48,
+  "known_dg": -27.97,
+  "known_gc": 0.32
+}
