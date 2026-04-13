@@ -1,4 +1,4 @@
-import { loadModuleJson, loadCsv, safeLoadCsv } from "@/lib/data-loader";
+import { safeLoadModuleJson, safeLoadCsv } from "@/lib/data-loader";
 import KpiCard from "@/components/kpi-card";
 import BarChart from "@/components/charts/bar-chart";
 
@@ -14,9 +14,9 @@ interface SlRnaSummary {
 }
 
 export default function RnaPage() {
-  const summary = loadModuleJson("results", "rna/sl_rna_summary.json") as SlRnaSummary;
-  const entropyProfile = loadCsv("rna/shannon_entropy_profile.csv");
-  const topTargets = loadCsv("rna/top_rna_targets.csv");
+  const summary = safeLoadModuleJson("results", "rna/sl_rna_summary.json") as SlRnaSummary | null;
+  const entropyProfile = safeLoadCsv("rna/shannon_entropy_profile.csv");
+  const topTargets = safeLoadCsv("rna/top_rna_targets.csv");
   const codonUsage = safeLoadCsv("rna/codon_usage_comparison.csv");
 
   // Sort entropy profile by shannon_entropy descending, take top 15
@@ -93,7 +93,7 @@ export default function RnaPage() {
       <div className="mb-6 grid grid-cols-2 gap-4 lg:grid-cols-4">
         <KpiCard
           title="Total Transcripts"
-          value={summary.total_transcripts}
+          value={summary?.total_transcripts ?? "—"}
           subtitle="L. infantum transcriptome"
           accentColor="bg-teal-500"
         />
@@ -111,9 +111,9 @@ export default function RnaPage() {
         />
         <KpiCard
           title="Human Absent"
-          value={summary.absent_in_human ? "\u2713 Yes" : "\u2717 No"}
+          value={summary ? (summary.absent_in_human ? "\u2713 Yes" : "\u2717 No") : "—"}
           subtitle="Not found in human transcriptome"
-          accentColor={summary.absent_in_human ? "bg-emerald-500" : "bg-red-500"}
+          accentColor={summary?.absent_in_human ? "bg-emerald-500" : "bg-teal-500"}
         />
       </div>
 
@@ -132,21 +132,21 @@ export default function RnaPage() {
             className="break-all font-mono text-lg font-bold tracking-widest"
             data-testid="sl-rna-sequence"
           >
-            {summary.sl_sequence}
+            {summary?.sl_sequence ?? "Computação em andamento"}
           </p>
         </div>
         <div className="mt-4 grid grid-cols-3 gap-4 border-t border-white/20 pt-4 text-xs">
           <div>
             <p className="text-teal-200">Entropy</p>
-            <p className="font-semibold">{summary.sl_entropy.toFixed(4)} bits</p>
+            <p className="font-semibold">{summary ? summary.sl_entropy.toFixed(4) + " bits" : "—"}</p>
           </div>
           <div>
             <p className="text-teal-200">GC Content</p>
-            <p className="font-semibold">{(summary.sl_gc_content * 100).toFixed(1)}%</p>
+            <p className="font-semibold">{summary ? (summary.sl_gc_content * 100).toFixed(1) + "%" : "—"}</p>
           </div>
           <div>
             <p className="text-teal-200">Length</p>
-            <p className="font-semibold">{summary.sl_sequence.length} nt</p>
+            <p className="font-semibold">{summary ? summary.sl_sequence.length + " nt" : "—"}</p>
           </div>
         </div>
       </div>

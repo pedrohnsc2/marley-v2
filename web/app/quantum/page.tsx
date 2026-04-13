@@ -1,4 +1,4 @@
-import { loadModuleJson } from "@/lib/data-loader";
+import { safeLoadModuleJson } from "@/lib/data-loader";
 import KpiCard from "@/components/kpi-card";
 import BarChart from "@/components/charts/bar-chart";
 
@@ -86,9 +86,33 @@ interface VqeData {
 }
 
 export default function QuantumPage() {
-  const qaoa = loadModuleJson("qaoa", "qaoa_top10_configurations.json") as QaoaTop10Data;
-  const comparison = loadModuleJson("qaoa", "qaoa_vs_classical_comparison.json") as ComparisonData;
-  const vqe = loadModuleJson("vqe", "vqe_mulliken_charges.json") as VqeData;
+  const qaoa = safeLoadModuleJson("qaoa", "qaoa_top10_configurations.json") as QaoaTop10Data | null;
+  const comparison = safeLoadModuleJson("qaoa", "qaoa_vs_classical_comparison.json") as ComparisonData | null;
+  const vqe = safeLoadModuleJson("vqe", "vqe_mulliken_charges.json") as VqeData | null;
+
+  if (!qaoa || !comparison || !vqe) {
+    return (
+      <div>
+        <div className="mb-6 flex items-center gap-3">
+          <span className="rounded-lg bg-indigo-100 px-2.5 py-1 text-xs font-bold text-indigo-600">QAOA+VQE</span>
+          <div>
+            <h1 className="text-2xl font-bold text-gray-900">Quantum Computing</h1>
+            <p className="text-sm text-gray-500">QAOA and VQE algorithms for ASO phosphorothioate stereochemistry optimization</p>
+          </div>
+        </div>
+        <div className="rounded-xl bg-white shadow-card p-12 text-center">
+          <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-indigo-50">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="h-6 w-6 text-indigo-400">
+              <circle cx="12" cy="12" r="9" />
+              <path strokeLinecap="round" d="M12 7v5l3 3" />
+            </svg>
+          </div>
+          <p className="text-sm font-semibold text-gray-700">Computação em andamento</p>
+          <p className="mt-1 text-xs text-gray-400">Resultados disponíveis em breve</p>
+        </div>
+      </div>
+    );
+  }
 
   const dgBase = qaoa.metadata.dg_base_kcal_mol;
   const bestEnergy = qaoa.top10_configurations[0].dg_total;
