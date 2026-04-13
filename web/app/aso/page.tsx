@@ -1,6 +1,6 @@
 import Link from "next/link";
 import dynamic from "next/dynamic";
-import { loadModuleJson, safeLoadPdb } from "@/lib/data-loader";
+import { safeLoadModuleJson, loadModuleJson, safeLoadPdb } from "@/lib/data-loader";
 import KpiCard from "@/components/kpi-card";
 import BarChart from "@/components/charts/bar-chart";
 
@@ -10,30 +10,35 @@ const MolViewer = dynamic(() => import("@/components/mol-viewer/MolViewer"), { s
 /*  Types                                                              */
 /* ------------------------------------------------------------------ */
 
-interface Molecule {
+interface MoleculeV2 {
   name: string;
-  sequence: string;
+  type: string;
   length: number;
   target: string;
-  target_sequence: string;
   target_region: string;
-  known_dg_kcal: number;
-  known_tm_celsius: number;
 }
 
-interface ModuleAssessment {
-  module: string;
-  verdict: string;
+interface DimensionDetails {
+  wt_dg_kcal?: number;
+  wt_tm_celsius?: number;
+  [key: string]: unknown;
+}
+
+interface DimensionAssessment {
+  dimension: string;
   score: number;
+  max_score: number;
+  verdict: string;
+  details: DimensionDetails;
   notes: string[];
 }
 
-interface MathCertificate {
-  molecule: Molecule;
-  verdict: string;
-  confidence: string;
-  overall_score: number;
-  module_assessments: ModuleAssessment[];
+interface MathCertificateV2 {
+  molecule: MoleculeV2;
+  overall_verdict: string;
+  composite_score: number;
+  max_score: number;
+  dimension_assessments: DimensionAssessment[];
 }
 
 interface DeliveryModuleResult {
@@ -54,14 +59,6 @@ interface DeliveryReport {
 /*  Mappings                                                           */
 /* ------------------------------------------------------------------ */
 
-const MODULE_NAMES: Record<string, string> = {
-  "01_thermodynamic_landscape": "Thermodynamic Landscape",
-  "02_selectivity_proof": "Selectivity Proof",
-  "03_evolutionary_conservation": "Evolutionary Conservation",
-  "04_exhaustive_optimization": "Exhaustive Optimization",
-  "05_resistance_model": "Resistance Barrier",
-};
-
 const DELIVERY_NAMES: Record<string, string> = {
   A: "Stability",
   B: "Membrane",
@@ -77,7 +74,7 @@ const DELIVERY_NAMES: Record<string, string> = {
 
 function verdictBadge(verdict: string) {
   const v = verdict.toLowerCase();
-  if (v === "pass") {
+  if (v === "pass" || v === "validated") {
     return (
       <span className="rounded-md bg-emerald-50 px-2 py-0.5 text-xs font-semibold text-emerald-700">
         PASS
@@ -135,15 +132,34 @@ function truncate(text: string, max: number): string {
 /*  Score bar (inline progress indicator)                              */
 /* ------------------------------------------------------------------ */
 
-function ScoreBar({ score }: { score: number }) {
-  const color =
-    score >= 90 ? "bg-emerald-500" : score >= 80 ? "bg-sky-500" : "bg-amber-500";
+function ScoreBar({ score, maxScore = 100 }: { score: number; maxScore?: number }) {
+  const pct = Math.round((score / maxScore) * 100);
+  const color = pct >= 90 ? "bg-emerald-500" : pct >= 70 ? "bg-sky-500" : "bg-amber-500";
   return (
     <div className="flex items-center gap-2">
       <div className="h-2 w-24 overflow-hidden rounded-full bg-gray-100">
-        <div className={`h-full rounded-full ${color}`} style={{ width: `${score}%` }} />
+        <div className={`h-full rounded-full ${color}`} style={{ width: `${pct}%` }} />
       </div>
-      <span className="font-mono text-xs font-bold text-gray-700">{score}</span>
+      <span className="font-mono text-xs font-bold text-gray-700">{score}/{maxScore}</span>
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Pending card                                                       */
+/* ------------------------------------------------------------------ */
+
+function PendingCard({ title, subtitle }: { title: string; subtitle?: string }) {
+  return (
+    <div className="mb-6 rounded-xl bg-white shadow-card p-8 text-center">
+      <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-gray-100">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="h-5 w-5 text-gray-400">
+          <circle cx="12" cy="12" r="9" />
+          <path strokeLinecap="round" d="M12 7v5l3 3" />
+        </svg>
+      </div>
+      <p className="text-sm font-semibold text-gray-700">{title}</p>
+      {subtitle && <p className="mt-1 text-xs text-gray-400">{subtitle}</p>}
     </div>
   );
 }
@@ -153,18 +169,18 @@ function ScoreBar({ score }: { score: number }) {
 /* ------------------------------------------------------------------ */
 
 export default function AsoPage() {
-  const cert = loadModuleJson("aso_math", "math_certificate.json") as MathCertificate;
+  const cert = safeLoadModuleJson("aso_math_reports", "math_certificate_v2.json") as MathCertificateV2 | null;
   const delivery = loadModuleJson("aso_delivery", "delivery_report.json") as DeliveryReport;
   const duplexPdb = safeLoadPdb("marley_ai/05_rosettafold/structures/aso_sl_duplex_model.pdb");
 
-  const { molecule, module_assessments } = cert;
+  const thermoDetails = cert?.dimension_assessments?.[0]?.details ?? {};
+  const wt_dg = thermoDetails.wt_dg_kcal as number | undefined;
+  const wt_tm = thermoDetails.wt_tm_celsius as number | undefined;
+  const overallPct = cert ? Math.round((cert.composite_score / cert.max_score) * 100) : 0;
 
-  /* Bar chart data */
-  const chartCategories = module_assessments.map(
-    (m) => MODULE_NAMES[m.module] ?? m.module,
-  );
+  const chartCategories = (cert?.dimension_assessments ?? []).map((m) => m.dimension.replace(/^\d+\.\s*/, "").split(" ").slice(0, 3).join(" "));
   const chartSeries = [
-    { name: "Score", data: module_assessments.map((m) => m.score) },
+    { name: "Score", data: (cert?.dimension_assessments ?? []).map((m) => m.score) },
   ];
 
   return (
@@ -172,7 +188,7 @@ export default function AsoPage() {
       {/* ---- Page header ---- */}
       <div className="mb-6 flex items-center gap-3">
         <span className="rounded-lg bg-rose-100 px-2.5 py-1 text-xs font-bold text-rose-600">
-          v1.0
+          v2.0
         </span>
         <div>
           <h1 className="text-2xl font-bold text-gray-900">ASO Therapy</h1>
@@ -187,14 +203,14 @@ export default function AsoPage() {
       <div className="mb-6 grid grid-cols-2 gap-4 lg:grid-cols-4">
         <KpiCard
           title="Math Score"
-          value={`${cert.overall_score}/100`}
-          subtitle={cert.verdict.replace(/_/g, " ")}
+          value={cert ? `${cert.composite_score}/${cert.max_score}` : "—"}
+          subtitle={cert ? cert.overall_verdict.replace(/_/g, " ") : "Computação em andamento"}
           accentColor="bg-rose-500"
         />
         <KpiCard
           title="Binding Energy"
-          value={`${molecule.known_dg_kcal} kcal/mol`}
-          subtitle={`Tm ${molecule.known_tm_celsius} C`}
+          value={wt_dg != null ? `${wt_dg} kcal/mol` : "—"}
+          subtitle={wt_tm != null ? `Tm ${wt_tm} °C` : "Data pending"}
           accentColor="bg-pink-500"
         />
         <KpiCard
@@ -252,84 +268,76 @@ export default function AsoPage() {
       )}
 
       {/* ---- Molecule card ---- */}
-      <div className="mb-6 rounded-xl bg-white shadow-card overflow-hidden">
-        <div className="border-b border-gray-100 px-5 py-4">
-          <h2 className="text-sm font-semibold text-gray-900">Molecule: {molecule.name}</h2>
-          <p className="mt-0.5 text-xs text-gray-400">
-            {molecule.length}-mer antisense oligonucleotide with LNA gapmer design
-          </p>
-        </div>
-        <div className="px-5 py-5">
-          {/* Sequence display */}
-          <div className="mb-5 rounded-lg bg-rose-50 px-4 py-3">
-            <p className="mb-1 text-xs font-semibold uppercase tracking-wider text-rose-400">
-              5&apos; &rarr; 3&apos; Sequence
-            </p>
-            <p
-              className="font-mono text-lg font-bold tracking-widest text-rose-700"
-              data-testid="aso-sequence"
-            >
-              {molecule.sequence}
+      {cert ? (
+        <div className="mb-6 rounded-xl bg-white shadow-card overflow-hidden">
+          <div className="border-b border-gray-100 px-5 py-4">
+            <h2 className="text-sm font-semibold text-gray-900">Molecule: {cert.molecule.name}</h2>
+            <p className="mt-0.5 text-xs text-gray-400">
+              {cert.molecule.type}
             </p>
           </div>
-
-          {/* Properties grid */}
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
-            {[
-              { label: "Target", value: molecule.target },
-              { label: "Target Region", value: molecule.target_region },
-              { label: "Length", value: `${molecule.length} nt` },
-              { label: "dG", value: `${molecule.known_dg_kcal} kcal/mol` },
-              { label: "Tm", value: `${molecule.known_tm_celsius} C` },
-            ].map((prop) => (
-              <div key={prop.label} className="rounded-lg bg-gray-50 p-3">
-                <p className="text-xs text-gray-400">{prop.label}</p>
-                <p className="mt-1 text-sm font-semibold text-gray-900">{prop.value}</p>
-              </div>
-            ))}
+          <div className="px-5 py-5">
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
+              {[
+                { label: "Target", value: cert.molecule.target },
+                { label: "Target Region", value: cert.molecule.target_region },
+                { label: "Length", value: `${cert.molecule.length} nt` },
+                { label: "dG", value: wt_dg != null ? `${wt_dg} kcal/mol` : "—" },
+                { label: "Tm", value: wt_tm != null ? `${wt_tm} °C` : "—" },
+              ].map((prop) => (
+                <div key={prop.label} className="rounded-lg bg-gray-50 p-3">
+                  <p className="text-xs text-gray-400">{prop.label}</p>
+                  <p className="mt-1 text-sm font-semibold text-gray-900">{prop.value}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
+      ) : (
+        <PendingCard title="Mathematical certificate pending" subtitle="Computação em andamento — resultados disponíveis em breve" />
+      )}
 
       {/* ---- Validation modules table ---- */}
-      <div className="mb-6 rounded-xl bg-white shadow-card overflow-hidden">
-        <div className="border-b border-gray-100 px-5 py-4">
-          <h2 className="text-sm font-semibold text-gray-900">Validation Modules</h2>
-          <p className="mt-0.5 text-xs text-gray-400">
-            5 mathematical validation modules &mdash; overall score {cert.overall_score}/100
-          </p>
-        </div>
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-sm" data-testid="validation-table">
-            <thead className="border-b border-gray-100 bg-gray-50 text-xs uppercase tracking-wider text-gray-400">
-              <tr>
-                <th className="px-4 py-3">#</th>
-                <th className="px-4 py-3">Module</th>
-                <th className="px-4 py-3">Verdict</th>
-                <th className="px-4 py-3">Score</th>
-                <th className="px-4 py-3">Note</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-50">
-              {module_assessments.map((m, i) => (
-                <tr key={m.module} className="transition-colors hover:bg-gray-50">
-                  <td className="px-4 py-2.5 font-mono text-xs text-gray-300">{i + 1}</td>
-                  <td className="px-4 py-2.5 text-sm font-medium text-gray-800">
-                    {MODULE_NAMES[m.module] ?? m.module}
-                  </td>
-                  <td className="px-4 py-2.5">{verdictBadge(m.verdict)}</td>
-                  <td className="px-4 py-2.5">
-                    <ScoreBar score={m.score} />
-                  </td>
-                  <td className="max-w-sm px-4 py-2.5 text-xs text-gray-500">
-                    {m.notes.length > 0 ? truncate(translateNote(m.notes[0]), 120) : "\u2014"}
-                  </td>
+      {cert ? (
+        <div className="mb-6 rounded-xl bg-white shadow-card overflow-hidden">
+          <div className="border-b border-gray-100 px-5 py-4">
+            <h2 className="text-sm font-semibold text-gray-900">Validation Dimensions</h2>
+            <p className="mt-0.5 text-xs text-gray-400">
+              {cert.dimension_assessments.length} mathematical validation dimensions &mdash; overall {cert.composite_score}/{cert.max_score} ({overallPct}%)
+            </p>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-sm" data-testid="validation-table">
+              <thead className="border-b border-gray-100 bg-gray-50 text-xs uppercase tracking-wider text-gray-400">
+                <tr>
+                  <th className="px-4 py-3">#</th>
+                  <th className="px-4 py-3">Dimension</th>
+                  <th className="px-4 py-3">Verdict</th>
+                  <th className="px-4 py-3">Score</th>
+                  <th className="px-4 py-3">Note</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody className="divide-y divide-gray-50">
+                {cert.dimension_assessments.map((m, i) => (
+                  <tr key={m.dimension} className="transition-colors hover:bg-gray-50">
+                    <td className="px-4 py-2.5 font-mono text-xs text-gray-300">{i + 1}</td>
+                    <td className="px-4 py-2.5 text-sm font-medium text-gray-800">
+                      {m.dimension.replace(/^\d+\.\s*/, "")}
+                    </td>
+                    <td className="px-4 py-2.5">{verdictBadge(m.verdict)}</td>
+                    <td className="px-4 py-2.5">
+                      <ScoreBar score={m.score} maxScore={m.max_score} />
+                    </td>
+                    <td className="max-w-sm px-4 py-2.5 text-xs text-gray-500">
+                      {m.notes.length > 0 ? truncate(translateNote(m.notes[0]), 120) : "—"}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
+      ) : null}
 
       {/* ---- Delivery pipeline table ---- */}
       <div className="mb-6 rounded-xl bg-white shadow-card overflow-hidden">
@@ -373,19 +381,21 @@ export default function AsoPage() {
       </div>
 
       {/* ---- Bar chart ---- */}
-      <div className="rounded-xl bg-white shadow-card p-5">
-        <h2 className="text-sm font-semibold text-gray-900">Module Scores</h2>
-        <p className="mt-0.5 mb-4 text-xs text-gray-400">
-          Mathematical validation score per module (0&ndash;100)
-        </p>
-        <BarChart
-          categories={chartCategories}
-          series={chartSeries}
-          colors={["#E11D48"]}
-          height={260}
-          horizontal
-        />
-      </div>
+      {cert && chartCategories.length > 0 && (
+        <div className="rounded-xl bg-white shadow-card p-5">
+          <h2 className="text-sm font-semibold text-gray-900">Dimension Scores</h2>
+          <p className="mt-0.5 mb-4 text-xs text-gray-400">
+            Mathematical validation score per dimension
+          </p>
+          <BarChart
+            categories={chartCategories}
+            series={chartSeries}
+            colors={["#E11D48"]}
+            height={260}
+            horizontal
+          />
+        </div>
+      )}
     </div>
   );
 }
