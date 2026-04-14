@@ -3,10 +3,12 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import type { StageRecord, StageStatus } from "@/lib/types/run";
+import FriendlyError from "@/components/runs/friendly-error";
 
 interface StageProgressProps {
   stages: StageRecord[];
   totalExpected?: number;
+  runId?: string;
 }
 
 function formatDuration(seconds: number): string {
@@ -101,6 +103,7 @@ function StatusIndicator({ status }: { status: StageStatus }) {
 export default function StageProgress({
   stages,
   totalExpected,
+  runId = "",
 }: StageProgressProps) {
   const t = useTranslations("runs");
   const [expandedErrors, setExpandedErrors] = useState<Set<string>>(new Set());
@@ -159,7 +162,6 @@ export default function StageProgress({
         {stages.map((stage, index) => {
           const isLast = index === stages.length - 1;
           const hasError = stage.status === "failed" && stage.error;
-          const isExpanded = expandedErrors.has(stage.stage_id);
 
           return (
             <div key={stage.stage_id} className="relative" data-testid={`stage-row-${stage.stage_id}`}>
@@ -213,31 +215,14 @@ export default function StageProgress({
                     </div>
                   </div>
 
-                  {/* Error details (expandable) */}
+                  {/* Friendly error component for failed stages */}
                   {hasError && (
-                    <div className="mt-1.5">
-                      <button
-                        onClick={() => toggleError(stage.stage_id)}
-                        className="text-xs font-medium underline"
-                        style={{ color: "rgb(244 63 94)" }}
-                        data-testid={`stage-error-toggle-${stage.stage_id}`}
-                      >
-                        {t("detail.errorDetails")}
-                      </button>
-                      {isExpanded && (
-                        <pre
-                          className="mt-1.5 overflow-x-auto rounded-lg p-3 text-xs"
-                          style={{
-                            backgroundColor: "var(--app-surface-2)",
-                            color: "rgb(244 63 94)",
-                            border: "1px solid var(--app-border)",
-                          }}
-                          data-testid={`stage-error-message-${stage.stage_id}`}
-                        >
-                          {stage.error}
-                        </pre>
-                      )}
-                    </div>
+                    <FriendlyError
+                      errorInfo={stage.error_info ?? null}
+                      rawError={stage.error}
+                      runId={runId}
+                      stageId={stage.stage_id}
+                    />
                   )}
                 </div>
               </div>

@@ -17,6 +17,23 @@ export type StageStatus =
   | "failed"
   | "skipped";
 
+export type ErrorCategory =
+  | "data"
+  | "network"
+  | "compute"
+  | "config"
+  | "dependency"
+  | "permission"
+  | "internal";
+
+export interface ErrorInfo {
+  category: ErrorCategory;
+  code: string;
+  message: string;
+  stage_id: string;
+  suggestion: string;
+}
+
 export interface StageRecord {
   stage_id: string;
   name: string;
@@ -25,6 +42,7 @@ export interface StageRecord {
   completed_at: string | null;
   duration_s: number;
   error: string | null;
+  error_info: ErrorInfo | null;
   output_file: string | null;
   key_metrics: Record<string, unknown>;
 }

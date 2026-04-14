@@ -634,6 +634,9 @@
       "backToRuns": "Voltar às Execuções",
       "parameters": "Parâmetros",
       "stalled": "Esta execução pode ter travado. Verifique o arquivo de log.",
+      "stalledTitle": "Análise Demorando Mais Que o Esperado",
+      "stalledBody": "Sua análise está demorando mais do que o esperado. Se não for concluída em alguns minutos, você pode cancelar e tentar novamente.",
+      "tryAgain": "Tentar Novamente",
       "errorDetails": "Detalhes do Erro"
     },
     "compare": {

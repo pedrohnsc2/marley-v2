@@ -634,6 +634,9 @@
       "backToRuns": "Back to Runs",
       "parameters": "Parameters",
       "stalled": "This run may have stalled. Check the log file for details.",
+      "stalledTitle": "Analysis Taking Longer Than Expected",
+      "stalledBody": "Your analysis is taking longer than expected. If it does not complete within a few minutes, you can cancel and try again.",
+      "tryAgain": "Try Again",
       "errorDetails": "Error Details"
     },
     "compare": {

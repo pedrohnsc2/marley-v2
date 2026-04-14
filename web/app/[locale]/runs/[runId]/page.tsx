@@ -202,9 +202,27 @@ export default function RunDetailPage() {
           }}
           data-testid="run-failed-banner"
         >
-          <p className="text-sm font-medium" style={{ color: "rgb(244 63 94)" }}>
-            {t("detail.failed")}
-          </p>
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <p className="text-sm font-semibold" style={{ color: "rgb(244 63 94)" }}>
+                {t("detail.failed")}
+              </p>
+              <p className="mt-1 text-sm" style={{ color: "var(--app-text-2)" }}>
+                {t("detail.failedBanner")}
+              </p>
+            </div>
+            <Link
+              href={`/runs/new?pipeline=${run.pipeline}`}
+              className="rounded-lg px-3 py-1.5 text-xs font-medium"
+              style={{
+                backgroundColor: "rgb(244 63 94)",
+                color: "white",
+              }}
+              data-testid="try-again-link"
+            >
+              {t("detail.tryAgain")}
+            </Link>
+          </div>
         </div>
       )}
 
@@ -219,7 +237,10 @@ export default function RunDetailPage() {
           data-testid="run-stalled-warning"
         >
           <p className="text-sm font-medium" style={{ color: "rgb(245 158 11)" }}>
-            {t("detail.stalled")}
+            {t("detail.stalledTitle")}
+          </p>
+          <p className="mt-1 text-sm" style={{ color: "var(--app-text-2)" }}>
+            {t("detail.stalledBody")}
           </p>
         </div>
       )}
@@ -234,7 +255,7 @@ export default function RunDetailPage() {
         }}
         data-testid="run-stages-section"
       >
-        <StageProgress stages={stages} />
+        <StageProgress stages={stages} runId={runId} />
       </div>
 
       {/* Parameters (collapsible) */}
