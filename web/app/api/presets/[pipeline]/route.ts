@@ -1,11 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 import { listPresets, loadPreset, splitPreset } from "@/lib/presets";
+import { requireAuth } from "@/lib/api-auth";
 import { rateLimit } from "@/lib/rate-limit";
 
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ pipeline: string }> },
 ) {
+  const { response: authErr } = await requireAuth(request);
+  if (authErr) return authErr;
+
   const limited = rateLimit(request);
   if (limited) return limited;
 

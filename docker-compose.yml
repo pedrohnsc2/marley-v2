@@ -1,0 +1,157 @@
+# =============================================================================
+# Marley Platform — Production Docker Compose
+#
+# Services:
+#   web        — Next.js frontend (port 3000)
+#   worker-api — FastAPI service for run management (port 8000, internal)
+#   worker     — rq worker(s) executing pipeline jobs
+#   redis      — Job queue backend
+#   caddy      — Reverse proxy with automatic HTTPS
+#
+# Usage:
+#   docker compose up -d                    # start all
+#   docker compose up -d --scale worker=2   # 2 pipeline workers
+#   docker compose logs -f worker           # tail worker logs
+#   docker compose exec worker-api python -m core.run_cli --list-runs
+# =============================================================================
+
+x-python-common: &python-common
+  build:
+    context: .
+    dockerfile: infra/Dockerfile.worker
+  env_file: .env.production
+  environment:
+    REDIS_URL: redis://redis:6379/0
+    SUPABASE_URL: ${SUPABASE_URL}
+    SUPABASE_KEY: ${SUPABASE_KEY}
+    API_SECRET_KEY: ${API_SECRET_KEY}
+  volumes:
+    # Shared volume for run results (worker writes, API reads)
+    - run-results:/app/results
+    - pipeline-data:/app/data
+  depends_on:
+    redis:
+      condition: service_healthy
+  restart: unless-stopped
+
+services:
+  # ---------------------------------------------------------------------------
+  # Reverse Proxy — automatic HTTPS via Let's Encrypt
+  # ---------------------------------------------------------------------------
+  caddy:
+    image: caddy:2-alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./infra/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+    depends_on:
+      - web
+      - worker-api
+    restart: unless-stopped
+
+  # ---------------------------------------------------------------------------
+  # Next.js Frontend
+  # ---------------------------------------------------------------------------
+  web:
+    build:
+      context: .
+      dockerfile: infra/Dockerfile.web
+      args:
+        NEXT_PUBLIC_SUPABASE_URL: ${NEXT_PUBLIC_SUPABASE_URL}
+        NEXT_PUBLIC_SUPABASE_ANON_KEY: ${NEXT_PUBLIC_SUPABASE_ANON_KEY}
+        NEXT_PUBLIC_WORKER_API_URL: ${NEXT_PUBLIC_WORKER_API_URL:-http://worker-api:8000}
+    environment:
+      NEXT_PUBLIC_SUPABASE_URL: ${NEXT_PUBLIC_SUPABASE_URL}
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: ${NEXT_PUBLIC_SUPABASE_ANON_KEY}
+      API_SECRET_KEY: ${API_SECRET_KEY}
+    expose:
+      - "3000"
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: "0.5"
+
+  # ---------------------------------------------------------------------------
+  # Worker API — FastAPI service for run management
+  # ---------------------------------------------------------------------------
+  worker-api:
+    <<: *python-common
+    command: >
+      uvicorn core.worker_api:app
+        --host 0.0.0.0
+        --port 8000
+        --workers 2
+        --log-level info
+    environment:
+      REDIS_URL: redis://redis:6379/0
+      SUPABASE_URL: ${SUPABASE_URL}
+      SUPABASE_KEY: ${SUPABASE_KEY}
+      API_SECRET_KEY: ${API_SECRET_KEY}
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:3000}
+    expose:
+      - "8000"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+          cpus: "0.25"
+
+  # ---------------------------------------------------------------------------
+  # Pipeline Workers — execute bioinformatics jobs from the queue
+  # ---------------------------------------------------------------------------
+  worker:
+    <<: *python-common
+    command: python -m core.worker
+    deploy:
+      replicas: 2
+      resources:
+        limits:
+          memory: 2G
+          cpus: "2.0"
+        reservations:
+          memory: 512M
+          cpus: "0.5"
+
+  # ---------------------------------------------------------------------------
+  # Redis — job queue backend
+  # ---------------------------------------------------------------------------
+  redis:
+    image: redis:7-alpine
+    command: redis-server --maxmemory 128mb --maxmemory-policy allkeys-lru --appendonly yes
+    volumes:
+      - redis-data:/data
+    expose:
+      - "6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 192M
+          cpus: "0.25"
+
+volumes:
+  run-results:
+    driver: local
+  pipeline-data:
+    driver: local
+  redis-data:
+    driver: local
+  caddy-data:
+    driver: local
+  caddy-config:
+    driver: local

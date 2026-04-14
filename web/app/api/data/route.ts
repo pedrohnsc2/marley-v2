@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
+import { requireAuth } from "@/lib/api-auth";
 import { rateLimit } from "@/lib/rate-limit";
 
 const RESULTS_DIR = path.join(process.cwd(), "..", "results");
@@ -23,6 +24,9 @@ function parseCsv(content: string): Record<string, string>[] {
 }
 
 export async function GET(request: NextRequest) {
+  const { response: authErr } = await requireAuth(request);
+  if (authErr) return authErr;
+
   const limited = rateLimit(request);
   if (limited) return limited;
 

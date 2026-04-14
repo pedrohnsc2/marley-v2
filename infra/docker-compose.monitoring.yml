@@ -1,0 +1,69 @@
+# =============================================================================
+# Marley Monitoring Stack (optional overlay)
+#
+# Usage:
+#   docker compose -f docker-compose.yml -f infra/docker-compose.monitoring.yml up -d
+#
+# Provides:
+#   - Prometheus: metrics collection (port 9090)
+#   - Grafana: dashboards (port 3001)
+#   - cAdvisor: container resource metrics
+#
+# Total memory overhead: ~300MB
+# =============================================================================
+
+services:
+  prometheus:
+    image: prom/prometheus:v2.51.0
+    volumes:
+      - ./infra/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.retention.time=30d"
+      - "--storage.tsdb.retention.size=1GB"
+    expose:
+      - "9090"
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 128M
+
+  grafana:
+    image: grafana/grafana:11.0.0
+    volumes:
+      - grafana-data:/var/lib/grafana
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_PASSWORD:-marley-admin}
+      GF_SERVER_ROOT_URL: https://${DOMAIN:-localhost}/grafana/
+      GF_SERVER_SERVE_FROM_SUB_PATH: "true"
+      GF_AUTH_ANONYMOUS_ENABLED: "false"
+    expose:
+      - "3000"
+    depends_on:
+      - prometheus
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 128M
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:v0.49.1
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    expose:
+      - "8080"
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 64M
+
+volumes:
+  prometheus-data:
+  grafana-data:

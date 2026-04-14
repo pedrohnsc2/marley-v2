@@ -63,12 +63,18 @@ def _launch(data: dict) -> dict:
         tags = []
     notes = str(data.get("notes", ""))[:500]
 
+    # Extract optional user/team ownership
+    user_id = data.get("user_id") if isinstance(data.get("user_id"), str) else None
+    team_id = data.get("team_id") if isinstance(data.get("team_id"), str) else None
+
     # Create the run (writes to disk + Supabase)
     run = create_pipeline_run(
         pipeline_id=pipeline_id,
         parameters=parameters,
         tags=tags,
         notes=notes,
+        user_id=user_id,
+        team_id=team_id,
     )
 
     # Fork execution into detached background process

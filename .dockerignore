@@ -1,0 +1,44 @@
+# Git
+.git
+.gitignore
+
+# Python
+__pycache__
+*.pyc
+*.pyo
+venv/
+.venv/
+.pytest_cache/
+*.egg-info/
+.ruff_cache/
+
+# Node
+web/node_modules/
+web/.next/
+
+# Results (built at runtime, not baked into image)
+results/
+
+# IDE
+.vscode/
+.idea/
+
+# Environment
+.env
+.env.local
+.env.production
+web/.env.local
+
+# CI/Docs
+.github/
+docs/
+*.md
+LICENSE
+
+# Infra (not needed inside containers)
+infra/
+docker-compose*.yml
+
+# Claude
+.claude/
+orchestrator/

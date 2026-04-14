@@ -1,0 +1,53 @@
+# ============================================================================
+# Marley Next.js Frontend — standalone output for Docker
+# ============================================================================
+FROM node:20-alpine AS builder
+
+WORKDIR /app
+
+# Copy package files first for layer caching
+COPY web/package.json web/package-lock.json* ./
+RUN npm ci
+
+# Copy source
+COPY web/ ./
+
+# Build-time env vars (overridden at runtime via docker env)
+ARG NEXT_PUBLIC_SUPABASE_URL
+ARG NEXT_PUBLIC_SUPABASE_ANON_KEY
+ARG NEXT_PUBLIC_WORKER_API_URL=http://worker-api:8000
+
+ENV NEXT_PUBLIC_SUPABASE_URL=${NEXT_PUBLIC_SUPABASE_URL}
+ENV NEXT_PUBLIC_SUPABASE_ANON_KEY=${NEXT_PUBLIC_SUPABASE_ANON_KEY}
+ENV NEXT_PUBLIC_WORKER_API_URL=${NEXT_PUBLIC_WORKER_API_URL}
+
+RUN npm run build
+
+# ---------------------------------------------------------------------------
+FROM node:20-alpine AS runtime
+
+WORKDIR /app
+
+RUN addgroup -S marley && adduser -S marley -G marley
+
+# Copy standalone build output
+COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/.next/static ./.next/static
+COPY --from=builder /app/public ./public
+
+# Copy i18n files needed at runtime
+COPY --from=builder /app/i18n ./i18n
+COPY --from=builder /app/messages ./messages
+
+USER marley
+
+ENV NODE_ENV=production
+ENV PORT=3000
+ENV HOSTNAME="0.0.0.0"
+
+EXPOSE 3000
+
+HEALTHCHECK --interval=15s --timeout=5s --retries=3 \
+    CMD wget -q --spider http://localhost:3000/ || exit 1
+
+CMD ["node", "server.js"]

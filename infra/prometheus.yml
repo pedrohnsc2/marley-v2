@@ -1,0 +1,17 @@
+# Prometheus scrape configuration for Marley
+global:
+  scrape_interval: 30s
+  evaluation_interval: 30s
+
+scrape_configs:
+  # Container metrics via cAdvisor
+  - job_name: cadvisor
+    static_configs:
+      - targets: ["cadvisor:8080"]
+
+  # Worker API health + custom metrics
+  - job_name: worker-api
+    metrics_path: /health
+    static_configs:
+      - targets: ["worker-api:8000"]
+    scrape_interval: 15s

@@ -55,6 +55,8 @@ def upsert_run(run: PipelineRun) -> None:
             "output_dir": run.output_dir,
             "notes": run.notes,
             "tags": run.tags,
+            "user_id": run.user_id,
+            "team_id": run.team_id,
         }
         client.table(RUNS_TABLE).upsert(payload, on_conflict="run_id").execute()
         logger.info("Upserted run %s (status=%s)", run.run_id, run.status)

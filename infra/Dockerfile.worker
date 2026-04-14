@@ -1,0 +1,63 @@
+# ============================================================================
+# Marley Python Worker — runs bioinformatics pipelines
+# Multi-stage build: builder installs compiled deps, runtime is lean
+# ============================================================================
+FROM python:3.11-slim AS builder
+
+# System deps for scientific Python + RDKit + OpenBabel
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    libopenbabel-dev \
+    swig \
+    git \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /build
+
+# Install Python deps first (better layer caching)
+COPY infra/requirements.worker.txt pyproject.toml ./
+RUN pip install --no-cache-dir --prefix=/install -r requirements.worker.txt
+
+# ---------------------------------------------------------------------------
+FROM python:3.11-slim AS runtime
+
+# Runtime system libs for RDKit/OpenBabel
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libopenbabel7 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Non-root user for security
+RUN groupadd -r marley && useradd -r -g marley -m -s /bin/bash marley
+
+# Copy installed Python packages from builder
+COPY --from=builder /install /usr/local
+
+WORKDIR /app
+
+# Copy project source code
+COPY core/ ./core/
+COPY pipeline/ ./pipeline/
+COPY drug_targets/ ./drug_targets/
+COPY rna_entropy/ ./rna_entropy/
+COPY aso_math/ ./aso_math/
+COPY aso_delivery/ ./aso_delivery/
+COPY marley_ai/ ./marley_ai/
+COPY mrl_quantum/ ./mrl_quantum/
+COPY vaccine_platforms/ ./vaccine_platforms/
+COPY configs/ ./configs/
+COPY data/ ./data/
+COPY pyproject.toml ./
+
+# Create results directory owned by marley user
+RUN mkdir -p /app/results/runs /app/results/latest && \
+    chown -R marley:marley /app/results
+
+USER marley
+
+# Health check: verify Python + core imports work
+HEALTHCHECK --interval=30s --timeout=5s --retries=3 \
+    CMD python -c "from core.registry import PIPELINES; print(len(PIPELINES))"
+
+# Default: run as a worker that reads jobs from Redis queue
+# Override in docker-compose for CLI usage
+CMD ["python", "-m", "core.worker"]

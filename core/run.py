@@ -93,6 +93,8 @@ class PipelineRun:
     output_dir: str = ""
     notes: str = ""
     tags: list[str] = field(default_factory=list)
+    user_id: str | None = None
+    team_id: str | None = None
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -109,6 +111,8 @@ class PipelineRun:
             "output_dir": self.output_dir,
             "notes": self.notes,
             "tags": self.tags,
+            "user_id": self.user_id,
+            "team_id": self.team_id,
         }
 
     @classmethod
@@ -128,6 +132,8 @@ class PipelineRun:
             output_dir=data.get("output_dir", ""),
             notes=data.get("notes", ""),
             tags=data.get("tags", []),
+            user_id=data.get("user_id"),
+            team_id=data.get("team_id"),
         )
 
 
@@ -205,6 +211,8 @@ class RunManager:
         parameters: dict[str, Any] | None = None,
         tags: list[str] | None = None,
         notes: str = "",
+        user_id: str | None = None,
+        team_id: str | None = None,
     ) -> PipelineRun:
         """Cria um novo PipelineRun e persiste no disco."""
         now = _now_iso()
@@ -222,6 +230,8 @@ class RunManager:
             output_dir=str(self._run_dir(run_id) / "outputs"),
             notes=notes,
             tags=tags or [],
+            user_id=user_id,
+            team_id=team_id,
         )
 
         # Cria diretorios

@@ -1,3 +1,8 @@
+/**
+ * @deprecated Use `@/lib/supabase/client` (browser) or `@/lib/supabase/server` (server)
+ * instead. These SSR-aware clients handle cookie-based auth properly.
+ * This file is kept for backward compatibility with existing code.
+ */
 import { createClient } from "@supabase/supabase-js";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;

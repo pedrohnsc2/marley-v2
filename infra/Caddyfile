@@ -1,0 +1,45 @@
+# =============================================================================
+# Caddy Reverse Proxy for Marley Platform
+#
+# Replace {$DOMAIN} with your actual domain, or set the DOMAIN env var.
+# For testing without a domain, use :80 instead of {$DOMAIN}.
+#
+# Caddy automatically provisions and renews Let's Encrypt certificates.
+# =============================================================================
+
+{$DOMAIN:marley.local} {
+    # --- Next.js Frontend ---
+    # All requests go to the frontend by default
+    reverse_proxy web:3000
+
+    # --- Worker API ---
+    # /api/runs/start, /api/queue/status, /api/presets/* route to the Python API
+    handle /api/runs/start {
+        reverse_proxy worker-api:8000
+    }
+    handle /api/queue/* {
+        reverse_proxy worker-api:8000
+    }
+    handle /api/presets/* {
+        reverse_proxy worker-api:8000
+    }
+
+    # --- Security Headers ---
+    header {
+        X-Frame-Options DENY
+        X-Content-Type-Options nosniff
+        Referrer-Policy strict-origin-when-cross-origin
+        X-DNS-Prefetch-Control on
+        Permissions-Policy "camera=(), microphone=(), geolocation=()"
+        -Server
+    }
+
+    # --- Compression ---
+    encode gzip zstd
+
+    # --- Logging ---
+    log {
+        output stdout
+        format json
+    }
+}

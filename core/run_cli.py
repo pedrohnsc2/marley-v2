@@ -150,6 +150,8 @@ def create_pipeline_run(
     tags: list[str] | None = None,
     notes: str = "",
     dry_run: bool = False,
+    user_id: str | None = None,
+    team_id: str | None = None,
 ) -> PipelineRun:
     """Cria um PipelineRun sem executar stages. Retorna o run persistido."""
     mgr = RunManager()
@@ -163,6 +165,8 @@ def create_pipeline_run(
         parameters=parameters,
         tags=run_tags,
         notes=notes,
+        user_id=user_id,
+        team_id=team_id,
     )
     return run
 

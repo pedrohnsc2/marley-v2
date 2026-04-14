@@ -1,0 +1,69 @@
+# =============================================================================
+# Marley — Local Development Compose
+#
+# Only starts Redis and worker services. Next.js runs via `npm run dev`.
+#
+# Usage:
+#   docker compose -f docker-compose.dev.yml up -d
+#   cd web && npm run dev      # in another terminal
+# =============================================================================
+
+services:
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+
+  worker-api:
+    build:
+      context: .
+      dockerfile: infra/Dockerfile.worker
+    command: >
+      uvicorn core.worker_api:app
+        --host 0.0.0.0
+        --port 8000
+        --reload
+        --log-level debug
+    ports:
+      - "8000:8000"
+    environment:
+      REDIS_URL: redis://redis:6379/0
+    env_file: .env
+    volumes:
+      - ./core:/app/core
+      - ./pipeline:/app/pipeline
+      - ./drug_targets:/app/drug_targets
+      - ./rna_entropy:/app/rna_entropy
+      - ./aso_math:/app/aso_math
+      - ./configs:/app/configs
+      - ./results:/app/results
+      - ./data:/app/data
+    depends_on:
+      redis:
+        condition: service_healthy
+
+  worker:
+    build:
+      context: .
+      dockerfile: infra/Dockerfile.worker
+    command: python -m core.worker
+    environment:
+      REDIS_URL: redis://redis:6379/0
+    env_file: .env
+    volumes:
+      - ./core:/app/core
+      - ./pipeline:/app/pipeline
+      - ./drug_targets:/app/drug_targets
+      - ./rna_entropy:/app/rna_entropy
+      - ./aso_math:/app/aso_math
+      - ./configs:/app/configs
+      - ./results:/app/results
+      - ./data:/app/data
+    depends_on:
+      redis:
+        condition: service_healthy

@@ -13,6 +13,8 @@ import { StepConfirm } from "./step-confirm";
 export interface WizardState {
   pipeline: string | null;
   preset: string | null;
+  /** Display name from the preset _meta block (null for presets without _meta) */
+  presetDisplayName: string | null;
   parameters: Record<string, unknown>;
   /** Snapshot of the original preset parameters, used to detect modifications */
   originalParameters: Record<string, unknown>;
@@ -21,6 +23,7 @@ export interface WizardState {
 const INITIAL_STATE: WizardState = {
   pipeline: null,
   preset: null,
+  presetDisplayName: null,
   parameters: {},
   originalParameters: {},
 };
@@ -140,6 +143,7 @@ export function PipelineWizard() {
         ...prev,
         pipeline: pipelineId,
         preset: null,
+        presetDisplayName: null,
         parameters: {},
         originalParameters: {},
       }));
@@ -148,10 +152,11 @@ export function PipelineWizard() {
   );
 
   const selectPreset = useCallback(
-    (presetName: string, presetParams: Record<string, unknown>) => {
+    (presetName: string, presetParams: Record<string, unknown>, displayName: string | null) => {
       setState((prev) => ({
         ...prev,
         preset: presetName,
+        presetDisplayName: displayName,
         parameters: { ...presetParams },
         originalParameters: { ...presetParams },
       }));

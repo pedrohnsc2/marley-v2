@@ -6,6 +6,7 @@ import Sidebar from "./sidebar";
 import Header from "./header";
 
 const IMMERSIVE_ROUTES = ["/bio-sim"];
+const AUTH_ROUTES = ["/login", "/signup"];
 
 export default function LayoutShell({ children }: { children: React.ReactNode }) {
   const [collapsed, setCollapsed] = useState(false);
@@ -13,6 +14,10 @@ export default function LayoutShell({ children }: { children: React.ReactNode })
 
   if (IMMERSIVE_ROUTES.includes(pathname)) {
     return <main className="h-screen w-screen overflow-hidden">{children}</main>;
+  }
+
+  if (AUTH_ROUTES.includes(pathname)) {
+    return <main className="min-h-screen bg-app-bg">{children}</main>;
   }
 
   return (
