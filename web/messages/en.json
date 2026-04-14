@@ -20,7 +20,8 @@
     "targetValidation": "Target Validation",
     "bioSim": "Bio-Sim 3D",
     "methods": "Methods",
-    "settings": "Settings"
+    "settings": "Settings",
+    "runs": "Pipeline Runs"
   },
   "breadcrumb": {
     "home": "Dashboard",
@@ -32,7 +33,8 @@
     "rna": "Target Validation",
     "bioSim": "Bio-Sim 3D",
     "methods": "Methods & Data",
-    "settings": "Settings"
+    "settings": "Settings",
+    "runs": "Pipeline Runs"
   },
   "molViewer": {
     "cartoon": "Cartoon",
@@ -395,6 +397,98 @@
       "mrnaLnp": "mRNA-LNP technology: Moderna/BioNTech manufacturing protocols",
       "ecoli": "E. coli recombinant: Leish-Tec (Hertape Calier) as regulatory precedent",
       "ctvacinas": "CTVacinas (UFMG) platform comparison framework"
+    }
+  },
+  "runs": {
+    "title": "Pipeline Runs",
+    "subtitle": "All pipeline executions and their results",
+    "kpi": {
+      "totalRuns": "Total Runs",
+      "completed": "Completed",
+      "completedSub": "Successfully finished",
+      "failed": "Failed",
+      "failedSub": "Ended with errors",
+      "pipelinesUsed": "Pipelines Used",
+      "pipelinesUsedSub": "Distinct pipeline types"
+    },
+    "table": {
+      "title": "Run History",
+      "subtitle": "{count} runs found",
+      "runId": "Run ID",
+      "pipeline": "Pipeline",
+      "status": "Status",
+      "duration": "Duration",
+      "date": "Date",
+      "tags": "Tags"
+    },
+    "status": {
+      "completed": "Completed",
+      "failed": "Failed",
+      "running": "Running",
+      "created": "Created",
+      "cancelled": "Cancelled"
+    },
+    "pipelines": {
+      "all": "All",
+      "vaccine": "Vaccine",
+      "drug": "Drug",
+      "docking": "Docking",
+      "rna": "RNA",
+      "aso_math": "ASO Math"
+    },
+    "filter": {
+      "all": "All Pipelines",
+      "label": "Filter by pipeline"
+    },
+    "empty": {
+      "title": "No runs yet",
+      "subtitle": "Use the CLI to start your first pipeline run."
+    },
+    "newRun": {
+      "title": "Configure New Run",
+      "subtitle": "Select a pipeline, choose a preset, and customize parameters. Then copy the CLI command to execute.",
+      "parameters": "Parameters",
+      "cliCommand": "CLI Command",
+      "copyCommand": "Copy",
+      "copied": "Copied!",
+      "cliNote": "Pipeline execution runs via CLI. Copy the command and run it in your terminal.",
+      "jsonPreview": "JSON Parameter Preview",
+      "runButton": "Run Pipeline",
+      "running": "Starting...",
+      "runError": "Failed to start pipeline",
+      "orCli": "Or run manually via CLI:"
+    },
+    "detail": {
+      "title": "Run Details",
+      "live": "Live",
+      "stages": "Pipeline Stages",
+      "stageStatus": {
+        "pending": "Pending",
+        "running": "Running",
+        "success": "Completed",
+        "failed": "Failed",
+        "skipped": "Skipped"
+      },
+      "overallProgress": "{completed} of {total} stages",
+      "completed": "Pipeline completed successfully",
+      "failed": "Pipeline failed",
+      "viewResults": "View Results",
+      "backToRuns": "Back to Runs",
+      "parameters": "Parameters",
+      "stalled": "This run may have stalled. Check the log file for details.",
+      "stalledTitle": "Analysis Taking Longer Than Expected",
+      "stalledBody": "Your analysis is taking longer than expected. If it does not complete within a few minutes, you can cancel and try again.",
+      "failedBanner": "Something went wrong during this pipeline run. Check the stage details below for more information.",
+      "tryAgain": "Try Again",
+      "errorDetails": "Error Details"
+    },
+    "compare": {
+      "title": "Compare Runs",
+      "selectPrompt": "Select two runs to compare their parameters and results.",
+      "compareButton": "Compare",
+      "notFound": "Run not found",
+      "parameters": "Parameter Differences",
+      "stages": "Stage Comparison"
     }
   }
 }
