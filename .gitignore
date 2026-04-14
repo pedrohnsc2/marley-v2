@@ -12,3 +12,4 @@ orchestrator/
 setup-orchestrator.sh
 .env.local
 *.tsbuildinfo
+.claude/worktrees/
