@@ -1,0 +1,13 @@
+{
+  "organism": "trypanosoma_cruzi",
+  "species_name": "Trypanosoma cruzi",
+  "top_n_targets": 5,
+  "compound_library": "repurposing",
+  "max_compounds_per_target": 150,
+  "exhaustiveness": 16,
+  "blind_docking": false,
+  "affinity_weight": 0.50,
+  "admet_weight": 0.25,
+  "repurposing_weight": 0.15,
+  "selectivity_weight": 0.10
+}

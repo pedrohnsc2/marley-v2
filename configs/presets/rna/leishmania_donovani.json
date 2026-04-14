@@ -1,0 +1,11 @@
+{
+  "organism": "leishmania_donovani",
+  "species_name": "Leishmania donovani",
+  "host_organism": "homo_sapiens",
+  "sl_sequence": "AACTAACGCTATATAAGTATCAGTTTCTGTACTTATATG",
+  "entropy_delta_weight": 0.35,
+  "conservation_weight": 0.25,
+  "codon_bias_weight": 0.20,
+  "sl_rna_weight": 0.10,
+  "structure_weight": 0.10
+}

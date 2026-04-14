@@ -1,0 +1,17 @@
+{
+  "organism": "trypanosoma_cruzi",
+  "species_name": "Trypanosoma cruzi",
+  "proteome_source": "tritrypdb",
+  "proteome_id": "CL_Brener_Esmeraldo",
+  "conservation_weight": 0.5,
+  "immunogenicity_weight": 0.5,
+  "conservation_threshold": 0.5,
+  "mhc_alleles": [
+    "HLA-A*02:01",
+    "HLA-A*24:02",
+    "HLA-B*07:02",
+    "HLA-B*08:01",
+    "HLA-B*35:01",
+    "HLA-B*44:02"
+  ]
+}

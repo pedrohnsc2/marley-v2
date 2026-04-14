@@ -1,0 +1,11 @@
+{
+  "organism": "trypanosoma_cruzi",
+  "species_name": "Trypanosoma cruzi",
+  "host_organism": "homo_sapiens",
+  "sl_sequence": "AACTAACGCTATTATTGATACAGTTTCTGTACTATATTG",
+  "entropy_delta_weight": 0.35,
+  "conservation_weight": 0.25,
+  "codon_bias_weight": 0.20,
+  "sl_rna_weight": 0.10,
+  "structure_weight": 0.10
+}

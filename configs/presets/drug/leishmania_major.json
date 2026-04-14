@@ -1,0 +1,9 @@
+{
+  "organism": "leishmania_major",
+  "species_name": "Leishmania major",
+  "divergence_weight": 0.40,
+  "active_site_weight": 0.35,
+  "essentiality_weight": 0.25,
+  "host_organism": "homo_sapiens",
+  "top_n_targets": 20
+}

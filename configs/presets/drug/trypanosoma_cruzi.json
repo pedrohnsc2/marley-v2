@@ -1,0 +1,9 @@
+{
+  "organism": "trypanosoma_cruzi",
+  "species_name": "Trypanosoma cruzi",
+  "divergence_weight": 0.45,
+  "active_site_weight": 0.30,
+  "essentiality_weight": 0.25,
+  "host_organism": "homo_sapiens",
+  "top_n_targets": 25
+}

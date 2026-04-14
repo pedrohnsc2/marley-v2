@@ -1,0 +1,17 @@
+{
+  "organism": "leishmania_donovani",
+  "species_name": "Leishmania donovani",
+  "proteome_source": "tritrypdb",
+  "proteome_id": "BPK282A1",
+  "conservation_weight": 0.4,
+  "immunogenicity_weight": 0.6,
+  "conservation_threshold": 0.6,
+  "mhc_alleles": [
+    "HLA-A*02:01",
+    "HLA-A*24:02",
+    "HLA-B*07:02",
+    "HLA-B*08:01",
+    "HLA-B*35:01",
+    "HLA-B*44:02"
+  ]
+}
