@@ -42,6 +42,7 @@ class StageRecord:
     completed_at: str | None = None
     duration_s: float = 0.0
     error: str | None = None
+    error_info: dict[str, Any] | None = None  # structured ErrorInfo
     output_file: str | None = None
     key_metrics: dict[str, Any] = field(default_factory=dict)
 
@@ -54,6 +55,7 @@ class StageRecord:
             "completed_at": self.completed_at,
             "duration_s": self.duration_s,
             "error": self.error,
+            "error_info": self.error_info,
             "output_file": self.output_file,
             "key_metrics": self.key_metrics,
         }
@@ -68,6 +70,7 @@ class StageRecord:
             completed_at=data.get("completed_at"),
             duration_s=data.get("duration_s", 0.0),
             error=data.get("error"),
+            error_info=data.get("error_info"),
             output_file=data.get("output_file"),
             key_metrics=data.get("key_metrics", {}),
         )
@@ -253,6 +256,7 @@ class RunManager:
         stage_id: str,
         status: str = "success",
         error: str | None = None,
+        error_info: dict[str, Any] | None = None,
         output_file: str | None = None,
         key_metrics: dict[str, Any] | None = None,
     ) -> None:
@@ -266,6 +270,7 @@ class RunManager:
                     end = datetime.fromisoformat(stage.completed_at)
                     stage.duration_s = round((end - start).total_seconds(), 2)
                 stage.error = error
+                stage.error_info = error_info
                 stage.output_file = output_file
                 stage.key_metrics = key_metrics or {}
 

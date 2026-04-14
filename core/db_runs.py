@@ -82,6 +82,7 @@ def upsert_stage(run_id: str, stage: StageRecord) -> None:
             "completed_at": stage.completed_at,
             "duration_s": stage.duration_s,
             "error": stage.error,
+            "error_info": stage.error_info,
             "key_metrics": stage.key_metrics,
         }
         client.table(STAGES_TABLE).upsert(
