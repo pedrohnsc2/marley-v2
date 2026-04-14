@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import type { StageRecord, StageStatus } from "@/lib/types/run";
-import FriendlyError from "@/components/runs/friendly-error";
 
 interface StageProgressProps {
   stages: StageRecord[];
@@ -106,6 +105,11 @@ export default function StageProgress({
   const t = useTranslations("runs");
   const [expandedErrors, setExpandedErrors] = useState<Set<string>>(new Set());
 
+  const completedCount = stages.filter(
+    (s) => s.status === "success" || s.status === "failed" || s.status === "skipped",
+  ).length;
+  const total = totalExpected ?? stages.length;
+
   const toggleError = (stageId: string) => {
     setExpandedErrors((prev) => {
       const next = new Set(prev);
@@ -117,11 +121,6 @@ export default function StageProgress({
       return next;
     });
   };
-
-  const completedCount = stages.filter(
-    (s) => s.status === "success" || s.status === "failed" || s.status === "skipped",
-  ).length;
-  const total = totalExpected ?? stages.length;
 
   return (
     <div data-testid="stage-progress">
