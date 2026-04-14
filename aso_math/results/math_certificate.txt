@@ -7,7 +7,7 @@ Alvo:      Spliced Leader RNA de L. infantum (AACTAACGCTATATAAGTATCAGTTTCTGTACTT
 Regiao:    posicoes 5-30
 dG:        -27.97 kcal/mol
 Tm:        68.48 C
-Data:      2026-04-11 03:38 UTC
+Data:      2026-04-13 14:43 UTC
 
 ----------------------------------------------------------------------
 1. OTIMALIDADE TERMODINAMICA

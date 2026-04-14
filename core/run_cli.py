@@ -225,7 +225,14 @@ def execute_pipeline_run(
             if "dry_run" in sig.parameters:
                 kwargs["dry_run"] = False
             if "config" in sig.parameters:
-                kwargs["config"] = parameters
+                # aso_math modules expect a TargetConfig object, not a dict
+                if run.pipeline == "aso_math":
+                    from aso_math.target_config import TargetConfig
+                    valid_fields = {f.name for f in __import__("dataclasses").fields(TargetConfig)}
+                    filtered = {k: v for k, v in parameters.items() if k in valid_fields}
+                    kwargs["config"] = TargetConfig(**filtered)
+                else:
+                    kwargs["config"] = parameters
             if "top_n" in sig.parameters:
                 kwargs["top_n"] = parameters.get("top_n_targets", 5)
 

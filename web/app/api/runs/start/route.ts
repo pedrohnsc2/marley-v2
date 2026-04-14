@@ -92,14 +92,22 @@ export async function POST(request: NextRequest) {
     };
 
     // Call Python launcher via execFileSync (no shell involved)
+    // stderr goes to parent process (logs), stdout has the JSON result
     const result = execFileSync(PYTHON_BIN, ["-m", "core.launcher"], {
       input: JSON.stringify(sanitizedBody),
       cwd: PROJECT_ROOT,
       timeout: 10_000,
       encoding: "utf-8",
+      stdio: ["pipe", "pipe", "pipe"],
     });
 
-    const parsed = JSON.parse(result.trim());
+    // Extract the last line that looks like JSON (launcher prints logs before JSON)
+    const lines = result.trim().split("\n");
+    const jsonLine = lines.reverse().find((l) => l.startsWith("{"));
+    if (!jsonLine) {
+      throw new Error("No JSON output from launcher");
+    }
+    const parsed = JSON.parse(jsonLine);
 
     // Release run slot after spawn since the Python process runs independently
     releaseRunSlot();
