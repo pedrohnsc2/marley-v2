@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { Link, useRouter } from "@/i18n/routing";
-import LoginParticles from "@/components/login-particles";
+import LoginBackground from "@/components/login-background";
 
 type AuthMode = "password" | "magic-link";
 
@@ -61,10 +61,10 @@ export default function LoginPage() {
 
   return (
     <div className="login-bg relative flex min-h-screen flex-col items-center justify-center px-4">
-      <LoginParticles />
+      <LoginBackground />
 
       {/* ── Card ── */}
-      <div className="login-card relative z-10 w-full max-w-[420px] px-8 py-10 sm:px-10">
+      <div className="login-card relative z-10 w-full max-w-[420px] overflow-hidden px-8 py-10 sm:px-10">
         <div className="login-stagger">
           {/* Wordmark */}
           <div className="mb-8 text-center">
@@ -78,7 +78,7 @@ export default function LoginPage() {
               className="mt-1.5 text-[11px] font-medium uppercase"
               style={{ color: "var(--app-text-3)", letterSpacing: "0.1em" }}
             >
-              Reverse Vaccinology Platform
+              Computational Biology Platform
             </p>
           </div>
 
