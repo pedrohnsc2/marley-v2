@@ -247,13 +247,16 @@ def execute_pipeline_run(
 
         except Exception as exc:
             elapsed = round(time.time() - start, 2)
+            from core.errors import classify_error
+            err_info = classify_error(exc, stage_id=stage_def.stage_id)
             mgr.complete_stage(
                 run, stage_def.stage_id,
                 status="failed",
                 error=str(exc),
+                error_info=err_info.to_dict(),
                 key_metrics={"duration_s": elapsed},
             )
-            logger.error("Stage %s FAILED: %s", stage_def.stage_id, exc)
+            logger.error("Stage %s FAILED [%s]: %s", stage_def.stage_id, err_info.code, exc)
 
     mgr.complete_run(run)
     _print_run_summary(run)

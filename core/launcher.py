@@ -100,11 +100,18 @@ def _execute(run_id: str) -> None:
     try:
         run = mgr.load_run(run_id)
         execute_pipeline_run(run, run.parameters)
-    except Exception:
+    except Exception as exc:
         logger.error("Run %s crashed: %s", run_id, traceback.format_exc())
         try:
+            from core.errors import classify_error
+            err_info = classify_error(exc)
             run = mgr.load_run(run_id)
             mgr.fail_run(run, error=traceback.format_exc()[:2000])
+            # Attach structured error info to run notes for diagnostics
+            run.notes = (
+                f"{run.notes}\n[{err_info.code}] {err_info.suggestion}".strip()
+            )
+            mgr._save(run)
         except Exception:
             pass
         raise
