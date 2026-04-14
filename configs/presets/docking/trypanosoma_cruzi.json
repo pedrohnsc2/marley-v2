@@ -1,4 +1,9 @@
 {
+  "_meta": {
+    "display_name": "T. cruzi — Drug Repurposing",
+    "description": "Docking with repurposing compound library for Chagas disease targets.",
+    "recommended": false
+  },
   "organism": "trypanosoma_cruzi",
   "species_name": "Trypanosoma cruzi",
   "top_n_targets": 5,

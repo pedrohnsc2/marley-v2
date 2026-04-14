@@ -1,4 +1,9 @@
 {
+  "_meta": {
+    "display_name": "L. infantum — Standard Analysis",
+    "description": "Recommended settings for L. infantum drug target discovery.",
+    "recommended": true
+  },
   "organism": "leishmania_infantum",
   "species_name": "Leishmania infantum",
   "divergence_weight": 0.40,

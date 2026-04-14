@@ -1,4 +1,9 @@
 {
+  "_meta": {
+    "display_name": "L. infantum — Standard Validation",
+    "description": "ASO mathematical validation for L. infantum targets.",
+    "recommended": true
+  },
   "organism_slug": "leishmania_infantum",
   "species_name": "Leishmania infantum",
   "taxonomic_group": "kinetoplastida",

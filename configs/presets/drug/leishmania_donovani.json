@@ -1,4 +1,9 @@
 {
+  "_meta": {
+    "display_name": "L. donovani — Visceral Leishmaniasis",
+    "description": "Drug targets for L. donovani.",
+    "recommended": false
+  },
   "organism": "leishmania_donovani",
   "species_name": "Leishmania donovani",
   "divergence_weight": 0.40,

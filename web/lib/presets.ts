@@ -4,6 +4,35 @@ import { validateId } from "@/lib/safe-path";
 
 const PRESETS_DIR = path.join(process.cwd(), "..", "configs", "presets");
 
+/* ------------------------------------------------------------------ */
+/*  Types                                                              */
+/* ------------------------------------------------------------------ */
+
+export interface PresetMeta {
+  display_name: string;
+  description: string;
+  recommended?: boolean;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Helpers                                                            */
+/* ------------------------------------------------------------------ */
+
+/**
+ * Separate the `_meta` block from the actual pipeline parameters.
+ * Returns null for meta if the preset has no `_meta` key (backwards compat).
+ */
+export function splitPreset(raw: Record<string, unknown>): {
+  meta: PresetMeta | null;
+  params: Record<string, unknown>;
+} {
+  const { _meta, ...params } = raw;
+  return {
+    meta: (_meta as PresetMeta) ?? null,
+    params,
+  };
+}
+
 /**
  * List available preset names for a given pipeline.
  * Returns an array of preset names (filename without .json extension).

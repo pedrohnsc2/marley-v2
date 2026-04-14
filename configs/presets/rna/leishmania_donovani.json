@@ -1,4 +1,9 @@
 {
+  "_meta": {
+    "display_name": "L. donovani — Visceral Leishmaniasis",
+    "description": "RNA target validation for L. donovani.",
+    "recommended": false
+  },
   "organism": "leishmania_donovani",
   "species_name": "Leishmania donovani",
   "host_organism": "homo_sapiens",

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { listPresets, loadPreset } from "@/lib/presets";
+import { listPresets, loadPreset, splitPreset } from "@/lib/presets";
 import { rateLimit } from "@/lib/rate-limit";
 
 export async function GET(
@@ -15,19 +15,27 @@ export async function GET(
     const url = new URL(request.url);
     const name = url.searchParams.get("name");
 
+    // Single preset: return { meta, params } with _meta separated
     if (name) {
-      const preset = loadPreset(pipeline, name);
-      if (!preset) {
+      const raw = loadPreset(pipeline, name);
+      if (!raw) {
         return NextResponse.json(
           { error: "Preset not found" },
           { status: 404 },
         );
       }
-      return NextResponse.json(preset);
+      const { meta, params: presetParams } = splitPreset(raw);
+      return NextResponse.json({ meta, params: presetParams });
     }
 
-    const presets = listPresets(pipeline);
-    return NextResponse.json(presets);
+    // List presets: return enriched array with meta for each preset
+    const names = listPresets(pipeline);
+    const enriched = names.map((presetName) => {
+      const raw = loadPreset(pipeline, presetName);
+      const meta = raw ? splitPreset(raw).meta : null;
+      return { name: presetName, meta };
+    });
+    return NextResponse.json(enriched);
   } catch {
     return NextResponse.json(
       { error: "Internal server error" },

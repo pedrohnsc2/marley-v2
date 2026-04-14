@@ -1,4 +1,9 @@
 {
+  "_meta": {
+    "display_name": "L. donovani — Visceral Leishmaniasis",
+    "description": "ASO validation for L. donovani targets.",
+    "recommended": false
+  },
   "organism_slug": "leishmania_donovani",
   "species_name": "Leishmania donovani",
   "taxonomic_group": "kinetoplastida",

@@ -1,4 +1,9 @@
 {
+  "_meta": {
+    "display_name": "T. cruzi — Chagas Disease",
+    "description": "Adapted for Trypanosoma cruzi CL Brener. Causative agent of Chagas disease.",
+    "recommended": false
+  },
   "organism": "trypanosoma_cruzi",
   "species_name": "Trypanosoma cruzi",
   "proteome_source": "tritrypdb",

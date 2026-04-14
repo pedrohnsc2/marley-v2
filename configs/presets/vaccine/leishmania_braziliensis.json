@@ -1,4 +1,9 @@
 {
+  "_meta": {
+    "display_name": "L. braziliensis — Mucocutaneous Leishmaniasis",
+    "description": "Settings for L. braziliensis M2904. Causes mucocutaneous leishmaniasis in the Americas.",
+    "recommended": false
+  },
   "organism": "leishmania_braziliensis",
   "species_name": "Leishmania braziliensis",
   "proteome_source": "tritrypdb",

@@ -1,4 +1,9 @@
 {
+  "_meta": {
+    "display_name": "T. cruzi — Chagas Disease",
+    "description": "Drug targets for T. cruzi. Higher divergence weight for cross-species targets.",
+    "recommended": false
+  },
   "organism": "trypanosoma_cruzi",
   "species_name": "Trypanosoma cruzi",
   "divergence_weight": 0.45,

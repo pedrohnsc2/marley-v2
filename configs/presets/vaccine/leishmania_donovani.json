@@ -1,4 +1,9 @@
 {
+  "_meta": {
+    "display_name": "L. donovani — Visceral Leishmaniasis",
+    "description": "Settings for L. donovani BPK282A1. Primary agent of visceral leishmaniasis in the Old World.",
+    "recommended": false
+  },
   "organism": "leishmania_donovani",
   "species_name": "Leishmania donovani",
   "proteome_source": "tritrypdb",

@@ -1,4 +1,9 @@
 {
+  "_meta": {
+    "display_name": "L. infantum — Standard Docking",
+    "description": "Molecular docking against L. infantum targets with default compound library.",
+    "recommended": true
+  },
   "organism": "leishmania_infantum",
   "species_name": "Leishmania infantum",
   "top_n_targets": 5,

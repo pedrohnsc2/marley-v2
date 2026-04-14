@@ -1,10 +1,17 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import {
-  PIPELINE_METADATA,
-  PRESET_LABELS,
-} from "@/lib/pipeline-metadata";
+import { PIPELINE_METADATA } from "@/lib/pipeline-metadata";
+import type { PresetMeta } from "@/lib/presets";
+
+/* ------------------------------------------------------------------ */
+/*  Types                                                              */
+/* ------------------------------------------------------------------ */
+
+interface PresetListEntry {
+  name: string;
+  meta: PresetMeta | null;
+}
 
 /* ------------------------------------------------------------------ */
 /*  Props                                                              */
@@ -13,7 +20,7 @@ import {
 interface StepPresetSelectProps {
   pipeline: string;
   selectedPreset: string | null;
-  onSelect: (presetName: string, presetParams: Record<string, unknown>) => void;
+  onSelect: (presetName: string, presetParams: Record<string, unknown>, displayName: string | null) => void;
   onBack: () => void;
   onNext: () => void;
 }
@@ -29,7 +36,7 @@ export function StepPresetSelect({
   onBack,
   onNext,
 }: StepPresetSelectProps) {
-  const [presetNames, setPresetNames] = useState<string[]>([]);
+  const [presets, setPresets] = useState<PresetListEntry[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [loadingPreset, setLoadingPreset] = useState<string | null>(null);
@@ -47,9 +54,9 @@ export function StepPresetSelect({
         if (!res.ok) throw new Error(`Failed to load presets (${res.status})`);
         return res.json();
       })
-      .then((data: string[]) => {
+      .then((data: PresetListEntry[]) => {
         if (!cancelled) {
-          setPresetNames(data);
+          setPresets(data);
           setIsLoading(false);
         }
       })
@@ -78,8 +85,11 @@ export function StepPresetSelect({
         if (!res.ok) {
           throw new Error(`Failed to load preset details (${res.status})`);
         }
-        const params = (await res.json()) as Record<string, unknown>;
-        onSelect(presetName, params);
+        const data = (await res.json()) as {
+          meta: PresetMeta | null;
+          params: Record<string, unknown>;
+        };
+        onSelect(presetName, data.params, data.meta?.display_name ?? null);
       } catch (err) {
         const message =
           err instanceof Error ? err.message : "Failed to load preset";
@@ -91,17 +101,27 @@ export function StepPresetSelect({
     [pipeline, onSelect],
   );
 
-  // Humanize preset name
-  function getPresetLabel(name: string): { title: string; description: string } {
-    const known = PRESET_LABELS[name];
-    if (known) return { title: known.name, description: known.description };
+  // Humanize preset name: use _meta from API, fallback to formatted filename
+  function getPresetLabel(entry: PresetListEntry): {
+    title: string;
+    description: string;
+    recommended: boolean;
+  } {
+    if (entry.meta) {
+      return {
+        title: entry.meta.display_name,
+        description: entry.meta.description,
+        recommended: entry.meta.recommended === true,
+      };
+    }
     // Fallback: capitalize and replace underscores
     return {
-      title: name
+      title: entry.name
         .split("_")
         .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
         .join(" "),
-      description: `Configuration preset for ${name.replace(/_/g, " ")}`,
+      description: `Configuration preset for ${entry.name.replace(/_/g, " ")}`,
+      recommended: false,
     };
   }
 
@@ -181,7 +201,7 @@ export function StepPresetSelect({
       )}
 
       {/* Empty state */}
-      {!isLoading && !error && presetNames.length === 0 && (
+      {!isLoading && !error && presets.length === 0 && (
         <div
           className="rounded-xl p-8 text-center"
           style={{
@@ -201,10 +221,11 @@ export function StepPresetSelect({
       )}
 
       {/* Preset cards */}
-      {!isLoading && presetNames.length > 0 && (
+      {!isLoading && presets.length > 0 && (
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          {presetNames.map((name) => {
-            const label = getPresetLabel(name);
+          {presets.map((entry) => {
+            const label = getPresetLabel(entry);
+            const name = entry.name;
             const isSelected = selectedPreset === name;
             const isLoadingThis = loadingPreset === name;
 
@@ -287,8 +308,19 @@ export function StepPresetSelect({
                   )}
                 </div>
 
-                {/* Preset filename as badge */}
-                <div className="mt-3">
+                {/* Badges */}
+                <div className="mt-3 flex items-center gap-2">
+                  {label.recommended && (
+                    <span
+                      className="rounded-md px-2 py-0.5 text-xs font-medium"
+                      style={{
+                        backgroundColor: "color-mix(in srgb, var(--app-primary) 15%, transparent)",
+                        color: "var(--app-primary)",
+                      }}
+                    >
+                      Recommended
+                    </span>
+                  )}
                   <span
                     className="rounded-md px-2 py-0.5 font-mono text-xs"
                     style={{

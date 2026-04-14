@@ -4,7 +4,6 @@ import { useState, useMemo } from "react";
 import { useRouter } from "@/i18n/routing";
 import {
   PIPELINE_METADATA,
-  PRESET_LABELS,
   PARAMETER_METADATA,
 } from "@/lib/pipeline-metadata";
 import type { WizardState } from "./pipeline-wizard";
@@ -28,13 +27,13 @@ export function StepConfirm({ state, onBack }: StepConfirmProps) {
   const [error, setError] = useState<string | null>(null);
 
   const pipelineMeta = PIPELINE_METADATA[state.pipeline!];
-  const presetLabel = state.preset
-    ? PRESET_LABELS[state.preset]?.name ??
-      state.preset
-        .split("_")
-        .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-        .join(" ")
-    : "Custom";
+  const presetLabel = state.presetDisplayName
+    ?? (state.preset
+      ? state.preset
+          .split("_")
+          .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+          .join(" ")
+      : "Custom");
 
   // Detect modified parameters
   const modifiedParams = useMemo(() => {

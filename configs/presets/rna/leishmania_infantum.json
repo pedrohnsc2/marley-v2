@@ -1,4 +1,9 @@
 {
+  "_meta": {
+    "display_name": "L. infantum — Standard Analysis",
+    "description": "RNA entropy and conservation analysis for L. infantum.",
+    "recommended": true
+  },
   "organism": "leishmania_infantum",
   "species_name": "Leishmania infantum",
   "host_organism": "homo_sapiens",

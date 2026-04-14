@@ -1,4 +1,9 @@
 {
+  "_meta": {
+    "display_name": "T. cruzi — Chagas Disease",
+    "description": "RNA analysis for T. cruzi with species-specific SL sequence.",
+    "recommended": false
+  },
   "organism": "trypanosoma_cruzi",
   "species_name": "Trypanosoma cruzi",
   "host_organism": "homo_sapiens",

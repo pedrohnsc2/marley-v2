@@ -1,4 +1,9 @@
 {
+  "_meta": {
+    "display_name": "L. infantum — Standard Analysis",
+    "description": "Recommended settings for the L. infantum JPCM5 reference proteome. Visceral leishmaniasis (canine/human).",
+    "recommended": true
+  },
   "organism": "leishmania_infantum",
   "species_name": "Leishmania infantum",
   "proteome_source": "tritrypdb",

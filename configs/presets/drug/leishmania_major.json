@@ -1,4 +1,9 @@
 {
+  "_meta": {
+    "display_name": "L. major — Cutaneous Leishmaniasis",
+    "description": "Drug targets for L. major Friedlin.",
+    "recommended": false
+  },
   "organism": "leishmania_major",
   "species_name": "Leishmania major",
   "divergence_weight": 0.40,

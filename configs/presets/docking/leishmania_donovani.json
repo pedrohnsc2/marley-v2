@@ -1,4 +1,9 @@
 {
+  "_meta": {
+    "display_name": "L. donovani — Visceral Leishmaniasis",
+    "description": "Molecular docking against L. donovani targets.",
+    "recommended": false
+  },
   "organism": "leishmania_donovani",
   "species_name": "Leishmania donovani",
   "top_n_targets": 5,

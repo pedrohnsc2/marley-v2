@@ -1,4 +1,9 @@
 {
+  "_meta": {
+    "display_name": "L. major — Cutaneous Leishmaniasis",
+    "description": "Settings for L. major Friedlin strain. Causes cutaneous leishmaniasis.",
+    "recommended": false
+  },
   "organism": "leishmania_major",
   "species_name": "Leishmania major",
   "proteome_source": "tritrypdb",

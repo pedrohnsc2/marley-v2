@@ -228,38 +228,6 @@ export const PIPELINE_METADATA: Record<string, PipelineMetadata> = {
   },
 };
 
-/** Preset display names (humanized) */
-export const PRESET_LABELS: Record<
-  string,
-  { name: string; description: string }
-> = {
-  leishmania_infantum: {
-    name: "L. infantum \u2014 Standard Analysis",
-    description:
-      "Recommended settings for the L. infantum JPCM5 reference proteome. Visceral leishmaniasis (canine/human).",
-  },
-  leishmania_donovani: {
-    name: "L. donovani \u2014 Visceral Leishmaniasis",
-    description:
-      "Settings for L. donovani BPK282A1. Primary agent of visceral leishmaniasis in the Old World.",
-  },
-  leishmania_major: {
-    name: "L. major \u2014 Cutaneous Leishmaniasis",
-    description:
-      "Settings for L. major Friedlin strain. Causes cutaneous leishmaniasis.",
-  },
-  leishmania_braziliensis: {
-    name: "L. braziliensis \u2014 Mucocutaneous Leishmaniasis",
-    description:
-      "Settings for L. braziliensis M2904. Causes mucocutaneous leishmaniasis in the Americas.",
-  },
-  trypanosoma_cruzi: {
-    name: "T. cruzi \u2014 Chagas Disease",
-    description:
-      "Adapted for Trypanosoma cruzi CL Brener. Causative agent of Chagas disease.",
-  },
-};
-
 /** Parameter humanization */
 export interface ParameterMeta {
   label: string;
