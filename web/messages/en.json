@@ -66,6 +66,10 @@
     "sectionPipelineModules": "Pipeline Modules",
     "sectionDiscovery": "Discovery Pipeline",
     "sectionTherapeutics": "Therapeutics",
+    "newAnalysisHeadline": "Start a New Analysis",
+    "newAnalysisSubtext": "Choose a pipeline, configure parameters, and launch your run in minutes.",
+    "newAnalysis": "New Analysis",
+    "viewPastRuns": "View past runs",
     "kpi": {
       "proteinsAnalyzed": { "title": "Proteins Analyzed", "subtitle": "L. infantum proteome \u2192 {count} targets" },
       "asoValidation": { "title": "ASO Validation", "subtitle": "MRL-ASO-001 certificate" },
@@ -403,10 +407,158 @@
       "ctvacinas": "CTVacinas (UFMG) platform comparison framework"
     }
   },
+  "errors": {
+    "data.missing_input": {
+      "title": "Input Data Not Found",
+      "body": "A required input file for this analysis step was not found. This usually means a previous step did not complete.",
+      "suggestion": "Re-run the pipeline from the beginning, or check that upstream stages succeeded."
+    },
+    "data.invalid_format": {
+      "title": "Invalid Data Format",
+      "body": "An input file could not be read because it has an unexpected format.",
+      "suggestion": "Verify that input files have not been modified manually."
+    },
+    "data.empty_result": {
+      "title": "No Results Found",
+      "body": "This analysis step completed but found no matching results. The filtering criteria may be too restrictive.",
+      "suggestion": "Try adjusting the pipeline parameters (e.g., lower thresholds)."
+    },
+    "network.timeout": {
+      "title": "Server Timeout",
+      "body": "A request to an external server timed out.",
+      "suggestion": "Check your internet connection and try again. External databases may be temporarily overloaded."
+    },
+    "network.connection_refused": {
+      "title": "Connection Failed",
+      "body": "Could not connect to an external service required by this analysis step.",
+      "suggestion": "Verify your internet connection and firewall settings."
+    },
+    "network.dns_failure": {
+      "title": "DNS Resolution Failed",
+      "body": "The server address could not be resolved.",
+      "suggestion": "Check your network configuration and DNS settings."
+    },
+    "network.api_error": {
+      "title": "External Service Error",
+      "body": "An external bioinformatics service returned an error.",
+      "suggestion": "The service may be temporarily unavailable. Try again later."
+    },
+    "network.ssl_error": {
+      "title": "Secure Connection Failed",
+      "body": "Could not establish a secure connection to an external service.",
+      "suggestion": "This may be caused by a corporate proxy or firewall. Contact your network administrator."
+    },
+    "compute.out_of_memory": {
+      "title": "Insufficient Memory",
+      "body": "The system ran out of memory while processing this step.",
+      "suggestion": "Try reducing the dataset size in pipeline parameters."
+    },
+    "compute.numerical_error": {
+      "title": "Computation Error",
+      "body": "A numerical calculation produced an invalid result.",
+      "suggestion": "Check your input data for extreme or missing values."
+    },
+    "compute.timeout": {
+      "title": "Computation Timeout",
+      "body": "This analysis step exceeded its time limit.",
+      "suggestion": "Try reducing the dataset size or increasing the timeout parameter."
+    },
+    "compute.subprocess_failed": {
+      "title": "External Tool Error",
+      "body": "An external bioinformatics tool exited with an error.",
+      "suggestion": "Check that the tool is properly installed and that input data is valid."
+    },
+    "config.invalid_parameter": {
+      "title": "Invalid Parameter",
+      "body": "One of the pipeline parameters has an incorrect value or type.",
+      "suggestion": "Review the parameters used for this run and correct the invalid value."
+    },
+    "config.missing_parameter": {
+      "title": "Missing Parameter",
+      "body": "A required pipeline parameter was not provided.",
+      "suggestion": "Check the preset configuration or add the missing parameter."
+    },
+    "config.preset_not_found": {
+      "title": "Preset Not Found",
+      "body": "The selected organism preset does not exist.",
+      "suggestion": "Use the pipeline wizard to see available presets."
+    },
+    "dependency.module_missing": {
+      "title": "Missing Software Package",
+      "body": "A required Python package is not installed in the pipeline environment.",
+      "suggestion": "Run: pip install -r requirements.txt"
+    },
+    "dependency.tool_missing": {
+      "title": "Missing External Tool",
+      "body": "A required bioinformatics tool is not installed on this system.",
+      "suggestion": "See the Methods page for a list of required software."
+    },
+    "permission.file_access": {
+      "title": "File Permission Denied",
+      "body": "The pipeline could not read or write a required file.",
+      "suggestion": "Check file and directory permissions."
+    },
+    "permission.api_auth": {
+      "title": "Authentication Failed",
+      "body": "An API key or credential was rejected by an external service.",
+      "suggestion": "Verify that API keys are correctly set in the .env file."
+    },
+    "internal.assertion": {
+      "title": "Internal Error",
+      "body": "An internal consistency check failed. This is likely a software bug.",
+      "suggestion": "Please report this issue with the run ID and technical details."
+    },
+    "internal.unknown": {
+      "title": "Unexpected Error",
+      "body": "An unexpected error occurred during this analysis step.",
+      "suggestion": "Check the technical details below. If the issue persists, report it with your run ID."
+    },
+    "fallback": {
+      "title": "Error",
+      "body": "This step encountered an error.",
+      "suggestion": "Check the technical details for more information."
+    },
+    "reportIssue": "Report Issue",
+    "technicalDetails": "Technical Details",
+    "hideDetails": "Hide Details",
+    "tryAgain": "Try Again",
+    "copied": "Diagnostic info copied to clipboard",
+    "stalledWarning": "Your analysis is taking longer than expected. This can happen with large datasets. If it does not complete within a few minutes, you can cancel and try again."
+  },
+  "wizard": {
+    "title": "New Analysis",
+    "step1Title": "What would you like to analyze?",
+    "step1Subtitle": "Select a pipeline to get started. Each one produces different results.",
+    "step2Title": "Choose a starting configuration",
+    "step2Subtitle": "Presets are pre-configured parameter sets optimized for common research scenarios.",
+    "step3Title": "Review parameters",
+    "step3Subtitle": "These defaults work well for most analyses. Only change them if you know what you are doing.",
+    "step4Title": "Review and launch",
+    "step4Subtitle": "Everything looks good? Launch your analysis.",
+    "steps": {
+      "pipeline": "Pipeline",
+      "configuration": "Configuration",
+      "parameters": "Parameters",
+      "launch": "Launch"
+    },
+    "expectedOutputs": "What you will receive",
+    "estimatedDuration": "Estimated duration",
+    "recommended": "Recommended",
+    "default": "default",
+    "modified": "modified",
+    "advanced": "Advanced Parameters",
+    "launchAnalysis": "Launch Analysis",
+    "launching": "Launching...",
+    "continue": "Continue",
+    "back": "Back",
+    "cancel": "Cancel"
+  },
   "runs": {
     "title": "Pipeline Runs",
     "subtitle": "All pipeline executions and their results",
     "newAnalysis": "New Analysis",
+    "failedBanner": "Your {pipeline} analysis encountered an issue. The technical details have been saved.",
+    "completedBanner": "Your {pipeline} analysis finished successfully in {duration}.",
     "kpi": {
       "totalRuns": "Total Runs",
       "completed": "Completed",
@@ -446,9 +598,9 @@
       "label": "Filter by pipeline"
     },
     "empty": {
-      "title": "No runs yet",
-      "subtitle": "Start your first pipeline analysis to see results here.",
-      "cta": "New Analysis"
+      "title": "No analyses yet",
+      "subtitle": "Start your first analysis to see results here.",
+      "cta": "Start First Analysis"
     },
     "newRun": {
       "title": "Configure New Run",

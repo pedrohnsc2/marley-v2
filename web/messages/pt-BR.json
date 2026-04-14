@@ -66,6 +66,10 @@
     "sectionPipelineModules": "Módulos do Pipeline",
     "sectionDiscovery": "Pipeline de Descoberta",
     "sectionTherapeutics": "Terapêuticos",
+    "newAnalysisHeadline": "Iniciar Nova Análise",
+    "newAnalysisSubtext": "Escolha um pipeline, configure os parâmetros e inicie sua execução em minutos.",
+    "newAnalysis": "Nova Análise",
+    "viewPastRuns": "Ver execuções anteriores",
     "kpi": {
       "proteinsAnalyzed": { "title": "Proteínas Analisadas", "subtitle": "Proteoma de L. infantum \u2192 {count} alvos" },
       "asoValidation": { "title": "Validação ASO", "subtitle": "Certificado MRL-ASO-001" },
@@ -403,10 +407,158 @@
       "ctvacinas": "CTVacinas (UFMG) framework de comparação de plataformas"
     }
   },
+  "errors": {
+    "data.missing_input": {
+      "title": "Dados de Entrada Não Encontrados",
+      "body": "Um arquivo de entrada necessário para esta etapa de análise não foi encontrado. Isso geralmente significa que uma etapa anterior não foi concluída.",
+      "suggestion": "Execute o pipeline novamente desde o início ou verifique se as etapas anteriores foram concluídas com sucesso."
+    },
+    "data.invalid_format": {
+      "title": "Formato de Dados Inválido",
+      "body": "Um arquivo de entrada não pôde ser lido porque possui um formato inesperado.",
+      "suggestion": "Verifique se os arquivos de entrada não foram modificados manualmente."
+    },
+    "data.empty_result": {
+      "title": "Nenhum Resultado Encontrado",
+      "body": "Esta etapa de análise foi concluída, mas não encontrou resultados correspondentes. Os critérios de filtragem podem estar muito restritivos.",
+      "suggestion": "Tente ajustar os parâmetros do pipeline (ex.: diminuir os limiares)."
+    },
+    "network.timeout": {
+      "title": "Tempo Limite do Servidor",
+      "body": "Uma requisição a um servidor externo excedeu o tempo limite.",
+      "suggestion": "Verifique sua conexão com a internet e tente novamente. Bancos de dados externos podem estar temporariamente sobrecarregados."
+    },
+    "network.connection_refused": {
+      "title": "Conexão Falhou",
+      "body": "Não foi possível conectar a um serviço externo necessário para esta etapa de análise.",
+      "suggestion": "Verifique sua conexão com a internet e as configurações de firewall."
+    },
+    "network.dns_failure": {
+      "title": "Falha na Resolução DNS",
+      "body": "O endereço do servidor não pôde ser resolvido.",
+      "suggestion": "Verifique sua configuração de rede e as configurações de DNS."
+    },
+    "network.api_error": {
+      "title": "Erro no Serviço Externo",
+      "body": "Um serviço externo de bioinformática retornou um erro.",
+      "suggestion": "O serviço pode estar temporariamente indisponível. Tente novamente mais tarde."
+    },
+    "network.ssl_error": {
+      "title": "Falha na Conexão Segura",
+      "body": "Não foi possível estabelecer uma conexão segura com um serviço externo.",
+      "suggestion": "Isso pode ser causado por um proxy corporativo ou firewall. Entre em contato com o administrador de rede."
+    },
+    "compute.out_of_memory": {
+      "title": "Memória Insuficiente",
+      "body": "O sistema ficou sem memória ao processar esta etapa.",
+      "suggestion": "Tente reduzir o tamanho do conjunto de dados nos parâmetros do pipeline."
+    },
+    "compute.numerical_error": {
+      "title": "Erro de Computação",
+      "body": "Um cálculo numérico produziu um resultado inválido.",
+      "suggestion": "Verifique seus dados de entrada para valores extremos ou ausentes."
+    },
+    "compute.timeout": {
+      "title": "Tempo Limite de Computação",
+      "body": "Esta etapa de análise excedeu seu limite de tempo.",
+      "suggestion": "Tente reduzir o tamanho do conjunto de dados ou aumentar o parâmetro de tempo limite."
+    },
+    "compute.subprocess_failed": {
+      "title": "Erro em Ferramenta Externa",
+      "body": "Uma ferramenta externa de bioinformática encerrou com erro.",
+      "suggestion": "Verifique se a ferramenta está instalada corretamente e se os dados de entrada são válidos."
+    },
+    "config.invalid_parameter": {
+      "title": "Parâmetro Inválido",
+      "body": "Um dos parâmetros do pipeline possui um valor ou tipo incorreto.",
+      "suggestion": "Revise os parâmetros utilizados nesta execução e corrija o valor inválido."
+    },
+    "config.missing_parameter": {
+      "title": "Parâmetro Ausente",
+      "body": "Um parâmetro obrigatório do pipeline não foi fornecido.",
+      "suggestion": "Verifique a configuração do preset ou adicione o parâmetro ausente."
+    },
+    "config.preset_not_found": {
+      "title": "Preset Não Encontrado",
+      "body": "O preset de organismo selecionado não existe.",
+      "suggestion": "Use o assistente de pipeline para ver os presets disponíveis."
+    },
+    "dependency.module_missing": {
+      "title": "Pacote de Software Ausente",
+      "body": "Um pacote Python necessário não está instalado no ambiente do pipeline.",
+      "suggestion": "Execute: pip install -r requirements.txt"
+    },
+    "dependency.tool_missing": {
+      "title": "Ferramenta Externa Ausente",
+      "body": "Uma ferramenta de bioinformática necessária não está instalada neste sistema.",
+      "suggestion": "Consulte a página de Métodos para a lista de software necessário."
+    },
+    "permission.file_access": {
+      "title": "Permissão de Arquivo Negada",
+      "body": "O pipeline não conseguiu ler ou gravar um arquivo necessário.",
+      "suggestion": "Verifique as permissões de arquivos e diretórios."
+    },
+    "permission.api_auth": {
+      "title": "Falha na Autenticação",
+      "body": "Uma chave de API ou credencial foi rejeitada por um serviço externo.",
+      "suggestion": "Verifique se as chaves de API estão configuradas corretamente no arquivo .env."
+    },
+    "internal.assertion": {
+      "title": "Erro Interno",
+      "body": "Uma verificação de consistência interna falhou. Isso provavelmente é um bug do software.",
+      "suggestion": "Por favor, reporte este problema com o ID da execução e os detalhes técnicos."
+    },
+    "internal.unknown": {
+      "title": "Erro Inesperado",
+      "body": "Um erro inesperado ocorreu durante esta etapa de análise.",
+      "suggestion": "Verifique os detalhes técnicos abaixo. Se o problema persistir, reporte com o ID da execução."
+    },
+    "fallback": {
+      "title": "Erro",
+      "body": "Esta etapa encontrou um erro.",
+      "suggestion": "Verifique os detalhes técnicos para mais informações."
+    },
+    "reportIssue": "Reportar Problema",
+    "technicalDetails": "Detalhes Técnicos",
+    "hideDetails": "Ocultar Detalhes",
+    "tryAgain": "Tentar Novamente",
+    "copied": "Informações de diagnóstico copiadas para a área de transferência",
+    "stalledWarning": "Sua análise está demorando mais do que o esperado. Isso pode acontecer com conjuntos de dados grandes. Se não for concluída em alguns minutos, você pode cancelar e tentar novamente."
+  },
+  "wizard": {
+    "title": "Nova Análise",
+    "step1Title": "O que você gostaria de analisar?",
+    "step1Subtitle": "Selecione um pipeline para começar. Cada um produz resultados diferentes.",
+    "step2Title": "Escolha uma configuração inicial",
+    "step2Subtitle": "Presets são conjuntos de parâmetros pré-configurados e otimizados para cenários comuns de pesquisa.",
+    "step3Title": "Revise os parâmetros",
+    "step3Subtitle": "Esses valores padrão funcionam bem para a maioria das análises. Altere apenas se souber o que está fazendo.",
+    "step4Title": "Revisar e iniciar",
+    "step4Subtitle": "Tudo parece correto? Inicie sua análise.",
+    "steps": {
+      "pipeline": "Pipeline",
+      "configuration": "Configuração",
+      "parameters": "Parâmetros",
+      "launch": "Iniciar"
+    },
+    "expectedOutputs": "O que você receberá",
+    "estimatedDuration": "Duração estimada",
+    "recommended": "Recomendado",
+    "default": "padrão",
+    "modified": "modificado",
+    "advanced": "Parâmetros Avançados",
+    "launchAnalysis": "Iniciar Análise",
+    "launching": "Iniciando...",
+    "continue": "Continuar",
+    "back": "Voltar",
+    "cancel": "Cancelar"
+  },
   "runs": {
     "title": "Execuções do Pipeline",
     "subtitle": "Todas as execuções de pipeline e seus resultados",
     "newAnalysis": "Nova Análise",
+    "failedBanner": "Sua análise de {pipeline} encontrou um problema. Os detalhes técnicos foram salvos.",
+    "completedBanner": "Sua análise de {pipeline} foi concluída com sucesso em {duration}.",
     "kpi": {
       "totalRuns": "Total de Execuções",
       "completed": "Concluídas",
