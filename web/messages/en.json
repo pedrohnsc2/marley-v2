@@ -21,7 +21,8 @@
     "bioSim": "Bio-Sim 3D",
     "methods": "Methods",
     "settings": "Settings",
-    "runs": "Pipeline Runs"
+    "runs": "Pipeline Runs",
+    "newAnalysis": "New Analysis"
   },
   "breadcrumb": {
     "home": "Dashboard",
@@ -34,7 +35,8 @@
     "bioSim": "Bio-Sim 3D",
     "methods": "Methods & Data",
     "settings": "Settings",
-    "runs": "Pipeline Runs"
+    "runs": "Pipeline Runs",
+    "runsNew": "New Analysis"
   },
   "molViewer": {
     "cartoon": "Cartoon",
@@ -59,6 +61,8 @@
   "dashboard": {
     "title": "Marley Dashboard",
     "subtitle": "Reverse vaccinology and drug discovery for canine visceral leishmaniasis.",
+    "newAnalysis": "New Analysis",
+    "newAnalysisSubtitle": "Configure and launch a pipeline run",
     "sectionPipelineModules": "Pipeline Modules",
     "sectionDiscovery": "Discovery Pipeline",
     "sectionTherapeutics": "Therapeutics",
@@ -402,6 +406,7 @@
   "runs": {
     "title": "Pipeline Runs",
     "subtitle": "All pipeline executions and their results",
+    "newAnalysis": "New Analysis",
     "kpi": {
       "totalRuns": "Total Runs",
       "completed": "Completed",
@@ -442,7 +447,8 @@
     },
     "empty": {
       "title": "No runs yet",
-      "subtitle": "Use the CLI to start your first pipeline run."
+      "subtitle": "Start your first pipeline analysis to see results here.",
+      "cta": "New Analysis"
     },
     "newRun": {
       "title": "Configure New Run",

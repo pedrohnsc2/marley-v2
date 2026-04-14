@@ -1,5 +1,5 @@
-import Link from "next/link";
 import { getTranslations } from "next-intl/server";
+import { Link } from "@/i18n/routing";
 import KpiCard from "@/components/kpi-card";
 
 /* ------------------------------------------------------------------ */
@@ -18,7 +18,12 @@ function PipelineCard({ item }: { item: PipelineItem }) {
   return (
     <Link
       href={item.href}
-      className="rounded-xl bg-white shadow-card p-5 transition-all hover:shadow-md"
+      className="rounded-xl p-5 transition-all hover:shadow-md"
+      style={{
+        backgroundColor: "var(--app-surface)",
+        border: "1px solid var(--app-border)",
+        boxShadow: "var(--app-card-shadow)",
+      }}
       data-testid={`pipeline-${item.href.slice(1)}`}
     >
       <div className="mb-2 flex items-center gap-2">
@@ -27,9 +32,11 @@ function PipelineCard({ item }: { item: PipelineItem }) {
         >
           {item.track}
         </span>
-        <h3 className="text-sm font-semibold text-gray-900">{item.title}</h3>
+        <h3 className="text-sm font-semibold" style={{ color: "var(--app-text)" }}>
+          {item.title}
+        </h3>
       </div>
-      <p className="text-xs leading-relaxed text-gray-500">
+      <p className="text-xs leading-relaxed" style={{ color: "var(--app-text-3)" }}>
         {item.description}
       </p>
     </Link>
@@ -151,12 +158,27 @@ export default async function Home() {
 
   return (
     <div>
-      {/* Page header */}
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">{t("title")}</h1>
-        <p className="mt-1 text-sm text-gray-500">
-          {t("subtitle")}
-        </p>
+      {/* Page header with New Analysis CTA */}
+      <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <h1 className="text-2xl font-bold" style={{ color: "var(--app-text)" }}>
+            {t("title")}
+          </h1>
+          <p className="mt-1 text-sm" style={{ color: "var(--app-text-3)" }}>
+            {t("subtitle")}
+          </p>
+        </div>
+        <Link
+          href="/runs/new"
+          data-testid="dashboard-new-analysis-cta"
+          className="inline-flex items-center gap-2 rounded-lg px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-opacity hover:opacity-90"
+          style={{ backgroundColor: "var(--app-accent-bar)" }}
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="h-4 w-4">
+            <path d="M12 5v14M5 12h14" />
+          </svg>
+          {t("newAnalysis")}
+        </Link>
       </div>
 
       {/* KPI Grid - Row 1 */}
@@ -193,12 +215,18 @@ export default async function Home() {
 
       {/* Pipeline Modules */}
       <div className="mb-6">
-        <h2 className="mb-4 text-sm font-semibold uppercase tracking-wider text-gray-400">
+        <h2
+          className="mb-4 text-sm font-semibold uppercase tracking-wider"
+          style={{ color: "var(--app-text-3)" }}
+        >
           {t("sectionPipelineModules")}
         </h2>
 
         {/* Discovery Pipeline */}
-        <p className="mb-2 px-1 text-xs font-semibold uppercase tracking-wider text-gray-400">
+        <p
+          className="mb-2 px-1 text-xs font-semibold uppercase tracking-wider"
+          style={{ color: "var(--app-text-3)" }}
+        >
           {t("sectionDiscovery")}
         </p>
         <div className="mb-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
@@ -208,7 +236,10 @@ export default async function Home() {
         </div>
 
         {/* Therapeutics */}
-        <p className="mb-2 px-1 text-xs font-semibold uppercase tracking-wider text-gray-400">
+        <p
+          className="mb-2 px-1 text-xs font-semibold uppercase tracking-wider"
+          style={{ color: "var(--app-text-3)" }}
+        >
           {t("sectionTherapeutics")}
         </p>
         <div className="mb-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">

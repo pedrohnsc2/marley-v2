@@ -21,7 +21,8 @@
     "bioSim": "Bio-Sim 3D",
     "methods": "Métodos",
     "settings": "Configurações",
-    "runs": "Execuções do Pipeline"
+    "runs": "Execuções do Pipeline",
+    "newAnalysis": "Nova Análise"
   },
   "breadcrumb": {
     "home": "Painel",
@@ -34,7 +35,8 @@
     "bioSim": "Bio-Sim 3D",
     "methods": "Métodos e Dados",
     "settings": "Configurações",
-    "runs": "Execuções do Pipeline"
+    "runs": "Execuções do Pipeline",
+    "runsNew": "Nova Análise"
   },
   "molViewer": {
     "cartoon": "Cartoon",
@@ -59,6 +61,8 @@
   "dashboard": {
     "title": "Painel Marley",
     "subtitle": "Vacinologia reversa e descoberta de fármacos para leishmaniose visceral canina.",
+    "newAnalysis": "Nova Análise",
+    "newAnalysisSubtitle": "Configure e inicie uma execução de pipeline",
     "sectionPipelineModules": "Módulos do Pipeline",
     "sectionDiscovery": "Pipeline de Descoberta",
     "sectionTherapeutics": "Terapêuticos",
@@ -402,6 +406,7 @@
   "runs": {
     "title": "Execuções do Pipeline",
     "subtitle": "Todas as execuções de pipeline e seus resultados",
+    "newAnalysis": "Nova Análise",
     "kpi": {
       "totalRuns": "Total de Execuções",
       "completed": "Concluídas",
@@ -442,7 +447,8 @@
     },
     "empty": {
       "title": "Nenhuma execução ainda",
-      "subtitle": "Use o CLI para iniciar sua primeira execução de pipeline."
+      "subtitle": "Inicie sua primeira análise de pipeline para ver os resultados aqui.",
+      "cta": "Nova Análise"
     },
     "newRun": {
       "title": "Configurar Nova Execução",

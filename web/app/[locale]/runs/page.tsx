@@ -112,27 +112,40 @@ export default async function RunsPage({
   return (
     <div>
       {/* Page header */}
-      <div className="mb-6 flex items-center gap-3">
-        <span
-          className="rounded-lg px-2.5 py-1 text-xs font-bold"
-          style={{
-            backgroundColor: "var(--app-surface-2)",
-            color: "var(--app-text-2)",
-          }}
-        >
-          runs
-        </span>
-        <div>
-          <h1
-            className="text-2xl font-bold"
-            style={{ color: "var(--app-text)" }}
+      <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex items-center gap-3">
+          <span
+            className="rounded-lg px-2.5 py-1 text-xs font-bold"
+            style={{
+              backgroundColor: "var(--app-surface-2)",
+              color: "var(--app-text-2)",
+            }}
           >
-            {t("title")}
-          </h1>
-          <p className="text-sm" style={{ color: "var(--app-text-3)" }}>
-            {t("subtitle")}
-          </p>
+            runs
+          </span>
+          <div>
+            <h1
+              className="text-2xl font-bold"
+              style={{ color: "var(--app-text)" }}
+            >
+              {t("title")}
+            </h1>
+            <p className="text-sm" style={{ color: "var(--app-text-3)" }}>
+              {t("subtitle")}
+            </p>
+          </div>
         </div>
+        <Link
+          href="/runs/new"
+          data-testid="runs-header-new-analysis"
+          className="inline-flex items-center gap-2 rounded-lg px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-opacity hover:opacity-90"
+          style={{ backgroundColor: "var(--app-accent-bar)" }}
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="h-4 w-4">
+            <path d="M12 5v14M5 12h14" />
+          </svg>
+          {t("newAnalysis")}
+        </Link>
       </div>
 
       {/* KPIs */}
@@ -322,13 +335,27 @@ export default async function RunsPage({
             >
               {t("empty.subtitle")}
             </p>
+            <Link
+              href="/runs/new"
+              data-testid="runs-empty-new-analysis"
+              className="mt-5 inline-flex items-center gap-2 rounded-lg px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-opacity hover:opacity-90"
+              style={{ backgroundColor: "var(--app-accent-bar)" }}
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="h-4 w-4">
+                <path d="M12 5v14M5 12h14" />
+              </svg>
+              {t("empty.cta")}
+            </Link>
             <div
-              className="mx-auto mt-4 max-w-md rounded-lg p-3"
+              className="mx-auto mt-6 max-w-md rounded-lg p-3"
               style={{
                 backgroundColor: "var(--app-surface-2)",
                 border: "1px solid var(--app-border)",
               }}
             >
+              <p className="mb-1.5 text-xs font-medium" style={{ color: "var(--app-text-3)" }}>
+                {t("newRun.orCli")}
+              </p>
               <code
                 className="text-xs font-mono"
                 style={{ color: "var(--app-text-2)" }}

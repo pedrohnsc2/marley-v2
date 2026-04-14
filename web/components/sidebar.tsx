@@ -248,6 +248,24 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
         </button>
       </div>
 
+      {/* New Analysis quick action */}
+      <div className="px-3 pt-4 pb-2">
+        <Link
+          href="/runs/new"
+          data-testid="sidebar-new-analysis"
+          className={`flex items-center gap-2 rounded-xl px-3 py-2.5 text-sm font-semibold text-white transition-opacity hover:opacity-90 ${
+            collapsed ? "justify-center" : ""
+          }`}
+          style={{ backgroundColor: "var(--app-accent-bar)" }}
+          title={collapsed ? t("newAnalysis") : undefined}
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.2} className="h-4 w-4 flex-shrink-0">
+            <path d="M12 5v14M5 12h14" />
+          </svg>
+          {!collapsed && <span>{t("newAnalysis")}</span>}
+        </Link>
+      </div>
+
       {/* Main nav */}
       <nav className="flex-1 overflow-y-auto px-3 py-4">
         {navGroups.map((group, gi) => (

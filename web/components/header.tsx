@@ -29,9 +29,13 @@ export default function Header() {
     "/bio-sim": t("bioSim"),
     "/methods": t("methods"),
     "/settings": t("settings"),
+    "/runs": t("runs"),
+    "/runs/new": t("runsNew"),
   };
 
-  const pageTitle = breadcrumbMap[pathname] ?? "Page";
+  const pageTitle =
+    breadcrumbMap[pathname] ??
+    (pathname.startsWith("/runs/") ? t("runs") : "Page");
 
   function switchLocale(newLocale: string) {
     router.replace(pathname, { locale: newLocale as "pt-BR" | "en" | "es" });
