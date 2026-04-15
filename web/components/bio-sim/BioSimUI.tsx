@@ -7,6 +7,7 @@ import dogNoseAnimation from "@/public/dog-nose.json";
 import { STAGE_METAS } from "./core/constants";
 import { NARRATION_SCRIPTS } from "./narration/narration-scripts";
 import NarrationOverlay from "./narration/NarrationOverlay";
+import type { NarrationVoice } from "./narration/useNarrationAudio";
 
 interface BioSimUIProps {
   sceneIndex: number;
@@ -14,10 +15,12 @@ interface BioSimUIProps {
   autoplay: boolean;
   narrationEnabled: boolean;
   isMuted: boolean;
+  voice: NarrationVoice;
   sceneProgress: number;
   onToggleAutoplay: () => void;
   onToggleNarration: () => void;
   onToggleMute: () => void;
+  onToggleVoice: () => void;
   onNext: () => void;
   onPrev: () => void;
   onGoTo: (index: number) => void;
@@ -29,10 +32,12 @@ export default function BioSimUI({
   autoplay,
   narrationEnabled,
   isMuted,
+  voice,
   sceneProgress,
   onToggleAutoplay,
   onToggleNarration,
   onToggleMute,
+  onToggleVoice,
   onNext,
   onPrev,
   onGoTo,
@@ -333,6 +338,33 @@ export default function BioSimUI({
             data-testid="bio-sim-mute"
           >
             {isMuted ? "UNMUTE" : "MUTE"}
+          </button>
+
+          {/* Voice toggle (male/female) */}
+          <button
+            onClick={onToggleVoice}
+            style={{
+              height: 32,
+              paddingLeft: 10,
+              paddingRight: 10,
+              borderRadius: 16,
+              border: "1px solid rgba(255,255,255,0.3)",
+              color: "#ffffff",
+              backgroundColor: "transparent",
+              fontSize: 10,
+              fontWeight: 700,
+              letterSpacing: "0.05em",
+              textTransform: "uppercase",
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              gap: 4,
+            }}
+            aria-label={`Switch to ${voice === "male" ? "female" : "male"} voice`}
+            data-testid="bio-sim-voice"
+          >
+            <span style={{ fontSize: 14 }}>{voice === "male" ? "\u2642" : "\u2640"}</span>
+            {voice === "male" ? "MALE" : "FEMALE"}
           </button>
 
           {/* Narration toggle */}

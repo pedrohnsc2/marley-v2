@@ -35,8 +35,6 @@ export default function BioSimViewer() {
   const camTargetPos = useRef(new THREE.Vector3(0, 2, 8));
   const camTargetLookAt = useRef(new THREE.Vector3(0, 0, 0));
   const sceneStartRef = useRef<number>(Date.now());
-  const progressRef = useRef<number>(0);
-  const frameCountRef = useRef<number>(0);
 
   const [sceneIndex, setSceneIndex] = useState(0);
   const [autoplay, setAutoplay] = useState(false);
@@ -80,7 +78,6 @@ export default function BioSimViewer() {
 
     // Reset progress
     sceneStartRef.current = Date.now();
-    progressRef.current = 0;
     setSceneProgress(0);
   }, []);
 
@@ -109,6 +106,30 @@ export default function BioSimViewer() {
 
     return () => clearTimeout(timer);
   }, [autoplay, sceneIndex, narrationAudio.duration]);
+
+  // ---- Text progress (separate from Three.js loop to avoid stale closures) ----
+  useEffect(() => {
+    // Determine the scene duration: use audio duration if available, else 12s
+    const sceneDurationMs = narrationAudio.duration
+      ? narrationAudio.duration * 1000
+      : AUTOPLAY_INTERVAL_MS;
+
+    const tick = setInterval(() => {
+      const audioP = narrationAudio.getProgress();
+
+      if (audioP > 0 && !narrationAudio.isMuted) {
+        // Audio is actively playing — sync text to audio
+        setSceneProgress(audioP);
+      } else if (autoplay) {
+        // Autoplay on, no audio playing — use wall clock
+        const elapsed = Date.now() - sceneStartRef.current;
+        setSceneProgress(Math.min(elapsed / sceneDurationMs, 1));
+      }
+      // If neither autoplay nor audio playing: don't advance (text stays put)
+    }, 66); // ~15fps
+
+    return () => clearInterval(tick);
+  }, [autoplay, narrationAudio]);
 
   // ---- Three.js initialization and animation loop ----
   useEffect(() => {
@@ -157,15 +178,6 @@ export default function BioSimViewer() {
         active.group.rotation.y += GROUP_ROTATION_SPEED;
       }
 
-      // Update scene progress (~15fps to React, every 4th frame)
-      frameCountRef.current++;
-      if (frameCountRef.current % 4 === 0) {
-        const elapsedMs = Date.now() - sceneStartRef.current;
-        const p = Math.min(elapsedMs / AUTOPLAY_INTERVAL_MS, 1);
-        progressRef.current = p;
-        setSceneProgress(p);
-      }
-
       lerpVec3(camera.position, camTargetPos.current, CAMERA_LERP_ALPHA);
       const lookAtVec = new THREE.Vector3().copy(camTargetLookAt.current);
       camera.lookAt(lookAtVec);
@@ -184,6 +196,17 @@ export default function BioSimViewer() {
       }
     });
     observer.observe(container);
+
+    // Build initial scene (sceneIndex effect runs before this, so transitionTo
+    // returned early because sceneRef was still null — build scene 0 here)
+    if (sceneBuilders.length > 0) {
+      const config = sceneBuilders[0]();
+      scene.add(config.group);
+      activeSceneRef.current = config;
+      camTargetPos.current.set(...config.camPos);
+      camTargetLookAt.current.set(...config.camTarget);
+      sceneStartRef.current = Date.now();
+    }
 
     return () => {
       observer.disconnect();
@@ -219,10 +242,16 @@ export default function BioSimViewer() {
         autoplay={autoplay}
         narrationEnabled={narrationEnabled}
         isMuted={narrationAudio.isMuted}
+        voice={narrationAudio.voice}
         sceneProgress={sceneProgress}
         onToggleAutoplay={() => setAutoplay((a) => !a)}
         onToggleNarration={() => setNarrationEnabled((n) => !n)}
         onToggleMute={narrationAudio.toggleMute}
+        onToggleVoice={() =>
+          narrationAudio.setVoice(
+            narrationAudio.voice === "male" ? "female" : "male",
+          )
+        }
         onNext={() =>
           setSceneIndex((i) => Math.min(i + 1, SCENE_COUNT - 1))
         }

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { getTranslations } from "next-intl/server";
-import { loadModuleJson, safeLoadPdb, safeLoadRunModuleJson, safeLoadRunPdb, getRunCompletedDate } from "@/lib/data-loader";
+import { loadModuleJson, safeLoadModuleJson, safeLoadPdb, safeLoadRunModuleJson, safeLoadRunPdb, getRunCompletedDate } from "@/lib/data-loader";
 import KpiCard from "@/components/kpi-card";
 import BarChart from "@/components/charts/bar-chart";
 import RunBanner from "@/components/runs/run-banner";
@@ -143,21 +143,35 @@ export default async function AsoPage({
 
   const cert = (
     runId
-      ? safeLoadRunModuleJson(runId, "aso_math", "math_certificate.json") ?? loadModuleJson("aso_math", "math_certificate.json")
-      : loadModuleJson("aso_math", "math_certificate.json")
-  ) as MathCertificate;
+      ? safeLoadRunModuleJson(runId, "aso_math", "math_certificate.json") ?? safeLoadModuleJson("aso_math", "math_certificate.json")
+      : safeLoadModuleJson("aso_math", "math_certificate.json")
+  ) as MathCertificate | null;
 
   const delivery = (
     runId
-      ? safeLoadRunModuleJson(runId, "aso_delivery", "delivery_report.json") ?? loadModuleJson("aso_delivery", "delivery_report.json")
-      : loadModuleJson("aso_delivery", "delivery_report.json")
-  ) as DeliveryReport;
+      ? safeLoadRunModuleJson(runId, "aso_delivery", "delivery_report.json") ?? safeLoadModuleJson("aso_delivery", "delivery_report.json")
+      : safeLoadModuleJson("aso_delivery", "delivery_report.json")
+  ) as DeliveryReport | null;
 
   const duplexPdb = runId
     ? safeLoadRunPdb(runId, "marley_ai/05_rosettafold/structures/aso_sl_duplex_model.pdb") ?? safeLoadPdb("marley_ai/05_rosettafold/structures/aso_sl_duplex_model.pdb")
     : safeLoadPdb("marley_ai/05_rosettafold/structures/aso_sl_duplex_model.pdb");
 
   const runCompletedAt = runId ? getRunCompletedDate(runId) : null;
+
+  if (!cert || !delivery) {
+    return (
+      <div className="flex min-h-[60vh] items-center justify-center">
+        <div className="text-center" style={{ color: "var(--app-text-2)" }}>
+          <h2 className="text-xl font-bold mb-2">Data not available</h2>
+          <p className="text-sm">Pipeline results could not be loaded. Run the ASO pipeline first.</p>
+          <Link href="/runs" className="mt-4 inline-block text-sm underline" style={{ color: "var(--app-primary)" }}>
+            Go to Runs
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   const { molecule, module_assessments } = cert;
 

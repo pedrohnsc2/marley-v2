@@ -647,5 +647,104 @@
       "parameters": "Diferencias de Parámetros",
       "stages": "Comparación de Etapas"
     }
+  },
+  "onboarding": {
+    "welcome": {
+      "title": "Bienvenido a Marley",
+      "subtitle": "Plataforma de vacunología reversa y descubrimiento de fármacos para leishmaniasis visceral canina.",
+      "startTour": "Iniciar Tour",
+      "skip": "Omitir por ahora",
+      "features": {
+        "pipeline": {
+          "title": "Análisis de Pipeline",
+          "desc": "Ejecute pipelines completos con un asistente de 4 pasos."
+        },
+        "drugTargets": {
+          "title": "Blancos Terapéuticos",
+          "desc": "52 blancos priorizados por druggability en el proteoma de L. infantum."
+        },
+        "vaccine": {
+          "title": "Diseño de Vacuna",
+          "desc": "Constructo mRNA multi-epítopo con 11 epítopos validados."
+        },
+        "docking": {
+          "title": "Acoplamiento Molecular",
+          "desc": "Cribado virtual de compuestos contra blancos seleccionados."
+        },
+        "aso": {
+          "title": "Terapia ASO",
+          "desc": "Oligonucleótidos antisentido contra SL RNA de kinetoplástidos."
+        },
+        "bioSim": {
+          "title": "Bio-Sim 3D",
+          "desc": "Visualización inmersiva del mecanismo de acción con narración."
+        }
+      }
+    },
+    "tour": {
+      "step1": {
+        "title": "Bienvenido a Marley",
+        "desc": "Su panel de biología computacional para investigación en leishmaniasis visceral canina."
+      },
+      "step2": {
+        "title": "Iniciar un Análisis",
+        "desc": "Haga clic aquí para iniciar una nueva ejecución de pipeline con el asistente de análisis."
+      },
+      "step3": {
+        "title": "Pipeline de Descubrimiento",
+        "desc": "Herramientas de diseño de vacuna, blancos terapéuticos y acoplamiento molecular."
+      },
+      "step4": {
+        "title": "Terapéuticos",
+        "desc": "Terapia ASO, plataformas vacunales y validación de blancos."
+      },
+      "step5": {
+        "title": "Bio-Sim 3D",
+        "desc": "Una visualización 3D inmersiva del mecanismo de acción del MRL-ASO-001."
+      },
+      "step6": {
+        "title": "Búsqueda",
+        "desc": "Localice rápidamente proteínas, compuestos, ejecuciones de pipeline o cualquier dato en el sistema."
+      },
+      "step7": {
+        "title": "Idioma y Tema",
+        "desc": "Alterne entre Portugués, Inglés y Español. El tema visual se puede ajustar en Configuración."
+      },
+      "step8": {
+        "title": "¡Está listo!",
+        "desc": "Explore el panel o inicie su primer análisis. Puede repetir este tour en Configuración en cualquier momento."
+      },
+      "back": "Anterior",
+      "next": "Siguiente",
+      "finish": "Finalizar",
+      "skipTour": "Omitir tour",
+      "completionToast": "Tour completo. Puede repetirlo en cualquier momento desde Configuración."
+    },
+    "hints": {
+      "newAnalysis": "Inicie su primer análisis de pipeline.",
+      "bioSim": "Vea el mecanismo de acción en 3D inmersivo.",
+      "vaccine": "Explore el constructo vacunal multi-epítopo.",
+      "settingsTheme": "Personalice el tema visual de la plataforma.",
+      "search": "Busque proteínas, compuestos o ejecuciones."
+    },
+    "settings": {
+      "title": "Primeros Pasos",
+      "subtitle": "Siga su progreso y repita el tour de la plataforma.",
+      "progress": "{count} / {total} funcionalidades exploradas",
+      "progressComplete": "Ha explorado todas las funcionalidades.",
+      "replayTour": "Repetir Tour",
+      "resetHints": "Resetear Pistas",
+      "hintsToggle": "Pistas contextuales",
+      "features": {
+        "dashboard": "Panel",
+        "runs": "Ejecuciones del Pipeline",
+        "drug": "Blancos Terapéuticos",
+        "vaccine": "Diseño de Vacuna",
+        "docking": "Acoplamiento Molecular",
+        "aso": "Terapia ASO",
+        "bioSim": "Bio-Sim 3D",
+        "settings": "Configuración"
+      }
+    }
   }
 }

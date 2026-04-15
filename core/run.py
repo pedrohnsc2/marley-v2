@@ -309,6 +309,9 @@ class RunManager:
         if run.status == "completed":
             self._update_latest(run)
 
+        # Upload results to remote storage (best-effort)
+        self._upload_to_storage(run)
+
     def fail_run(self, run: PipelineRun, error: str = "") -> None:
         """Marca o run como falho."""
         run.status = "failed"
@@ -324,6 +327,22 @@ class RunManager:
         run.completed_at = _now_iso()
         run.total_duration_s = sum(s.duration_s for s in run.stages)
         self._save(run)
+
+    # ------------------------------------------------------------------
+    # Remote storage upload
+    # ------------------------------------------------------------------
+
+    def _upload_to_storage(self, run: PipelineRun) -> None:
+        """Upload run outputs to remote storage (best-effort)."""
+        try:
+            from core.storage import get_storage, build_storage_prefix, STORAGE_BUCKET
+
+            storage = get_storage()
+            prefix = build_storage_prefix(run.run_id, run.team_id)
+            run_dir = self._run_dir(run.run_id)
+            storage.upload_directory(STORAGE_BUCKET, prefix, run_dir)
+        except Exception:
+            pass  # Storage upload is best-effort
 
     # ------------------------------------------------------------------
     # Latest symlinks

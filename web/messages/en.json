@@ -647,5 +647,104 @@
       "parameters": "Parameter Differences",
       "stages": "Stage Comparison"
     }
+  },
+  "onboarding": {
+    "welcome": {
+      "title": "Welcome to Marley",
+      "subtitle": "Reverse vaccinology and drug discovery platform for canine visceral leishmaniasis.",
+      "startTour": "Start Tour",
+      "skip": "Skip for now",
+      "features": {
+        "pipeline": {
+          "title": "Pipeline Analysis",
+          "desc": "Run complete pipelines with a 4-step wizard."
+        },
+        "drugTargets": {
+          "title": "Drug Targets",
+          "desc": "52 targets prioritized by druggability in the L. infantum proteome."
+        },
+        "vaccine": {
+          "title": "Vaccine Design",
+          "desc": "Multi-epitope mRNA construct with 11 validated epitopes."
+        },
+        "docking": {
+          "title": "Molecular Docking",
+          "desc": "Virtual screening of compounds against selected targets."
+        },
+        "aso": {
+          "title": "ASO Therapy",
+          "desc": "Antisense oligonucleotides targeting kinetoplastid SL RNA."
+        },
+        "bioSim": {
+          "title": "Bio-Sim 3D",
+          "desc": "Immersive visualization of mechanism of action with narration."
+        }
+      }
+    },
+    "tour": {
+      "step1": {
+        "title": "Welcome to Marley",
+        "desc": "Your computational biology dashboard for canine visceral leishmaniasis research."
+      },
+      "step2": {
+        "title": "Start an Analysis",
+        "desc": "Click here to launch a new pipeline run with the analysis wizard."
+      },
+      "step3": {
+        "title": "Discovery Pipeline",
+        "desc": "Vaccine design, drug targets, and molecular docking tools."
+      },
+      "step4": {
+        "title": "Therapeutics",
+        "desc": "ASO therapy, vaccine platforms, and target validation."
+      },
+      "step5": {
+        "title": "Bio-Sim 3D",
+        "desc": "An immersive 3D visualization of MRL-ASO-001's mechanism of action."
+      },
+      "step6": {
+        "title": "Search",
+        "desc": "Quickly locate proteins, compounds, pipeline runs, or any data in the system."
+      },
+      "step7": {
+        "title": "Language & Theme",
+        "desc": "Switch between Portuguese, English, and Spanish. The visual theme can be adjusted in Settings."
+      },
+      "step8": {
+        "title": "You're Ready!",
+        "desc": "Explore the dashboard or start your first analysis. You can replay this tour from Settings anytime."
+      },
+      "back": "Back",
+      "next": "Next",
+      "finish": "Finish",
+      "skipTour": "Skip tour",
+      "completionToast": "Tour complete. You can replay it anytime from Settings."
+    },
+    "hints": {
+      "newAnalysis": "Start your first pipeline analysis.",
+      "bioSim": "See the mechanism of action in immersive 3D.",
+      "vaccine": "Explore the multi-epitope vaccine construct.",
+      "settingsTheme": "Customize the platform's visual theme.",
+      "search": "Search for proteins, compounds, or runs."
+    },
+    "settings": {
+      "title": "Getting Started",
+      "subtitle": "Track your progress and replay the platform tour.",
+      "progress": "{count} / {total} features explored",
+      "progressComplete": "You have explored all features.",
+      "replayTour": "Replay Tour",
+      "resetHints": "Reset Hints",
+      "hintsToggle": "Contextual hints",
+      "features": {
+        "dashboard": "Dashboard",
+        "runs": "Pipeline Runs",
+        "drug": "Drug Targets",
+        "vaccine": "Vaccine Design",
+        "docking": "Molecular Docking",
+        "aso": "ASO Therapy",
+        "bioSim": "Bio-Sim 3D",
+        "settings": "Settings"
+      }
+    }
   }
 }

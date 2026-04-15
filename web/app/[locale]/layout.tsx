@@ -3,6 +3,7 @@ import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { ThemeProvider } from "@/contexts/theme-context";
+import { OnboardingProvider } from "@/components/onboarding/OnboardingProvider";
 import LayoutShell from "@/components/layout-shell";
 
 export function generateStaticParams() {
@@ -27,7 +28,9 @@ export default async function LocaleLayout({
   return (
     <NextIntlClientProvider messages={messages}>
       <ThemeProvider>
-        <LayoutShell>{children}</LayoutShell>
+        <OnboardingProvider>
+          <LayoutShell>{children}</LayoutShell>
+        </OnboardingProvider>
       </ThemeProvider>
     </NextIntlClientProvider>
   );

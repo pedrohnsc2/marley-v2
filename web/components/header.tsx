@@ -64,7 +64,7 @@ export default function Header() {
       </div>
 
       {/* Search */}
-      <div className="ml-4 hidden flex-1 max-w-xs sm:block">
+      <div className="ml-4 hidden flex-1 max-w-xs sm:block" data-tour="search">
         <div className="relative">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2" style={{ color: "var(--app-text-3)" }}>
             <circle cx="11" cy="11" r="7" />
@@ -81,7 +81,7 @@ export default function Header() {
 
       <div className="ml-auto flex items-center gap-2">
         {/* Locale switcher */}
-        <div className="flex items-center" style={{ gap: 2 }} data-testid="locale-switcher">
+        <div className="flex items-center" style={{ gap: 2 }} data-testid="locale-switcher" data-tour="locale-switcher">
           {LOCALE_OPTIONS.map((l) => (
             <button
               key={l.code}

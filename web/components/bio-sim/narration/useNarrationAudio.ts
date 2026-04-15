@@ -2,13 +2,19 @@
 
 import { useRef, useState, useEffect, useCallback } from "react";
 
+export type NarrationVoice = "male" | "female";
+
 interface UseNarrationAudioReturn {
   isMuted: boolean;
   isLoaded: boolean;
   duration: number;
+  voice: NarrationVoice;
+  setVoice: (v: NarrationVoice) => void;
   toggleMute: () => void;
   play: () => void;
   pause: () => void;
+  /** Returns audio progress 0-1, or -1 if audio not loaded */
+  getProgress: () => number;
 }
 
 export function useNarrationAudio(sceneIndex: number): UseNarrationAudioReturn {
@@ -18,12 +24,21 @@ export function useNarrationAudio(sceneIndex: number): UseNarrationAudioReturn {
     if (typeof window === "undefined") return false;
     return localStorage.getItem("biosim-muted") === "true";
   });
+  const [voice, setVoice] = useState<NarrationVoice>(() => {
+    if (typeof window === "undefined") return "female";
+    return (localStorage.getItem("biosim-voice") as NarrationVoice) || "female";
+  });
   const [isLoaded, setIsLoaded] = useState(false);
   const [duration, setDuration] = useState(0);
 
-  // Create/update audio element on scene change
+  // Persist voice choice
   useEffect(() => {
-    const src = `/audio/narration/scene-${sceneIndex}.mp3`;
+    localStorage.setItem("biosim-voice", voice);
+  }, [voice]);
+
+  // Create/update audio element on scene change or voice change
+  useEffect(() => {
+    const src = `/audio/narration/${voice}/scene-${sceneIndex}.mp3`;
 
     // Stop previous
     if (audioRef.current) {
@@ -51,7 +66,7 @@ export function useNarrationAudio(sceneIndex: number): UseNarrationAudioReturn {
 
     // Preload next scene
     if (sceneIndex < 7) {
-      const nextSrc = `/audio/narration/scene-${sceneIndex + 1}.mp3`;
+      const nextSrc = `/audio/narration/${voice}/scene-${sceneIndex + 1}.mp3`;
       const preload = new Audio(nextSrc);
       preload.preload = "auto";
       preloadRef.current = preload;
@@ -61,7 +76,7 @@ export function useNarrationAudio(sceneIndex: number): UseNarrationAudioReturn {
       audio.pause();
       audio.src = "";
     };
-  }, [sceneIndex]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [sceneIndex, voice]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Sync mute state
   useEffect(() => {
@@ -88,5 +103,11 @@ export function useNarrationAudio(sceneIndex: number): UseNarrationAudioReturn {
     }
   }, []);
 
-  return { isMuted, isLoaded, duration, toggleMute, play, pause };
+  const getProgress = useCallback((): number => {
+    const audio = audioRef.current;
+    if (!audio || !isLoaded || !audio.duration) return -1;
+    return audio.currentTime / audio.duration;
+  }, [isLoaded]);
+
+  return { isMuted, isLoaded, duration, voice, setVoice, toggleMute, play, pause, getProgress };
 }
