@@ -58,7 +58,7 @@ jobs:
             type=raw,value=latest
 
       - name: Build and push worker image
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v7
         with:
           context: .
           file: infra/Dockerfile.worker
@@ -70,7 +70,7 @@ jobs:
           cache-to: type=gha,mode=max
 
       - name: Build and push web image
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v7
         with:
           context: .
           file: infra/Dockerfile.web
